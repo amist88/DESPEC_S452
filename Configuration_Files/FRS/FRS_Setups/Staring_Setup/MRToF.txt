@@ -1,0 +1,6 @@
+#MRToF Parameters
+#
+mrtof->MRTOFMS_a: 0.069
+mrtof->MRTOFMS_b: 0.71
+mrtof->MRTOFMS_t0: 0
+mrtof->MRTOFMS_TXRS: 0

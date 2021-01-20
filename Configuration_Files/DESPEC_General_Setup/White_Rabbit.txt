@@ -1,0 +1,3 @@
+#Configuration for White Rabbit 
+#Name			use WR (1 = yes,0 = no)
+White_Rabbit	1

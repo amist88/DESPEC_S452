@@ -1,0 +1,11 @@
+# Configuration file for chosing between TAMEX of VME for PLASTIC and FATIMA
+# 
+# used module bPlastic: (VME_bPlas, TAMEX_bPlas)
+# ===================================
+TAMEX_bPlas
+# ===================================
+# used module Fatima: (VME_Fatima, TAMEX_Fatima, VME_AND_TAMEX_Fatima) (VME and QDC, TAMEX Timing)
+# ===================================
+VME_Fatima
+# ===================================
+#

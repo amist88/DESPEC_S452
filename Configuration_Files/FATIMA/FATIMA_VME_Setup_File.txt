@@ -1,0 +1,12 @@
+# ---------------------------- 
+# FATIMA VME CONFIGURATION
+# ---------------------------- 
+#
+gain_match_used: 1
+#
+#
+Number_of_FATIMA_TDC_Modules: 2
+#
+# 
+Scaler_Module: 1
+
