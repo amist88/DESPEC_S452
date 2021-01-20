@@ -276,49 +276,50 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
         
        
    if (PrcID_Conv[2] ==2 ){
-      for(int i=0; i<10; i++){
+      for(int i=0; i<bPLASTIC_TAMEX_HITS; i++){
          bPlas_RefCh0_Det1[i] =0;
          bPlas_RefCh0_Det2[i] =0;
          bPlas_RefCh0_Det3[i] =0;
          }
-        for (int i = 0; i < 48; i++)    
-            {   
-                for(int j=0; j<10;j++){    
-
-                 if(i < 16) lead_lead_bplas_Ref1[i][j]=0;  
-                 lead_lead_fat_Ref0[i][j]=0;    
-  
-                 SC41L_ANA_lead_bPlas[i][j] = 0;    
-                 SC41R_ANA_lead_bPlas[i][j] = 0;    
-                 SC41L_DIG_lead_bPlas[i][j] = 0;    
-                 SC41R_DIG_lead_bPlas[i][j] = 0;    
-                
+          for (int j = 0; j < bPLASTIC_CHAN_PER_DET; j++)    
+                {   
+                    for(int k=0; k<bPLASTIC_TAMEX_HITS;k++){    
+                        lead_lead_bplas_Ref1[j][k]=0;  
+                        lead_lead_bplas_Ref2[j][k]=0;  
+                        lead_lead_fat_Ref0[j][k]=0;   
+                    }
+                }
+                 
+         for (int i=1; i<4; i++){
+            for (int j = 0; j < bPLASTIC_CHAN_PER_DET; j++)    
+                {   
+                    for(int k=0; k<bPLASTIC_TAMEX_HITS;k++){    
+                 SC41L_ANA_lead_bPlas[i][j][k] = 0;    
+                 SC41R_ANA_lead_bPlas[i][j][k] = 0;    
+                 SC41L_DIG_lead_bPlas[i][j][k] = 0;    
+                 SC41R_DIG_lead_bPlas[i][j][k] = 0;    
+                    }
                 }   
             }
-       // cout<<"ANL USED bPlas " << endl;
-        pOutput->pbPLAS_WR = pInput->fbPlas_WR;
+  
+                pOutput->pbPLAS_WR = pInput->fbPlas_WR;
+                
+                bPlas_TAM_SC41L_ANA = pInput->fbPlas_Lead_PMT[bPLASTIC_ADDITIONAL_CH_MOD][SC41L_bPLASTIC][0];
+                bPlas_TAM_SC41R_ANA = pInput->fbPlas_Lead_PMT[bPLASTIC_ADDITIONAL_CH_MOD][SC41R_bPLASTIC][0];
+                bPlas_TAM_SC41L_DIG = pInput->fbPlas_Lead_PMT[bPLASTIC_ADDITIONAL_CH_MOD][SC41L_bPLASTIC_Digi][0];
+                bPlas_TAM_SC41R_DIG = pInput->fbPlas_Lead_PMT[bPLASTIC_ADDITIONAL_CH_MOD][SC41R_bPLASTIC_Digi][0];
 
+       ///bPlas_AND_Coinc[j] = pInput->fFat_Lead_PMT[9][j];
        
-       // for (int i = 0; i < fbPlaschan; i++){
-            //for(int j=0; j<fOutput->fbPlas_PMT_Lead_N[2][chan];j++){ ///Hits iterator
-//                 bPlas_TAM_SC41L_ANA = pInput->fbPlas_Lead_PMT[2][0][0];
-//                 bPlas_TAM_SC41R_ANA = pInput->fbPlas_Lead_PMT[2][1][0];
-//                 bPlas_TAM_SC41L_DIG = pInput->fbPlas_Lead_PMT[2][2][0];
-//                 bPlas_TAM_SC41R_DIG = pInput->fbPlas_Lead_PMT[2][3][0];
-
-       // bPlas_AND_Coinc[j] = pInput->fFat_Lead_PMT[9][j];
-       
-           // }
-       // }
   // if(pOutput->pEvent_Number==100598) 
      for(int i=1; i<pInput->fbPlasDetNum; i++){ ///Detector number
                  for (int j = 0; j < pInput->fbPlasChan[i]; j++){  ///Channel number 
                      
                 for(int k=0; k<= pInput->fbPlas_PMT_Lead_N[i][j]; k++){ 
                     //Fat_RefCh[j] = pInput->fFat_Lead_PMT[1][j]; 
-                    bPlas_RefCh0_Det1[k] = pInput->fbPlas_Lead_PMT[1][0][k];
-                    bPlas_RefCh0_Det2[k] = pInput->fbPlas_Lead_PMT[2][0][k];
-                    bPlas_RefCh0_Det3[k] = pInput->fbPlas_Lead_PMT[3][0][k];
+                    bPlas_RefCh0_Det1[k] = pInput->fbPlas_Lead_PMT[1][bPlastRefCh_Det1][k];
+                    bPlas_RefCh0_Det2[k] = pInput->fbPlas_Lead_PMT[2][bPlastRefCh_Det2][k];
+                    bPlas_RefCh0_Det3[k] = pInput->fbPlas_Lead_PMT[3][bPlastRefCh_Det3][k];
             
                         }      
                     }
@@ -332,8 +333,8 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
        Do_Fatima_Tamex_Histos(pInput,pOutput);  
         pOutput->pFAT_Tamex_WR = pInput->fFat_Tamex_WR;
         
-        Fat_TAM_SC41L_ANA = pInput->fFat_Lead_PMT[37][0];
-        Fat_TAM_SC41R_ANA = pInput->fFat_Lead_PMT[38][0];
+        Fat_TAM_SC41L_ANA = pInput->fFat_Lead_PMT[FATIMA_TAMEX_SC41L][0];
+        Fat_TAM_SC41R_ANA = pInput->fFat_Lead_PMT[FATIMA_TAMEX_SC41R][0];
 //         Fat_TAM_SC41L_DIG = pInput->fFat_Lead_PMT[50][0];
 //         Fat_TAM_SC41R_DIG = pInput->fFat_Lead_PMT[51][0];
    }
@@ -411,11 +412,6 @@ if(Fatmult > 0){
         }//End sc41 for fill
        
 
-//     for (int i = 0; i<Fatmult; i++){
-//     
-//         //cout << " fat mult " << Fatmult << " i: " << i << " QDC ID: " << Fat_QDC_ID[i] << " TDC ID: " << Fat_TDC_ID[i] << " QDC Energy: " << FatQDC[i]  << " TDC Time: " << Fat_TDC_T[i] << endl;
-//     }
-
 		//Inputting singles TDC and QDC hits
         stdcmult = pInput->fFat_tdcsinglescount;
         sqdcmult = pInput->fFat_qdcsinglescount;
@@ -454,7 +450,6 @@ if(Fatmult > 0){
        }
     
        if ( PrcID_Conv[5]==5){
-        //cout<<"ANL USED GAL " << endl;
         GeFired =  pInput->fGe_fired;
     //    GePileup = pInput->fGe_Pileup;
         Ge_WR = pInput->fGe_WR;
@@ -468,7 +463,7 @@ if(Fatmult > 0){
           GeE[i] = pInput->fGe_E[i];
           GeEventT[i]=pInput->fGe_Event_T[i];
           GeT[i] = pInput->fGe_T[i];
-          // Maybe keep this for calibration auto program purposes
+          // Maybe keep this for auto calibration program purposes
           int id = GeDet[i] * 3 + GeCrys[i];
           GeE_Cal[i] = (fCal->AGe[id]* pow( GeE[i],2) + fCal->BGe[id]*  GeE[i] + fCal->CGe[id]);
         }
@@ -814,8 +809,8 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
                 hID_x2AoQ_x4AoQgate[i]->Fill(FRS_AoQ, FRS_ID_x2);
                 hID_x4AoQ_x4AoQgate[i]->Fill(FRS_AoQ, FRS_ID_x4);
           if (FRS_z2) hID_ZAoQ_x4AoQgate[i]->Fill(FRS_AoQ, FRS_z2);
-           hID_dEdeg_Z1_X4AoQgate[i]->Fill(FRS_z,FRS_dEdeg);
-           hID_dEdegoQ_Z1_X4AoQgate[i]->Fill(FRS_z,FRS_dEdegoQ);
+                hID_dEdeg_Z1_X4AoQgate[i]->Fill(FRS_z,FRS_dEdeg);
+                hID_dEdegoQ_Z1_X4AoQgate[i]->Fill(FRS_z,FRS_dEdegoQ);
             }
         }
         for(int i=0; i<8; i++){
@@ -1308,7 +1303,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
        // hbPlas_lead_lead_gated[i][j] = MakeTH1('D', Form("bPlastic/Lead-Lead_Egated/Lead-Lead Egated Plas Det. %2d Ch. %2d",  i,j), Form("Lead - Lead Energy gated Det. %2d Ch.  %2d", i,j),2500, -50000., 50000.); 
             
        // hbPlas_SC41L_lead[i][j] = MakeTH1('D', Form("bPlastic/SC41-Lead_Plas/SC41_Lead Plas Det. %2d Ch.%02d", i,j), Form("SC41 Lead - bPlas Lead Det. %2d Lead Ch. %2d ", i,j), 4002, -100000., 100000.);    
-         hbPlas_SC41L_Anal_lead[i][j] = MakeTH1('D', Form("bPlastic/SC41L_Anal-Lead_bPlas/SC41L_Ana_Lead bPlas Det. %2d Ch.%02d", i,j), Form("SC41L Analogue Lead - bPlas Lead Det. %2d Lead Ch. %2d ", i,j), 4002, -100000., 100000.);    
+         hbPlas_SC41L_Anal_lead[i][j] = MakeTH1('D', Form("bPlastic/SC41L_Anal-Lead_bPlas/SC41L_Ana_Lead bPlas Det.%2d Ch.%02d", i,j), Form("SC41L Analogue Lead - bPlas Lead Det. %2d Lead Ch. %2d ", i,j), 4000, -100000., 100000.);    
             
          hbPlas_SC41R_Anal_lead[i][j] = MakeTH1('D', Form("bPlastic/SC41R_Anal-Lead_bPlas/SC41R_Ana_Lead bPlas Det. %2d Ch.%02d", i,j), Form("SC41R Analogue Lead - bPlas Lead Det. %2d Lead Ch. %2d ", i,j), 4000, -100000., 100000.);    
             
@@ -1341,7 +1336,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
            
          fired_det1=false, fired_det2=false;    
          bPlas_tot_hits = 0;
-	 bool Fibre=false;
+         bool Fibre=false;
 	/* 
 	 // ToT versus ToT for channel a1 and c8
 	 if(ToT_bplas[3][1][0]>0){// Channel A1 is there
@@ -1402,10 +1397,10 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
             ////////////////////////////    
               ///Loop over channels 
               pOutput->pbPlasDetNum= pInput->fbPlasDetNum;
-             // cout<<"111pInput->fbPlas_Lead_PMT[2][0][0] " <<pInput->fbPlas_Lead_PMT[2][0][0] << endl;
+             
               for(int a=1; a<=pInput->fbPlasDetNum; a++){ ///Detector number
                     pOutput->pbPlasChan[a]= pInput->fbPlasChan[a];
-              // cout<<"pInput->fbPlasChan[a] " <<pInput->fbPlasChan[a] << " a " << a<< endl;
+             
                  for (int b = 0; b <= pInput->fbPlasChan[a]; b++){  ///Channel number 
                      
  ///**---------------------------------------------Plastic Lead Time ----------------------------------**/    
@@ -1422,28 +1417,51 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
                     pOutput->pbPlas_LeadT[a][b][j] = lead_bplas[a][b][j];    
                     pOutput->pbPlas_LeadHits = hits_bplas_lead; 
                     pOutput->pbPlas_LeadT_Avg = lead_bplas[a][b][j]/hits_bplas_lead;
-           // cout<<"lead_bplas[a][b][j] " <<lead_bplas[a][b][j] << " a " << a << " b " << b << " j " << endl;
+         
     ///**---------------------------------------------Plastic Lead Ref dT ----------------------------------**/          
                           
 //                     if(i>15 && pInput->fbPlas_Lead_PMT[16][j]>0 && pInput->fbPlas_Lead_PMT[a][b][j]>0) {   
                 
         if(bPlas_RefCh0_Det1[j]>0 && lead_bplas[1][b][j]>0){
             lead_lead_bplas_Ref1[b][j] = (bPlas_RefCh0_Det1[j] -  lead_bplas[1][b][j])*CYCLE_TIME; 
-	  // cout<<"1lead_lead_bplas_Ref1[b][j] " <<lead_lead_bplas_Ref1[b][j] << " bPlas_RefCh0_Det1[j] " <<bPlas_RefCh0_Det1[j] << " lead_bplas[1][b][j] " << lead_bplas[1][b][j] << " b " << b << " j " << j << endl;
+	 
         }
         if(bPlas_RefCh0_Det2[j]>0 && lead_bplas[2][b][j]>0){
-                      lead_lead_bplas_Ref2[b][j] = (bPlas_RefCh0_Det2[j] -  lead_bplas[2][b][j])*CYCLE_TIME;
+            lead_lead_bplas_Ref2[b][j] = (bPlas_RefCh0_Det2[j] -  lead_bplas[2][b][j])*CYCLE_TIME;
         }
       //  if(bPlas_RefCh0_Det3[j]>0 && lead_bplas[3][b][j]>0){
 //                       lead_lead_bplas_Ref3[b][j] = (bPlas_RefCh0_Det3[j] -  lead_bplas[3][b][j])*CYCLE_TIME;
        // }
-                      
-              if(lead_lead_bplas_Ref1[b][j]!=0){ hbPlas_lead_lead_ref_det1[1][b] ->Fill(lead_lead_bplas_Ref1[b][j]);
-		//cout<<"2lead_lead_bplas_Ref1[b][j] " <<lead_lead_bplas_Ref1[b][j] << " b " << b << " j " << j << endl;
-		
+    
+      
+  
+              if(lead_lead_bplas_Ref1[b][j]!=0 && a==1){ hbPlas_lead_lead_ref_det1[1][b] ->Fill(lead_lead_bplas_Ref1[b][j]);
 	      }
-              if(lead_lead_bplas_Ref2[b][j]!=0) hbPlas_lead_lead_ref_det2[2][b] ->Fill(lead_lead_bplas_Ref2[b][j]);
-//               if(lead_lead_bplas_Ref3[b][j]!=0) hbPlas_lead_lead_ref_det3[3][b] ->Fill(lead_lead_bplas_Ref3[b][j]);
+              if(lead_lead_bplas_Ref2[b][j]!=0 && a==2) hbPlas_lead_lead_ref_det2[2][b] ->Fill(lead_lead_bplas_Ref2[b][j]);
+              
+              
+              ///SCI41 references
+               if(bPlas_TAM_SC41L_ANA>0 && lead_bplas[a][b][j]>0){
+                    SC41L_ANA_lead_bPlas[a][b][j] = (bPlas_TAM_SC41L_ANA -  lead_bplas[a][b][j])*CYCLE_TIME;
+                    hbPlas_SC41L_Anal_lead[a][b]->Fill(SC41L_ANA_lead_bPlas[a][b][j] );
+                }
+        
+                if(bPlas_TAM_SC41R_ANA>0 && lead_bplas[a][b][j]>0){
+                    SC41R_ANA_lead_bPlas[a][b][j] = (bPlas_TAM_SC41R_ANA -  lead_bplas[a][b][j])*CYCLE_TIME;
+                    hbPlas_SC41R_Anal_lead[a][b]->Fill(SC41R_ANA_lead_bPlas[a][b][j] );
+                    }
+                    
+                if(bPlas_TAM_SC41L_DIG>0 && lead_bplas[a][b][j]>0){
+                    SC41L_ANA_lead_bPlas[a][b][j] = (bPlas_TAM_SC41L_DIG -  lead_bplas[a][b][j])*CYCLE_TIME;
+                    hbPlas_SC41L_Digi_lead[a][b]->Fill(SC41L_DIG_lead_bPlas[a][b][j] );
+                    }
+                    
+                if(bPlas_TAM_SC41R_DIG>0 && lead_bplas[a][b][j]>0){
+                    SC41R_ANA_lead_bPlas[a][b][j] = (bPlas_TAM_SC41R_DIG -  lead_bplas[a][b][j])*CYCLE_TIME;
+                    hbPlas_SC41R_Digi_lead[a][b]->Fill(SC41R_DIG_lead_bPlas[a][b][j] );
+                    }
+        
+             
            
                 }
               
@@ -1457,16 +1475,16 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
                     
                     trail_bplas[a][b][j] = pInput->fbPlas_Trail_PMT[a][b][j];  
                     
-                 //   cout<<"event number "<<pOutput->pEvent_Number<<" INfbPlas_Trail_PMT "<<pInput->fbPlas_Trail_PMT[a][b][j] << " a " << a << " b " << b << " j " << j <<" pbPlas_LeadT " << pOutput->pbPlas_LeadT[a][b][j] << endl;
+               
  
                     hbPlas_Trail_T[a][b]->Fill(trail_bplas[a][b][j]);
                     hits_bplas_trail++;  
                     pOutput->pbPlas_TrailT[a][b][j] = trail_bplas[a][b][j];  
                      }
    ///**---------------------------------------------Plastic ToT ----------------------------------**/  
-             // cout<<"111 pInput->fbPlas_PMT_Lead_N[a][b] " <<pInput->fbPlas_PMT_Lead_N[a][b] <<" a " << a << " b "<< b << endl;
+           
               for(int j=0; j<= pInput->fbPlas_PMT_Lead_N[a][b]; j++){ 
-                 // cout<<"TotANLfbPlas_Trail_PMT[a][b][j] " <<pInput->fbPlas_Trail_PMT[a][b][j] << " fbPlas_Lead_PMT[a][b][j] " <<pInput->fbPlas_Lead_PMT[a][b][j] << " a " << a << " b " << b << " j " << j << endl; 
+              
                   if(pInput->fbPlas_Trail_PMT[a][b][j] >0 && pInput->fbPlas_Lead_PMT[a][b][j]>0){ 
                 
         ToT_bplas[a][b][j] = (pInput->fbPlas_Trail_PMT[a][b][j] - pInput->fbPlas_Lead_PMT[a][b][j]);   
@@ -1482,7 +1500,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
                        ///Gain matching  
                // pOutput-> pbPlas_ToTCalib[a][b][j] = fCal->Abplas_TAMEX_ZAoQ[i]* ToT_bplas[a][b][j] + fCal->Bbplas_TAMEX_ZAoQ[i];
                pOutput-> pbPlas_ToTCalib[a][b][j] =ToT_bplas[a][b][j];
-               // cout<<"  ToT_bplas[a][b][j] " <<  ToT_bplas[a][b][j] <<" Lead " << pInput->fbPlas_Lead_PMT[a][b][j] <<" Trail " << pInput->fbPlas_Trail_PMT[a][b][j] <<   " a " << a << " b " << b << " j " << j << endl;
+             
                        if(ToT_bplas[a][b][j]>0) {
                         hbPlas_ToT_det[a][b] ->Fill(ToT_bplas[a][b][j]);   
                         hbPlas_ToT_Sum[a]->Fill(ToT_bplas[a][b][j]);   
@@ -1504,7 +1522,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
     /**-----------------------------------------------------------------------------------------------**/
  void EventAnlProc::Make_Fatima_Tamex_Histos(){
      
-     for(int i=0; i<48; i++){ 
+     for(int i=0; i<FATIMA_TAMEX_CHANNELS; i++){ 
          hFat_Lead_T[i] =  MakeTH1('D', Form("FATIMA_TAMEX/LeadT/Lead Time Ch.%2d",i), Form("Lead time. %2d",i), 5000,0,5000);
          hFat_Trail_T[i] =  MakeTH1('D', Form("FATIMA_TAMEX/TrailT/Trail Time Ch.%2d",i), Form("Trail time. %2d",i), 5000,0,5000);
          hFat_lead_lead_ref[i] =   MakeTH1('D', Form("FATIMA_TAMEX/LeadRef-Lead/Lead-Lead Time Ref Ch1- Ch.%2d",i), Form("RefLead-Lead time. %2d",i), 1000,-10000,10000);
@@ -1523,9 +1541,8 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
          Fat_tot_hits = 0;
          hits_fat_lead=0;
          hits_fat_trail=0;
-        // for(int a=1; a<3; a++){
-                 for (int i = 0; i < 48; i++){  
-                     for(int j=0; j<10; j++){
+                 for (int i = 0; i < FATIMA_TAMEX_CHANNELS; i++){  
+                     for(int j=0; j<FATIMA_TAMEX_HITS; j++){
                         lead_fat[i][j]=0; 
                         ToT_fat[i][j] = 0; 
                         lead_lead_fat_Ref1[i][j]=0;
@@ -1536,7 +1553,7 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
                      }
                  }
          
-         for(int i=0; i<10; i++){
+         for(int i=0; i<FATIMA_TAMEX_HITS; i++){
          FatTam_RefCh0[i] =0;
          SC41L_ANA_lead_fat[i] =0;
          SC41R_ANA_lead_fat[i] =0;
@@ -1626,6 +1643,8 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
                pOutput-> pFat_ToTCalib[i][j] =ToT_fat[i][j];
                        if(ToT_fat[i][j]>0) {
                         hFat_ToT_det[i] ->Fill(ToT_fat[i][j]);   
+                        
+                        
                        if(i!=FatVME_TimeMachineCh1 && i!=FatVME_TimeMachineCh2 && i!=FATIMA_TAMEX_SC41L && i!=FATIMA_TAMEX_SC41R && i!=FATIMA_TAMEX_SC41L_Digi && i!=FATIMA_TAMEX_SC41R_Digi) hFat_ToT_Sum->Fill(ToT_fat[i][j]);   
                         hFat_tamex_hit_pattern->Fill(i);  
                     

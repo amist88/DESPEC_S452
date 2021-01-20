@@ -48,17 +48,26 @@
 #define bPLASTIC_TAMEX_MODULES 4
 #define bPLASTIC_TAMEX_HITS 10
 #define bPLASTIC_TAMEX_CHANNELS 16
+///bPlastic number of channels per detector 
 #define bPLASTIC_CHAN_PER_DET 20
-#define SC41L_bPLASTIC 32
-#define SC41R_bPLASTIC 33
-#define SC41L_bPLASTIC_Digi 36
-#define SC41R_bPLASTIC_Digi 37
-#define bPLASTIC_OR_UP_DOWN 34
-#define bPLASTIC_UP_COIN 38
-#define bPLASTIC_DOWN_COIN 39
+///bPlast Additional signals Module Num
+#define bPLASTIC_ADDITIONAL_CH_MOD 3
+///bPlast Additional signals Channel Num
+#define SC41L_bPLASTIC 1
+#define SC41R_bPLASTIC 2
+#define SC41L_bPLASTIC_Digi 3
+#define SC41R_bPLASTIC_Digi 4
+#define bPLASTIC_OR_UP_DOWN 5
+#define bPLASTIC_UP_COIN 6
+#define bPLASTIC_DOWN_COIN 7
+///bPlast Time Machine Board Num/Channels
 #define bPlastTimeMachineBoard 1
 #define bPlastTimeMachineCh1 1
 #define bPlastTimeMachineCh2 2
+///bPlastic refence channels
+#define bPlastRefCh_Det1 0
+#define bPlastRefCh_Det2 0
+#define bPlastRefCh_Det3 0
 
 ///FIBRE
 #define FIBRE_BOARD 3

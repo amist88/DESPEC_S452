@@ -634,37 +634,28 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
 
               if(RAW->get_PLASTIC_CH_ID(i,j) % 2 == 1){ //Lead odd j
                   //Phys_Channel_Lead_bPlas[TAMID][Hit]
-                Phys_Channel_Lead_bPlas[i][j] = TAMEX_bPlast_Chan[i][RAW->get_PLASTIC_physical_channel(i, j)]; 
-   
-       // cout<<"Phys_Channel_Lead_bPlas" <<Phys_Channel_Lead_bPlas[i][j]<< " TAMEX_bPlast_Chan[i] " << TAMEX_bPlast_Chan[i][RAW->get_PLASTIC_physical_channel(i, j)] << " RAW->get_PLASTIC_physical_channel " << RAW->get_PLASTIC_physical_channel(i, j) << " i " << i << " j " << j << endl; 
-                //This fixes a problem with the first two channels
-                  ///  if(RAW->get_PLASTIC_CH_ID(i,j)==1)Phys_Channel_Lead_bPlas[0][j]=0;
-                   
+                Phys_Channel_Lead_bPlas[i][j] = TAMEX_bPlast_Chan[i][RAW->get_PLASTIC_physical_channel(i, j)];                
                 chan = (Phys_Channel_Lead_bPlas[i][j]);
-                
-                
+
                 /// PMT allocation succeeded
-		   bPlasdetnum=TAMEX_bPlast_Det[i][RAW->get_PLASTIC_physical_channel(i, j)];
-           fOutput->fbPlasDetNum = bPlasdetnum;
-           fOutput->fbPlasChan[bPlasdetnum]=  chan; 
-                 N1 = fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan]++;
+                bPlasdetnum=TAMEX_bPlast_Det[i][RAW->get_PLASTIC_physical_channel(i, j)];
+                fOutput->fbPlasDetNum = bPlasdetnum;
+                fOutput->fbPlasChan[bPlasdetnum]=  chan; 
+                N1 = fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan]++;
 		
 		 if(N1>-1 && N1<15){
 		
                fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] = RAW->get_PLASTIC_lead_T(i,j);
-//cout<<"event " << event_number <<" Lead " << fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1]<< " bPlasdetnum " << bPlasdetnum << " chan " << chan  <<" physchan " << RAW->get_PLASTIC_physical_channel(i, j)  <<" i " << i  << " j " << j<<" N1 " << N1 <<endl;
-		
-                //if(fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] !=0) cout<<"event " << event_number <<" Lead " << fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1]<<" N1 " << N1 << " bPlasdetnum " << bPlasdetnum << " chan " << chan << " j " << j << endl;
-  
+
                     }
-        }
+                }
+                
                if(RAW->get_PLASTIC_CH_ID(i,j) % 2 == 0){ //Trail even j
                   
                 Phys_Channel_Trail_bPlas[i][j] = TAMEX_bPlast_Chan[i][RAW->get_PLASTIC_physical_channel(i, j)]; 
                 chan = (Phys_Channel_Trail_bPlas[i][j]);
                 
                
-              //  cout<<"Phys_Channel_Trail_bPlas[i][j] " <<Phys_Channel_Trail_bPlas[i][j]<< " TAMEX_bPlast_Chan[i] " << TAMEX_bPlast_Chan[i]<< " RAW->get_PLASTIC_physical_channel(i, j) " << RAW->get_PLASTIC_physical_channel(i, j) << " i " << i << " j " << j << endl; 
 		 
                 /// PMT allocation succeeded
                  N1 = fOutput->fbPlas_PMT_Trail_N[bPlasdetnum][chan]++;

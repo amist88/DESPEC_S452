@@ -81,9 +81,9 @@ class EventAnlProc : public TGo4EventProcessor {
         int hits_fat_lead, hits_fat_trail;
         int Fat_tot_hits;
         
-        double SC41L_ANA_lead_bPlas[48][100], SC41R_ANA_lead_bPlas[48][100];
-        double SC41L_DIG_lead_bPlas[48][100], SC41R_DIG_lead_bPlas[48][100];
-        double lead_lead_fat_Ref0[48][100];
+        double SC41L_ANA_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_ANA_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+        double SC41L_DIG_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_DIG_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+        double lead_lead_fat_Ref0[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         int hits_bplas_lead = 0, hits_bplas_trail=0;
         
 
@@ -92,9 +92,9 @@ class EventAnlProc : public TGo4EventProcessor {
         double bPlas_TAM_SC41L_DIG;
         double bPlas_TAM_SC41R_DIG;
        
-        double bPlas_RefCh0_Det1[10];
-        double bPlas_RefCh0_Det2[10];
-        double bPlas_RefCh0_Det3[10];
+        double bPlas_RefCh0_Det1[bPLASTIC_TAMEX_HITS];
+        double bPlas_RefCh0_Det2[bPLASTIC_TAMEX_HITS];
+        double bPlas_RefCh0_Det3[bPLASTIC_TAMEX_HITS];
         
         double Fat_TAM_SC41L_ANA;
         double Fat_TAM_SC41R_ANA;
@@ -203,25 +203,25 @@ class EventAnlProc : public TGo4EventProcessor {
       Long64_t Fat_QDC_T_coarse[FAT_MAX_VME_CHANNELS];
       double Fat_QDC_T_fine[FAT_MAX_VME_CHANNELS];
       
-      int    Fat_TDC_ID[50];
-      Long64_t Fat_TDC_T[50];
-      Long64_t Fat_TDC_T_Raw[50];
+      int    Fat_TDC_ID[FAT_VME_MAX_MULTI];
+      Long64_t Fat_TDC_T[FAT_VME_MAX_MULTI];
+      Long64_t Fat_TDC_T_Raw[FAT_VME_MAX_MULTI];
       //Long64_t FatTDC_TS[50][50];
-      int    FatTDC_Multipl[50];
+//       int    FatTDC_Multipl[FAT_VME_MAX_MULTI];
       double Fat_Cha_Ref_TDC;
       Long64_t Fat_WR;
-      double SC40[50];
-      double SC41[50];
+      double SC40[FAT_VME_MAX_MULTI];
+      double SC41[FAT_VME_MAX_MULTI];
 
 
-      int Fat_TDC_Singles_ID[50];
-      int Fat_QDC_Singles_ID[50];
-      double Fat_QDC_Singles_E[50];
-      double Fat_QDC_Singles_E_Raw[50];
-      Long64_t Fat_TDC_Singles_t[50];
-      Long64_t Fat_TDC_Singles_t_Raw[50];
-      Long64_t Fat_QDC_Singles_t_coarse[50];
-      double_t Fat_QDC_Singles_t_fine[50];
+      int Fat_TDC_Singles_ID[FAT_VME_MAX_MULTI];
+      int Fat_QDC_Singles_ID[FAT_VME_MAX_MULTI];
+      double Fat_QDC_Singles_E[FAT_VME_MAX_MULTI];
+      double Fat_QDC_Singles_E_Raw[FAT_VME_MAX_MULTI];
+      Long64_t Fat_TDC_Singles_t[FAT_VME_MAX_MULTI];
+      Long64_t Fat_TDC_Singles_t_Raw[FAT_VME_MAX_MULTI];
+      Long64_t Fat_QDC_Singles_t_coarse[FAT_VME_MAX_MULTI];
+      double_t Fat_QDC_Singles_t_fine[FAT_VME_MAX_MULTI];
       
       
        // From unpacker
@@ -239,7 +239,6 @@ class EventAnlProc : public TGo4EventProcessor {
 
      
       Long64_t Ge_WR;
-      Long64_t Ge_WR_Store[100];
 
       int    Fing_firedTamex;
       int    Fing_leadHits[4];
@@ -453,39 +452,39 @@ class EventAnlProc : public TGo4EventProcessor {
 	    TH2 *hFIMP_ToT_Correlation_Comb2;
 	    
              
-             TH1 *hFat_Lead_T[48];
-             TH1 *hFat_Trail_T[48];
-             TH1 *hFat_lead_lead_ref[48];
-             TH1 *hFat_ToT_det[48];
+             TH1 *hFat_Lead_T[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_Trail_T[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_lead_lead_ref[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_ToT_det[FATIMA_TAMEX_CHANNELS];
              TH1 *hFat_ToT_Sum;
              TH1 *hFat_tamex_hit_pattern;
              TH1 *hFat_tamex_multiplicity;
 
             TH1 *hScalar_hit_pattern;
             //Fatima Histograms
-            TH1 *hFAT_Energy[50];
-            TH1 *hFAT_QDCdt[50];
+            TH1 *hFAT_Energy[FAT_MAX_VME_CHANNELS];
+            TH1 *hFAT_QDCdt[FAT_MAX_VME_CHANNELS];
             TH1 *hFAT_EnergySum;
             TH1 *hFAT_hits_QDC;
-            TH1 *hFAT_TDCdt_refCha[50];
-            TH1 *hFat_SC41L_TDC_dT[50];
+            TH1 *hFAT_TDCdt_refCha[FAT_MAX_VME_CHANNELS];
+            TH1 *hFat_SC41L_TDC_dT[FAT_MAX_VME_CHANNELS];
             
             TH1 *hFAT_Multipl;
             TH1 *hFAT_hits_TDC;
 
             TH1 *hFAT_SC41_check;
 
-            TH1 *hFAT_lead_lead[50];
-            TH1 *hFAT_lead_lead_ref[50];
-            TH1 *hFAT_lead_lead_gated[50];
-            TH1 *hFAT_lead_lead_gated1[50];
-            TH1 *hFAT_lead_lead_gated2[50];
-            TH2 *hFAT_lead_lead_energy[50];
-            TH1 *hFAT_ToT[50];
-            TH1 *hFAT_trail_trail[50];
-            TH2 *hFAT_gamma_gamma;
+//             TH1 *hFAT_lead_lead[50];
+//             TH1 *hFAT_lead_lead_ref[50];
+//             TH1 *hFAT_lead_lead_gated[50];
+//             TH1 *hFAT_lead_lead_gated1[50];
+//             TH1 *hFAT_lead_lead_gated2[50];
+//             TH2 *hFAT_lead_lead_energy[50];
+//             TH1 *hFAT_ToT[50];
+//             TH1 *hFAT_trail_trail[50];
+//             TH2 *hFAT_gamma_gamma;
 
-            TH1* hFAT_lead_lead_QDC_Gate[50];
+           // TH1* hFAT_lead_lead_QDC_Gate[50];
 
             ///Germanium Histograms
             TH1 *hGe_Chan_E[Germanium_MAX_DETS][Germanium_CRYSTALS];
@@ -501,7 +500,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hGe_SC41L_digi;
             TH1 *hGe_SC41R_digi;
             TH1 *hGe_Chan_Time_Diff[Germanium_MAX_DETS][Germanium_CRYSTALS];
-            TH1 *hGe_Time_Diff_vs_Energy[32];
+            //TH1 *hGe_Time_Diff_vs_Energy[32];
             TH1 *hGe_ESum;
             TH1 *hGe_Mult;
             TH1 *hGe_ESum_halfkev;
@@ -513,7 +512,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH2 *hGe_Time_Diff_vs_Energy_sum;
             TH2 *hGe_Chan_E_vsDet;
             TH2 *hGe_MultvsdT; 
-            TH1 *hGe_Chan_E_gate[32];
+          //  TH1 *hGe_Chan_E_gate[32];
             TH1 *hGe_ge_time_difference_gg;
         
 
@@ -557,33 +556,12 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hFING_SC41_lead_lead;
             TH1 *hFING_SC41_trail_trail;
             TH1 *hFING_SC41_tot;
-
-
-
-            TH1 *hFat_minus_plasticTDC[50];
-            TH1 *hFat_minus_plasticTDCFatGate[50];
-            TH1 *hFat_bplas_Corr_RawTDCFAT_RawTDCbP_Dets[50];
-
-            TH1 *hFat_bplas_Corr_SC41_Dets[50];
-            TH1 *hFat_bplas_Corr_SC41_Dets_gated[50];
-            TH1 *hFat_bplas_Corr_SiPM_Dets[50];
-            TH1 *hFat_bplas_Corr_SiPM_Dets_gated[50];
-            TH2 *hFat_bplas_Corr_EFatEbPlas;
-            TH1 *hFat_bplas_Corr_SiPM_Gated_Dets[50];
             TH1 *hSC41FatPlas;
-
-            TH2 *h_FingStrip_PlasID;
-            TH2 *h_FingToT_PlasE;
-            TH2 *h_FingToT_PlasT[32];
-            TH1 *h_FingToT_PlasQDC;
-            TH2 *hFing_MaxToT_v_Strip_bPgated;
-
-            TGo4Picture *picPMT;
      
 private :
      ///TEMP 
                     bool fired_det1, fired_det2;    
-        int bPlas_tot_hits ;
+                    int bPlas_tot_hits ;
         
             bool FAT_dist_corr_used; // Read from General Setup File
             int  FAT_exclusion_dist; // Read from General Setup File
