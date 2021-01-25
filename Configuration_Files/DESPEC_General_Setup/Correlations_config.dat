@@ -6,9 +6,7 @@
 
 ## FRS_Aida
 1
-## Include Z1 Z2, X2/X4 A/Q Analysis? 1 = yes, 0 = ONLY Z1 vs A/Q ##
-1
-## FRS Germanium 'prompt' gammas [1 0] only singles, [1 1] include gamma-gamma matrices ##
+## FRS Germanium 'prompt' gammas [1 0] only singles, [1 1] include gamma-gamma matrices 
 1 1
 
 ## FRS Germanium 'delayed' gammas [1 0] only 'delayed' gammas, [1 1] include 'prompt' gammas) ##
