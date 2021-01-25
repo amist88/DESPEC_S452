@@ -2070,7 +2070,7 @@ void EventAnlProc::FRS_Gates(){
         
     for (i = 0; i < MAX_FRS_GATE; i++){
          for (int j = 0; j < MAX_FRS_PolyPoints ; j++){
-       if(IsData(file)) file >>X2AoQgnum>> XX2_AoQ[i][j]>> YX2_AoQ[i][j] ;
+       if(IsData(file)) file >> XX2_AoQ[i][j]>> YX2_AoQ[i][j] ;
      // cout<<" XX2_AoQ[i][j] " << XX2_AoQ[i][j] << " YX2_AoQ[i][j] " <<YX2_AoQ[i][j] << " i " << i << " j " << j << endl;
          }
     }
@@ -2082,7 +2082,7 @@ void EventAnlProc::FRS_Gates(){
 
     for (i = 0; i < MAX_FRS_GATE; i++){
         for (int j = 0; j < MAX_FRS_PolyPoints ; j++){
-       if(IsData(file)) file >> X4AoQgnum>>XX4_AoQ[i][j]>> YX4_AoQ[i][j] ;
+       if(IsData(file)) file >>XX4_AoQ[i][j]>> YX4_AoQ[i][j] ;
         }
     }
   file.close();
@@ -2093,8 +2093,8 @@ void EventAnlProc::FRS_Gates(){
   file.open("Configuration_Files/2D_Gates/ID_Z_Z2.txt");
  for (i = 0; i < MAX_FRS_GATE; i++){
     for (int j = 0; j < MAX_FRS_PolyPoints ; j++){
-       if(IsData(file)) file >>Z1Z2gnum>> X_ZZ2[i][j]>> Y_ZZ2[i][j] ;
-    //   cout<<"Z1Z2gnum " <<Z1Z2gnum<<" X_ZZ2 " << X_ZZ2[i][j] << " Y_ZZ2[i][j]  " << Y_ZZ2[i][j] << " i " << i << " j " << j << endl;
+       if(IsData(file)) file >> X_ZZ2[i][j]>> Y_ZZ2[i][j] ;
+    
     }
     }
   file.close();
@@ -2105,7 +2105,7 @@ void EventAnlProc::FRS_Gates(){
     
     for (i = 0; i < MAX_FRS_GATE; i++){
         for(int j=0; j<MAX_FRS_PolyPoints; j++){
-       if(IsData(file)) file >>ZAoQgnum >> X_ZAoQ[i][j]>> Y_ZAoQ[i][j] ;
+       if(IsData(file)) file >> X_ZAoQ[i][j]>> Y_ZAoQ[i][j] ;
        
      //  cout<<"X_ZAoQ[i][j] " <<X_ZAoQ[i][j] <<" Y_ZAoQ[i][j] " <<Y_ZAoQ[i][j] << " i " << i << endl;
         }
@@ -2115,9 +2115,9 @@ void EventAnlProc::FRS_Gates(){
   ///--------------------------------------------------------------------------------
       file.open("Configuration_Files/2D_Gates/ID_dEdeg_Z1.txt");
     
-    for (i = 0; i < 4; i++){
-        for(int j=0; j<6; j++){
-       if(IsData(file)) file >>dEdeggnum >> X_dEdeg[i][j]>> Y_dEdeg[i][j] ;
+    for (i = 0; i < MAX_FRS_GATE; i++){
+        for(int j=0; j<MAX_FRS_PolyPoints; j++){
+       if(IsData(file)) file >> X_dEdeg[i][j]>> Y_dEdeg[i][j] ;
     }
     }
   file.close();

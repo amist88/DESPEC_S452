@@ -122,7 +122,7 @@ void setup_s452_03_191Ta_b()
   
   //=============primary beam at S4 (2020/March)=============//
   frs->primary_z = 82.;   
-  id->min_aoq_plot = 2.2;
+  id->min_aoq_plot = 2.0;
   id->max_aoq_plot = 2.8;
   id->min_z_plot   = 45.0;
   id->max_z_plot   = 90.0;

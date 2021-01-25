@@ -6,7 +6,8 @@
 
 ## FRS_Aida
 1
-
+## Include Z1 Z2, X2/X4 A/Q Analysis? 1 = yes, 0 = ONLY Z1 vs A/Q ##
+1
 ## FRS Germanium 'prompt' gammas [1 0] only singles, [1 1] include gamma-gamma matrices ##
 1 1
 
@@ -24,7 +25,9 @@
 
 ## Include Fatima Lifetime Analysis for Beta-delayed gammas ##
 1
-## Combined Z1 Z2 AND X2/X4 AoQ gates, define with Z1 Z2 PID gate number will be used ##
+
+
+## Combined Z1 Z2 AND X2/X4 AoQ gates, define which Z1 Z2 PID gate number will be used ##
 1
 ##############################################################
 #### Setup correlation conditions for each detector array  ###
