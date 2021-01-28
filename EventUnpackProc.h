@@ -122,9 +122,9 @@ using namespace std;
         const static char* tpc_folder_ext1[7];
         
         //--------Scaler Graphs----------
-  TH1I          *hScaler_per_s[64];
-  TH1I          *hScaler_per_100ms[64];
-  TH1I          *hScaler_per_spill[64];  
+  TH1          *hScaler_per_s[64];
+  TH1          *hScaler_per_100ms[64];
+  TH1          *hScaler_per_spill[64];  
   int            scaler_ch_1kHz=0;
   int            scaler_ch_spillstart=0;
   UInt_t         scaler_initial[64];

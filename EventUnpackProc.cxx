@@ -1397,9 +1397,13 @@ void EventUnpackProc::get_used_systems(){
   
 
   for(int ii=0; ii<64; ii++){
-    hScaler_per_s[ii]     = MakeH1I("FRS/Scaler/Scaler_per_1s",Form("%s_per_1s",scaler_name[ii]),1000,0,1000,"Time (s)", 2,5, "Count per second");
-    hScaler_per_100ms[ii] = MakeH1I("FRS/Scaler/Scaler_per_0.1s",Form("%s_per_0.1s",scaler_name[ii]),4000,0,400,"Time (s)", 2,5, "Count per 0.1 second");
-    hScaler_per_spill[ii] = MakeH1I("FRS/Scaler/Scaler_per_spill",Form("%s_per_spill",scaler_name[ii]),1000,0,1000,"Spill", 2,5, "Count per spill");
+    
+    hScaler_per_s[ii] = MakeTH1('D', Form("FRS/Scaler/Scaler_per_1s/%s_per_1s",scaler_name[ii]), Form("%s_per_1s",scaler_name[ii]),1000,0,1000,"Time (s)",  "Count per second");
+    
+     hScaler_per_100ms[ii] = MakeTH1('D', Form("FRS/Scaler/Scaler_per_0.1s/%s_per_0.1s",scaler_name[ii]), Form("%s_per_1s",scaler_name[ii]),4000,0,400,"Time (s)",  "Count per 0.1 second");
+     
+     hScaler_per_spill[ii] = MakeTH1('D', Form("FRS/Scaler/Scaler_per_spill/%s_per_spill",scaler_name[ii]), Form("%s_per_spill",scaler_name[ii]),1000,0,1000,"Spill (s)",  "Count per spill");
+    
   }
 
   for (int cnt = 0; cnt<7; cnt++) //changed from 3 to 6 04.07.2018

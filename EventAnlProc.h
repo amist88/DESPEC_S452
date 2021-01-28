@@ -372,26 +372,26 @@ class EventAnlProc : public TGo4EventProcessor {
              TH2 *hdEdegoQ_Z;
              TH2 *hdEdeg_Z;
               
-             TH2I *hID_Z1_Z2gate[MAX_FRS_GATE];
-             TH2I *hID_x2AoQ_x2AoQgate[MAX_FRS_GATE];
-             TH2I *hID_x2AoQ_x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1_Z2gate[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_x4AoQgate[MAX_FRS_GATE];
              
-             TH2I *hID_x4AoQ_x2AoQgate[MAX_FRS_GATE];
-             TH2I *hID_x4AoQ_x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_x4AoQgate[MAX_FRS_GATE];
              
-             TH2I *hID_ZAoQ_x2AoQgate[MAX_FRS_GATE];
-             TH2I *hID_ZAoQ_x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_x4AoQgate[MAX_FRS_GATE];
              
-             TH2I *hID_x2AoQ_Z1Z2gate[MAX_FRS_GATE];
-             TH2I *hID_x4AoQ_Z1Z2gate[MAX_FRS_GATE];
-             TH2I *hID_ZAoQ_Z1Z2gate[MAX_FRS_GATE];
-             TH2I *hID_SC43Z1_Z1Z2gate[MAX_FRS_GATE];
-             TH2I *hID_ZAoQ_Z1Z2_X2AoQgate[MAX_FRS_GATE];
-             TH2I *hID_ZAoQ_Z1Z2_X4AoQgate[MAX_FRS_GATE];
-             TH2I *hID_Z1_AoQ_dEdegZgate[MAX_FRS_GATE];
-             TH2I *hID_Z1_AoQ_zsame_dEdegZgate[MAX_FRS_GATE];
-             TH2I *hID_Z1_AoQcorr_dEdegZgate[MAX_FRS_GATE];
-             TH2I *hID_Z1_AoQcorr_zsame_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_SC43Z1_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2_X2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2_X4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1_AoQ_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_Z1_AoQ_zsame_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_Z1_AoQcorr_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_Z1_AoQcorr_zsame_dEdegZgate[MAX_FRS_GATE];
              
              TGo4PolyCond  *cID_Z_AoQ[MAX_FRS_GATE];       
              TGo4PolyCond  *cID_Z_Z2gate[MAX_FRS_GATE];

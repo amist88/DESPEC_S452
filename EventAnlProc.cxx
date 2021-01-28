@@ -618,30 +618,36 @@ void EventAnlProc::Make_FRS_Histos(){
       sprintf(name,"cID_Z1_Z2_Gate%d",i);
       cID_Z_Z2gate[i] = MakePolyCond("FRS_Z1_Z2_Gates",name,num_ID_Z_Z2,init_ID_Z_Z2[i], hID_Z_Z2 ->GetName());
        
-      sprintf(name,"ID_Z1_Z2gate%d",i);
-       hID_Z1_Z2gate[i] = MakeH2I("FRS/ID_Gated/Z1Z2/Z1Z2Gated",name,  2000,frs_id->min_z_plot,70, 2000,frs_id->min_z_plot,frs_id->max_z_plot,"Z1 s2-s4", "Z2 s2-s4", 2);
+//       sprintf(name,"ID_Z1_Z2gate%d",i);
+//        hID_Z1_Z2gate[i] = MakeH2I("FRS/ID_Gated/Z1Z2/Z1Z2Gated",name,  2000,frs_id->min_z_plot,70, 2000,frs_id->min_z_plot,frs_id->max_z_plot,"Z1 s2-s4", "Z2 s2-s4", 2);
        
-      sprintf(name,"ID_x2AoQ_Z1Z2gate%d",i);
-      hID_x2AoQ_Z1Z2gate[i] = MakeH2I("FRS/ID_Gated/x2AoQ/x2AoQ_Z1Z2Gated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on Z X at S2 [mm]", 2);
+       sprintf(name,"ID_Z1_Z2gate%d",i);
+       hID_Z1_Z2gate[i] = MakeTH2('D',"FRS/ID_Gated/Z1Z2/Z1Z2Gated",name,  2000,frs_id->min_z_plot,70, 2000,frs_id->min_z_plot,frs_id->max_z_plot,"Z1 s2-s4", "Z2 s2-s4");
+      
+       
+       sprintf(name,"ID_x2AoQ_Z1Z2gate%d",i);
+       hID_x2AoQ_Z1Z2gate[i] = MakeTH2('D',"FRS/ID_Gated/x2AoQ/x2AoQ_Z1Z2Gated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on Z X at S2 [mm]");
 
       sprintf(name,"ID_x4AoQ_Z1Z2gate%d",i);
-      hID_x4AoQ_Z1Z2gate[i] = MakeH2I("FRS/ID_Gated/x4AoQ/x4AoQ_Z1Z2Gated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on Z X at S4 [mm]", 2);
+      hID_x4AoQ_Z1Z2gate[i] = MakeTH2('D',"FRS/ID_Gated/x4AoQ/x4AoQ_Z1Z2Gated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on Z X at S4 [mm]");
 
-      sprintf(name,"ID_Z1AoQ_Z1Z2gate%d",i);
-      hID_ZAoQ_Z1Z2gate[i] = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQ_Z1Z2Gated", name, 300,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2", 2);
+      sprintf(name,"ID_Z1AoQ_Z1Z2gate%d",i);  
+      hID_ZAoQ_Z1Z2gate[i] = MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQ_Z1Z2Gated", name, 300,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2");
       
       sprintf(name,"ID_dEdeg_Z1_Z1Z2gate%d",i);
       hID_dEdeg_Z1_Z1Z2gate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdeg_Z1/dEdeg_Z1_Z1Z2gated",name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z from MUSIC41", "dE(S2deg) [a.u.]");
+      
+      
       
       sprintf(name,"ID_dEdegoQ_Z1_Z1Z2gate%d",i);
       hID_dEdegoQ_Z1_Z1Z2gate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdegoQ_Z1/dEdegoQ_Z1_Z1Z2gated",   name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z from MUSIC41", "dE(S2deg)/Q [a.u.]");
       
       ///Z1 Z2 and X4/X2 A/Q gated Z vs A/Q
       sprintf(name,"ID_Z1AoQ_Z1Z2_X2AoQgate%d",i);
-      hID_ZAoQ_Z1Z2_X2AoQgate[i] = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQ_Z1Z2_X2AoQGated", name, 300,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2", 2);
-      
+      hID_ZAoQ_Z1Z2_X2AoQgate[i] =  MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQ_Z1Z2_X2AoQGated", name, 300,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2");
+
       sprintf(name,"ID_Z1AoQ_Z1Z2_X4AoQgate%d",i);
-      hID_ZAoQ_Z1Z2_X4AoQgate[i] = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQ_Z1Z2_X4AoQGated", name, 300,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2", 2);
+      hID_ZAoQ_Z1Z2_X4AoQgate[i] =  MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQ_Z1Z2_X4AoQGated", name, 300,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2");
       
       sprintf(name,"ID_dEdeg_Z1_Z1Z2_X2AoQgate%d",i);
       hID_dEdeg_Z1_Z1Z2_X2AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdeg_Z1/dEdeg_Z1_Z1Z2_X2AoQgated",  name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z from MUSIC41", "dE(S2deg)/Q [a.u.]");
@@ -663,13 +669,13 @@ void EventAnlProc::Make_FRS_Histos(){
       cID_x2AoQ[i] = MakePolyCond("FRS_X2_Gates",name,num_ID_x2AoQ,init_ID_x2AoQ[i], hID_x2AoQ->GetName());
       
       sprintf(name,"hID_x2AoQ_x2AoQgate%d",i);
-      hID_x2AoQ_x2AoQgate[i] = MakeH2I("FRS/ID_Gated/x2AoQ/x2AoQ_x2AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X2: X at S2 [mm]", 2);
+      hID_x2AoQ_x2AoQgate[i] =  MakeTH2('D',"FRS/ID_Gated/x2AoQ/x2AoQ_x2AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X2: X at S2 [mm]");
 
       sprintf(name,"hID_x4AoQ_x2AoQgate%d",i);
-      hID_x4AoQ_x2AoQgate[i] = MakeH2I("FRS/ID_Gated/x4AoQ/x4AoQ_x2AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X2: X at S4 [mm]", 2);
+      hID_x4AoQ_x2AoQgate[i] =  MakeTH2('D',"FRS/ID_Gated/x4AoQ/x4AoQ_x2AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X2: X at S4 [mm]");
 
       sprintf(name,"ID_Z1AoQ_x2AoQgate%d",i);
-      hID_ZAoQ_x2AoQgate[i] = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQ_x2AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2", 2);
+      hID_ZAoQ_x2AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQ_x2AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music2");
 
       sprintf(name,"ID_dEdeg_Z1_X2AoQgate%d",i);
       hID_dEdeg_Z1_X2AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdeg_Z1/dEdeg_Z1_X2AoQgated",   name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z1 from MUSIC41", "dE(S2deg)/Q [a.u.]");
@@ -682,13 +688,13 @@ void EventAnlProc::Make_FRS_Histos(){
       cID_x4AoQ[i] = MakePolyCond("FRS_X4_Gates",name,num_ID_x4AoQ,init_ID_x4AoQ[i], hID_x4AoQ->GetName());
       
       sprintf(name,"ID_x2AoQ_x4AoQgate%d",i);
-      hID_x2AoQ_x4AoQgate[i] = MakeH2I("FRS/ID_Gated/x2AoQ/x2AoQ_x4AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X4: X at S2 [mm]", 2);
+      hID_x2AoQ_x4AoQgate[i] =  MakeTH2('D',"FRS/ID_Gated/x2AoQ/x2AoQ_x4AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X4: X at S2 [mm]");
 
       sprintf(name,"ID_x4AoQ_x4AoQgate%d",i);
-      hID_x4AoQ_x4AoQgate[i] = MakeH2I("FRS/ID_Gated/x4AoQ/x4AoQ_x4AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X4: X at S4 [mm]", 2);
+      hID_x4AoQ_x4AoQgate[i] =  MakeTH2('D',"FRS/ID_Gated/x4AoQ/x4AoQ_x4AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "gate on FRS AoQ, ID X4: X at S4 [mm]");
       
       sprintf(name,"ID_Z1AoQ_x4AoQgate%d",i);
-      hID_ZAoQ_x4AoQgate[i] = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQ_x4AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music41", 2);
+      hID_ZAoQ_x4AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQ_x4AoQGated", name,1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music41");
       
       sprintf(name,"ID_dEdeg_Z1_X4AoQgate%d",i);
       hID_dEdeg_Z1_X4AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdeg_Z1/dEdeg_Z1_X4AoQgated",   name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z1 from MUSIC41", "dE(S2deg)/Q [a.u.]");
@@ -701,16 +707,16 @@ void EventAnlProc::Make_FRS_Histos(){
       cID_dEdeg_Z1[i] = MakePolyCond("FRS_dEdeg_Z1",name, num_ID_dEdeg_Z1,init_dEdeg_Z1[i], hdEdeg_Z->GetName());
        
       sprintf(name,"ID_Z1_AoQ_dEdegZ1_%d",i);
-      hID_Z1_AoQ_dEdegZgate[i]   = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQ_dEdegZ1Gated",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z from MUSIC41", 2);
+      hID_Z1_AoQ_dEdegZgate[i]   =  MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQ_dEdegZ1Gated",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z from MUSIC41");
       
       sprintf(name,"ID_Z1_AoQ_zsame_cdEdegZ %d",i);
-      hID_Z1_AoQ_zsame_dEdegZgate[i]   = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQSame_dEdegZ1Gated",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z from MUSIC41", 2);
+      hID_Z1_AoQ_zsame_dEdegZgate[i]   =  MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQSame_dEdegZ1Gated",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z from MUSIC41");
      
       sprintf(name,"ID_Z1_AoQcorr_cdEdegZ %d",i);
-      hID_Z1_AoQcorr_dEdegZgate[i]   = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQCorr_dEdegZ1Gated",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4 corr.", "Z from MUSIC41", 2);
+      hID_Z1_AoQcorr_dEdegZgate[i]   =  MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQCorr_dEdegZ1Gated",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4 corr.", "Z from MUSIC41");
     
       sprintf(name,"ID_Z1_AoQcorr_zsame_cdEdegZ %d",i);
-      hID_Z1_AoQcorr_zsame_dEdegZgate[i]   = MakeH2I("FRS/ID_Gated/Z1AoQ/Z1AoQCorrSame_IDdEdegZ1gate",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4 corr.", "Z from MUSIC41", 2);       
+      hID_Z1_AoQcorr_zsame_dEdegZgate[i]   =  MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQCorrSame_IDdEdegZ1gate",name, 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4 corr.", "Z from MUSIC41");       
       
       
         }
@@ -1973,43 +1979,43 @@ if(Fatmult > 0){
     }//end of Do_Germanium_Histos()
     
 //--------------------------------------------------------------------------------------------------------------------//
-TH1I* EventAnlProc::MakeH1I(const char* fname,
-                            const char* hname,
-                            Int_t nbinsx,
-                            Float_t xmin, Float_t xmax,
-                            const char* xtitle,
-                            Color_t linecolor,
-                            Color_t fillcolor,
-                            const char* ytitle) {
-//    TNamed* res = TestObject((getfunc)&TGo4EventProcessor::GetHistogram, fname, hname);
-//    if (res!=0) return dynamic_cast<TH1I*>(res);
-
-   TH1I* histo = new TH1I(hname, hname, nbinsx, xmin, xmax);
-   histo->SetXTitle(xtitle);
-   if (ytitle) histo->SetYTitle(ytitle);
-   histo->SetLineColor(linecolor);
-   histo->SetFillColor(fillcolor);
-   AddHistogram(histo, fname);
-   return histo;
-}
+// TH1I* EventAnlProc::MakeH1I(const char* fname,
+//                             const char* hname,
+//                             Int_t nbinsx,
+//                             Float_t xmin, Float_t xmax,
+//                             const char* xtitle,
+//                             Color_t linecolor,
+//                             Color_t fillcolor,
+//                             const char* ytitle) {
+// //    TNamed* res = TestObject((getfunc)&TGo4EventProcessor::GetHistogram, fname, hname);
+// //    if (res!=0) return dynamic_cast<TH1I*>(res);
+// 
+//    TH1I* histo = new TH1I(hname, hname, nbinsx, xmin, xmax);
+//    histo->SetXTitle(xtitle);
+//    if (ytitle) histo->SetYTitle(ytitle);
+//    histo->SetLineColor(linecolor);
+//    histo->SetFillColor(fillcolor);
+//    AddHistogram(histo, fname);
+//    return histo;
+// }
 //-----------------------------------------------------------------------------------------------------------------------------//
 
-TH2I* EventAnlProc::MakeH2I(const char* fname,
-                             const char* hname,
-                             Int_t nbinsx, Float_t xmin, Float_t xmax,
-                             Int_t nbinsy, Float_t ymin, Float_t ymax,
-                             const char* xtitle, const char* ytitle,
-                             Color_t markercolor) {
-//    TNamed* res = TestObject((getfunc)&TGo4EventProcessor::GetHistogram, fname, hname);
-//    if (res!=0) return dynamic_cast<TH2I*>(res);
-
-   TH2I* histo = new TH2I(hname, hname, nbinsx, xmin, xmax, nbinsy, ymin, ymax);
-   histo->SetMarkerColor(markercolor);
-   histo->SetXTitle(xtitle);
-   histo->SetYTitle(ytitle);
-   AddHistogram(histo, fname);
-   return histo;
-}
+// TH2I* EventAnlProc::MakeH2I(const char* fname,
+//                              const char* hname,
+//                              Int_t nbinsx, Float_t xmin, Float_t xmax,
+//                              Int_t nbinsy, Float_t ymin, Float_t ymax,
+//                              const char* xtitle, const char* ytitle,
+//                              Color_t markercolor) {
+// //    TNamed* res = TestObject((getfunc)&TGo4EventProcessor::GetHistogram, fname, hname);
+// //    if (res!=0) return dynamic_cast<TH2I*>(res);
+// 
+//    TH2I* histo = new TH2I(hname, hname, nbinsx, xmin, xmax, nbinsy, ymin, ymax);
+//    histo->SetMarkerColor(markercolor);
+//    histo->SetXTitle(xtitle);
+//    histo->SetYTitle(ytitle);
+//    AddHistogram(histo, fname);
+//    return histo;
+// }
 //-----------------------------------------------------------------------------------------------------------------------------//
 
 TGo4WinCond* EventAnlProc::MakeWindowCond(const char* fname,
