@@ -1348,6 +1348,7 @@ void EventUnpackProc::get_used_systems(){
   const char *fext2[12]={"01", "11", "21", "22","31", "41",
              "42", "43", "61",
              "62", "81", "82"};
+              int test=5;
              
   ///FRS Scalers           
   bool scaler_enable_hist[64];
@@ -1419,39 +1420,29 @@ void EventUnpackProc::get_used_systems(){
         case 5: index = 10; break;
         case 6: index = 8; break;
     }
-      sprintf(fname,"FRS/SCI/SCI%s/SCI%s",fext1[index],fext2[index]);
-      sprintf(name, "SCI%s_L", count_title1[index]);
-      sprintf(title, "Sc%s L dE [ch]", count_title1[index]);
-      hSCI_L[index] = MakeH1I(fname,name,4096,0,4096,title,2,3);
+//       sprintf(fname,"FRS/SCI/SCI%s/SCI%s",fext1[index],fext2[index]);
+//       sprintf(name, "SCI%s_L", count_title1[index]);
+//       sprintf(title, "Sc%s L dE [ch]", count_title1[index]);
+//       hSCI_L[index] = MakeH1I(fname,name,4096,0,4096,title,2,3);
+      
+      hSCI_L[index] = MakeTH1('D', Form("FRS/SCI/SCI%s/SCI%s/SCI%s_L",fext1[index],fext2    [index],count_title1[index]), Form("SCI%s_L", count_title1[index]),4096,0,4096,"Sc%s L dE [ch]", count_title1[index]);
+      
+      hSCI_R[index] = MakeTH1('D', Form("FRS/SCI/SCI%s/SCI%s/SCI%s_R",fext1[index],fext2    [index],count_title1[index]), Form("SCI%s_R", count_title1[index]),4096,0,4096,"Sc%s R dE [ch]", count_title1[index]);
 
-      sprintf(name, "SCI%s_R", count_title1[index]);
-      sprintf(title, "Sc%s R dE [ch]", count_title1[index]);
-      hSCI_R[index] = MakeH1I(fname,name,4096,0,4096,title,2,3);
+      hSCI_E[index] = MakeTH1('D', Form("FRS/SCI/SCI%s/SCI%s/SCI%s_E",fext1[index],fext2    [index],count_title1[index]), Form("SCI%s_E", count_title1[index]),4096,0,4096,"Sc%s Energy [ch]", count_title1[index]);
 
-      sprintf(name, "SCI%s_E", count_title1[index]);
-      sprintf(title, "Sc%s Energy [ch]", count_title1[index]);
-      hSCI_E[index] = MakeH1I(fname,name,4096,0,4096,title,2,3);
+      hSCI_Tx[index] = MakeTH1('D', Form("FRS/SCI/SCI%s/SCI%s/SCI%s_Tx",fext1[index],fext2    [index],count_title1[index]), Form("SCI%s_Tx", count_title1[index]),4096,0,4096,"Sc%s t_lr TAC [ch]", count_title1[index]);
 
-      sprintf(name, "SCI%s_Tx", count_title1[index]);
-      sprintf(title, "Sc%s t_lr [ch] TAC", count_title1[index]);
-      hSCI_Tx[index] = MakeH1I(fname,name,4096,0,4096,title,2,3);
-
-      sprintf(name, "SCI%s_X", count_title1[index]);
-      sprintf(title, "Sc%s x-pos [mm]", count_title1[index]);
-      hSCI_X[index] = MakeH1I(fname,name,240,-120,120,title,2,3);
-
+      hSCI_X[index] = MakeTH1('D', Form("FRS/SCI/SCI%s/SCI%s/SCI%s_X",fext1[index],fext2    [index],count_title1[index]), Form("SCI%s_X", count_title1[index]),240,-120,120,"Sc%s x-pos [mm]", count_title1[index]);
     }
-      hSCI_dE24 = MakeH2I("FRS/SCI","SCI_dE21-41", 1000,10,4000,1000,10,4000,"SC21 dE","SC41 dE",2);
-     // ToF SC21-SC41
-        sprintf(fname,"FRS/SCI/TOF/TOF(%d)",2);
-        sprintf(name,"SCI_21_41_TofLL");
-        hSCI_TofLL2 = MakeH1I(fname,name,1500,0,62000,"TAC SC41L-SC21L [ps]",2,3);
+    
+        hSCI_dE24 = MakeTH2('D',"FRS/SCI/SCI_dE21-41","SCI_dE21-41",1000,10,4000,1000,10,4000,"SC21 dE","SC41 dE");
 
-        sprintf(name,"SCI_21_41_TofRR");
-        hSCI_TofRR2 = MakeH1I(fname,name,1500,0,62000,"TAC SC41R-SC21R [ps]",2,3);
+        hSCI_TofLL2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofLL","SCI_21_41_TofLL",1500,0,62000,"TAC SC41L-SC21L [ps]");
+
+        hSCI_TofRR2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofRR","SCI_21_41_TofRR",1500,0,62000,"TAC SC41R-SC21R [ps]");
         
-        sprintf(name,"SCI_21_41_Tof2");
-        hSCI_Tof2 = MakeH1I(fname,name,1000,0,62000,"TAC SC41-SC21 [ps] (pos.corr.)",2,3);
+        hSCI_Tof2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_Tof2","SCI_21_41_Tof2",1000,0,62000,"TAC SC41-SC21 [pos.corr.]");
 
 //         hSCIdE41_TPC42X= MakeH2I("FRS/SCI_TPC/","SCIdE41_TPC42X", 1024,0,4096, 400,-100.,100, "SC41 dE", "TPC42 X[mm]", 2);
 //         hSCIdE41L_TPC42X= MakeH2I("FRS/SCI_TPC/","SCIdE41L_TPC42X", 1024,0,4096, 400,-100.,100, "SC41L dE", "TPC42 X[mm]", 2);
@@ -1465,16 +1456,22 @@ void EventUnpackProc::get_used_systems(){
 //         hSCIdE21R_TPC42X= MakeH2I("FRS/SCI_TPC/","SCIdE21R_TPC42X", 1024,0,4096, 400,-100.,100, "SC21R dE", "TPC42 X[mm]", 2);
 //         hSCIdE21R_TPC41X= MakeH2I("FRS/SCI_TPC/","SCIdE21R_TPC41X", 1024,0,4096, 400,-100.,100, "SC21R dE", "TPC41 X[mm]", 2);
 
-        // ToF SC21-SC42 changed on 03.07.2018 SB
-        sprintf(fname,"FRS/SCI/TOF/TOF(%d)",3);
-        sprintf(name,"SCI_21_42_TofLL");
-        hSCI_TofLL3 = MakeH1I(fname,name,1500,0,62000,"TAC SC42L-SC21L [ps]",2,3);
+//         // ToF SC21-SC42 changed on 03.07.2018 SB
+//         sprintf(fname,"FRS/SCI/TOF/TOF(%d)",3);
+//         sprintf(name,"SCI_21_42_TofLL");
+//         hSCI_TofLL3 = MakeH1I(fname,name,1500,0,62000,"TAC SC42L-SC21L [ps]",2,3);
+// 
+//         sprintf(name,"SCI_21_42_TofRR");
+//         hSCI_TofRR3 = MakeH1I(fname,name,1500,0,62000,"TAC SC42R-SC21R [ps]",2,3);
+// 
+//         sprintf(name,"SCI_21_42_Tof3");
+//         hSCI_Tof3 = MakeH1I(fname,name,1000,0,62000,"TAC SC42-SC21 [ps] (pos.corr.)",2,3);
+        
+        hSCI_TofLL2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofLL","SCI_21_41_TofLL",1500,0,62000,"TAC SC41L-SC21L [ps]");
 
-        sprintf(name,"SCI_21_42_TofRR");
-        hSCI_TofRR3 = MakeH1I(fname,name,1500,0,62000,"TAC SC42R-SC21R [ps]",2,3);
-
-        sprintf(name,"SCI_21_42_Tof3");
-        hSCI_Tof3 = MakeH1I(fname,name,1000,0,62000,"TAC SC42-SC21 [ps] (pos.corr.)",2,3);
+        hSCI_TofRR2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofRR","SCI_21_41_TofRR",1500,0,62000,"TAC SC41R-SC21R [ps]");
+        
+        hSCI_Tof2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_Tof2","SCI_21_41_Tof2",1000,0,62000,"TAC SC41-SC21 [pos.corr.]");
 
     /*hSCI_dT_21l_41l = MakeTH1('D',"FRS/SCI/dT/SCI_dt_21l_41l","hSCI_dT_21l_41l",5001,0,5000); //from Multihit TDCS
     hSCI_dT_21r_41r = MakeTH1('D',"FRS/SCI/dT/SCI_dt_21r_41r","hSCI_dT_21r_41r",5001,0,5000);
@@ -1483,29 +1480,32 @@ void EventUnpackProc::get_used_systems(){
     hSCI_dT_21r_42r = MakeTH1('D',"FRS/SCI/dT/SCI_dt_21r_42r","hSCI_dT_21r_42r",5001,0,5000);*/
 
     //ID
-    hID_AoQ = MakeH1I("FRS/ID","ID_AoQ",500,1.4,2.5,"A/Q S2-S4",2,6);
-    hID_AoQ_corr = MakeH1I("FRS/ID","ID_AoQ_corr",500,1.4,2.5,"A/Q S2-S4",2,6);
+    hID_AoQ = MakeTH1('D',"FRS/ID/ID_AoQ","ID_AoQ",500,1.4,2.5,"A/Q S2-S4");
+    hID_AoQ_corr = MakeTH1('D',"FRS/ID/ID_AoQ_corr","ID_AoQ_corr",500,1.4,2.5,"A/Q S2-S4");
   //   hID_Z = MakeH1I("ID",Form("ID_Z, gain=%f",music->e1_gain[0]),1000,10,93,"Z s2-s4",2,6);
-    hID_Z = MakeH1I("FRS/ID","ID_Z1",1000,0,93,"Z1 s2-s4",2,6);
-    hID_Z2 = MakeH1I("FRS/ID","ID_Z2",1000,0,93,"Z2 s2-s4",2,6);
+    hID_Z = MakeTH1('D',"FRS/ID/ID_Z1","ID_Z1",1000,0,93,"Z1 s2-s4");
+    hID_Z2 = MakeTH1('D',"FRS/ID/ID_Z2","ID_Z2",1000,0,93,"Z2 s2-s4");
    // hID_Z3 = MakeH1I("FRS/ID","ID_Z3",1000,10,93,"Z3 s2-s4",2,6);
     ////////////////////////////////////////////////////////////
 
-    hID_Z_dE2 = MakeH2I("FRS/ID","ID_Z1_dE2", 250,1,30, 250,0.,4000.,
-              "Z1", "MUSIC2_dE", 2);
+    hID_Z_dE2 = MakeTH2('D',"FRS/ID/ID_Z1_dE2","ID_Z1_dE2", 250,1,30, 250,0.,4000.,
+              "Z1", "MUSIC2_dE");
 
-    hID_Z_Sc21E = MakeH2I("FRS/ID","ID_Z1_Sc21E", 300,0,25.,400,0,4000.,
-            "Z s2-s4", "sqrt(Sc21_L*sC21_R)", 2);
-    hID_x2z = MakeH2I("FRS/ID","ID_x2Z1", 300,1.,30., 200,-100.,100., "Z1 s2-s4", "X at S2 [mm]", 2);
-    hID_x4z = MakeH2I("FRS/ID","ID_x4Z1", 300,1.,30., 200,-100.,100., "Z1 s2-s4", "X at S4 [mm]", 2);
-    hID_E_Xs4 = MakeH2I("FRS/ID","ID_dE_x2", 200,-100.,100., 400,0.,4000., "X s4 [mm]", "Delta E", 2);
-    hID_E_Xs2 = MakeH2I("FRS/ID","ID_dE_x4", 200,-100.,100., 400,0.,4000., "X s2 [mm]", "Delta E", 2);
-    hID_x2a2 = MakeH2I("FRS/ID", "ID_x2_a2", 200, -100., 100., 200, -100., 100., "X s2 [mm]", "AngleX s2 [mrad]", 2);
-    hID_y2b2 = MakeH2I("FRS/ID", "ID_y2_b2", 200, -100., 100., 200, -100., 100., "Y s2 [mm]", "AngleY s2 [mrad]", 2);
-    hID_x4a4 = MakeH2I("FRS/ID", "ID_x4_a4", 200, -100., 100., 200, -100., 100., "X s4 [mm]", "AngleX s4 [mrad]", 2);
-    hID_y4b4 = MakeH2I("FRS/ID", "ID_y4_b4", 200, -100., 100., 200, -100., 100., "Y s4 [mm]", "AngleY s4 [mrad]", 2);
-    hID_x2x4 = MakeH2I("FRS/ID","ID_x2_x4",200,-100,100,200,-100,100,"x2 mm","x4 mm",2);
-    hID_SC41dE_AoQ = MakeH2I("FRS/ID","ID_SC41dE_AoQ", 300,1.2,3.0, 800,0.,4000.,"A/Q s2-s4", "SC41 dE", 2);
+    hSCI_dE24 = MakeTH2('D',"FRS/SCI/SCI_dE21-41","SCI_dE21-41",1000,10,4000,1000,10,4000,"SC21 dE","SC41 dE");
+     
+    hID_Z_Sc21E = MakeTH2('D',"FRS/ID/ID_Z1_Sc21E","ID_Z1_Sc21E", 300,0,25.,400,0,4000.,
+            "Z s2-s4", "sqrt(Sc21_L*sC21_R)");
+    
+    hID_x2z = MakeTH2('D',"FRS/ID/ID_x2Z1","ID_x2Z1", 300,1.,30., 200,-100.,100., "Z1 s2-s4", "X at S2 [mm]");
+    hID_x4z = MakeTH2('D',"FRS/ID/ID_x4Z1","ID_x4Z1", 300,1.,30., 200,-100.,100., "Z1 s2-s4", "X at S4 [mm]");
+    hID_E_Xs4 = MakeTH2('D',"FRS/ID/ID_dE_x2","ID_dE_x2", 200,-100.,100., 400,0.,4000., "X s4 [mm]", "Delta E");
+    hID_E_Xs2 = MakeTH2('D',"FRS/ID/ID_dE_x4","ID_dE_x4", 200,-100.,100., 400,0.,4000., "X s2 [mm]", "Delta E");
+    hID_x2a2 = MakeTH2('D',"FRS/ID/ID_x2_a2", "ID_x2_a2", 200, -100., 100., 200, -100., 100., "X s2 [mm]", "AngleX s2 [mrad]");
+    hID_y2b2 = MakeTH2('D',"FRS/ID/ID_y2_b2", "ID_y2_b2", 200, -100., 100., 200, -100., 100., "Y s2 [mm]", "AngleY s2 [mrad]");
+    hID_x4a4 = MakeTH2('D',"FRS/ID/ID_x4_a4", "ID_x4_a4", 200, -100., 100., 200, -100., 100., "X s4 [mm]", "AngleX s4 [mrad]");
+    hID_y4b4 = MakeTH2('D',"FRS/ID/ID_y4_b4", "ID_y4_b4", 200, -100., 100., 200, -100., 100., "Y s4 [mm]", "AngleY s4 [mrad]");
+    hID_x2x4 = MakeTH2('D',"FRS/ID/ID_x2_x4","ID_x2_x4",200,-100,100,200,-100,100,"x2 mm","x4 mm");
+    hID_SC41dE_AoQ = MakeTH2('D',"FRS/ID/ID_SC41dE_AoQ","ID_SC41dE_AoQ", 300,1.2,3.0, 800,0.,4000.,"A/Q s2-s4", "SC41 dE");
   ///////////////////////////////////////////////////////////////////////////////////////////////
 for(int i=0;i<7;i++)
     {
@@ -1513,21 +1513,31 @@ for(int i=0;i<7;i++)
       char name[100];
       sprintf(fname,"FRS/TPC/%s/",tpc_folder_ext1[i]);
 
-      hTPC_X[i]=MakeH1I_TPC(fname,"X",i,800,-100.,100.,
-                "x[mm]",2,3);
-      hTPC_Y[i]=MakeH1I_TPC(fname,"Y",i,800,-100.,100.,
-                "y[mm]",2,3);
+      //hTPC_X[i]=MakeTH1('D',fname,"X",i,800,-100.,100.,"x[mm]");
+    //  hTPC_Y[i]=MakeTH1('D',fname,"Y",i,800,-100.,100.,"y[mm]");
 
+     hTPC_X[i] = MakeTH1('D', Form("FRS/TPC/%s/%s_X",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_X", tpc_folder_ext1[i]),800,-100.,100,"x[mm]");
+     
+     hTPC_Y[i] = MakeTH1('D', Form("FRS/TPC/%s/%s_Y",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_Y", tpc_folder_ext1[i]),800,-100.,100,"y[mm]");
 
-      sprintf(name,"%s%s",tpc_name_ext1[i],"XY");
-      hcTPC_XY[i]=MakeH2I(fname,name, 120,-120.,120., 120,-120.,120.,
-              "X [mm] ","Y [mm] ", 2);
-
-      sprintf(name,"%s%s",tpc_name_ext1[i],"LTRT");
-      hTPC_LTRT[i]=MakeH2I(fname,name, 2048,0,4095, 2048,0,4095,
-               "LT [ch]","RT[ch] ", 2);
-      hTPC_DELTAX[i]=MakeH1I_TPC(fname,"x0-x1",i,100,-10.,10.,
-                 "x0-x1[mm]",2,3);
+//       sprintf(name,"%s%s",tpc_name_ext1[i],"XY");
+//       hcTPC_XY[i]=MakeTH2('D',fname,name, 120,-120.,120., 120,-120.,120.,"X [mm] ","Y [mm] ");
+     
+      
+       hcTPC_XY[i] = MakeTH2('D',Form("FRS/TPC/%s/%s_XY",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_XY" ,tpc_folder_ext1[i]), 120,-120.,120., 120,-120.,120.,"X [mm] ","Y [mm] ");
+       
+        hTPC_LTRT[i] = MakeTH2('D',Form("FRS/TPC/%s/%s_LTRT",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_LTRT" ,tpc_folder_ext1[i]), 2048,0,4095, 2048,0,4095,"LT [ch]","RT[ch] ");
+       
+//          hID_dEdeg_Z1_Z1AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdeg_Z1/dEdeg_Z1_Z1AoQgated",  name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z1 from MUSIC41", "dE(S2deg) [a.u.]");
+     
+// 
+//       sprintf(name,"%s%s",tpc_name_ext1[i],"LTRT");
+//       hTPC_LTRT[i]=MakeTH2('D',fname,name, 2048,0,4095, 2048,0,4095,"LT [ch]","RT[ch] ");
+      
+      //hTPC_DELTAX[i]=MakeH1I_TPC(fname,"x0-x1",i,100,-10.,10.,
+              //   "x0-x1[mm]",2,3);
+      
+       // hTPC_DELTAX[i]=MakeTH1('D',fname,"x0-x1",i,100,-10.,10.,"x0-x1[mm]");
 
     }
     hID_x2 = MakeTH1('D',"FRS/TPC/S2_X","ID_x2",200,-100,100);
@@ -1545,14 +1555,22 @@ for(int i=0;i<7;i++)
 //     htpc_X4 = MakeTH1('D',"FRS/TPC/S4_TPCX","tpc_x S41",800,-100,100);
 //     htpc_Y4 = MakeTH1('D',"FRS/TPC/S4_TPCY","tpc_y S41",800,-100,100);
 
-    hID_beta = MakeH1I("FRS/ID","ID_beta",2000,0,2000,"id.beta(2)*1000",2,6);
-
+   
+    hID_beta= MakeTH1('D',"FRS/ID/ID_beta","ID_beta",2000,0,2000,"id.beta(2)*1000");
+    
     hID_tof4121_mhtdc= MakeTH1('D',"FRS/ID/TOF_4121_MHTDC","ToF 41-21",1000,0,1000);
     hID_tof4221_mhtdc= MakeTH1('D',"FRS/ID/TOF_4221_MHTDC","ToF 42-21",1000,0,1000);
     
-    hID_dEToF = MakeH2I("FRS/ID","ID_dEToF", 2000, 00000.,70000.,400,0,4000, "tof S2-S4 Sci.Tof(2)", "Music_dE(1)", 2);
-    hID_BRho[0] = MakeH1I("FRS/ID","ID_BRho0",5000,2.5,14.5,"BRho of 1. Stage [Tm]",2,6);
-    hID_BRho[1] = MakeH1I("FRS/ID","ID_BRho1",5000,2.5,14.5,"BRho of 2. Stage [Tm]",2,6);
+    hID_dEToF = MakeTH2('D',"FRS/ID/ID_dEToF","ID_dEToF", 2000, 0.,70000.,400,0,4000, "tof S2-S4 Sci.Tof(2)", "Music_dE(1)");
+    
+    
+   // hID_BRho[0] = MakeH1I("FRS/ID","ID_BRho0",5000,2.5,14.5,"BRho of 1. Stage [Tm]",2,6);
+    
+     hID_BRho[0]= MakeTH1('D',"FRS/ID/ID_BRho0","ID_BRho0",5000,2.5,14.5,"BRho of 1. Stage [Tm]");
+    
+  //  hID_BRho[1] = MakeH1I("FRS/ID","ID_BRho1",5000,2.5,14.5,"BRho of 2. Stage [Tm]",2,6);
+    
+     hID_BRho[1]= MakeTH1('D',"FRS/ID/ID_BRho1","ID_BRho1",5000,2.5,14.5,"BRho of 1. Stage [Tm]");
 
   // char name[80], xtitle[80];
    for(int i=0;i<8;i++)

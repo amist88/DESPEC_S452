@@ -191,11 +191,11 @@ using namespace std;
 
             /// positions and control sum
 
-            TH1I *hTPC_X[7];
-            TH1I *hTPC_Y[7];
-            TH2I *hcTPC_XY[7];
-            TH2I *hTPC_LTRT[7];
-            TH1I *hTPC_DELTAX[7];
+            TH1 *hTPC_X[7];
+            TH1 *hTPC_Y[7];
+            TH2 *hcTPC_XY[7];
+            TH2 *hTPC_LTRT[7];
+            TH1 *hTPC_DELTAX[7];
 
             // CSUM[index][anode_no]
             TH1I *hTPC_CSUM[7][4];
@@ -205,12 +205,12 @@ using namespace std;
             TH1* htpc_X4;
             TH1* htpc_Y4;
 
-            TH1I *hSCI_L[12];
-            TH1I *hSCI_R[12];
-            TH1I *hSCI_E[12];
-            TH1I *hSCI_Tx[12];
-            TH1I *hSCI_X[12];
-            TH2I *hSCI_dE24;
+            TH1 *hSCI_L[12];
+            TH1 *hSCI_R[12];
+            TH1 *hSCI_E[12];
+            TH1 *hSCI_Tx[12];
+            TH1 *hSCI_X[12];
+            TH2 *hSCI_dE24;
 
             TH2I *hSCIdE41_TPC42X;
             TH2I *hSCIdE41L_TPC41X;
@@ -223,12 +223,12 @@ using namespace std;
             TH2I *hSCIdE21R_TPC42X;
             TH2I *hSCIdE21R_TPC41X;
 
-            TH1I *hSCI_TofLL2;
-            TH1I *hSCI_TofLL3;
-            TH1I *hSCI_Tof2;
-            TH1I *hSCI_TofRR2;
-            TH1I *hSCI_TofRR3;
-            TH1I *hSCI_Tof3;
+            TH1 *hSCI_TofLL2;
+            TH1 *hSCI_TofLL3;
+            TH1 *hSCI_Tof2;
+            TH1 *hSCI_TofRR2;
+            TH1 *hSCI_TofRR3;
+            TH1 *hSCI_Tof3;
 
 			TH1* hSCI_dT_21l_41l;
 			TH1* hSCI_dT_21r_41r;
@@ -239,40 +239,40 @@ using namespace std;
 			TH1* hSCI_dT_21l_81l;
 			TH1* hSCI_dT_21r_81r;
 
-			TH1I *hID_AoQ;
-            TH1I *hID_AoQ_corr;
+			TH1 *hID_AoQ;
+            TH1 *hID_AoQ_corr;
 //             TH2I *hID_x2AoQ;
 //             TH2I *hID_Z_AoQ;
 //             TH2I *hID_Z_AoQ_zsame;
 //             TH2I *hID_Z_AoQ_corr;
-			TH1I *hID_Z;
-            TH1I *hID_Z2;
-            TH1I *hID_Z3;
+			TH1 *hID_Z;
+            TH1 *hID_Z2;
+            TH1 *hID_Z3;
 
-            TH2I *hID_x2a2;
-            TH2I *hID_y2b2;
-            TH2I *hID_x4a4;
-            TH2I *hID_y4b4;
+            TH2 *hID_x2a2;
+            TH2 *hID_y2b2;
+            TH2 *hID_x4a4;
+            TH2 *hID_y4b4;
 
           //  TH2I *hID_Z_Z2;
            // TH2I *hID_Z_Z3;
 
-            TH2I *hID_Z_dE2;
+            TH2 *hID_Z_dE2;
 
-            TH2I *hID_Z_Sc21E;
-            TH2I *hID_SC41dE_AoQ;
-            TH2I *hID_x2z;
-            TH2I *hID_x4z;
-            TH2I *hID_x4AoQ;
-            TH2I *hID_E_Xs4;
-            TH2I *hID_E_Xs2;
+            TH2 *hID_Z_Sc21E;
+            TH2 *hID_SC41dE_AoQ;
+            TH2 *hID_x2z;
+            TH2 *hID_x4z;
+            TH2 *hID_x4AoQ;
+            TH2 *hID_E_Xs4;
+            TH2 *hID_E_Xs2;
 
-            TH2I *hID_x2x4;
-            TH2I *hID_dEToF;
-            TH1I *hID_beta;
+            TH2 *hID_x2x4;
+            TH2 *hID_dEToF;
+            TH1 *hID_beta;
             TH1 *hID_tof4121_mhtdc;
             TH1 *hID_tof4221_mhtdc;
-            TH1I *hID_BRho[2];
+            TH1 *hID_BRho[2];
 
             TH1* hvftx_TRaw[32];
             TH1* hvftx_Sci21PosRaw;
