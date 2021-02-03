@@ -2,7 +2,7 @@
 //========= Macro generated from object: cID_Z_AoQ0/
 //========= by ROOT version6.16/00
    
-   TCutG *cutg = new TCutG("cID_Z_AoQ0",8);
+   TCutG *cutg = new TCutG("cID_Z_AoQ0",9);
    cutg->SetVarX("");
    cutg->SetVarY("");
    cutg->SetTitle("");
@@ -23,5 +23,6 @@
    cutg->SetPoint(5,2.60031,76.4706);
    cutg->SetPoint(6,2.66786,76.3369);
    cutg->SetPoint(7,2.64809,75.9024);
+   cutg->SetPoint(8,2.64809,75.9024);
    cutg->Draw("");
 }
