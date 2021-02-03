@@ -141,6 +141,7 @@ class EventAnlStore : public TGo4EventElement {
       
           ULong64_t pGe_Event_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
           ULong64_t pGe_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
+          ULong64_t pGe_CF_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
           double   pGe_E[Germanium_MAX_DETS][Germanium_CRYSTALS];
           double   pGe_E_Raw[Germanium_MAX_DETS][Germanium_CRYSTALS];
           double   pGe_EAddback[Germanium_MAX_DETS][Germanium_CRYSTALS];

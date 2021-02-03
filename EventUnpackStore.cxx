@@ -154,6 +154,7 @@ void  EventUnpackStore::Clear(Option_t *t)
         ZERO_ARRAY(fGe_Crystal);
         ZERO_ARRAY(fGe_E);
         ZERO_ARRAY(fGe_T);
+        ZERO_ARRAY(fGe_cfT);
         ZERO_ARRAY(fGe_Pileup);
         ZERO_ARRAY(fGe_Overflow);
       

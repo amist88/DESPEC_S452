@@ -99,7 +99,7 @@ void Germanium_Detector_System::load_board_channel_file()
 
 void Germanium_Detector_System::get_Event_data(Raw_Event* RAW){
     
-  RAW->set_DATA_Germanium(fired_FEBEX_amount,Sum_Time,Ge_channels,Chan_Time,Chan_Energy,det_ids,crystal_ids,Pileup,Overflow);
+  RAW->set_DATA_Germanium(fired_FEBEX_amount,Sum_Time,Ge_channels,Chan_Time,Chan_Energy,det_ids,crystal_ids,Pileup,Overflow, Chan_CF);
     
 }
 

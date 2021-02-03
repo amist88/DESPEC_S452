@@ -463,6 +463,7 @@ if(Fatmult > 0){
           GeE[i] = pInput->fGe_E[i];
           GeEventT[i]=pInput->fGe_Event_T[i];
           GeT[i] = pInput->fGe_T[i];
+          GeCF_T[i] = pInput->fGe_cfT[i];
           // Maybe keep this for auto calibration program purposes
           int id = GeDet[i] * 3 + GeCrys[i];
           GeE_Cal[i] = (fCal->AGe[id]* pow( GeE[i],2) + fCal->BGe[id]*  GeE[i] + fCal->CGe[id]);
@@ -1804,6 +1805,8 @@ if(Fatmult > 0){
        hGe_dTaddback = MakeTH1('I',"Germanium/Sum/Germanium_Addback_dT","Germanium Addback dT",400,-200,200);
        
        hGe_dTgammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_dT","Germanium Gamma-Gamma dT",400,-200,200);
+       
+       hGe_CFdT_gammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_dT","Germanium Gamma-Gamma dT",400,-200,200);
     
       for (int i=0; i<Germanium_MAX_DETS; i++)
       {
@@ -1860,7 +1863,7 @@ if(Fatmult > 0){
 	   if(det>-1){
            pOutput->pGe_Event_T[det][crys] = GeEventT[i];
            pOutput->pGe_T[det][crys] = GeT[i];
-           
+           pOutput->pGe_CF_T[det][crys] = GeCF_T[i];
            pOutput->pGe_E[det][crys] = GeE_Cal[i];
            pOutput->pGe_E_Raw[det][crys] = GeE[i];
   
@@ -1878,6 +1881,9 @@ if(Fatmult > 0){
               if (i == j) continue;
               if(GeE_Cal[i]>0 && GeE_Cal[j]>0){
               hGe_dTgammagamma->Fill(GeT[i]-GeT[j]);
+              ///Constant fraction time testing 03.02.21
+              hGe_CFdT_gammagamma->Fill(GeCF_T[i]-GeCF_T[j]);
+              
               Gam_mult++;
               //cout<<"Gam_mult " << Gam_mult<<endl;
               hGe_Mult->Fill(Gam_mult);

@@ -276,13 +276,13 @@ private:
         int Ge_FIRED;
         int Germanium_Det_Nums[Germanium_MAX_HITS];
         int Germanium_Crystal_Nums[Germanium_MAX_HITS];
-        ULong Germanium_sum_time[Germanium_MAX_HITS];
+        ULong64_t Germanium_sum_time[Germanium_MAX_HITS];
         int Germanium_hit_pattern[Germanium_MAX_HITS];
-        ULong Germanium_chan_time[Germanium_MAX_HITS];
+        ULong64_t Germanium_chan_time[Germanium_MAX_HITS];
         double Germanium_chan_energy[Germanium_MAX_HITS];
         bool Germanium_Pileup[Germanium_MAX_HITS];
         bool Germanium_Overflow[Germanium_MAX_HITS];
-
+        ULong64_t Germanium_chan_cf[Germanium_MAX_HITS];
 	int Event_Type;
 
 
@@ -334,7 +334,7 @@ public:
 
     void set_DATA_SCALER(int, double*);
 
-    void set_DATA_Germanium(int,ULong64_t*,int*,ULong64_t*,double*,int*,int*,bool*,bool*);
+    void set_DATA_Germanium(int,ULong64_t*,int*,ULong64_t*,double*,int*,int*,bool*,bool*,ULong64_t*);
 
 
 
@@ -588,7 +588,7 @@ public:
         int         get_Germanium_Crystal_id(int);
         bool        get_Germanium_Pileup(int);
         bool        get_Germanium_Overflow(int);
-
+        ULong64_t   get_Germanium_Channel_cf(int);
 
 	//White Rabbit setter and getter
 	void set_WR(ULong64_t);

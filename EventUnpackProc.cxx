@@ -995,8 +995,8 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fGe_Crystal[i] =  RAW->get_Germanium_Crystal_id(i);
                 fOutput->fGe_E[i] = RAW->get_Germanium_Chan_E(i);
                 fOutput->fGe_T[i] = RAW->get_Germanium_Chan_T(i);
-	
-		//cout<<" fOutput->fGe_T[i] " <<fOutput->fGe_T[i] << "fOutput-> event " << fOutput->fevent_number<< endl;
+                fOutput->fGe_cfT[i] = RAW->get_Germanium_Channel_cf(i);
+    
 		
                 fOutput->fGe_Event_T[i] = RAW->get_Germanium_Event_T(i);
                 fOutput->fGe_Pileup[i] = RAW->get_Germanium_Pileup(i);

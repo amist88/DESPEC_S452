@@ -231,7 +231,8 @@ class EventAnlProc : public TGo4EventProcessor {
           double GeE[Germanium_MAX_HITS];
           double GeE_Cal[Germanium_MAX_HITS];
           double GeE_Cal_Test[Germanium_MAX_DETS][Germanium_CRYSTALS];
-          double GeT[Germanium_MAX_HITS];
+          ULong64_t GeT[Germanium_MAX_HITS];
+          ULong64_t GeCF_T[Germanium_MAX_HITS];
           double GeEventT[Germanium_MAX_HITS];
           bool GePileUp[Germanium_MAX_HITS];
           bool GeOverFlow[Germanium_MAX_HITS];
@@ -495,6 +496,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hGe_AddbackSum_halfkev;
             TH1 *hGe_dTaddback;
             TH1 *hGe_dTgammagamma;
+            TH1 *hGe_CFdT_gammagamma;
             TH1 *hGe_SC41L;
             TH1 *hGe_SC41R;
             TH1 *hGe_SC41L_digi;

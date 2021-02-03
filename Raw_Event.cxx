@@ -643,7 +643,7 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
 //-------------------------------------- Germanium FEBEX  ------------------------------------------------//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Raw_Event::set_DATA_Germanium(int Ge_FIRED,ULong64_t* sum_time,int* hit_pattern,ULong64_t* chan_time,double* chan_en, int* det_ids, int* crystal_ids, bool* pileup, bool* overflow){
+void Raw_Event::set_DATA_Germanium(int Ge_FIRED,ULong64_t* sum_time,int* hit_pattern,ULong64_t* chan_time,double* chan_en, int* det_ids, int* crystal_ids, bool* pileup, bool* overflow,ULong64_t* chan_cf){
         this->Ge_FIRED = Ge_FIRED;
     
         for(int i = 0;i < Ge_FIRED;++i){
@@ -656,6 +656,7 @@ void Raw_Event::set_DATA_Germanium(int Ge_FIRED,ULong64_t* sum_time,int* hit_pat
         Germanium_chan_energy[i] = chan_en[i];
         Germanium_Pileup[i] = pileup[i];
         Germanium_Overflow[i] = overflow[i];
+        Germanium_chan_cf[i] = chan_cf[i];
 
     }
 
@@ -1044,3 +1045,5 @@ PLASTIC_DataStruct* Raw_Event::PassPLASTIC(){ return &PLASTIC_Data;}*/
     int Raw_Event::get_Germanium_Det_id(int i){return Germanium_Det_Nums[i];}   
     
     int Raw_Event::get_Germanium_Crystal_id(int i){return Germanium_Crystal_Nums[i];}
+    
+    ULong64_t Raw_Event::get_Germanium_Channel_cf(int i){return Germanium_chan_cf[i];}

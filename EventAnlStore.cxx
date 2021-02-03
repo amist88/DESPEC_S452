@@ -127,6 +127,7 @@ void EventAnlStore::Clear(Option_t *t)
 ///         pFat_TrailT[i][j] = 0;
     
     ZERO_ARRAY(pGe_T);
+    ZERO_ARRAY(pGe_CF_T);
     ZERO_ARRAY(pGe_E);
     ZERO_ARRAY(pGe_E_Raw);
     ZERO_ARRAY(pGe_EAddback);

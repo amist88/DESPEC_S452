@@ -126,8 +126,9 @@ public:
          Int_t    fGe_Detector[Germanium_MAX_HITS];
          Int_t    fGe_Crystal[Germanium_MAX_HITS];
          Double_t fGe_E[Germanium_MAX_HITS];
-         Double_t fGe_T[Germanium_MAX_HITS];
+         ULong64_t fGe_T[Germanium_MAX_HITS];
          ULong64_t fGe_Event_T[Germanium_MAX_HITS];
+         ULong64_t fGe_cfT[Germanium_MAX_HITS];
          bool     fGe_Pileup[Germanium_MAX_HITS];
          bool     fGe_Overflow[Germanium_MAX_HITS];
          Long64_t fGe_WR;
