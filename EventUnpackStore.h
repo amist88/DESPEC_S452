@@ -152,7 +152,7 @@ public:
        Double_t fFing_Lead_PMT[52][10];
        Double_t fFing_Trail_PMT[52][10];
        //FATIMA TAMEX 
-       Int_t fFat_Strip_N[50];     
+         
 //        Double_t fFat_SC41_lead[2][50];
 //        Double_t fFat_SC41_trail[2][50];
        Int_t fFat_PMT_Lead_N[FATIMA_TAMEX_CHANNELS];

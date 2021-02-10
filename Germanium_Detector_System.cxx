@@ -188,7 +188,7 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
                 FEBEX_Chan_Header *fbx_Ch=(FEBEX_Chan_Header*) this->pdata;
         
                 int tmp_Ch_ID = fbx_Ch->Ch_ID;
-        
+   //     cout<<"tmp_Ch_ID " <<tmp_Ch_ID << endl;
         //if(false && pileup_flags[tmp_Ch_ID] == 1) this->pdata += 3;
             
         //else
@@ -203,7 +203,7 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
             Sum_Time[fired_FEBEX_amount] = tmp_Sum_Time;
 	   // printf("Upper pdata=0x%08x\n",*this->pdata);
             this->pdata++; // Moves to rest of channel timestamp //
-            //cout<<"2 tmp_Sum_Time " <<tmp_Sum_Time <<" tmp_Ch_ID  "<< tmp_Ch_ID <<endl;
+           
             
 	  // printf("Lower pdata=0x%08x\n",*this->pdata);
 	   

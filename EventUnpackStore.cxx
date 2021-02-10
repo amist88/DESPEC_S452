@@ -173,7 +173,6 @@ void  EventUnpackStore::Clear(Option_t *t)
         ZERO_ARRAY(fFing_Lead_Down);
         
         ///Fatima Tamex
-        ZERO_ARRAY(fFat_Strip_N);
         ZERO_ARRAY(fFat_PMT_Lead_N);
         ZERO_ARRAY(fFat_PMT_Trail_N);
         ZERO_ARRAY(fFat_Lead_PMT);

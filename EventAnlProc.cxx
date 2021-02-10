@@ -1806,7 +1806,7 @@ if(Fatmult > 0){
        
        hGe_dTgammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_dT","Germanium Gamma-Gamma dT",400,-200,200);
        
-       hGe_CFdT_gammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_dT","Germanium Gamma-Gamma dT",400,-200,200);
+       hGe_CFdT_gammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_CF_dT","Germanium Gamma-Gamma dT",400,-200,200);
     
       for (int i=0; i<Germanium_MAX_DETS; i++)
       {
