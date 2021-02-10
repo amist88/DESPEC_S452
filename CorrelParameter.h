@@ -49,7 +49,7 @@ public:
  Int_t GBDG_FRS_Gate;
  
  Float_t GAidaImpDecT_Low, GAidaImpDecT_High;
- Int_t GAidaImpDecT_HBin;
+ Float_t GAidaImpDecT_HBin;
  
  Int_t GAidaFB_dT, GAidaFB_dE;
  
