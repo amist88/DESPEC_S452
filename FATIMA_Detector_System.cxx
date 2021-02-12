@@ -640,14 +640,15 @@ bool FATIMA_Detector_System::wired_TDC(int board_id,int ch_num){
 //det_ids_TDC/det_ids_QDC has to
 //be set correctly before calling these cal / gm functions
 void FATIMA_Detector_System::Calibrate_QDC(int id){
-    if (gain_match_used){
+    
+   // if (gain_match_used){
         QLong[id] = FATIMA_E_CALIB->Calibrate(QLong_Raw[id], det_ids_QDC[id]);
-       
-    }
-   else{
-        QLong[id] = QLong_Raw[id];
-        
-   }
+      // cout<<" 1QLong[id] " << QLong[id] << " QLong_Raw[id] " <<QLong_Raw[id] << endl;
+   // }
+  // else{
+     //   QLong[id] = QLong_Raw[id];
+      //  cout<<" 2QLong[id] " << QLong[id] << " QLong_Raw[id] " <<QLong_Raw[id] << endl;
+  // }
     QDC_Time_Coarse[id] = FATIMA_T_CALIB->Calibrate_QDC(QDC_Time_Coarse[id], det_ids_TDC[id]);
     QDC_Time_Fine[id] = FATIMA_T_CALIB->Calibrate_QDC(QDC_Time_Fine[id], det_ids_TDC[id]);
 

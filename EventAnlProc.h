@@ -466,6 +466,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hFAT_Energy[FAT_MAX_VME_CHANNELS];
             TH1 *hFAT_QDCdt[FAT_MAX_VME_CHANNELS];
             TH1 *hFAT_EnergySum;
+            TH1 *hFAT_EnergySum_Large;
             TH1 *hFAT_hits_QDC;
             TH1 *hFAT_TDCdt_refCha[FAT_MAX_VME_CHANNELS];
             TH1 *hFat_SC41L_TDC_dT[FAT_MAX_VME_CHANNELS];

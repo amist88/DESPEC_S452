@@ -702,9 +702,9 @@ void EventAnlProc::Make_FRS_Histos(){
       hID_Z1_AoQ_zsame_dEdegZgate[i] = MakeTH2('I', Form("FRS/ID_Gated/Z1AoQ/Z1AoQ_dEdegated/ID_Z1_AoQ_zsame_cdEdegZ%d",i), Form("ID_Z1_AoQ_zsame_cdEdegZ%d",i),1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music41");
       
       
-      hID_Z1_AoQcorr_dEdegZgate[i] = MakeTH2('I', Form("FRS/ID_Gated/Z1AoQ/Z1AoQ_dEdegated/AoQcorr/ID_Z1_AoQcorr_cdEdegZ%d",i), Form("ID_Z1_AoQcorr_cdEdegZ%d",i),1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music41");
+      hID_Z1_AoQcorr_dEdegZgate[i] = MakeTH2('I', Form("FRS/ID_Gated/Z1AoQ/Z1AoQ_dEdegated/AoQcorr/ID_Z1_AoQcorr_dEdegZ%d",i), Form("ID_Z1_AoQcorr_cdEdegZ%d",i),1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music41");
       
-        hID_Z1_AoQcorr_dEdegZgate[i] = MakeTH2('I', Form("FRS/ID_Gated/Z1AoQ/Z1AoQ_dEdegated/zsame/ID_Z1_AoQcorr_zsame_cdEdegZ%d",i), Form("ID_Z1_AoQcorr_zsame_cdEdegZ%d",i),1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", " Z music41");
+    
       
         }
       ///////////////////////////////////////////////////////
@@ -774,7 +774,7 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
             }
     
         ///GATE: ID vs x2AoQ
-     for(int i=0; i<8; i++){
+     for(int i=0; i<MAX_FRS_GATE; i++){
       if(cID_x2AoQ[i]->Test(FRS_AoQ, FRS_ID_x2)==true)
         {
           pOutput->pFRS_x2AoQ_pass[i] = true;
@@ -795,7 +795,7 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
             }
      }
         ///GATE: ID vs x4AoQ
-        for(int i=0; i<8; i++){
+        for(int i=0; i<MAX_FRS_GATE; i++){
       if(cID_x4AoQ[i]->Test(FRS_AoQ, FRS_ID_x4)==true)
         {
                 pOutput->pFRS_x4AoQ_pass[i] = true;
@@ -806,7 +806,7 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
                 hID_dEdegoQ_Z1_X4AoQgate[i]->Fill(FRS_z,FRS_dEdegoQ);
             }
         }
-        for(int i=0; i<8; i++){
+        for(int i=0; i<MAX_FRS_GATE; i++){
           ///GATE: Z1 vs Z2
             if(cID_Z_Z2gate[i]->Test(FRS_z, FRS_z2)==true)
             {
@@ -848,7 +848,7 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
         }
      
         ///GATE: AoQ vs Z
-        for(int g=0; g<8; g++){
+        for(int g=0; g<MAX_FRS_GATE; g++){
        if( cID_Z_AoQ[g]->Test(FRS_AoQ, FRS_z)==true){
           pOutput->pFRS_ZAoQ_pass[g] =true;
           
@@ -860,14 +860,14 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
         }
         
          ///High charge states
-      for(int g=0; g<4; g++){
+      for(int g=0; g<MAX_FRS_GATE; g++){
       if(cID_dEdeg_Z1[g]->Test(FRS_z,FRS_dEdeg)==true){ // dEdeg_vs_Z check
         hID_Z1_AoQ_dEdegZgate[g]->Fill(FRS_AoQ, FRS_z);;
         hID_Z1_AoQcorr_dEdegZgate[g]->Fill(FRS_AoQ_corr, FRS_z);
    
     if(fabs(FRS_z2-FRS_z)<0.4){ // in addition Z same
       hID_Z1_AoQ_zsame_dEdegZgate[g]->Fill(FRS_AoQ, FRS_z);
-      hID_Z1_AoQcorr_zsame_dEdegZgate[g]->Fill(FRS_AoQ_corr, FRS_z);
+     // hID_Z1_AoQcorr_zsame_dEdegZgate[g]->Fill(FRS_AoQ_corr, FRS_z);
             }
         }
       }         
@@ -1667,7 +1667,8 @@ void EventAnlProc::Make_Fatima_Histos(){
    
   }
 
-    hFAT_EnergySum = MakeTH1('D', "FATIMA_VME/Energy/Fat_VME_EnergySum", "LaBr Energy (all detectors)",4000,0,4000);
+    hFAT_EnergySum = MakeTH1('D', "FATIMA_VME/Energy/Fat_VME_EnergySum", "LaBr Energy (all detectors)",2000,0,4000);
+    hFAT_EnergySum_Large = MakeTH1('D', "FATIMA_VME/Energy/Fat_VME_EnergySum_LargeRange", "LaBr Energy (all detectors)",20000,0,40000);
     hFAT_hits_QDC       = MakeTH1('D', "FATIMA_VME/Stats/QDC_FAThits", "FATIMA QDC hit pattern",50,0,50);
     hFAT_hits_TDC       = MakeTH1('D', "FATIMA_VME/Stats/TDC_FAThits", "FATIMA TDC hit pattern",50,0,50);
     hFAT_Multipl       = MakeTH1('D', "FATIMA_VME/Stats/Fatima_VME_Multiplicity", "FATIMA TDC Multiplicity",50,0,50);
@@ -1707,6 +1708,7 @@ if(Fatmult > 0){
       ///Fatima Energy 
       hFAT_Energy[Fat_QDC_ID[i]]->Fill(Fat_QDC_E[i]);    
       hFAT_EnergySum->Fill(Fat_QDC_E[i]);
+      hFAT_EnergySum_Large->Fill(Fat_QDC_E[i]);
       
           
          ///Hit patterns
@@ -1788,8 +1790,8 @@ if(Fatmult > 0){
       hGe_SC41L_digi = MakeTH1('I',"Germanium/SCI41/Germanium_SC41L_Digi","Germanium SC41 Left",5000,0,5000);
       hGe_SC41R_digi = MakeTH1('I',"Germanium/SCI41/Germanium_SC41R_Digi","Germanium SC41 Right",5000,0,5000);
       
-      hGe_ESum_largerange_OF = MakeTH1('I',"Germanium/Sum/Germanium_ESum_largerange_OF","Germanium Energy Sum (Overflow)",5000,0,5000);
-      hGe_ESum_largerange_PU = MakeTH1('I',"Germanium/Sum/Germaniumrmanium_ESum_largerange_PU","Germanium Energy Sum (Pileup)",5000,0,5000);
+      hGe_ESum_largerange_OF = MakeTH1('I',"Germanium/Sum/Germanium_largerange_OF","Germanium Energy Sum (Overflow)",5000,0,5000);
+      hGe_ESum_largerange_PU = MakeTH1('I',"Germanium/Sum/Germanium_largerange_PU","Germanium Energy Sum (Pileup)",5000,0,5000);
       hGe_Hit_Pat = MakeTH1('I',"Germanium/Stats/Germanium_Hit_Pat","Germanium Hit Pattern",Germanium_MAX_HITS,0,Germanium_MAX_HITS);
       
       hGe_Chan_E_Mat = MakeTH2('D',"Germanium/Sum/Germanium_E_Mat","Germanium Energy-Energy Matrix",2000,0,2000,2000,0,2000);
@@ -1847,14 +1849,14 @@ if(Fatmult > 0){
               pOutput->pGePileUp[i]=GePileUp[i];
               pOutput->pGeOverFlow[i]=GeOverFlow[i];
            // Skip pileup/overflow events
-           if (GePileUp[i] && (det * Germanium_CRYSTALS + crys)<24)
+           if (GePileUp[i] && (det!=Germanium_SC41_Det  || det!=Germanium_SC41_Det_Digi || det!=Germanium_TimeMachine_Det))
            {
               hGe_ESum_largerange_PU->Fill(GeE_Cal[i]);
               continue;
    
             }
   
-           if (GeOverFlow[i]&& (det * Germanium_CRYSTALS + crys)<24)
+           if (GeOverFlow[i]&& (det!=Germanium_SC41_Det  || det!=Germanium_SC41_Det_Digi || det!=Germanium_TimeMachine_Det))
            {
              hGe_ESum_largerange_OF->Fill(GeE_Cal[i]);
              continue;

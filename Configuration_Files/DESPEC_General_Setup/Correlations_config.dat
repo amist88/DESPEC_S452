@@ -38,8 +38,7 @@
 ## dT Germanium-FRS White Rabbit ##
 -1000 20000
 
-## dT Germanium-SCI41 ##
--1000 20000
+# dT (Fat/Ge T - SC41 T) is defined in Configuration_Files/2D_Gates/dT_Det_SC41.txt ##
 
 ## Gamma-Gamma Germanium Time gate (Low, High (ns))
 -50 50

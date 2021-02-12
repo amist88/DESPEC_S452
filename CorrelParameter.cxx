@@ -33,8 +33,8 @@ CorrelParameter::CorrelParameter()
     
     GFRS_Ge_TLow = 0;
     GFRS_Ge_THigh = 0;
-    GGe_SCI41_Low=0;
-    GGe_SCI41_High=0;
+//     GGe_SCI41_Low=0;
+//     GGe_SCI41_High=0;
     GGe1_Ge2_Low =0;
     GGe1_Ge2_High =0;
     GGe1_Ge2_HistoBin =0;
@@ -123,8 +123,8 @@ CorrelParameter::CorrelParameter(const Text_t* name)
          
          GFRS_Ge_TLow = -1000;
          GFRS_Ge_THigh = 1000;
-         GGe_SCI41_Low=-20000;
-         GGe_SCI41_High=20000;
+//          GGe_SCI41_Low=-20000;
+//          GGe_SCI41_High=20000;
          GLongIso_PID_Gate=0;
          GGe1_Ge2_Low= -20000;
          GGe1_Ge2_High = 20000;
@@ -192,8 +192,8 @@ cout << "CorrelParameter - reading from Configuration_Files/DESPEC_General_Setup
        if(IsData(file)) file >> GFRS_AIDA_TLow >>GFRS_AIDA_THigh;
        ///FRS Galileo WR Time Gate
        if(IsData(file)) file >> GFRS_Ge_TLow >>GFRS_Ge_THigh;
-       ///FRS Galileo WR Time Gate
-       if(IsData(file)) file >> GGe_SCI41_Low >>GGe_SCI41_High;
+//        ///FRS Galileo WR Time Gate
+//        if(IsData(file)) file >> GGe_SCI41_Low >>GGe_SCI41_High;
        /// Gamma-Gamma Germanium Time gate 
         if(IsData(file)) file >> GGe1_Ge2_Low >>GGe1_Ge2_High;
        /// Gamma-Gamma Germanium Histogram Size
@@ -292,7 +292,7 @@ Int_t CorrelParameter::PrintParameter(Text_t *buf, Int_t)
   cout << "\tGermanium-FRS WR Time Gate:: "<< GFRS_Ge_TLow <<" -- " <<  GFRS_Ge_THigh <<  " ns " <<endl;
   
   
-   cout << "\tGermanium-SCI41 Time Gate:: "<< GGe_SCI41_Low <<" -- " <<  GGe_SCI41_High <<  " ns " <<endl;
+  // cout << "\tGermanium-SCI41 Time Gate:: "<< GGe_SCI41_Low <<" -- " <<  GGe_SCI41_High <<  " ns " <<endl;
   
   cout<<" ==================================================================================="<<endl; 
   cout << "\tGermanium Gamma-Gamma Time gate::  "<< GGe1_Ge2_Low << " -- " <<  GGe1_Ge2_High <<" ns " <<  endl;
@@ -387,8 +387,8 @@ Bool_t CorrelParameter::UpdateFrom(TGo4Parameter *pp)
       
       GFRS_Ge_TLow = from->GFRS_Ge_TLow; 
       GFRS_Ge_THigh = from->GFRS_Ge_THigh; 
-      GGe_SCI41_Low = from->GGe_SCI41_Low; 
-      GGe_SCI41_High = from->GGe_SCI41_High; 
+//       GGe_SCI41_Low = from->GGe_SCI41_Low; 
+//       GGe_SCI41_High = from->GGe_SCI41_High; 
       GGe1_Ge2_Low = from->GGe1_Ge2_Low;
       GGe1_Ge2_High = from->GGe1_Ge2_High;
       GGe1_Ge2_HistoBin = from->GGe1_Ge2_HistoBin;
