@@ -108,6 +108,8 @@ public:
   Float_t       x_offset[7][2];     /*                          */
   Float_t       y_factor[7][4];     /* [mm/ch]                  */
   Float_t       y_offset[7][4];     /*                          */
+  
+ 
 
   Float_t       a_offset[7][4];
   Float_t       tdc1_factor[32];
@@ -120,8 +122,16 @@ public:
   Float_t lim_csum2[7][2];
   Float_t lim_csum3[7][2];
   Float_t lim_csum4[7][2];
+  
+   Float_t lim_dt[7][4][2];
+  Float_t lim_lt[7][2][2];
+  Float_t lim_rt[7][2][2];
+  Float_t lim_timeref[8][2];
+
 
   ClassDef(TTPCParameter,1)
+  
+  
 };
 // *************************************************************************
 

@@ -212,6 +212,7 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
 	   
             Chan_Time[fired_FEBEX_amount] = ((fbx_Ch_TS->chan_ts)+(tmp_ext_chan_ts<<32))*10; // in nanoseconds
             
+           
           // cout<<"fbx_Ch_TS->chan_ts " <<fbx_Ch_TS->chan_ts << " tmp_ext_chan_ts " <<tmp_ext_chan_ts << endl;
           // cout<<"Chan_Time[fired_FEBEX_amount] " <<Chan_Time[fired_FEBEX_amount]<< endl;
         
@@ -222,7 +223,8 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
             
             Chan_Energy[fired_FEBEX_amount] = fbx_Ch_En->chan_en;
            // cout<<"Chan_Energy[fired_FEBEX_amount] " <<Chan_Energy[fired_FEBEX_amount] << endl;
-            Chan_CF[fired_FEBEX_amount] = fbx_Ch_En->cf;
+             Chan_CF[fired_FEBEX_amount] = 10.0*((tmp_ext_chan_ts<<32)+(fbx_Ch_En->cf)/64.0);
+            
            // if(Chan_CF[fired_FEBEX_amount]!=0)cout<<"Chan_CF[fired_FEBEX_amount] " <<Chan_CF[fired_FEBEX_amount]<< endl;
                        // Sign extend the 24-bit energy so negative energies work properly
             if (fbx_Ch_En->chan_en & 0x00800000)

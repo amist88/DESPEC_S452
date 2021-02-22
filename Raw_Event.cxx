@@ -146,7 +146,10 @@ void Raw_Event::set_DATA_SCI_dT(Int_t FRS_dt_21l_21r, Int_t FRS_dt_41l_41r,
 
 
 }
-void Raw_Event::set_DATA_SCI_ToF(Float_t FRS_sci_tofll2,Float_t FRS_sci_tofll3,Float_t FRS_sci_tof2,Float_t FRS_sci_tofrr2,Float_t FRS_sci_tofrr3,Float_t FRS_sci_tof3){
+void Raw_Event::set_DATA_SCI_ToF(Float_t FRS_sci_tofll2,Float_t FRS_sci_tofll3,Float_t FRS_sci_tofll5, Float_t FRS_sci_tof2,Float_t FRS_sci_tofrr2,Float_t FRS_sci_tofrr3, Float_t FRS_sci_tofrr5, Float_t FRS_sci_tof3,Float_t FRS_sci_tof5,Float_t FRS_sci_tof2_calib,Float_t FRS_sci_tof3_calib, Float_t FRS_sci_tof5_calib){
+    
+   // (sci_tofll2, sci_tofll3, sci_tofll5, sci_tof2, sci_tofrr2, sci_tofrr3, sci_tofrr5, sci_tof3,sci_tof5);
+    
     sci_tofll2 = 0;
     sci_tofll3 = 0;
     sci_tof2   = 0;
@@ -154,16 +157,25 @@ void Raw_Event::set_DATA_SCI_ToF(Float_t FRS_sci_tofll2,Float_t FRS_sci_tofll3,F
     sci_tofrr3 = 0;
     sci_tof3   = 0;
     
+    sci_tof2_calib   = 0;
+    sci_tof3_calib   = 0;
+    sci_tof5_calib   = 0;
+    
     
     sci_tofll2 = FRS_sci_tofll2;
     sci_tofll3 = FRS_sci_tofll3;
+    sci_tofll5 = FRS_sci_tofll5;
     sci_tof2   = FRS_sci_tof2;
     sci_tofrr2 = FRS_sci_tofrr2;
     sci_tofrr3 = FRS_sci_tofrr3;
+    sci_tofrr5 = FRS_sci_tofrr5;
     sci_tof3   = FRS_sci_tof3;
-
+    sci_tof5   = FRS_sci_tof5;
+    sci_tof2_calib   = FRS_sci_tof2_calib;
+    sci_tof3_calib   = FRS_sci_tof3_calib;
+    sci_tof5_calib   = FRS_sci_tof5_calib;
 }
-void Raw_Event::set_DATA_TPC(Int_t** FRS_TPC_lt,Int_t** FRS_TPC_rt,Float_t* FRS_TPC_x, Float_t* FRS_TPC_y ,Float_t FRS_TPC_x0,Float_t FRS_TPC_x1){
+void Raw_Event::set_DATA_TPC(Int_t*** FRS_TPC_lt,Int_t*** FRS_TPC_rt,Float_t* FRS_TPC_x, Float_t* FRS_TPC_y ,Float_t FRS_TPC_x0,Float_t FRS_TPC_x1){
  
     TPC_x0 = 0;
     TPC_x1 = 0;
@@ -171,16 +183,21 @@ for(int i=0; i<7; i++){
         TPC_x[i] = 0;
         TPC_y[i] = 0;
          for(int j=0; j<2; j++){
-            TPC_lt[i][j] = 0;
-            TPC_rt[i][j] = 0;
+             for(int k=0; k<64; k++){
+                TPC_lt[i][j][k] = 0;
+                TPC_rt[i][j][k] = 0;
+             }
         }
     }
      for(int i=0; i<7; i++){
         TPC_x[i] = FRS_TPC_x[i];
         TPC_y[i] = FRS_TPC_y[i];
         for(int j=0; j<2; j++){
-         TPC_lt[i][j] =  FRS_TPC_lt[i][j];
-         TPC_rt[i][j] =  FRS_TPC_rt[i][j];
+            for(int k=0; k<64; k++){
+         TPC_lt[i][j][k] =  FRS_TPC_lt[i][j][k];
+         TPC_rt[i][j][k] =  FRS_TPC_rt[i][j][k];
+                
+            }
         }
     }
     TPC_x0 = FRS_TPC_x0;
@@ -197,8 +214,7 @@ void Raw_Event::set_DATA_ID_2_4(Float_t FRS_ID_x2,Float_t FRS_ID_y2,Float_t FRS_
     ID_y4 = 0;
     ID_a4 = 0;
     ID_b4 = 0;
-   
-    
+
     ID_x2 = FRS_ID_x2;
     ID_y2 = FRS_ID_y2;
     ID_a2 = FRS_ID_a2;
@@ -286,7 +302,24 @@ void Raw_Event::set_DATA_VFTX(Double_t vftx_21l, Double_t vftx_21r,Double_t vftx
      TRaw_vftx[i] = vftx_t[i];   
     }
 }
-void Raw_Event::set_DATA_ID_MHTDC(Float_t id_mhtdc_aoq,Float_t id_mhtdc_aoq_corr, Float_t id_mhtdc_z1,Float_t id_mhtdc_z2, Float_t id_mhtdc_dEdeg,Float_t id_mhtdc_dEdegoQ, Float_t id_mhtdc_beta, Float_t id_mhtdc_tof4121, Float_t id_mhtdc_tof4221){
+
+void Raw_Event::set_DATA_RAW_MHTDC(Float_t raw_mhtdc_sc21lr_dt,Float_t raw_mhtdc_sc21lr_x,Float_t raw_mhtdc_sc22lr_dt,Float_t raw_mhtdc_sc22lr_x,Float_t raw_mhtdc_sc41lr_dt,Float_t raw_mhtdc_sc41lr_x,Float_t raw_mhtdc_sc42lr_dt,Float_t raw_mhtdc_sc42lr_x){
+    
+    Raw_mhtdc_sc21lr_dt = raw_mhtdc_sc21lr_dt;
+    Raw_mhtdc_sc21lr_x = raw_mhtdc_sc21lr_x;
+    Raw_mhtdc_sc22lr_dt = raw_mhtdc_sc22lr_dt;
+    Raw_mhtdc_sc22lr_x = raw_mhtdc_sc22lr_x;
+    Raw_mhtdc_sc41lr_dt = raw_mhtdc_sc41lr_dt;
+    Raw_mhtdc_sc41lr_x = raw_mhtdc_sc41lr_x;
+    Raw_mhtdc_sc42lr_dt = raw_mhtdc_sc42lr_dt;
+    Raw_mhtdc_sc42lr_x = raw_mhtdc_sc42lr_x;
+       
+    }
+
+void Raw_Event::set_DATA_ID_MHTDC(Float_t id_mhtdc_aoq,Float_t id_mhtdc_aoq_corr, Float_t id_mhtdc_z1,Float_t id_mhtdc_z2, Float_t id_mhtdc_dEdeg,Float_t id_mhtdc_dEdegoQ, Float_t id_mhtdc_beta, Float_t id_mhtdc_tof4121, Float_t id_mhtdc_tof4221, Float_t id_mhtdc_tof4122){
+    
+  //  (id_mhtdc_aoq_s2s4, id_mhtdc_aoq_corr_s2s4, id_mhtdc_z_music41, id_mhtdc_z_music42, id_mhtdc_dEdeg, id_mhtdc_dEdegoQ, id_mhtdc_beta_s2s4, mhtdc_tof4121, mhtdc_tof4221,mhtdc_tof4122);
+    
     ID_mhtdc_AoQ = id_mhtdc_aoq;
     ID_mhtdc_AoQ_corr = id_mhtdc_aoq_corr;
     ID_mhtdc_Z1 = id_mhtdc_z1;
@@ -296,6 +329,7 @@ void Raw_Event::set_DATA_ID_MHTDC(Float_t id_mhtdc_aoq,Float_t id_mhtdc_aoq_corr
     ID_mhtdc_Beta = id_mhtdc_beta;
     ID_mhtdc_tof4121 = id_mhtdc_tof4121;
     ID_mhtdc_tof4221 = id_mhtdc_tof4221;
+    ID_mhtdc_tof4122 = id_mhtdc_tof4122;
    
 //          ID_mhtdc_AoQ = id_mhtdc_aoq;
 //          ID_mhtdc_Z1 = id_mhtdc_z1;
@@ -418,26 +452,26 @@ void Raw_Event::set_DATA_FINGER(int* it,double** Edge_Coarse,double** Edge_fine,
 //---------------------------------------PLASTIC VME  ------------------------------------------------//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void Raw_Event::set_DATA_PLASTIC_VME(int QDC_ite, int TDC_ite, double* VME_QDC_Dat1, double* VME_QDC_Dat2, int* VME_QDC_Chan, double* VME_TDC_Dat, int* VME_TDC_Chan){
-     QDC_IT=0;
-    this-> QDC_IT = QDC_ite;
-    this->TDC_IT = TDC_ite;
-    for (int i = 0; i<QDC_IT; i++){
-    this->VME_QDC_DAT1[i] = VME_QDC_Dat1[i];
-    this->VME_QDC_DAT2[i] = VME_QDC_Dat2[i];
-    this->VME_QDC_CHA[i] = VME_QDC_Chan[i];
-   
-      }
-
-    for(int j=0; j<TDC_IT; j++) {
-
-    this->VME_TDC_CHA[j] = VME_TDC_Chan[j];
-    this->VME_TDC_DAT[j] = VME_TDC_Dat[j];
-
-
-         }
-       Event_Type=2;
-        }
+// void Raw_Event::set_DATA_PLASTIC_VME(int QDC_ite, int TDC_ite, double* VME_QDC_Dat1, double* VME_QDC_Dat2, int* VME_QDC_Chan, double* VME_TDC_Dat, int* VME_TDC_Chan){
+//      QDC_IT=0;
+//     this-> QDC_IT = QDC_ite;
+//     this->TDC_IT = TDC_ite;
+//     for (int i = 0; i<QDC_IT; i++){
+//     this->VME_QDC_DAT1[i] = VME_QDC_Dat1[i];
+//     this->VME_QDC_DAT2[i] = VME_QDC_Dat2[i];
+//     this->VME_QDC_CHA[i] = VME_QDC_Chan[i];
+//    
+//       }
+// 
+//     for(int j=0; j<TDC_IT; j++) {
+// 
+//     this->VME_TDC_CHA[j] = VME_TDC_Chan[j];
+//     this->VME_TDC_DAT[j] = VME_TDC_Dat[j];
+// 
+// 
+//          }
+//        Event_Type=2;
+//         }
 /*
     void Raw_Event::set_DATA_SCALER(int Scaler_ite,  double* Scaler_Dat){
 
@@ -567,20 +601,20 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------- SCALERS  ------------------------------------------------//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void Raw_Event::set_DATA_SCALER(int Scaler_ite,  double* Scaler_Dat){
+//   void Raw_Event::set_DATA_SCALER(int Scaler_ite,  double* Scaler_Dat){
+// // 
+//      
+//     //  if(Scaler_Used==true){
+//           
+//         this->SCALER_ITERATOR = Scaler_ite;
+//         
+//         for(int i=0; i<Scaler_ite; i++) {
+//         this->SCALER_DATA[i] = Scaler_Dat[i];
+//          }
 // 
-     
-    //  if(Scaler_Used==true){
-          
-        this->SCALER_ITERATOR = Scaler_ite;
-        
-        for(int i=0; i<Scaler_ite; i++) {
-        this->SCALER_DATA[i] = Scaler_Dat[i];
-         }
-
-    Event_Type=2;
-      //  }
-  }
+//     Event_Type=2;
+//       //  }
+//   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------- FATIMA TAMEX  ------------------------------------------------//
@@ -696,10 +730,16 @@ Int_t Raw_Event::get_FRS_dt_21r_81r(){return dt_21r_81r;}
 
 Float_t Raw_Event::get_FRS_tofll2(){return sci_tofll2;}
 Float_t Raw_Event::get_FRS_tofll3(){return sci_tofll3;}
-Float_t Raw_Event::get_FRS_tof2(){return sci_tof2;}
+Float_t Raw_Event::get_FRS_tofll5(){return sci_tofll5;}
 Float_t Raw_Event::get_FRS_tofrr2(){return sci_tofrr2;}
 Float_t Raw_Event::get_FRS_tofrr3(){return sci_tofrr3;}
+Float_t Raw_Event::get_FRS_tofrr5(){return sci_tofrr5;}
+Float_t Raw_Event::get_FRS_tof2(){return sci_tof2;}
 Float_t Raw_Event::get_FRS_tof3(){return sci_tof3;}
+Float_t Raw_Event::get_FRS_tof5(){return sci_tof5;}
+Float_t Raw_Event::get_FRS_tof2_calib(){return sci_tof2_calib;}
+Float_t Raw_Event::get_FRS_tof3_calib(){return sci_tof3_calib;}
+Float_t Raw_Event::get_FRS_tof5_calib(){return sci_tof5_calib;}
 
 Float_t Raw_Event::get_FRS_x2(){return ID_x2;}
 Float_t Raw_Event::get_FRS_y2(){return ID_y2;}
@@ -713,8 +753,8 @@ Float_t Raw_Event::get_FRS_b4(){return ID_b4;}
 
 Float_t Raw_Event::get_FRS_tpcX(int i){return TPC_x[i];}
 Float_t Raw_Event::get_FRS_tpcY(int i){return TPC_y[i];}
-Int_t   Raw_Event::get_FRS_tpclt(int i,int j){return TPC_lt[i][j];}
-Int_t   Raw_Event::get_FRS_tpcrt(int i,int j){return TPC_rt[i][j];}
+Int_t   Raw_Event::get_FRS_tpclt(int i,int j,int k){return TPC_lt[i][j][k];}
+Int_t   Raw_Event::get_FRS_tpcrt(int i,int j,int k){return TPC_rt[i][j][k];}
 Float_t Raw_Event::get_FRS_tpcx0(){return TPC_x0;}
 Float_t Raw_Event::get_FRS_tpcx1(){return TPC_x1;}
 
@@ -756,6 +796,15 @@ Double_t Raw_Event::get_FRS_TRaw_vftx_41r(){return TRaw_vftx_41R;}
 Double_t Raw_Event::get_FRS_TRaw_vftx_42l(){return TRaw_vftx_42L;}
 Double_t Raw_Event::get_FRS_TRaw_vftx_42r(){return TRaw_vftx_42R;}
 Double_t Raw_Event::get_FRS_TRaw_vftx(int i){return TRaw_vftx[i];}
+
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_dt(){return Raw_mhtdc_sc21lr_dt;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_x(){return Raw_mhtdc_sc21lr_x;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_dt(){return Raw_mhtdc_sc22lr_dt;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_x(){return Raw_mhtdc_sc22lr_x;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc41lr_dt(){return Raw_mhtdc_sc41lr_dt;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc41lr_x(){return Raw_mhtdc_sc41lr_x;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc42lr_dt(){return Raw_mhtdc_sc42lr_dt;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc42lr_x(){return Raw_mhtdc_sc42lr_x;}
 
 Float_t Raw_Event::get_FRS_id_mhtdc_aoq(){return ID_mhtdc_AoQ;}
 Float_t Raw_Event::get_FRS_id_mhtdc_aoq_corr(){return ID_mhtdc_AoQ_corr;}
@@ -1006,16 +1055,16 @@ ULong64_t Raw_Event::get_WR(){return WR;}
     
     
 //------------------------------------------ bPlastic VME----------------------------------------//
- int Raw_Event::get_plastic_VME_QDC_fired(){return QDC_IT;}
- int Raw_Event::get_plastic_VME_TDC_fired(){return TDC_IT;}
- double Raw_Event::get_plastic_VME_QDC_dat1(int i){return VME_QDC_DAT1[i];}
- double Raw_Event::get_plastic_VME_QDC_dat2(int i){return VME_QDC_DAT2[i];}
- int Raw_Event::get_plastic_VME_QDC_cha(int i){return VME_QDC_CHA[i];}
- double Raw_Event::get_plastic_VME_TDC_dat(int i){return VME_TDC_DAT[i];}
- int Raw_Event::get_plastic_VME_TDC_cha(int i){return VME_TDC_CHA[i];}
+//  int Raw_Event::get_plastic_VME_QDC_fired(){return QDC_IT;}
+//  int Raw_Event::get_plastic_VME_TDC_fired(){return TDC_IT;}
+//  double Raw_Event::get_plastic_VME_QDC_dat1(int i){return VME_QDC_DAT1[i];}
+//  double Raw_Event::get_plastic_VME_QDC_dat2(int i){return VME_QDC_DAT2[i];}
+//  int Raw_Event::get_plastic_VME_QDC_cha(int i){return VME_QDC_CHA[i];}
+//  double Raw_Event::get_plastic_VME_TDC_dat(int i){return VME_TDC_DAT[i];}
+//  int Raw_Event::get_plastic_VME_TDC_cha(int i){return VME_TDC_CHA[i];}
 
- int Raw_Event::get_scaler_iterator(){return SCALER_ITERATOR;}
- double Raw_Event::get_scaler_data(int i){return SCALER_DATA[i];}
+//  int Raw_Event::get_scaler_iterator(){return SCALER_ITERATOR;}
+//  double Raw_Event::get_scaler_data(int i){return SCALER_DATA[i];}
 /*
 PLASTIC_VME_DataStruct* Raw_Event::PassPLASTIC_VME(){ return &PLASTIC_VME_Data;}
 

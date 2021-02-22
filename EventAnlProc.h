@@ -163,6 +163,10 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t  FRS_AoQ, FRS_AoQ_corr;
       Float_t  FRS_z, FRS_z2, FRS_z3;
       Float_t  FRS_dEdeg, FRS_dEdegoQ;
+      Float_t  FRS_AoQ_mhtdc, FRS_AoQ_corr_mhtdc;
+      Float_t  FRS_z_mhtdc, FRS_z2_mhtdc;
+      Float_t  FRS_dEdeg_mhtdc, FRS_dEdegoQ_mhtdc;
+      Float_t  FRS_beta_mhtdc;
       Float_t  FRS_timestamp, FRS_ts, FRS_ts2;
       bool FRS_spill;
       
@@ -503,6 +507,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hGe_SC41L_digi;
             TH1 *hGe_SC41R_digi;
             TH1 *hGe_Chan_Time_Diff[Germanium_MAX_DETS][Germanium_CRYSTALS];
+            TH1 *hGe_Chan_Time_Diff_CF[Germanium_MAX_DETS][Germanium_CRYSTALS];
             //TH1 *hGe_Time_Diff_vs_Energy[32];
             TH1 *hGe_ESum;
             TH1 *hGe_Mult;

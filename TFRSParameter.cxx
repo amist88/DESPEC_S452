@@ -410,7 +410,11 @@ ClassImp(TMWParameter)
 // TPC Parameters
   
 TTPCParameter::TTPCParameter() : TGo4Parameter("TTPCParameter") {
-  
+//     for(int i=0;i<8;i++){
+//     for(int j=0;j<2;j++){
+//         lim_timeref[i][j] = from->lim_timeref[i][j];
+//     }
+//   }
   //TPC 1 at S2 (TPC 21) in vaccuum
   x_factor[0][0] = 0.070623;
   x_factor[0][1] = 0.07248;

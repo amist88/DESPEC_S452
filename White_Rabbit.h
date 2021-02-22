@@ -16,7 +16,7 @@ class White_Rabbit{
 
 private:
 
-    const std::string names[7] = {"FRS","AIDA","PLASTIC","FATIMA","FATIMA_TAMEX","GALILEO","FINGER"};
+    const std::string names[7] = {"FRS","AIDA","PLASTIC","FATIMA","FATIMA_TAMEX","GERMANIUM","FINGER"};
     int increase;
     int DETECTORS[7];
     int ID[7];

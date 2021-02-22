@@ -621,7 +621,7 @@ Bool_t EventCorrelProc::BuildEvent(TGo4EventElement* dest)
     if(GAL_WR!=0){
      for(int g=0; g<Germanium_MAX_DETS; g++){
             for(int h=0; h<Germanium_CRYSTALS; h++){
-                if(g!=Germanium_SC41_Det||g!=Germanium_SC41_Det_Digi||g!=Germanium_TimeMachine_Det){
+                if(g!=Germanium_SC41_Det&&g!=Germanium_SC41_Det_Digi&&g!=Germanium_TimeMachine_Det){
                  
                     if (cInputMain->pGe_EAddback[g][h]>0) {
         GeE_Prm[Ge_mult_prompt] = cInputMain->pGe_EAddback[g][h];
@@ -834,14 +834,14 @@ Bool_t EventCorrelProc::BuildEvent(TGo4EventElement* dest)
                     for(int g=0; g<Germanium_MAX_DETS; g++){
                             for (int h=0; h<Germanium_CRYSTALS; h++){
 
-                          if(cInputMain->pGe_EAddback[g][h]>0 &&  (g!=Germanium_SC41_Det||g!=Germanium_SC41_Det_Digi||g!=Germanium_TimeMachine_Det)) {
+                          if(cInputMain->pGe_EAddback[g][h]>0 &&  (g!=Germanium_SC41_Det&&g!=Germanium_SC41_Det_Digi&&g!=Germanium_TimeMachine_Det)) {
                              GeE_Long[Ge_mult_long] = cInputMain->pGe_EAddback[g][h];
                              GeT_Long[Ge_mult_long] = cInputMain->pGe_T[g][h];
                             
                              Ge_mult_long++;
                           }
                                  
-                          if(cInputMain->pGe_EAddback[g][h]>10 && dT_frsge_long>0 &&( g!=Germanium_SC41_Det||g!=Germanium_SC41_Det_Digi||g!=Germanium_TimeMachine_Det )){
+                          if(cInputMain->pGe_EAddback[g][h]>10 && dT_frsge_long>0 &&( g!=Germanium_SC41_Det&&g!=Germanium_SC41_Det_Digi&&g!=Germanium_TimeMachine_Det )){
 
                              if(Ge_mult_long==1 && cInputMain->pGe_EAddback[g][h]>0){
            ///Note that Ge_FirstT_Long is not always necessarily the 'first' gamma (i.e. lowest time) since it loops over all detectors starting from 0
@@ -891,7 +891,7 @@ Bool_t EventCorrelProc::BuildEvent(TGo4EventElement* dest)
     
                 for(int g=0; g<Germanium_MAX_DETS; g++){
                     for(int h=0; h<Germanium_CRYSTALS; h++){
-                        if((g!=Germanium_SC41_Det||g!=Germanium_SC41_Det_Digi||g!=Germanium_TimeMachine_Det) && cInputMain->pGe_EAddback[g][h]>0){
+                        if((g!=Germanium_SC41_Det&&g!=Germanium_SC41_Det_Digi&&g!=Germanium_TimeMachine_Det) && cInputMain->pGe_EAddback[g][h]>0){
                              GeE_Prm_Long[Ge_mult_prompt] = cInputMain->pGe_EAddback[g][h];
                              GeT_Prm_Long[Ge_mult_prompt] = cInputMain->pGe_T[g][h];
                             Ge_mult_prompt++;
@@ -1788,7 +1788,7 @@ for(int i=0;i<MAX_FRS_GATE;i++){
           
             for(int g=0; g<Germanium_MAX_DETS; g++){
                     for (int h=0; h<Germanium_CRYSTALS; h++){
-                            if(cInputMain->pGe_EAddback[g][h]>0&& (g!=Germanium_SC41_Det||g!=Germanium_SC41_Det_Digi||g!=Germanium_TimeMachine_Det)){
+                            if(cInputMain->pGe_EAddback[g][h]>0&& (g!=Germanium_SC41_Det&&g!=Germanium_SC41_Det_Digi&&g!=Germanium_TimeMachine_Det)){
                                 hGe_BetaGamma->Fill(cInputMain->pGe_EAddback[g][h]); 
   
                 }
@@ -1816,7 +1816,7 @@ for(int i=0;i<MAX_FRS_GATE;i++){
                     for (int h=0; h<Germanium_CRYSTALS; h++){
                         
                         
-                 if(cInputMain->pGe_EAddback[g][h]>0&& (g!=Germanium_SC41_Det||g!=Germanium_SC41_Det_Digi||g!=Germanium_TimeMachine_Det) && lastdT_Gate[i]!=0){
+                 if(cInputMain->pGe_EAddback[g][h]>0&& (g!=Germanium_SC41_Det&&g!=Germanium_SC41_Det_Digi&&g!=Germanium_TimeMachine_Det) && lastdT_Gate[i]!=0){
                
                        hGe_BetaGamma_E[i]->Fill(cInputMain->pGe_EAddback[g][h]);    
                        hGe_BetaGamma_dT[i]->Fill(double(lastdT_Gate[i])/1e9); 

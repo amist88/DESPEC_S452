@@ -92,6 +92,16 @@ void  EventUnpackStore::Clear(Option_t *t)
    fFRS_z2 = 0;
    fFRS_dEdeg = 0;
    fFRS_dEdegoQ = 0;
+   
+   fFRS_AoQ_mhtdc= 0;
+   fFRS_AoQ_corr_mhtdc= 0;
+   fFRS_z_mhtdc= 0;
+   fFRS_z2_mhtdc= 0;
+   fFRS_dEdeg_mhtdc= 0;
+   fFRS_dEdegoQ_mhtdc= 0;
+   fFRS_beta_mhtdc= 0;
+   fFRS_tof4121_mhtdc= 0;
+   fFRS_tof4221_mhtdc= 0;
 //   fFRS_z3 = 0;
    /*fFRS_timestamp = 0;
    fFRS_ts = 0;

@@ -7,12 +7,16 @@
 #define WHITE_RABBIT_ENABLED 1
 
 ///Use FRS MHTDC for Analysis (1) or NIM TAC (0)
-#define MHTDC_OR_TAC 1
+#define MHTDC_OR_TAC 0
 ///Use FRS angle corrected A/Q for Analysis (1) or none-corrected (0)
-#define FRS_CORR 1
+#define FRS_CORR 0
 ///For Z1 Z2 AND X A/Q Gate: Use FRS X2 vs A/Q (1) OR X4 vs A/Q (0) 
 #define X2_or_X4 1
 
+#define FRS_MIN_AoQ 1.6
+#define FRS_MAX_AoQ 2.2
+#define FRS_MIN_Z 0
+#define FRS_MAX_Z 10
 
 ///Define number of FRS gates and Polygon Points
 #define MAX_FRS_GATE 8
@@ -31,8 +35,10 @@
 #define SC41R_FatVME  49
 #define SC41L_FatVME_Digi  48
 #define SC41R_FatVME_Digi  49
+
 #define FatVME_TimeMachineCh1 36
 #define FatVME_TimeMachineCh2 37
+#define FatVME_bPlast_MASTER 45
 ///FATIMA TAMEX
 #define FATIMA_TAMEX_MODULES 4
 #define FATIMA_TAMEX_HITS 50
@@ -77,18 +83,16 @@
 #define Germanium_CRYSTALS 3
 #define Germanium_MAX_HITS (Germanium_MAX_DETS * Germanium_CRYSTALS)
 ///Important for FEBEX
-#define Germanium_FEBEX_MODULES 3
+#define Germanium_FEBEX_MODULES 2
 #define Germanium_MAX_CHANNELS 49
 ///Define here where SC41 is plugged into FEBEX ("Detector" and "crystal" for mapping purposes) Use the germanium allocation file for mapping of this
-#define Germanium_SC41_Det 8
+#define Germanium_SC41_Det 7
 #define Germanium_SC41L_Crystal 0
 #define Germanium_SC41R_Crystal 1
-#define Germanium_SC41_Det_Digi 9
+#define Germanium_SC41_Det_Digi 7
 #define Germanium_SC41L_Crystal_Digi 0
 #define Germanium_SC41R_Crystal_Digi 1
-
-
-#define Germanium_TimeMachine_Det 10
+#define Germanium_TimeMachine_Det 1
 #define Germanium_TimeMachineCh1 0
 #define Germanium_TimeMachineCh2 1
 

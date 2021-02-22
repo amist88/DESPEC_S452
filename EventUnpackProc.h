@@ -83,7 +83,8 @@ using namespace std;
             Bool_t BuildEvent(TGo4EventElement* dest);
              void Process_AIDA_Event(EventUnpackStore* event);
 
-             ofstream WR_out;
+            
+             TIDParameter* frs_id;
 
 //            std::vector<AidaCluster> EventsToClusters(std::vector<AidaEvent> const&);
 //             AidaHit ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const&);
@@ -137,14 +138,16 @@ using namespace std;
 
     Float_t sci_l[12], sci_r[12], sci_e[12], sci_tx[12], sci_x[12];
 
-    Float_t sci_tofll2, sci_tofll3, sci_tof2, sci_tofrr2, sci_tofrr3, sci_tof3;
+    Float_t sci_tofll2,  sci_tofrr2, sci_tof2, sci_tofll3, sci_tofrr3, sci_tof3,sci_tofll5, sci_tofrr5, sci_tof5;
+    
+    Float_t sci_tof2_calib, sci_tof3_calib, sci_tof5_calib;
 
     Float_t ID_x2, ID_y2, ID_a2, ID_b2;
 
     Float_t ID_x4, ID_y4, ID_a4, ID_b4;
 
     Float_t TPC_X[7], TPC_Y[7];
-    Int_t TPC_LT[7][2], TPC_RT[7][2];
+    Int_t TPC_LT[7][2][64], TPC_RT[7][2][64];
     Float_t TPC_X0, TPC_X1;
 
 
@@ -159,6 +162,12 @@ using namespace std;
     Float_t AoQ, AoQ_corr;
 
     Float_t ID_z, ID_z2, ID_z3;
+    
+    Float_t AoQ_mhtdc, AoQ_corr_mhtdc;
+    
+    Float_t ID_z_mhtdc, ID_z2_mhtdc;
+    
+    Float_t beta_mhtdc;
     
     Float_t ID_tof4121_mhtdc, ID_tof4221_mhtdc;
 
@@ -225,10 +234,17 @@ using namespace std;
 
             TH1 *hSCI_TofLL2;
             TH1 *hSCI_TofLL3;
+            TH1 *hSCI_TofLL5;
             TH1 *hSCI_Tof2;
             TH1 *hSCI_TofRR2;
             TH1 *hSCI_TofRR3;
+            TH1 *hSCI_TofRR5;
             TH1 *hSCI_Tof3;
+            TH1 *hSCI_Tof5;
+            
+            TH1 *hSCI_Tof2_calib;
+            TH1 *hSCI_Tof3_calib;
+            TH1 *hSCI_Tof5_calib;
 
 			TH1* hSCI_dT_21l_41l;
 			TH1* hSCI_dT_21r_41r;
@@ -241,13 +257,20 @@ using namespace std;
 
 			TH1 *hID_AoQ;
             TH1 *hID_AoQ_corr;
-//             TH2I *hID_x2AoQ;
-//             TH2I *hID_Z_AoQ;
-//             TH2I *hID_Z_AoQ_zsame;
-//             TH2I *hID_Z_AoQ_corr;
+            
+            TH1 *hID_AoQ_mhtdc;
+            TH1 *hID_AoQ_corr_mhtdc;
+            TH1 *hID_beta_mhtdc;
+            
+            TH2 *hID_Z_AoQ_mhtdc;
+            TH2 *hID_Z_Z2_mhtdc;
+
 			TH1 *hID_Z;
             TH1 *hID_Z2;
             TH1 *hID_Z3;
+            
+            TH1 *hID_Z_mhtdc;
+            TH1 *hID_Z2_mhtdc;
 
             TH2 *hID_x2a2;
             TH2 *hID_y2b2;
@@ -301,6 +324,7 @@ using namespace std;
             TH2 *hMUSIC1_dE1dE2;
 
             TH2 *hMUSIC1_MUSIC2;
+
 
 			//Fatima histograms
 			//-general

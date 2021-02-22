@@ -1,10 +1,10 @@
 #include "Riostream.h"
 
-void setup_s452_03_191Ta_b()
+void setup_s533_10C_31_RealPET()
 {
   // look up analysis object and all parameters
 
-  DESPECAnalysis* an = dynamic_cast<DESPECAnalysis*> (TGo4Analysis::Instance());
+ DESPECAnalysis* an = dynamic_cast<DESPECAnalysis*> (TGo4Analysis::Instance());
   if (an==0) {
     cout << "!!!  Script should be run in FRS analysis" << endl;
     return;
@@ -58,11 +58,11 @@ void setup_s452_03_191Ta_b()
     return;
   }
 
-  TMRTOFMSParameter* mrtof = dynamic_cast<TMRTOFMSParameter*> (an->GetParameter("MRTOFMSPar"));
-  if (mrtof==0) {
-    cout << "!!!  Parameter MR-TOF-MSPar not found" << endl;
-    return;
-  }
+//   TMRTOFMSParameter* mrtof = dynamic_cast<TMRTOFMSParameter*> (an->GetParameter("MRTOFMSPar"));
+//   if (mrtof==0) {
+//     cout << "!!!  Parameter MR-TOF-MSPar not found" << endl;
+//     return;
+//   }
  /*
   TModParameter* ElecMod = dynamic_cast<TModParameter*>(an->GetParameter("ModPar"));
    */
@@ -79,26 +79,25 @@ void setup_s452_03_191Ta_b()
   frs->rho0[1]   = 1.; //S2-S4
   frs->rho0[2]   = 1.; //S4-S8
   frs->dispersion[0]    = -6.474266;// RUN81-TA2B-220CM 27.05.2016
-  frs->dispersion[1]    =  7.835;//focus set at 4 m at S4 //7.670 RUN81-TA2B-220CM 27.05.2016
+  frs->dispersion[1]    =  7.670;  // RUN81-TA2B-220CM 27.05.2016
   frs->magnification[1] =  1.18;   // RUN81-TA2B-220CM 27.05.2016
   frs->dispersion[2]    = 12.397;   //S2-S8 (gicosy sign definition)
   frs->magnification[2] =  1.829;   //S2-S8
   
-  //-----distances updated on 2020/Feb/20 -----
   //S2
   frs->dist_focS2 = 2012.5; // degrader disk position
   frs->dist_MW21  =  604.0;
   frs->dist_MW22  = 1782.5;
   frs->dist_SC21  = 1554.5;
-  frs->dist_SC22  = 2705.0; //measured on 2020/Feb/20 s467
+  frs->dist_SC22  = 2595.0; //BARB 2021 Feb Logbook  
   frs->dist_TPC21 =  604.0;
   frs->dist_TPC22 = 1782.5;
-  frs->dist_TPC23 = 2960.0; //measured on 2020/Feb/20 s467
-  frs->dist_TPC24 = 3985.0; //measured on 2020/Feb/20 s467
-  frs->dist_S2target = 2460.5; //for some experiments
+  frs->dist_TPC23 = 2915.0; //BARB 2021 Feb Logbook  
+  frs->dist_TPC24 = 3980.0; //BARB 2021 Feb Logbook
+  frs->dist_S2target = 2725.0; //BARB 2021 Feb Logbook  
 
   //S4
-  frs->dist_focS4   = 2349.0; //from SC411
+  frs->dist_focS4   = 3100.0; //BARB 2021 Feb
   frs->dist_SC41    = 2245.0;
   frs->dist_SC42    = 2620.0;
   frs->dist_SC43    = 4706.0;
@@ -117,22 +116,22 @@ void setup_s452_03_191Ta_b()
   frs->dist_SC81 = 0;
 
   id->x_s2_select   = 1; //1=tpc,2=sc21,3=sc22
-  id->tof_s4_select = 1; //1=sc21-41, 2=sc21-42, 3=sc22-41
+  id->tof_s4_select = 3; //1=sc21-41, 2=sc21-42, 3=sc22-41
   id->tof_s8_select = 1; //1=sc21-81, 2=sc22-81
   
-  //=============primary beam at S4 (2020/March)=============//
-  frs->primary_z = 82.;   
-  id->min_aoq_plot = 2.0;
-  id->max_aoq_plot = 2.8;
-  id->min_z_plot   = 45.0;
-  id->max_z_plot   = 90.0;
+  //=============115Te at S4 (2020/March)=============//
+  frs->primary_z = 6.;   
+  id->min_aoq_plot = 1.6;
+  id->max_aoq_plot = 2.2;
+  id->min_z_plot   = 0.0;
+  id->max_z_plot   = 10.0;
    
   // bfield (Tm) for new control system. (we put rho = 1)
-  //144Dy, S468 2020-april-11
-  frs->bfield[0] = 12.7471; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
-  frs->bfield[1] = 12.7471; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
-  frs->bfield[2] = 11.1099; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
-  frs->bfield[3] = 11.1099; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
+  //193W, S468 2020-april-11
+  frs->bfield[0] = 4.5388;//                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
+  frs->bfield[1] = 4.5388;//                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
+  frs->bfield[2] = 4.2371; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
+  frs->bfield[3] = 4.2371; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
   frs->bfield[4] = 99.999; // D5 (to ESR) not used
   frs->bfield[5] = 99.999; // D6 (to S8)
   
@@ -183,32 +182,44 @@ void setup_s452_03_191Ta_b()
   id->offset_z3  = 0.0 ;
   id->a2AoQCorr = 0.0012; //2020April12 JP
   id->a4AoQCorr = 0.0;
-  id->vel_a[0] =   15712.3; //  MUSIC41 velocity corr. S468
-  id->vel_a[1] =  -24957;   // 
-  id->vel_a[2] =   11630.2; // 
+
+  //  MUSIC41 velocity corr. S533
+  id->vel_a[0] =   4933.84; //  MUSIC41 velocity corr. s533
+  id->vel_a[1] =  -9943.62;   // 
+  id->vel_a[2] =   5664.88; // 
   id->vel_a[3] =   0.0;
-  id->vel_a2[0] =  15275.4 ; // MUSIC42 velocity corr. S468
-  id->vel_a2[1] = -23944.;
-  id->vel_a2[2] =  10891.9;
+
+// MUSIC42 velocity corr. S533
+  id->vel_a2[0] =  5124.7 ; 
+  id->vel_a2[1] = -10362.2;
+  id->vel_a2[2] =  5918.86;
   id->vel_a2[3] =  0.0;
+  
   id->vel_a3[0] =  13951.37; //MUSIC43 velocity corr. (old)
   id->vel_a3[1] = -38369.9;
   id->vel_a3[2] =  28396.46;
   id->vel_a3[3] =  0.0;
   
-  id->id_tofoff2 =  174492.;  // offset (ps) first fit S468 
-  id->id_path2   =  123195.;  // path/c (ps)
   id->id_tofoff3  = 175652.;   // [ps] guess
   id->id_path3    = 124420.;   // path/c [ps]
 
-  id->mhtdc_length_s2s4 = 37;
-  id->mhtdc_vel_a_music41[0]=15712.3;
-  id->mhtdc_vel_a_music41[1]=-24957; 
-  id->mhtdc_vel_a_music41[2]=11630.2; 
+  //TOF_SC41_SC21_TAC
+  id->id_tofoff2 =  325079.9;  // offset (ps) first fit S533 
+  id->id_path2   =  127972.3;  // path/c (ps)
+
+  //TOF_SC41_SC22_TAC
+  id->id_tofoff5 =  330995.7;  // offset (ps) first fit S533 
+  id->id_path5   =  134443.9;  // path/c (ps)
+
+  
+  id->mhtdc_length_s2s4 = 0.0;
+  id->mhtdc_vel_a_music41[0]=1.0;
+  id->mhtdc_vel_a_music41[1]=0.0;
+  id->mhtdc_vel_a_music41[2]=0.0;
   id->mhtdc_vel_a_music41[3]=0.0;
-  id->mhtdc_vel_a_music42[0]=15275.4 ;
-  id->mhtdc_vel_a_music42[1]=-23944.;
-  id->mhtdc_vel_a_music42[2]=10891.9;
+  id->mhtdc_vel_a_music42[0]=1.0;
+  id->mhtdc_vel_a_music42[1]=0.0;
+  id->mhtdc_vel_a_music42[2]=0.0;
   id->mhtdc_vel_a_music42[3]=0.0;
   id->mhtdc_offset_z_music41=0.0;
   id->mhtdc_offset_z_music42=0.0;
@@ -402,14 +413,14 @@ void setup_s452_03_191Ta_b()
   music->e2_gain[7]   = 1.;
 
   //MUSIC43
-  music->e3_off[0]   = 0.; //MUSIC3 offsets
-  music->e3_off[1]   = 0.;
-  music->e3_off[2]   = 0.;
-  music->e3_off[3]   = 0.;
-  music->e3_off[4]   = 0.;
-  music->e3_off[5]   = 0.;
-  music->e3_off[6]   = 0.;
-  music->e3_off[7]   = 0.;
+  music->e3_off[0]   = 2.; //MUSIC3 offsets
+  music->e3_off[1]   = 1.;
+  music->e3_off[2]   = 1.;
+  music->e3_off[3]   = 1.;
+  music->e3_off[4]   = 1.;
+  music->e3_off[5]   = 1.;
+  music->e3_off[6]   = 1.;
+  music->e3_off[7]   = 1.;
 
   music->e3_gain[0]   = 1.; // MUSIC3 gains
   music->e3_gain[1]   = 1.;
@@ -445,7 +456,7 @@ void setup_s452_03_191Ta_b()
   tpc->lim_timeref[6][0] = 2000.0; tpc->lim_timeref[6][1] = 48000.0;//time ref (---)
   tpc->lim_timeref[7][0] = 2000.0; tpc->lim_timeref[7][1] = 48000.0;//time ref (---)
 
-  // TPC 1 at S2 (TPC 21) in vaccuum ////2020/feb/29
+  // TPC 1 at S2 (TPC 21) in vaccuum //// (BARB 2021 Feb 15) 
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[0] = 1; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[0][0][0] = 2000.;  tpc->lim_dt[0][0][1] = 48000.0; //A11 drift time TDC cut
@@ -456,24 +467,24 @@ void setup_s452_03_191Ta_b()
   tpc->lim_rt[0][0][0] = 2000.;  tpc->lim_rt[0][0][1] = 48000.0; //DR1 time TDC cut
   tpc->lim_lt[0][1][0] = 2000.;  tpc->lim_lt[0][1][1] = 48000.0; //DL2 time TDC cut
   tpc->lim_rt[0][1][0] = 2000.;  tpc->lim_rt[0][1][1] = 48000.0; //DL2 time TDC cut
-  tpc->lim_csum1[0][0] = 10000.0;  tpc->lim_csum1[0][1] = 20000.0;
-  tpc->lim_csum2[0][0] = 10000.0;  tpc->lim_csum2[0][1] = 20000.0;
-  tpc->lim_csum3[0][0] = 10000.0;  tpc->lim_csum3[0][1] = 20000.0; 
-  tpc->lim_csum4[0][0] = 10000.0;  tpc->lim_csum4[0][1] = 20000.0;
-  tpc->x_offset[0][0] = -0.4;
-  tpc->x_offset[0][1] =  1.2;
-  tpc->x_factor[0][0] = 0.0088;
-  tpc->x_factor[0][1] = 0.0088;
-  tpc->y_offset[0][0] = -48.1;
-  tpc->y_offset[0][1] = -48.2;
-  tpc->y_offset[0][2] = -48.0;
-  tpc->y_offset[0][3] = -48.2;
+  tpc->lim_csum1[0][0] = 13700.0;  tpc->lim_csum1[0][1] = 14600.0;
+  tpc->lim_csum2[0][0] = 13900.0;  tpc->lim_csum2[0][1] = 14600.0;
+  tpc->lim_csum3[0][0] = 13500.0;  tpc->lim_csum3[0][1] = 14600.0; 
+  tpc->lim_csum4[0][0] = 13500.0;  tpc->lim_csum4[0][1] = 14600.0;
+  tpc->x_offset[0][0] = -0.4-0.5;
+  tpc->x_offset[0][1] =  1.2-0.5;
+  tpc->x_factor[0][0] = 0.00786;
+  tpc->x_factor[0][1] = 0.00786;
+  tpc->y_offset[0][0] = -48.1-7.5-1.0;
+  tpc->y_offset[0][1] = -48.2-8.5;
+  tpc->y_offset[0][2] = -48.0-9.0;
+  tpc->y_offset[0][3] = -48.2-8.5;
   tpc->y_factor[0][0] = 0.004;
   tpc->y_factor[0][1] = 0.004;
   tpc->y_factor[0][2] = 0.004;
   tpc->y_factor[0][3] = 0.004;
 
-  // TPC 2 at S2 (TPC 22) in vaccuum
+  // TPC 2 at S2 (TPC 22) in vaccuum (BARB 2021 Feb 15) 
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[1] = 1; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[1][0][0] = 2000.;  tpc->lim_dt[1][0][1] = 48000.0; //A11 drift time TDC cut
@@ -484,26 +495,26 @@ void setup_s452_03_191Ta_b()
   tpc->lim_rt[1][0][0] = 2000.;  tpc->lim_rt[1][0][1] = 48000.0; //DR1 time TDC cut
   tpc->lim_lt[1][1][0] = 2000.;  tpc->lim_lt[1][1][1] = 48000.0; //DL2 time TDC cut
   tpc->lim_rt[1][1][0] = 2000.;  tpc->lim_rt[1][1][1] = 48000.0; //DL2 time TDC cut
-  tpc->lim_csum1[1][0] = 10000.0;    tpc->lim_csum1[1][1] =  20000.0;
-  tpc->lim_csum2[1][0] = 10000.0;    tpc->lim_csum2[1][1] =  20000.0;
-  tpc->lim_csum3[1][0] = 10000.0;    tpc->lim_csum3[1][1] =  20000.0;
-  tpc->lim_csum4[1][0] = 10000.0;    tpc->lim_csum4[1][1] =  20000.0;
-  tpc->x_factor[1][0] = 0.0088;
-  tpc->x_factor[1][1] = 0.0088;
+  tpc->lim_csum1[1][0] = 17000.0;    tpc->lim_csum1[1][1] =  19200.0;
+  tpc->lim_csum2[1][0] = 17000.0;    tpc->lim_csum2[1][1] =  19200.0;
+  tpc->lim_csum3[1][0] = 17000.0;    tpc->lim_csum3[1][1] =  19200.0;
+  tpc->lim_csum4[1][0] = 17000.0;    tpc->lim_csum4[1][1] =  19200.0;
+  tpc->x_factor[1][0] = 0.0078;
+  tpc->x_factor[1][1] = 0.0075;
   tpc->y_factor[1][0] = 0.004;
   tpc->y_factor[1][1] = 0.004;
   tpc->y_factor[1][2] = 0.004;
   tpc->y_factor[1][3] = 0.004;
-  tpc->x_offset[1][0] = 1.2;
+  tpc->x_offset[1][0] = 1.2+1.0;
   tpc->x_offset[1][1] = 0.2;
-  tpc->y_offset[1][0] = -48.1;
-  tpc->y_offset[1][1] = -48.2;
-  tpc->y_offset[1][2] = -48.2;
-  tpc->y_offset[1][3] = -47.8;
+  tpc->y_offset[1][0] = -48.1-9.0;
+  tpc->y_offset[1][1] = -48.2-9.0;
+  tpc->y_offset[1][2] = -48.2-9.5;
+  tpc->y_offset[1][3] = -47.8-9.3;
 
-  // TPC 3 at S2 (TPC 23) in air
+  // TPC 3 at S2 (TPC 23) in air (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
-  tpc->id_tpc_timeref[2] = 1; ////(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
+  tpc->id_tpc_timeref[2] = 2; ////(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[2][0][0] = 2000.;  tpc->lim_dt[2][0][1] = 48000.0; //A11 drift time TDC cut
   tpc->lim_dt[2][1][0] = 2000.;  tpc->lim_dt[2][1][1] = 48000.0; //A12 drift time TDC cut
   tpc->lim_dt[2][2][0] = 2000.;  tpc->lim_dt[2][2][1] = 48000.0; //A21 drift time TDC cut
@@ -512,27 +523,27 @@ void setup_s452_03_191Ta_b()
   tpc->lim_rt[2][0][0] = 2000.;  tpc->lim_rt[2][0][1] = 48000.0; //DR1 time TDC cut
   tpc->lim_lt[2][1][0] = 2000.;  tpc->lim_lt[2][1][1] = 48000.0; //DL2 time TDC cut
   tpc->lim_rt[2][1][0] = 2000.;  tpc->lim_rt[2][1][1] = 48000.0; //DL2 time TDC cut
-  tpc->lim_csum1[2][0] = 10000.0;   tpc->lim_csum1[2][1] = 20000.0; //
-  tpc->lim_csum2[2][0] = 10000.0;   tpc->lim_csum2[2][1] = 20000.0;
-  tpc->lim_csum3[2][0] = 10000.0;   tpc->lim_csum3[2][1] = 20000.0;
-  tpc->lim_csum4[2][0] = 10000.0;   tpc->lim_csum4[2][1] = 20000.0;
-  tpc->x_offset[2][0] = 1.8; //
-  tpc->x_offset[2][1] = 0.2;
-  tpc->x_factor[2][0] = 0.0088;
-  tpc->x_factor[2][1] = 0.0088;
-  tpc->y_offset[2][0] = 48.4;
-  tpc->y_offset[2][1] = 48.5;
-  tpc->y_offset[2][2] = 48.4;
-  tpc->y_offset[2][3] = 48.1;
+  tpc->lim_csum1[2][0] = 13500.0;   tpc->lim_csum1[2][1] = 15000.0; //
+  tpc->lim_csum2[2][0] = 13500.0;   tpc->lim_csum2[2][1] = 15000.0;
+  tpc->lim_csum3[2][0] = 13500.0;   tpc->lim_csum3[2][1] = 15000.0;
+  tpc->lim_csum4[2][0] = 13500.0;   tpc->lim_csum4[2][1] = 15000.0;
+  tpc->x_offset[2][0] = 1.8+3.0; //
+  tpc->x_offset[2][1] = 0.2+2.0;
+  tpc->x_factor[2][0] = 0.0081;
+  tpc->x_factor[2][1] = 0.0077;
+  tpc->y_offset[2][0] = 48.4-1.0;
+  tpc->y_offset[2][1] = 48.5-1.0;
+  tpc->y_offset[2][2] = 48.4-1.0;
+  tpc->y_offset[2][3] = 48.1-1.0;
   tpc->y_factor[2][0] = -0.004;
   tpc->y_factor[2][1] = -0.004;
   tpc->y_factor[2][2] = -0.004;
   tpc->y_factor[2][3] = -0.004;
 
   
-  // TPC 4 at S2 (TPC 24) in air
+  // TPC 4 at S2 (TPC 24) in air (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
-  tpc->id_tpc_timeref[3] = 1; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
+  tpc->id_tpc_timeref[3] = 2; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->timeref_calibrun[3] = 1037.0; //sc21
   tpc->lim_dt[3][0][0] = 2000.;  tpc->lim_dt[3][0][1] = 48000.0; //A11 drift time TDC cut
   tpc->lim_dt[3][1][0] = 2000.;  tpc->lim_dt[3][1][1] = 48000.0; //A12 drift time TDC cut
@@ -542,24 +553,24 @@ void setup_s452_03_191Ta_b()
   tpc->lim_rt[3][0][0] = 2000.;  tpc->lim_rt[3][0][1] = 48000.0; //DR1 time TDC cut
   tpc->lim_lt[3][1][0] = 2000.;  tpc->lim_lt[3][1][1] = 48000.0; //DL2 time TDC cut
   tpc->lim_rt[3][1][0] = 2000.;  tpc->lim_rt[3][1][1] = 48000.0; //DL2 time TDC cut
-  tpc->lim_csum1[3][0] = 10000.0;    tpc->lim_csum1[3][1]= 20000.0; //
-  tpc->lim_csum2[3][0] = 10000.0;    tpc->lim_csum2[3][1] = 20000.0;
-  tpc->lim_csum3[3][0] = 10000.0;    tpc->lim_csum3[3][1] = 20000.0; //
-  tpc->lim_csum4[3][0] = 10000.0;    tpc->lim_csum4[3][1] = 20000.0;
-  tpc->x_offset[3][0] = 0.8;
-  tpc->x_offset[3][1] = -1.1;
-  tpc->x_factor[3][0] = 0.0088;
+  tpc->lim_csum1[3][0] = 17500.0;    tpc->lim_csum1[3][1]= 19500.0; //
+  tpc->lim_csum2[3][0] = 17500.0;    tpc->lim_csum2[3][1] = 19500.0;
+  tpc->lim_csum3[3][0] = 17500.0;    tpc->lim_csum3[3][1] = 19500.0; //
+  tpc->lim_csum4[3][0] = 17500.0;    tpc->lim_csum4[3][1] = 19500.0;
+  tpc->x_offset[3][0] = 0.8 + 3.0;
+  tpc->x_offset[3][1] = -1.1 +3.5;
+  tpc->x_factor[3][0] = 0.00782;
   tpc->x_factor[3][1] = 0.0088;
-  tpc->y_offset[3][0] = 48.2;
-  tpc->y_offset[3][1] = 48.4;
-  tpc->y_offset[3][2] = 48.1;
-  tpc->y_offset[3][3] = 48.6;
+  tpc->y_offset[3][0] = 48.2 +10.5;
+  tpc->y_offset[3][1] = 48.4 +10.5;
+  tpc->y_offset[3][2] = 48.1 +10.0;
+  tpc->y_offset[3][3] = 48.6 +10.0;
   tpc->y_factor[3][0] = -0.004;
   tpc->y_factor[3][1] = -0.004;
   tpc->y_factor[3][2] = -0.004;
   tpc->y_factor[3][3] = -0.004;
   
-  // TPC 5  at S4 (TPC 41) in air
+  // TPC 5  at S4 (TPC 41) in air (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[4] = 4; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[4][0][0] = 2000.;  tpc->lim_dt[4][0][1] = 48000.0; //A11 drift time TDC cut
@@ -574,20 +585,20 @@ void setup_s452_03_191Ta_b()
   tpc->lim_csum2[4][0] = 10000.0;    tpc->lim_csum2[4][1] = 20000.0;
   tpc->lim_csum3[4][0] = 10000.0;    tpc->lim_csum3[4][1] = 20000.0;
   tpc->lim_csum4[4][0] = 10000.0;    tpc->lim_csum4[4][1] = 20000.0;
-  tpc->x_offset[4][0] = -1.6;
-  tpc->x_offset[4][1] = -1.1;
-  tpc->x_factor[4][0] = 0.0088;
-  tpc->x_factor[4][1] = 0.0088;
-  tpc->y_offset[4][0] = 56.4;
-  tpc->y_offset[4][1] = 56.7;
-  tpc->y_offset[4][2] = 56.5;
-  tpc->y_offset[4][3] = 56.3;
+  tpc->x_offset[4][0] = -1.6-1.0;
+  tpc->x_offset[4][1] = -1.1-1.8;
+  tpc->x_factor[4][0] = 0.00794;
+  tpc->x_factor[4][1] = 0.00782;
+  tpc->y_offset[4][0] = 56.4-1.5;
+  tpc->y_offset[4][1] = 56.7-2.0;
+  tpc->y_offset[4][2] = 56.5-0.3;
+  tpc->y_offset[4][3] = 56.3-0.3;
   tpc->y_factor[4][0] = -0.004;
   tpc->y_factor[4][1] = -0.004;
   tpc->y_factor[4][2] = -0.004;
   tpc->y_factor[4][3] = -0.004;
 
-  //-------- TPC42 parameters (S468 2020Apr run_0389 Pb208) --------//
+  //-------- TPC42 parameters (BARB 2021 Feb 15)--------------
   // TPC 6 at S4 (TPC 42) in air
   tpc->id_tpc_timeref[5] = 4; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[5][0][0] = 2000.;  tpc->lim_dt[5][0][1] = 48000.0; //A11 drift time TDC cut
@@ -602,14 +613,14 @@ void setup_s452_03_191Ta_b()
   tpc->lim_csum2[5][0] = 10000.0;    tpc->lim_csum2[5][1] = 20000.0;
   tpc->lim_csum3[5][0] = 10000.0;    tpc->lim_csum3[5][1] = 20000.0;
   tpc->lim_csum4[5][0] = 10000.0;    tpc->lim_csum4[5][1] = 20000.0;
-  tpc->x_offset[5][0] = 2.0;
-  tpc->x_offset[5][1] = 1.7;
-  tpc->x_factor[5][0] = 0.0088;
-  tpc->x_factor[5][1] = 0.0088;
-  tpc->y_offset[5][0] = 56.5;
-  tpc->y_offset[5][1] = 57.3;
-  tpc->y_offset[5][2] = 56.8;
-  tpc->y_offset[5][3] = 56.4;
+  tpc->x_offset[5][0] = 2.0+1.2;
+  tpc->x_offset[5][1] = 1.7+0.5;
+  tpc->x_factor[5][0] = 0.0077;
+  tpc->x_factor[5][1] = 0.0078;
+  tpc->y_offset[5][0] = 56.5-1.5;
+  tpc->y_offset[5][1] = 57.3-1.5;
+  tpc->y_offset[5][2] = 56.8-2.6;
+  tpc->y_offset[5][3] = 56.4-2.6;
   tpc->y_factor[5][0] = -0.004;
   tpc->y_factor[5][1] = -0.004;
   tpc->y_factor[5][2] = -0.004;
@@ -664,6 +675,7 @@ void setup_s452_03_191Ta_b()
   tpc->a_offset[3][1] = 117.;
   tpc->a_offset[3][2] = 123.;
   tpc->a_offset[3][3] =  81.;
+
 
   //===========
   // Plastics
@@ -766,21 +778,21 @@ void setup_s452_03_191Ta_b()
   sci->tac_off[14] =  2152.6;  //SC81L-SC22L  // fix to 0
   sci->tac_off[15] = 2040.3;  //SC81R-SC22R  // fix to 0
   */
-  //2020/April/08 S468
-  sci->tac_factor[0]  = 10.5675; //SC21L-R [ps/ch]     >> ch0 of ADC
-  sci->tac_factor[1]  = 10.6968; //SC41L-R [ps/ch]     >> ch1 of ADC
-  sci->tac_factor[2]  = 11.1536; //SC41L-SC21L [ps/ch] >> ch5 of ADC
-  sci->tac_factor[3]  = 10.9765; //SC41R-SC21R [ps/ch] >> ch6 of ADC
-  sci->tac_factor[4]  = 10.5438; //SC42L-R             >> ch2 of ADC
-  sci->tac_factor[5]  = 10.8122; //SC42L-SC21L [ps/ch] >> ch8 of ADC
-  sci->tac_factor[6]  = 10.6187; //SC42R-SC21R [ps/ch] >> ch7 of ADC
-  sci->tac_factor[7]  = 11.0168; //SC43L-R [ps/ch]     >> ch3 of ADC
-  sci->tac_factor[8]  = 10.0000; //SC81L-R [ps/ch]     >> ch4 of ADC
-  sci->tac_factor[9]  = 20.0000; //SC81L-SC21L         >> ch9
-  sci->tac_factor[10] = 20.0000; //SC81R-SC21R         >> ch10
-  sci->tac_factor[11] = 10.5360; //SC22L-R             >> ch11
-  sci->tac_factor[12] = 10.0922; //SC41L-SC22L [ps/ch] >> ch12
-  sci->tac_factor[13] = 10.8017; //SC41R-SC22R [ps/ch] >> ch13
+  //2021/Feb/BARB 
+  sci->tac_factor[0]  = 10.5293; //SC21L-R [ps/ch]     >> ch0 of ADC
+  sci->tac_factor[1]  = 10.6934; //SC41L-R [ps/ch]     >> ch1 of ADC
+  sci->tac_factor[2]  = 43.6914; //SC41L-SC21L [ps/ch] >> ch5 of ADC
+  sci->tac_factor[3]  = 43.3264; //SC41R-SC21R [ps/ch] >> ch6 of ADC
+  sci->tac_factor[4]  = 10.5367; //SC42L-R             >> ch2 of ADC
+  sci->tac_factor[5]  = 42.3307; //SC42L-SC21L [ps/ch] >> ch8 of ADC
+  sci->tac_factor[6]  = 41.6716; //SC42R-SC21R [ps/ch] >> ch7 of ADC
+  sci->tac_factor[7]  = 11.0166; //SC43L-R [ps/ch]     >> ch3 of ADC
+  sci->tac_factor[8]  = 10.5001; //SC81L-R [ps/ch]     >> ch4 of ADC
+  sci->tac_factor[9]  = 20.7879; //SC81L-SC21L         >> ch9
+  sci->tac_factor[10] = 19.9815; //SC81R-SC21R         >> ch10
+  sci->tac_factor[11] = 10.5536; //SC22L-R             >> ch11
+  sci->tac_factor[12] = 39.9969; //SC41L-SC22L [ps/ch] >> ch12
+  sci->tac_factor[13] = 42.3244; //SC41R-SC22R [ps/ch] >> ch13
   sci->tac_factor[14] = 20.0000; //SC81L-SC22L [ps/ch] >> ch14
   sci->tac_factor[15] = 20.0000; //SC81R-SC22R [ps/ch] >> ch15
   
@@ -803,11 +815,13 @@ void setup_s452_03_191Ta_b()
   sci->mhtdc_offset_43l_43r  =  0.0;              sci->mhtdc_factor_43l_43r = 60.0; // pos = offset + factor*dt
   sci->mhtdc_offset_31l_31r  =  0.0;              sci->mhtdc_factor_31l_31r = 60.0; // pos = offset + factor*dt
   sci->mhtdc_offset_81l_81r  =  -410.411;         sci->mhtdc_factor_81l_81r = 43.691; // pos = offset + factor*dt
+  sci->mhtdc_offset_22l_22r  =  -39.6625+20.0;    sci->mhtdc_factor_22l_22r = 62.5341;  // pos = offset + factor*dt
   sci->mhtdc_offset_41_21  =  178.0; //ns
   sci->mhtdc_offset_42_21  =  0.0; //ns
   sci->mhtdc_offset_43_21  =  0.0; //ns
   sci->mhtdc_offset_31_21  =  0.0; //ns
   sci->mhtdc_offset_81_21  =  -400.0 + 165.214; //ns
+  sci->mhtdc_offset_41_22  =  173.0; //ns
 
   //---- initial value for Z vs AoQ PID -----//
   id->ID_Z_AoverQ_num[0]=5;
@@ -816,12 +830,12 @@ void setup_s452_03_191Ta_b()
   id->ID_Z_AoverQ_num[3]=5;
   id->ID_Z_AoverQ_num[4]=5;
 
-  //rangescan 43
-  id->ID_Z_AoverQ[0][0][0]=2.200      ; id->ID_Z_AoverQ[0][0][1]=64.6;
-  id->ID_Z_AoverQ[0][1][0]=2.200      ; id->ID_Z_AoverQ[0][1][1]=65.5;
-  id->ID_Z_AoverQ[0][2][0]=2.218      ; id->ID_Z_AoverQ[0][2][1]=65.5;
-  id->ID_Z_AoverQ[0][3][0]=2.218      ; id->ID_Z_AoverQ[0][3][1]=64.6;
-  id->ID_Z_AoverQ[0][4][0]=2.200      ; id->ID_Z_AoverQ[0][4][1]=64.6;
+  //203Pt
+  id->ID_Z_AoverQ[0][0][0]=2.602      ; id->ID_Z_AoverQ[0][0][1]=78.1;
+  id->ID_Z_AoverQ[0][1][0]=2.602      ; id->ID_Z_AoverQ[0][1][1]=77.3;
+  id->ID_Z_AoverQ[0][2][0]=2.587      ; id->ID_Z_AoverQ[0][2][1]=77.3;
+  id->ID_Z_AoverQ[0][3][0]=2.587      ; id->ID_Z_AoverQ[0][3][1]=78.1 ;
+  id->ID_Z_AoverQ[0][4][0]=2.587      ; id->ID_Z_AoverQ[0][4][1]=78.1;
 
   //Ir200
   id->ID_Z_AoverQ[1][0][0]=2.600; id->ID_Z_AoverQ[1][0][1]=77.2;
@@ -929,11 +943,11 @@ void setup_s452_03_191Ta_b()
      {    0., 4000.},
      {40000., 4000.},
      {40000.,    0.}};
- // an->SetupPolyCond("cID_dEToF", 4, my_cID_dEToF_points);
-
-  //======
-  //LaBr
-  //======
+//   an->SetupPolyCond("cID_dEToF", 4, my_cID_dEToF_points);
+// 
+//   //======
+//   //LaBr
+//   //======
 //    labr->labr_factor_2_1 = 0.;
 //    labr->labr_factor_2_2 = 0.;
 //    labr->labr_factor_2_3 = 0.;
@@ -961,53 +975,53 @@ void setup_s452_03_191Ta_b()
 //    labr->labr_offset7 = 0.;
 //    labr->labr_offset8 = 0.;
 
-  //=======
-  //  Si
-  //=======
-
-  si->si_factor1=5.82775; //CH 03/06/2016
-  si->si_offset1=-381.593; //CH 03/06/2016
-
-  si->si_factor2=3.809; //CH 18.10.2014
-  si->si_offset2=-529.01; //CH 18.10.2014
-
-  si->si_factor3=3.2596; //CH 21.05.2016
-  si->si_offset3=-550.59; //CH 21.05.2016|
-
-  si->si_factor4=3.2596; //CH 21.05.2016
-  si->si_offset4=-550.59; //CH 21.05.2016
-
-  for(int i = 0; i<32; i++){
-    si->dssd_factor_det1[i]=1.;
-    si->dssd_factor_det2[i]=1.;
-    si->dssd_factor_det3[i]=1.;
-    si->dssd_factor_det4[i]=1.;
-    si->dssd_factor_det5[i]=1.;
-    si->dssd_factor_det6[i]=1.;
-
+//   //=======
+//   //  Si
+//   //=======
+// 
+//   si->si_factor1=5.82775; //CH 03/06/2016
+//   si->si_offset1=-381.593; //CH 03/06/2016
+// 
+//   si->si_factor2=3.809; //CH 18.10.2014
+//   si->si_offset2=-529.01; //CH 18.10.2014
+// 
+//   si->si_factor3=3.2596; //CH 21.05.2016
+//   si->si_offset3=-550.59; //CH 21.05.2016|
+// 
+//   si->si_factor4=3.2596; //CH 21.05.2016
+//   si->si_offset4=-550.59; //CH 21.05.2016
+// 
+//   for(int i = 0; i<32; i++){
+//     si->dssd_factor_det1[i]=1.;
+//     si->dssd_factor_det2[i]=1.;
+//     si->dssd_factor_det3[i]=1.;
+//     si->dssd_factor_det4[i]=1.;
+//     si->dssd_factor_det5[i]=1.;
+//     si->dssd_factor_det6[i]=1.;
+// 
 //     si->dssd_factor2_det1[i]=0.;
 //     si->dssd_factor2_det2[i]=0.;
 //     si->dssd_factor2_det3[i]=0.;
 //     si->dssd_factor2_det4[i]=0.;
 //     si->dssd_factor2_det5[i]=0.;
 //     si->dssd_factor2_det6[i]=0.;
-
-    si->dssd_offset_det1[i]=0.;
-    si->dssd_offset_det2[i]=0.;
-    si->dssd_offset_det3[i]=0.;
-    si->dssd_offset_det4[i]=0.;
-    si->dssd_offset_det5[i]=0.;
-    si->dssd_offset_det6[i]=0.;
-  }
+// 
+//     si->dssd_offset_det1[i]=0.;
+//     si->dssd_offset_det2[i]=0.;
+//     si->dssd_offset_det3[i]=0.;
+//     si->dssd_offset_det4[i]=0.;
+//     si->dssd_offset_det5[i]=0.;
+//     si->dssd_offset_det6[i]=0.;
+//   }
 
   //=========
   //MR-TOF-MS
   //=========
-
+/*
   mrtof->MRTOFMS_a=0.069;
   mrtof->MRTOFMS_b=0.71;
   mrtof->MRTOFMS_t0=0;
-  mrtof->MRTOFMS_tFRS=0;
+  mrtof->MRTOFMS_tFRS=0;*/
 
   cout << "Focus distance S4: " << frs->dist_focS4 << endl;
   cout << "Setup done " << endl;

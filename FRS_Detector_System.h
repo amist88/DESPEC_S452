@@ -147,14 +147,21 @@ private:
     
     void Clear_all();
     
-    UInt_t  vme[6][21][32];         // FRS crate   
+    UInt_t vme[6][21][32];         // FRS crate   
     UInt_t vme_tpcs2[21][32];// TPC crate (S2 TPC)
     UInt_t vme_tpcs4[21][32];// TPC crate (S4/S3 TPC)
     UInt_t vme_frs[21][32];
     UInt_t vme_main[21][32];
+    UInt_t vme_tof[21][32]; // TOF crate
+    UInt_t leading_v1190_tpcs2[128][64];         // TPC crate (S2 TPC)
+    UInt_t nhit_v1190_tpcs2[128];         // TPC crate (S2 TPC)
+    
+    
     
     UInt_t vme_trmu_adc[16];              // Travel Music crate
     UInt_t vme_trmu_tdc[16];              // Travel Music crate
+    UInt_t vme_trmu_trigger[2];              // Travel Music crate
+    UInt_t vme_actstop[21][32];       //active stopper
     //UInt_t*** vme0;         // FRS crate                                
     //UInt_t*** vme1;         // TPC crate 
     //UInt_t*** vme3;         // Mtof crate
@@ -191,7 +198,9 @@ private:
   Int_t Proc_iterator;
    bool skip;
     
-    
+
+    int tmp_nhit_prev;
+  
     bool* firstTS;
     Long64_t* previousTimeStamp;
     Long64_t currentTimeStamp;
@@ -205,6 +214,15 @@ private:
     Int_t         qtrigger;        /*                       */
     Int_t         qevent_nr;       /*                       */
     
+    // special nurdlib
+    Int_t              utpat;  //! //This is to pass down the line
+    Int_t              uphystrig; //! // to have something else than TPC
+    Int_t              unbtrig; //! // number of triggers in utpat
+    Int_t              umaxtrig; //! // second trigger in utpat
+
+//Phystrig is build based on tpat, but trigger priority first tpat
+//trigger box, sc41..... etc.
+    
     
     /*******************************************************************/
     /***SORT STUFF***/
@@ -215,7 +233,7 @@ private:
   /*         VFTX : RAW TIME IN PS           */ 
   /* *************************************** */
   TRandom3 rand;
-  void m_VFTX_Bin2Ps();
+  void   m_VFTX_Bin2Ps();
   float  VFTX_Bin2Ps[VFTX_N][VFTX_MAX_CHN][1000];
   double VFTX_GetTraw_ps(int, int, int, int, float);
   
@@ -225,6 +243,13 @@ private:
     
     Int_t counter; 
     
+     void v1190_channel_init();
+     Int_t v1190_channel_dt[7][4];
+     Int_t v1190_channel_lt[7][2];
+     Int_t v1190_channel_rt[7][2];
+     Int_t v1190_channel_timeref[8];
+     Int_t v1190_channel_calibgrid[7];
+  
     // time stamp data  
     Int_t         ts_id;                                
     ULong64_t     ts_word[4]; //for the titris time stammping
@@ -237,6 +262,9 @@ private:
     
     Int_t         pattern;
     Int_t         trigger;
+    Int_t         sptrigger;
+    Int_t         snbtrig;
+    Int_t         smaxtrig ;
     
     // scaler readings     
     UInt_t sc_long[64]; //changed from 32 to 64 (10.07.2018)
@@ -256,18 +284,33 @@ private:
     
     // TPC part //(HAPOL-25/03/06) 6 TPCs each one with 2 delay lines each!!
     //7 TPCs (4 at S2, 2 at S4 and one at S3) 03.07.2018 SB
-    Int_t** tpc_l;
-    Int_t** tpc_r;
-    Int_t** tpc_lt;
-    Int_t** tpc_rt;
-    Int_t* tpc_timeref;
-    
-    
+//     Int_t** tpc_l;
+//     Int_t** tpc_r;
+//     Int_t** tpc_lt;
+//     Int_t** tpc_rt;
+//     Int_t* tpc_timeref;
+   
     // [index][anode_no]
-    Int_t** tpc_dt;
-    Int_t** tpc_a;
+//     Int_t** tpc_dt;
+     
     
+    Int_t tpc_l[7][2]; //[i_tpc][i_delayline_L]
+    Int_t tpc_r[7][2]; //[i_tpc][i_delayline_R]
+    Int_t tpc_a[7][4]; //[i_tpc][i_anode]
     
+//     Int_t tpc_lt[7][2][64];//multihit up to 16
+//     Int_t tpc_rt[7][2][64];//multihit up to 16
+    Int_t*** tpc_lt;//multihit up to 16
+    Int_t*** tpc_rt;//multihit up to 16
+    Int_t tpc_dt[7][4][64];//multihit up to 16
+    Int_t tpc_nhit_lt[7][2];//multihit number
+    Int_t tpc_nhit_rt[7][2];//multihit number
+    Int_t tpc_nhit_dt[7][4];//multihit number
+    
+    Int_t tpc_calibgrid[7][64];//multihit up to 16
+    Int_t tpc_timeref[8][64];//multihit up to 16
+    Int_t tpc_nhit_calibgrid[7];//multihit number
+    Int_t tpc_nhit_timeref[8];//multihit number
     
     // SCI part
     Int_t         de_21l;          /* dE SCI21 left            */  
@@ -284,8 +327,8 @@ private:
     Int_t         de_81r;          /* de SCI81 right           */  
     Int_t         de_31l;          /* de SCI31 left            */
     Int_t         de_31r;          /* de SCI31 right           */  
-    
-    
+    Int_t         de_22l;
+    Int_t         de_22r;
     Int_t         dt_21l_21r;      /*                          */ 
     Int_t         dt_41l_41r;      /*                          */ 
     Int_t         dt_21l_41l;      /*                          */
@@ -298,6 +341,11 @@ private:
     Int_t         dt_81l_81r;
     Int_t         dt_21l_81l;
     Int_t         dt_21r_81r;
+    Int_t         dt_22l_22r;
+    Int_t         dt_22l_41l;
+    Int_t         dt_22r_41r; 
+    Int_t         dt_22l_81l;
+    Int_t         dt_22r_81r;
     
     
     // VFTX for new ToF
@@ -315,19 +363,21 @@ private:
   
     // User multihit TDC
 	    
-    Int_t* tdc_sc41l;
-    Int_t* tdc_sc41r;
-    Int_t* tdc_sc21l;
-    Int_t* tdc_sc21r;
-    Int_t* tdc_sc42l;
-    Int_t* tdc_sc42r;
-    Int_t* tdc_sc43l;
-    Int_t* tdc_sc43r;
-    Int_t* tdc_sc81l;
-    Int_t* tdc_sc81r;
-    Int_t* tdc_sc31l;
-    Int_t* tdc_sc31r;
-    Int_t* tdc_sc11;
+    Int_t tdc_sc41l[10];
+    Int_t tdc_sc41r[10];
+    Int_t tdc_sc21l[10];
+    Int_t tdc_sc21r[10];
+    Int_t tdc_sc42l[10];
+    Int_t tdc_sc42r[10];
+    Int_t tdc_sc43l[10];
+    Int_t tdc_sc43r[10];
+    Int_t tdc_sc81l[10];
+    Int_t tdc_sc81r[10];
+    Int_t tdc_sc31l[10];
+    Int_t tdc_sc31r[10];
+    Int_t tdc_sc11[10];
+    Int_t tdc_sc22l[10];
+    Int_t tdc_sc22r[10];
     
     // MUSIC1 part
     Int_t*         music_e1;     /* Raw energy signals       */
@@ -529,16 +579,34 @@ private:
     Float_t       angle_y_s8;      /*                          */
     
     // TPC part
-    Int_t** tpc_csum;
-    Float_t* tpc_x;
-    Float_t* tpc_y;
-    Bool_t** b_tpc_csum;
-    Bool_t* b_tpc_xy;
-    Float_t* tpc_de;
-    Bool_t* b_tpc_de;
+//     Int_t** tpc_csum;
+//     Float_t* tpc_x;
+//     Float_t* tpc_y;
+//     Bool_t** b_tpc_csum;
+//     Bool_t* b_tpc_xy;
+//     Float_t* tpc_de;
+//     Bool_t* b_tpc_de;
     Float_t x0;
     Float_t x1;
+
     
+    Int_t tpc_lt_s[7][2];
+    Int_t tpc_rt_s[7][2];
+    Int_t tpc_xraw[7][2];
+    Int_t tpc_dt_s[7][4];//selected from multihit
+    Int_t tpc_yraw[7][4];
+    Int_t tpc_csum[7][4];
+    Float_t tpc_x[7];
+    Float_t tpc_y[7];
+    Bool_t b_tpc_csum[7][4];
+    Bool_t b_tpc_xy[7];
+    Float_t tpc_de[7];
+    Float_t tpc_dx12[7];
+    Bool_t b_tpc_de[7];
+    //timeref
+    Bool_t b_tpc_timeref[8];
+    Int_t tpc_timeref_s[8];
+                
     //TPCs 21 & 22 @ S2 focus
     Float_t tpc_x_s2_foc_21_22;
     Float_t tpc_y_s2_foc_21_22;
@@ -579,6 +647,13 @@ private:
   Float_t       tpc23_24_sc21_y;    /* SC21 y                    */
   Float_t       tpc22_24_sc21_x;      /* SC21 x                    */
   Float_t       tpc22_24_sc21_y;    /* SC21 y                    */
+  
+  Float_t       tpc21_22_sc22_x;     /* SC22 x                    */
+  Float_t       tpc21_22_sc22_y;     /* SC22 y                    */
+  Float_t       tpc23_24_sc22_x;      /* SC22 x                    */
+  Float_t       tpc23_24_sc22_y;      /* SC22 x                    */
+  Float_t       tpc22_24_sc22_x;     /* SC22 x                    */
+  Float_t       tpc22_24_sc22_y;     /* SC22 x                    */
 
   Float_t       tpc21_22_s2target_x;      /* S2TARGET x                    */
   Float_t       tpc21_22_s2target_y;    /* S2TARGET y                    */
@@ -673,12 +748,23 @@ private:
     Float_t*  cSCI_Tx;
     Float_t*  cSCI_X;
     
+   
+   
+          
+    Float_t** cTPC_SC_TIMEREF;
+    Float_t** cTPC_LT0;
+    Float_t** cTPC_RT0;
+    Float_t** cTPC_LT1;
+    Float_t** cTPC_RT1;
+    Float_t*** cTPC_DT;
     Float_t*  cSCI_LL2;
     Float_t*  cSCI_RR2;
     Float_t*  cSCI_LL3;
     Float_t*  cSCI_RR3;
     Float_t*  cSCI_LL4;
     Float_t*  cSCI_RR4;
+    Float_t*  cSCI_RR5;
+    Float_t*  cSCI_LL5;
     
     Float_t**  cSCI_detof;
     
@@ -752,7 +838,7 @@ private:
     Float_t       music1_x_mean;
     Float_t       music2_x_mean ;
     Float_t       music3_x_mean ;
-
+    
 	Bool_t        b_de1;
 	Bool_t        b_de2;
 	Bool_t        b_de3;
@@ -785,6 +871,10 @@ private:
 	Float_t       sci_tofrr4;
 	Float_t       sci_tof4;
     Float_t       sci_tof4_calib;
+    Float_t       sci_tofll5;
+    Float_t       sci_tofrr5;
+    Float_t       sci_tof5;
+    Float_t       sci_tof5_calib;
 	
 	Float_t*      sci_veto_l;
 	Float_t*      sci_veto_r;
@@ -804,6 +894,8 @@ private:
 	Bool_t        sci_b_tofrr3;
 	Bool_t        sci_b_tofll4;
 	Bool_t        sci_b_tofrr4;  
+    Bool_t        sci_b_tofll5;
+    Bool_t        sci_b_tofrr5; 
 	Bool_t        sci_b_detof;
 	Bool_t*       sci_b_veto_l;  
 	Bool_t*       sci_b_veto_r;  
@@ -813,10 +905,12 @@ private:
   Float_t       mhtdc_tof8121;
   Float_t       mhtdc_tof4121;
   Float_t       mhtdc_tof4221;
+  Float_t       mhtdc_tof4122;
   Float_t       mhtdc_tof4321;
   Float_t       mhtdc_tof3121;
 
   Float_t       mhtdc_sc21lr_dt;
+  Float_t       mhtdc_sc22lr_dt;
   Float_t       mhtdc_sc31lr_dt;
   Float_t       mhtdc_sc41lr_dt;
   Float_t       mhtdc_sc42lr_dt;
@@ -824,6 +918,7 @@ private:
   Float_t       mhtdc_sc81lr_dt;
 
   Float_t       mhtdc_sc21lr_x;
+  Float_t       mhtdc_sc22lr_x;
   Float_t       mhtdc_sc31lr_x;
   Float_t       mhtdc_sc41lr_x;
   Float_t       mhtdc_sc42lr_x;

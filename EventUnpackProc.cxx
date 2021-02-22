@@ -89,7 +89,8 @@ EventUnpackProc::EventUnpackProc(const char* name) : TGo4EventProcessor(name)
  
   fCal = (CalibParameter*) GetParameter("CalibPar"); 
   
-
+   DESPECAnalysis* an = dynamic_cast<DESPECAnalysis*> (TGo4Analysis::Instance());
+frs_id = dynamic_cast<TIDParameter*> (an->GetParameter("IDPar"));
  //create Detector Systems
   Detector_Systems = new Detector_System*[7];
 
@@ -221,7 +222,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
   isValid=kTRUE;
   event_number=fInput->GetCount();
   fOutput-> fevent_number = event_number;
-  //cout<<"event_number " << event_number << endl;
+ // cout<<"event_number " << event_number << endl;
   fOutput->fTrigger = fInput->GetTrigger();
 
   fInput->ResetIterator();
@@ -238,6 +239,8 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
  if(true){
   //if (event_number==141513){
 //  cout<<"event " << event_number <<endl;
+     
+//      cout<<"IM HERE" <<endl;
       int subevent_iter = 0;
       Int_t PrcID_Conv = 0;
 
@@ -409,7 +412,6 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
 //             fOutput->fFRS_ID_rho[i] = RAW->get_FRS_rho(i);
 //         }
  ///Using TAC
-   if(MHTDC_OR_TAC==0){
         fOutput->fFRS_beta = RAW->get_FRS_beta();
         
         fOutput->fFRS_gamma = RAW->get_FRS_gamma();
@@ -417,37 +419,32 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         fOutput->fFRS_AoQ_corr = RAW->get_FRS_AoQ_corr();
         fOutput->fFRS_z = RAW->get_FRS_z();
         fOutput->fFRS_z2 = RAW->get_FRS_z2();
-      
         fOutput->fFRS_dEdeg = RAW->get_FRS_dEdeg();
-     //if(RAW->get_FRS_dEdeg()!=0)   cout<<"RAW->get_FRS_dEdeg() " << RAW->get_FRS_dEdeg() <<endl;
         fOutput->fFRS_dEdegoQ = RAW->get_FRS_dEdegoQ();
-   }
         ///Using MHTDC
-    if(MHTDC_OR_TAC==1){
-    if(RAW->get_FRS_id_mhtdc_aoq()>0) fOutput->fFRS_AoQ = RAW->get_FRS_id_mhtdc_aoq();
-    if(RAW->get_FRS_id_mhtdc_aoq_corr()>0)   fOutput->fFRS_AoQ_corr = RAW->get_FRS_id_mhtdc_aoq_corr();
-    if(RAW->get_FRS_id_mhtdc_z1()>0)      fOutput->fFRS_z = RAW->get_FRS_id_mhtdc_z1();
-    if(RAW->get_FRS_id_mhtdc_z2()>0)  fOutput->fFRS_z2 = RAW->get_FRS_id_mhtdc_z2();
-//         fOutput->fFRS_znocorr =  RAW->get_FRS_znocorr();
-//         fOutput->fFRS_z2nocorr =  RAW->get_FRS_z2nocorr();
+
+    if(RAW->get_FRS_id_mhtdc_aoq()>0) fOutput->fFRS_AoQ_mhtdc = RAW->get_FRS_id_mhtdc_aoq();
+    if(RAW->get_FRS_id_mhtdc_aoq_corr()>0)   fOutput->fFRS_AoQ_corr_mhtdc = RAW->get_FRS_id_mhtdc_aoq_corr();
+    if(RAW->get_FRS_id_mhtdc_z1()>0)      fOutput->fFRS_z_mhtdc = RAW->get_FRS_id_mhtdc_z1();
+    if(RAW->get_FRS_id_mhtdc_z2()>0)  fOutput->fFRS_z2_mhtdc = RAW->get_FRS_id_mhtdc_z2();
     
-    if(RAW->get_FRS_id_mhtdc_dEdeg()>0)fOutput->fFRS_dEdeg = RAW->get_FRS_id_mhtdc_dEdeg();
-    if(RAW->get_FRS_id_mhtdc_dEdegoQ()>0)  fOutput->fFRS_dEdegoQ = RAW->get_FRS_id_mhtdc_dEdegoQ();
-    if(RAW->get_FRS_id_mhtdc_beta()>0.0 &&  RAW->get_FRS_id_mhtdc_beta()<1.0)  fOutput->fFRS_beta = RAW->get_FRS_id_mhtdc_beta();
+    if(RAW->get_FRS_id_mhtdc_dEdeg()>0)fOutput->fFRS_dEdeg_mhtdc = RAW->get_FRS_id_mhtdc_dEdeg();
+    if(RAW->get_FRS_id_mhtdc_dEdegoQ()>0)  fOutput->fFRS_dEdegoQ_mhtdc = RAW->get_FRS_id_mhtdc_dEdegoQ();
+    if(RAW->get_FRS_id_mhtdc_beta()>0.0 &&  RAW->get_FRS_id_mhtdc_beta()<1.0)  fOutput->fFRS_beta_mhtdc = RAW->get_FRS_id_mhtdc_beta();
     
-    if(RAW->get_FRS_id_mhtdc_tof4121()>0 )  fOutput->fFRS_tof4121 = RAW->get_FRS_id_mhtdc_tof4121();
-    if(RAW->get_FRS_id_mhtdc_tof4221()>0 )  fOutput->fFRS_tof4221 = RAW->get_FRS_id_mhtdc_tof4221();
+    if(RAW->get_FRS_id_mhtdc_tof4121()>0 )  fOutput->fFRS_tof4121_mhtdc = RAW->get_FRS_id_mhtdc_tof4121();
+    if(RAW->get_FRS_id_mhtdc_tof4221()>0 )  fOutput->fFRS_tof4221_mhtdc = RAW->get_FRS_id_mhtdc_tof4221();
          
-    }
-    else {cout<<"TOF vs TAC Parameter not set correctly in DESPEC_Setup_File.h"<<endl; exit(0);}
+  
         for (int i = 0; i < 7; i++){
-            if(PrcID!=35) {
+            if(PrcID!=20) {
             fOutput->fFRS_TPC_x[i]=0;
             fOutput->fFRS_TPC_y[i]=0;
             }
-             if(PrcID==35 && SubType==3600){
+             if(PrcID==20 && SubType==1){
         
            fOutput->fFRS_TPC_x[i] = RAW->get_FRS_tpcX(i);
+          
            fOutput->fFRS_TPC_y[i] = RAW->get_FRS_tpcY(i);
             }
         }
@@ -764,10 +761,13 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
             }//end i loop
             
         for (int i=0; i< RAW->get_FAT_TDCs_fired(); i++){
+               
 
-
-         if(RAW->get_FAT_TDC_id(i) > -1 && RAW->get_FAT_TDC_id(i) < 36){
-            fOutput->fFat_TDC_Singles_t[singlestdcmult] = RAW->get_FAT_TDC_timestamp(i);
+         if(RAW->get_FAT_TDC_id(i) > -1 ){
+             ///Remove Additional Channels
+          if(RAW->get_FAT_TDC_id(i) !=  FatVME_TimeMachineCh2 && RAW->get_FAT_TDC_id(i) != FatVME_TimeMachineCh1 && RAW->get_FAT_TDC_id(i) != SC41L_FatVME && RAW->get_FAT_TDC_id(i) != SC41R_FatVME && RAW->get_FAT_TDC_id(i) != SC41L_FatVME_Digi && RAW->get_FAT_TDC_id(i) != SC41R_FatVME_Digi && RAW->get_FAT_TDC_id(i) != FatVME_bPlast_MASTER){
+           
+             fOutput->fFat_TDC_Singles_t[singlestdcmult] = RAW->get_FAT_TDC_timestamp(i);
             fOutput->fFat_TDC_Singles_t_Raw[singlestdcmult] = RAW->get_FAT_TDC_timestamp_raw(i);
             fOutput->fFat_TDC_Singles_ID[singlestdcmult] = RAW->get_FAT_TDC_id(i);
 
@@ -784,6 +784,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 }//end if good event
                 //cout << dummy_tdc_id[i] << endl;
 			}//End if correct ID range
+         }
             
             if(RAW->get_FAT_TDC_id(i) == SC41L_FatVME && RAW->get_FAT_TDC_timestamp(i) != 0. ){
                 fOutput->fSC40[sc40count] =  RAW->get_FAT_TDC_timestamp(i);
@@ -800,7 +801,6 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fFat_TMCh1[FatVmeTMCh1_count] =  RAW->get_FAT_TDC_timestamp(i)*0.025;
                 FatVmeTMCh1_count++;
                 
-             //  cout<<"RAW->get_FAT_TDC_timestamp(i) " <<RAW->get_FAT_TDC_timestamp(i)<<" FatVmeTMCh1_count " <<FatVmeTMCh1_count <<  endl;
             }// end if statement to check for TimeMachine hits
            
             if(RAW->get_FAT_TDC_id(i) == FatVME_TimeMachineCh2 && RAW->get_FAT_TDC_timestamp(i) !=0.){
@@ -823,10 +823,11 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
             
         for (int i=0; i< RAW->get_FAT_QDCs_fired(); i++){
 		
-          if(RAW->get_FAT_QDC_id(i) > -1 && RAW->get_FAT_QDC_id(i) < 36){
+          if(RAW->get_FAT_QDC_id(i) > -1 ){
+              ///Remove Additional Channels
+          if(RAW->get_FAT_QDC_id(i) !=  FatVME_TimeMachineCh2 && RAW->get_FAT_QDC_id(i) != FatVME_TimeMachineCh1 && RAW->get_FAT_QDC_id(i) != SC41L_FatVME && RAW->get_FAT_QDC_id(i) != SC41R_FatVME && RAW->get_FAT_QDC_id(i) != SC41L_FatVME_Digi && RAW->get_FAT_QDC_id(i) != SC41R_FatVME_Digi && RAW->get_FAT_QDC_id(i) != FatVME_bPlast_MASTER){
+                 
             fOutput->fFat_QDC_Singles_E[singlesqdcmult] = RAW->get_FAT_QLong(i);
-            
-            
             fOutput->fFat_QDC_Singles_ID[singlesqdcmult] = RAW->get_FAT_QDC_id(i);
             fOutput->fFat_QDC_Singles_t_coarse[singlesqdcmult] = RAW->get_FAT_QDC_t_Coarse(i);
             fOutput->fFat_QDC_Singles_t_fine[singlesqdcmult] = RAW->get_FAT_QDC_t_Fine(i);
@@ -849,10 +850,11 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 //cout << RAW->get_FAT_QDC_id(i) << endl;
                 //cout << dummy_qdc_id[i] << endl;
 
-            }//end if to ensure real energies
-		}//End if right IDs
-	
-        }// end dummy QDC for loop
+                        }//end if to ensure real energies
+                }//End if right IDs
+        
+            }// end dummy QDC for loop
+        }
         
         
         if(dummyqdcmult < dummytdcmult) counter = dummytdcmult;
@@ -1438,11 +1440,40 @@ void EventUnpackProc::get_used_systems(){
     
         hSCI_dE24 = MakeTH2('D',"FRS/SCI/SCI_dE21-41","SCI_dE21-41",1000,10,4000,1000,10,4000,"SC21 dE","SC41 dE");
 
-        hSCI_TofLL2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofLL","SCI_21_41_TofLL",1500,0,62000,"TAC SC41L-SC21L [ps]");
-
-        hSCI_TofRR2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofRR","SCI_21_41_TofRR",1500,0,62000,"TAC SC41R-SC21R [ps]");
+        hSCI_TofLL2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofLL","SCI_21_41_TofLL",2000,0,200000,"TAC SC41L-SC21L [ps]");
         
-        hSCI_Tof2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_Tof2","SCI_21_41_Tof2",1000,0,62000,"TAC SC41-SC21 [pos.corr.]");
+        
+
+        hSCI_TofRR2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofRR","SCI_21_41_TofRR",2000,0,200000,"TAC SC41R-SC21R [ps]");
+        
+        hSCI_Tof2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_Tof2","SCI_21_41_Tof2",2000,0,200000,"TAC SC41-SC21 [pos.corr.]");
+        
+        hSCI_TofLL3 = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_TofLL","SCI_21_42_TofLL",2000,0,200000,"TAC SC42L-SC21L [ps]");
+        
+        hSCI_TofRR3 = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_TofRR","SCI_21_41_TofRR",2000,0,200000,"TAC SC42R-SC21R [ps]");
+        
+        hSCI_Tof3 = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_Tof2","SCI_21_41_Tof2",2000,0,200000,"TAC SC42-SC21 [pos.corr.]");
+        
+        hSCI_TofLL3 = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_TofLL","SCI_21_42_TofLL",2000,0,200000,"TAC SC42L-SC21L [ps]");
+        
+        hSCI_TofRR3 = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_TofRR","SCI_21_41_TofRR",2000,0,200000,"TAC SC42R-SC21R [ps]");
+        
+        hSCI_Tof3 = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_Tof2","SCI_21_42_Tof3",2000,0,200000,"TAC SC42-SC21 [pos.corr.]");
+        
+        
+        hSCI_TofLL5 = MakeTH1('D', "FRS/SCI/TOF/TOF(5)/SCI_22_41_TofLL","SCI_22_41_TofLL",2000,0,200000,"TAC SC41L-SC22L [ps]");
+        
+        hSCI_TofRR5 = MakeTH1('D', "FRS/SCI/TOF/TOF(5)/SCI_22_41_TofRR","SCI_22_41_TofRR",2000,0,200000,"TAC SC41R-SC22R [ps]");
+        
+        hSCI_Tof5 = MakeTH1('D', "FRS/SCI/TOF/TOF(5)/SCI_22_41_Tof2","SCI_22_41_Tof5",2000,0,200000,"TAC SC41-SC22 [pos.corr.]");
+        
+
+        hSCI_Tof2_calib = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_Tof2_calib","SCI_21_41_Tof2_calib",50000,0,500000,"TAC SC41-SC21 [pos.corr.]");
+        
+        hSCI_Tof3_calib = MakeTH1('D', "FRS/SCI/TOF/TOF(3)/SCI_21_42_Tof3_calib","SCI_21_42_Tof3_calib",18000,0,180000,"TAC SC42-SC21 [pos.corr.]");
+        
+        hSCI_Tof5_calib = MakeTH1('D', "FRS/SCI/TOF/TOF(5)/SCI_22_41_Tof5_calib","SCI_22_41_Tof3_calib",40000,0,400000,"TAC SC41-SC22 [pos.corr.]");
+
 
 //         hSCIdE41_TPC42X= MakeH2I("FRS/SCI_TPC/","SCIdE41_TPC42X", 1024,0,4096, 400,-100.,100, "SC41 dE", "TPC42 X[mm]", 2);
 //         hSCIdE41L_TPC42X= MakeH2I("FRS/SCI_TPC/","SCIdE41L_TPC42X", 1024,0,4096, 400,-100.,100, "SC41L dE", "TPC42 X[mm]", 2);
@@ -1467,12 +1498,7 @@ void EventUnpackProc::get_used_systems(){
 //         sprintf(name,"SCI_21_42_Tof3");
 //         hSCI_Tof3 = MakeH1I(fname,name,1000,0,62000,"TAC SC42-SC21 [ps] (pos.corr.)",2,3);
         
-        hSCI_TofLL2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofLL","SCI_21_41_TofLL",1500,0,62000,"TAC SC41L-SC21L [ps]");
-
-        hSCI_TofRR2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_TofRR","SCI_21_41_TofRR",1500,0,62000,"TAC SC41R-SC21R [ps]");
-        
-        hSCI_Tof2 = MakeTH1('D', "FRS/SCI/TOF/TOF(2)/SCI_21_41_Tof2","SCI_21_41_Tof2",1000,0,62000,"TAC SC41-SC21 [pos.corr.]");
-
+       
     /*hSCI_dT_21l_41l = MakeTH1('D',"FRS/SCI/dT/SCI_dt_21l_41l","hSCI_dT_21l_41l",5001,0,5000); //from Multihit TDCS
     hSCI_dT_21r_41r = MakeTH1('D',"FRS/SCI/dT/SCI_dt_21r_41r","hSCI_dT_21r_41r",5001,0,5000);
 
@@ -1480,15 +1506,25 @@ void EventUnpackProc::get_used_systems(){
     hSCI_dT_21r_42r = MakeTH1('D',"FRS/SCI/dT/SCI_dt_21r_42r","hSCI_dT_21r_42r",5001,0,5000);*/
 
     //ID
-    hID_AoQ = MakeTH1('D',"FRS/ID/ID_AoQ","ID_AoQ",500,1.4,2.5,"A/Q S2-S4");
-    hID_AoQ_corr = MakeTH1('D',"FRS/ID/ID_AoQ_corr","ID_AoQ_corr",500,1.4,2.5,"A/Q S2-S4");
+   
+    hID_AoQ = MakeTH1('D',"FRS/ID/ID_AoQ","ID_AoQ",2000,FRS_MIN_AoQ,FRS_MAX_AoQ,"A/Q S2-S4");
+    hID_AoQ_corr = MakeTH1('D',"FRS/ID/ID_AoQ_corr","ID_AoQ_corr",1500,FRS_MIN_AoQ,FRS_MAX_AoQ,"A/Q S2-S4");
+    
+    hID_AoQ_mhtdc = MakeTH1('D',"FRS/MHTDC/ID/ID_AoQ_mhtdc","ID_AoQ",2000,FRS_MIN_AoQ,FRS_MAX_AoQ,"A/Q S2-S4");
+    hID_AoQ_corr_mhtdc = MakeTH1('D',"FRS/MHTDC/ID/ID_AoQ_corr_mhtdc","ID_AoQ_corr",1500,FRS_MIN_AoQ,FRS_MAX_AoQ,"A/Q S2-S4");
+    
+    hID_Z_AoQ_mhtdc = MakeTH2('D',"FRS/MHTDC/ID/ID_Z1_AoQ_mhtdc", "Z1 vs A/Q",1500,FRS_MIN_AoQ,FRS_MAX_AoQ, 1000,FRS_MIN_Z,FRS_MAX_Z,"A/Q s2-s4", "Z1 s2-s4");
+    
+    hID_Z_Z2_mhtdc = MakeTH2('D',"FRS/MHTDC/ID/ID_Z1_Z2_mhtdc","Z1 vs. Z2", 1000,FRS_MIN_Z,FRS_MAX_Z, 400,FRS_MIN_Z,FRS_MAX_Z,"Z1", "Z2");
+    
   //   hID_Z = MakeH1I("ID",Form("ID_Z, gain=%f",music->e1_gain[0]),1000,10,93,"Z s2-s4",2,6);
-    hID_Z = MakeTH1('D',"FRS/ID/ID_Z1","ID_Z1",1000,0,93,"Z1 s2-s4");
-    hID_Z2 = MakeTH1('D',"FRS/ID/ID_Z2","ID_Z2",1000,0,93,"Z2 s2-s4");
-   // hID_Z3 = MakeH1I("FRS/ID","ID_Z3",1000,10,93,"Z3 s2-s4",2,6);
-    ////////////////////////////////////////////////////////////
-
-    hID_Z_dE2 = MakeTH2('D',"FRS/ID/ID_Z1_dE2","ID_Z1_dE2", 250,1,30, 250,0.,4000.,
+    hID_Z = MakeTH1('D',"FRS/ID/ID_Z1","ID_Z1",400,FRS_MIN_Z,FRS_MAX_Z,"Z1 s2-s4");
+    hID_Z2 = MakeTH1('D',"FRS/ID/ID_Z2","ID_Z2",400,FRS_MIN_Z,FRS_MAX_Z,"Z2 s2-s4");
+    
+    hID_Z_mhtdc = MakeTH1('D',"FRS/MHTDC/ID/ID_Z1_mhtdc","ID_Z1",400,FRS_MIN_Z,FRS_MAX_Z,"Z1 s2-s4");
+    hID_Z2_mhtdc = MakeTH1('D',"FRS/MHTDC/ID/ID_Z2/mhtdc","ID_Z2",400,FRS_MIN_Z,FRS_MAX_Z,"Z2 s2-s4");
+   
+    hID_Z_dE2 = MakeTH2('D',"FRS/ID/ID_Z1_dE2","ID_Z1_dE2", 400,FRS_MIN_Z,FRS_MAX_Z, 250,0.,4000.,
               "Z1", "MUSIC2_dE");
 
     hSCI_dE24 = MakeTH2('D',"FRS/SCI/SCI_dE21-41","SCI_dE21-41",1000,10,4000,1000,10,4000,"SC21 dE","SC41 dE");
@@ -1496,8 +1532,8 @@ void EventUnpackProc::get_used_systems(){
     hID_Z_Sc21E = MakeTH2('D',"FRS/ID/ID_Z1_Sc21E","ID_Z1_Sc21E", 300,0,25.,400,0,4000.,
             "Z s2-s4", "sqrt(Sc21_L*sC21_R)");
     
-    hID_x2z = MakeTH2('D',"FRS/ID/ID_x2Z1","ID_x2Z1", 300,1.,30., 200,-100.,100., "Z1 s2-s4", "X at S2 [mm]");
-    hID_x4z = MakeTH2('D',"FRS/ID/ID_x4Z1","ID_x4Z1", 300,1.,30., 200,-100.,100., "Z1 s2-s4", "X at S4 [mm]");
+    hID_x2z = MakeTH2('D',"FRS/ID/ID_x2Z1","ID_x2Z1", 400,FRS_MIN_Z,FRS_MAX_Z, 200,-100.,100., "Z1 s2-s4", "X at S2 [mm]");
+    hID_x4z = MakeTH2('D',"FRS/ID/ID_x4Z1","ID_x4Z1", 400,FRS_MIN_Z,FRS_MAX_Z, 200,-100.,100., "Z1 s2-s4", "X at S4 [mm]");
     hID_E_Xs4 = MakeTH2('D',"FRS/ID/ID_dE_x2","ID_dE_x2", 200,-100.,100., 400,0.,4000., "X s4 [mm]", "Delta E");
     hID_E_Xs2 = MakeTH2('D',"FRS/ID/ID_dE_x4","ID_dE_x4", 200,-100.,100., 400,0.,4000., "X s2 [mm]", "Delta E");
     hID_x2a2 = MakeTH2('D',"FRS/ID/ID_x2_a2", "ID_x2_a2", 200, -100., 100., 200, -100., 100., "X s2 [mm]", "AngleX s2 [mrad]");
@@ -1526,7 +1562,7 @@ for(int i=0;i<7;i++)
       
        hcTPC_XY[i] = MakeTH2('D',Form("FRS/TPC/%s/%s_XY",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_XY" ,tpc_folder_ext1[i]), 120,-120.,120., 120,-120.,120.,"X [mm] ","Y [mm] ");
        
-        hTPC_LTRT[i] = MakeTH2('D',Form("FRS/TPC/%s/%s_LTRT",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_LTRT" ,tpc_folder_ext1[i]), 2048,0,4095, 2048,0,4095,"LT [ch]","RT[ch] ");
+       hTPC_LTRT[i] = MakeTH2('D',Form("FRS/TPC/%s/%s_LTRT",tpc_folder_ext1[i],tpc_folder_ext1[i]), Form("%s_LTRT" ,tpc_folder_ext1[i]), 2048,0,4095, 2048,0,4095,"LT [ch]","RT[ch] ");
        
 //          hID_dEdeg_Z1_Z1AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/ID_dEdeg_Z1/dEdeg_Z1_Z1AoQgated",  name,  1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z1 from MUSIC41", "dE(S2deg) [a.u.]");
      
@@ -1556,10 +1592,12 @@ for(int i=0;i<7;i++)
 //     htpc_Y4 = MakeTH1('D',"FRS/TPC/S4_TPCY","tpc_y S41",800,-100,100);
 
    
-    hID_beta= MakeTH1('D',"FRS/ID/ID_beta","ID_beta",2000,0,2000,"id.beta(2)*1000");
+    hID_beta= MakeTH1('D',"FRS/ID/ID_beta","ID_beta",2000,0,2000,"beta(2)*1000");
     
-    hID_tof4121_mhtdc= MakeTH1('D',"FRS/ID/TOF_4121_MHTDC","ToF 41-21",1000,0,1000);
-    hID_tof4221_mhtdc= MakeTH1('D',"FRS/ID/TOF_4221_MHTDC","ToF 42-21",1000,0,1000);
+    hID_beta_mhtdc= MakeTH1('D',"FRS/MHTDC/ID/ID_beta_mhtdc","ID_beta",2000,0,2000,"beta mhtdc*1000");
+    
+    hID_tof4121_mhtdc= MakeTH1('D',"FRS/MHTDC/ID/TOF_4121_mhtdc","ToF 41-21",1000,0,1000);
+    hID_tof4221_mhtdc= MakeTH1('D',"FRS/MHTDC/ID/TOF_4221_mhtdc","ToF 42-21",1000,0,1000);
     
     hID_dEToF = MakeTH2('D',"FRS/ID/ID_dEToF","ID_dEToF", 2000, 0.,70000.,400,0,4000, "tof S2-S4 Sci.Tof(2)", "Music_dE(1)");
     
@@ -1663,13 +1701,21 @@ for(int i=0;i<7;i++)
         sci_tx[l] = RAW->get_FRS_sci_tx(l);
         sci_x[l] = RAW->get_FRS_sci_x(l);
     }
-    sci_tofll2 = RAW->get_FRS_tofll2();
-   
+    sci_tofll2 = RAW->get_FRS_tofll2(); 
     sci_tofll3 = RAW->get_FRS_tofll3();
-    sci_tof2 = RAW->get_FRS_tof2();
+    sci_tofll5 = RAW->get_FRS_tofll5(); ///S22-S41 calibrated ToF
+    
     sci_tofrr2 = RAW->get_FRS_tofrr2();
     sci_tofrr3 = RAW->get_FRS_tofrr3();
+    sci_tofrr5 = RAW->get_FRS_tofrr5(); ///S22-S41 calibrated ToF
+    sci_tof2 = RAW->get_FRS_tof2();
     sci_tof3 = RAW->get_FRS_tof3();
+    sci_tof5 = RAW->get_FRS_tof5();
+    
+    sci_tof2_calib = RAW->get_FRS_tof2_calib();
+    sci_tof3_calib = RAW->get_FRS_tof3_calib();
+    sci_tof5_calib = RAW->get_FRS_tof5_calib();
+    
 
     ID_x2 = RAW->get_FRS_x2();
     ID_y2 = RAW->get_FRS_y2();
@@ -1681,16 +1727,23 @@ for(int i=0;i<7;i++)
     ID_a4 = RAW->get_FRS_a4();
     ID_b4 = RAW->get_FRS_b4();
    
+    for (int i=0; i<7; i++){
+        TPC_X[i]=0;
+        TPC_Y[i]=0;
+    }
 
     for(int i =0; i<7; i++){
     TPC_X[i] = RAW-> get_FRS_tpcX(i);
     TPC_Y[i] = RAW-> get_FRS_tpcY(i);
     
+   
+    
     for(int j=0; j<2; j++){
-    TPC_LT[i][j] = RAW->get_FRS_tpclt(i,j);
-    TPC_RT[i][j] = RAW->get_FRS_tpcrt(i,j);
+        for(int k=0; k<64; k++){
+    TPC_LT[i][j][k] = RAW->get_FRS_tpclt(i,j,k);
+    TPC_RT[i][j][k] = RAW->get_FRS_tpcrt(i,j,k);
+            }
         }
-
     }
     TPC_X0 = RAW->get_FRS_tpcx0();
     TPC_X1 = RAW->get_FRS_tpcx0();
@@ -1713,8 +1766,8 @@ for(int i=0;i<7;i++)
   
     }
     ///Using TAC
-    if(MHTDC_OR_TAC==0){
-     beta = RAW->get_FRS_beta();
+  
+    beta = RAW->get_FRS_beta();
    
     beta3 = RAW->get_FRS_beta3();
     gamma = RAW->get_FRS_gamma();
@@ -1724,19 +1777,17 @@ for(int i=0;i<7;i++)
     ID_z = RAW->get_FRS_z();
     ID_z2 = RAW->get_FRS_z2();
     ID_z3 = RAW->get_FRS_z3();
-    }
+    
     
     ///Using MHTDC
-    if(MHTDC_OR_TAC==1){
-     AoQ = RAW->get_FRS_id_mhtdc_aoq();
-     AoQ_corr = RAW->get_FRS_id_mhtdc_aoq_corr();
-
-    ID_z = RAW->get_FRS_id_mhtdc_z1();
-    ID_z2 = RAW->get_FRS_id_mhtdc_z2();
-    beta = RAW->get_FRS_id_mhtdc_beta();
+    AoQ_mhtdc = RAW->get_FRS_id_mhtdc_aoq();
+    AoQ_corr_mhtdc = RAW->get_FRS_id_mhtdc_aoq_corr();
+    ID_z_mhtdc = RAW->get_FRS_id_mhtdc_z1();
+    ID_z2_mhtdc = RAW->get_FRS_id_mhtdc_z2();
+    beta_mhtdc = RAW->get_FRS_id_mhtdc_beta();
     ID_tof4121_mhtdc = RAW->get_FRS_id_mhtdc_tof4121();
     ID_tof4221_mhtdc = RAW->get_FRS_id_mhtdc_tof4221();
-    }
+    
    // ID_z3 = RAW->get_FRS_z3();
  
     TRaw_vftx_21l = RAW->get_FRS_TRaw_vftx_21l();
@@ -1783,7 +1834,7 @@ for(int i=0;i<7;i++)
    if(Music_E2[i]!=0) hMUSIC2_E[i]->Fill(Music_E2[i]);
    if(Music_T1[i]!=0) hMUSIC1_T[i]->Fill(Music_T1[i]);
    if(Music_T2[i]!=0) hMUSIC2_T[i]->Fill(Music_T2[i]);
- }
+        }
     }
      /*-------------------------------------------------------------------------*/
     /* focus index: detector number                  tof index  tof path       */
@@ -1839,9 +1890,9 @@ for(int i=0;i<7;i++)
     
    
      if(PrcID==10 &&SubType==1 ){ 
-        // cout<<"event " << event_number<<" sci_r[idx] " <<sci_r[idx]<< " idx " << idx <<" cnt " << cnt <<" PrcID " <<PrcID<< " SubType " << SubType << endl;
-        if(beta!=0) hID_beta->Fill(beta*1000);
-         
+//          cout<<"event " << event_number<<" sci_r[idx] " <<sci_r[idx]<< " idx " << idx <<" cnt " << cnt <<" PrcID " <<PrcID<< " SubType " << SubType << endl;
+        if(beta!=0 && cnt==0 && sci_r[idx]!=0)hID_beta->Fill(beta*1000);
+       //  cout<<"beta " <<beta <<" cnt " <<cnt << endl;}
 //     
 //     if(AoQ_corr!=0) hID_AoQ_corr->Fill(AoQ_corr);
          scalers_done = false;
@@ -1849,13 +1900,14 @@ for(int i=0;i<7;i++)
 	      if(sci_r[idx]!=0)   hSCI_R[idx]->Fill(sci_r[idx]);
 	      if(sci_e[idx]!=0)   hSCI_E[idx]->Fill(sci_e[idx]);
 	        if(sci_e[2]!=0 && sci_e[5]!=0)    hSCI_dE24->Fill(sci_e[2],sci_e[5]);
-	            }
+	            
 	      
 	    if(PrcID==30){
 	      if(sci_tx[idx]!=0)  hSCI_Tx[idx]->Fill(sci_tx[idx]);
 	      if(sci_x[idx]!=0)   hSCI_X[idx]->Fill(sci_x[idx]);
 	       }
     }
+     }
      
 //      if(sci_e[5]!=0 && TPC_X[5]!=0) hSCIdE41_TPC42X->Fill(sci_e[5],TPC_X[5]); //dE_SCI_41 vs TPC_42X
 //      if(sci_l[5]!=0 &&TPC_X[5]!=0) hSCIdE41L_TPC42X->Fill(sci_l[5],TPC_X[5]); //dE_SCI_41L vs TPC_42X
@@ -1875,11 +1927,19 @@ for(int i=0;i<7;i++)
      if(sci_tofll2!=0)  hSCI_TofLL2->Fill(sci_tofll2);
      
      if(sci_tofll3!=0) hSCI_TofLL3->Fill(sci_tofll3);
-     if(sci_tof2!=0) hSCI_Tof2->Fill(sci_tof2);
-  //   hSCI_Tof2->Fill(sci_tof2);
+     if(sci_tofll5!=0) hSCI_TofLL5->Fill(sci_tofll5);
+     
+
      if(sci_tofrr2!=0)   hSCI_TofRR2->Fill(sci_tofrr2);
      if(sci_tofrr3!=0)  hSCI_TofRR3->Fill(sci_tofrr3);
+     if(sci_tofrr5!=0)  hSCI_TofRR5->Fill(sci_tofrr5);
+     if(sci_tof2!=0) hSCI_Tof2->Fill(sci_tof2);
      if(sci_tof3!=0)  hSCI_Tof3->Fill(sci_tof3);
+     if(sci_tof5!=0)  hSCI_Tof5->Fill(sci_tof5);
+     
+     if(sci_tof2_calib!=0) hSCI_Tof2_calib->Fill(sci_tof2_calib);
+     if(sci_tof3_calib!=0) hSCI_Tof3_calib->Fill(sci_tof3_calib);
+     if(sci_tof5_calib!=0) hSCI_Tof5_calib->Fill(sci_tof5_calib);
      }
 if(PrcID==35 && SubType==1){
     
@@ -1892,17 +1952,20 @@ if(PrcID==35 && SubType==1){
     if(ID_y4!=0) hID_y4->Fill(ID_y4);
     if(ID_a4!=0) hID_a4->Fill(ID_a4);
     if(ID_b4!=0) hID_b4->Fill(ID_b4);
-    
+}
 
+if(PrcID==20 && SubType==1){
     for(int i=0; i<7; i++){
-       if(TPC_X[i]!=0)   hTPC_X[i]->Fill(TPC_X[i]);
+       if(TPC_X[i]!=0)  { hTPC_X[i]->Fill(TPC_X[i]);}
        if(TPC_Y[i]!=0)    hTPC_Y[i]->Fill(TPC_Y[i]);
        if(TPC_X[i]!=0 && TPC_Y[i]!=0)    hcTPC_XY[i]->Fill(TPC_X[i],TPC_Y[i]);
-       if(TPC_LT[i][0]!=0 && TPC_RT[i][1]!=0)    hTPC_LTRT[i]->Fill(TPC_LT[i][0],TPC_RT[i][1]);
+       for(int j=0; j<2; j++){
+       if(TPC_LT[i][j][0]!=0 && TPC_RT[i][j][0]!=0)    hTPC_LTRT[i]->Fill(TPC_LT[i][j][0],TPC_RT[i][j][0]);
        if(TPC_X0-TPC_X1!=0)    hTPC_DELTAX[i]->Fill(TPC_X0-TPC_X1);
          // cout<<"TPC_LT[i][0] " << TPC_LT[i][0] << " i " << i << endl;
+        }
     }
-
+}
 
 //     htpc_X2->Fill(TPC_X[2]);
 //     htpc_Y2->Fill(TPC_Y[2]);
@@ -1927,12 +1990,12 @@ if(PrcID==35 && SubType==1){
 // if(beta!=0)cout<<"beta " << beta*1000<<endl;
 //     if(beta!=0) hID_beta->Fill(beta*1000);
    // if(beta3) hbeta3->Fill(beta3);
-}
+//}
  
 if(PrcID==25||PrcID==20){
     
      if(AoQ!=0) hID_AoQ->Fill(AoQ);
-    
+   
     /****  S4  (MUSIC 1)   */
      if(ID_z!=0)hID_Z->Fill(ID_z);
     
@@ -1962,15 +2025,19 @@ if(PrcID==25||PrcID==20){
      if(ID_x4!=0 && ID_a4!=0)hID_x4a4->Fill(ID_x4,ID_a4);
      if(ID_x4!=0 && ID_b4!=0) hID_y4b4->Fill(ID_y4,ID_b4);
      
-     ///ToF
-    
-     
+     ///MHTDC
      if(ID_tof4121_mhtdc>0)hID_tof4121_mhtdc->Fill(ID_tof4121_mhtdc);
 
      if(ID_tof4221_mhtdc>0)hID_tof4221_mhtdc->Fill(ID_tof4221_mhtdc);
          
-     
-}
+     if(AoQ_mhtdc>0)hID_AoQ_mhtdc->Fill(AoQ_mhtdc);
+     if(AoQ_corr_mhtdc>0)hID_AoQ_corr_mhtdc->Fill(AoQ_corr_mhtdc);
+     if(ID_z_mhtdc>0)hID_Z_mhtdc->Fill(ID_z_mhtdc);
+     if(ID_z2_mhtdc>0)hID_Z2_mhtdc->Fill(ID_z2_mhtdc);
+     if(beta_mhtdc>0)hID_beta_mhtdc->Fill(beta_mhtdc);
+     if(ID_z_mhtdc>0 &&AoQ_mhtdc>0 )hID_Z_AoQ_mhtdc->Fill(ID_z_mhtdc,AoQ_mhtdc);
+     if(ID_z_mhtdc>0 && ID_z2_mhtdc>0)hID_Z_Z2_mhtdc->Fill(ID_z_mhtdc,ID_z2_mhtdc);
+    }
 
 if (PrcID == 35 && !scalers_done)
 {
@@ -2295,14 +2362,14 @@ void EventUnpackProc::Fill_FATIMA_Histos(){
                 }
          }
   /**------------------Scaler TIMING -----------------------------------------**/  
-         Scaler_iterator = RAW->get_scaler_iterator();
-         
-          for (int g=0; g<Scaler_iterator; g++){
-              if(RAW->get_scaler_data(g)>0){
-                hScaler_hit_pattern->Fill(g);
-                cout<<"g " << g << endl;
-           }
-        }
+//          Scaler_iterator = RAW->get_scaler_iterator();
+//          
+//           for (int g=0; g<Scaler_iterator; g++){
+//               if(RAW->get_scaler_data(g)>0){
+//                 hScaler_hit_pattern->Fill(g);
+//                 cout<<"g " << g << endl;
+//            }
+//         }
     }
 
 

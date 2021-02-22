@@ -63,10 +63,16 @@ private:
 
 	Float_t sci_tofll2; // set_DATA_SCI_ToF
 	Float_t sci_tofll3; // set_DATA_SCI_ToF
-	Float_t sci_tof2;   // set_DATA_SCI_ToF
+	Float_t sci_tofll5; // set_DATA_SCI_ToF
 	Float_t sci_tofrr2; // set_DATA_SCI_ToF
 	Float_t sci_tofrr3; // set_DATA_SCI_ToF
+	Float_t sci_tofrr5;
+	Float_t sci_tof2;   // set_DATA_SCI_ToF
 	Float_t sci_tof3;   // set_DATA_SCI_ToF
+	Float_t sci_tof5;   // set_DATA_SCI_ToF
+	Float_t sci_tof2_calib;   // set_DATA_SCI_ToF
+	Float_t sci_tof3_calib;   // set_DATA_SCI_ToF
+	Float_t sci_tof5_calib;   // set_DATA_SCI_ToF
 
 	// ID PARAMETERS //
 
@@ -82,8 +88,8 @@ private:
 	
 	Float_t TPC_x[7];
     Float_t TPC_y[7];
-    Int_t   TPC_lt[7][2];
-    Int_t   TPC_rt[7][2];
+    Int_t   TPC_lt[7][2][64];
+    Int_t   TPC_rt[7][2][64];
     Float_t TPC_x0;
     Float_t TPC_x1;
 
@@ -128,6 +134,15 @@ private:
     Double_t TRaw_vftx_42R;
     Double_t TRaw_vftx[32];
     
+    Float_t Raw_mhtdc_sc21lr_dt;
+    Float_t Raw_mhtdc_sc21lr_x;
+    Float_t Raw_mhtdc_sc22lr_dt;
+    Float_t Raw_mhtdc_sc22lr_x;
+    Float_t Raw_mhtdc_sc41lr_dt;
+    Float_t Raw_mhtdc_sc41lr_x;
+    Float_t Raw_mhtdc_sc42lr_dt;
+    Float_t Raw_mhtdc_sc42lr_x;
+    
     Float_t ID_mhtdc_AoQ;
     Float_t ID_mhtdc_AoQ_corr;
     Float_t ID_mhtdc_Z1;
@@ -137,23 +152,24 @@ private:
     Float_t ID_mhtdc_Beta;
     Float_t ID_mhtdc_tof4221;
     Float_t ID_mhtdc_tof4121;
+    Float_t ID_mhtdc_tof4122;
 	// ##########################################################
 
 	//White Rabbit
 	ULong64_t WR;
 
     //AIDA
-    double AIDA_Energy[AIDA_MAX_HITS];
-    int AIDA_FEE[AIDA_MAX_HITS];
-    int AIDA_CHA_ID[AIDA_MAX_HITS];
-    ULong64_t AIDA_WR[AIDA_MAX_HITS];
+    double      AIDA_Energy[AIDA_MAX_HITS];
+    int         AIDA_FEE[AIDA_MAX_HITS];
+    int         AIDA_CHA_ID[AIDA_MAX_HITS];
+    ULong64_t   AIDA_WR[AIDA_MAX_HITS];
     int         AIDA_Hits;
-    bool AIDA_HighE_VETO[AIDA_MAX_HITS];
-    int AIDA_SIDE[AIDA_MAX_HITS];
-    int AIDA_STRIP[AIDA_MAX_HITS];
-    int AIDA_EVT_ID[AIDA_MAX_HITS];
-	ULong64_t AIDA_FastTime[AIDA_MAX_HITS];
-	int AIDA_ADC[AIDA_MAX_HITS];
+    bool        AIDA_HighE_VETO[AIDA_MAX_HITS];
+    int         AIDA_SIDE[AIDA_MAX_HITS];
+    int         AIDA_STRIP[AIDA_MAX_HITS];
+    int         AIDA_EVT_ID[AIDA_MAX_HITS];
+	ULong64_t   AIDA_FastTime[AIDA_MAX_HITS];
+	int         AIDA_ADC[AIDA_MAX_HITS];
 	std::vector<AidaScaler> AIDA_SCALERS;
 
 
@@ -193,22 +209,22 @@ private:
 	//FATIMA_DataStruct FATIMA_Data;
 	
 	//FATIMA TAMEX
-    int amount_hit_tamex_fat;
-    int iterator_fat[4];
-    double trigger_coarse_fat[32];
-    double trigger_fine_fat[32];
-    int leading_array_fat[4][32];
-    int leading_hits_fat[4];
-    int trailing_hits_fat[4];
-    int phys_channel_fat[4][32];
-    int leading_hits_ch_fat[4][32];
-    int trailing_hits_ch_fat[4][32];
-    UInt ch_ID_fat[4][32];
-    double coarse_T_edge_lead_fat[4][32];
-    double coarse_T_edge_trail_fat[4][32];
-    double fine_T_edge_lead_fat[4][32];
-    double fine_T_edge_trail_fat[4][32];
-    bool fired_tamex_fat[4];
+    int     amount_hit_tamex_fat;
+    int     iterator_fat[4];
+    double  trigger_coarse_fat[32];
+    double  trigger_fine_fat[32];
+    int     leading_array_fat[4][32];
+    int     leading_hits_fat[4];
+    int     trailing_hits_fat[4];
+    int     phys_channel_fat[4][32];
+    int     leading_hits_ch_fat[4][32];
+    int     trailing_hits_ch_fat[4][32];
+    UInt    ch_ID_fat[4][32];
+    double  coarse_T_edge_lead_fat[4][32];
+    double  coarse_T_edge_trail_fat[4][32];
+    double  fine_T_edge_lead_fat[4][32];
+    double  fine_T_edge_trail_fat[4][32];
+    bool    fired_tamex_fat[4];
 
 
 	//bPlastic
@@ -216,74 +232,74 @@ private:
 //  	PLASTIC_VME_DataStruct PLASTIC_VME_Data;
 
     //FINGER
-    int amount_hit_tamex;
-    int iterator[FINGER_TAMEX_MODULES];
-    double trigger_coarse[FINGER_TAMEX_HITS];
-    double trigger_fine[FINGER_TAMEX_HITS];
-    int leading_array[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    int leading_hits[FINGER_TAMEX_MODULES];
-    int trailing_hits[FINGER_TAMEX_MODULES];
-    int phys_channel[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    int leading_hits_ch[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    int trailing_hits_ch[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    UInt ch_ID[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    int         amount_hit_tamex;
+    int         iterator[FINGER_TAMEX_MODULES];
+    double      trigger_coarse[FINGER_TAMEX_HITS];
+    double      trigger_fine[FINGER_TAMEX_HITS];
+    int         leading_array[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    int         leading_hits[FINGER_TAMEX_MODULES];
+    int         trailing_hits[FINGER_TAMEX_MODULES];
+    int         phys_channel[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    int         leading_hits_ch[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    int         trailing_hits_ch[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    UInt        ch_ID[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
 
-    double coarse_T_edge_lead[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    double coarse_T_edge_trail[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    double fine_T_edge_lead[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
-    double fine_T_edge_trail[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    double      coarse_T_edge_lead[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    double      coarse_T_edge_trail[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    double      fine_T_edge_lead[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
+    double      fine_T_edge_trail[FINGER_TAMEX_MODULES][FINGER_TAMEX_HITS];
 
     bool fired_tamex[4];
 
 	bool VME_Event;
 
     //bPlastic VME
-    int QDC_IT;
-    int TDC_IT;
-    double VME_QDC_DAT1[32];
-    double VME_QDC_DAT2[32];
-    int VME_QDC_CHA[32];
-    double VME_TDC_DAT[50];
-    int VME_TDC_CHA[50];
-
-    int SCALER_ITERATOR;
-    double SCALER_DATA[17];
+//     int         QDC_IT;
+//     int         TDC_IT;
+//     double      VME_QDC_DAT1[32];
+//     double      VME_QDC_DAT2[32];
+//     int         VME_QDC_CHA[32];
+//     double      VME_TDC_DAT[50];
+//     int         VME_TDC_CHA[50];
+// 
+//     int         SCALER_ITERATOR;
+//     double      SCALER_DATA[17];
     
     
     //bPlastic TAMEX
-    int amount_hit_tamex_bPlas;
-    int tamex_id_bPlas[100];
-    int iterator_bPlas[4];
-    double trigger_coarse_bPlas[48];
-    double trigger_fine_bPlas[48];
-    int leading_array_bPlas[4][48];
-    int leading_hits_bPlas[4];
-    int trailing_hits_bPlas[4];
-    int phys_channel_bPlas[4][48];
-    int leading_hits_ch_bPlas[4][48];
-    int trailing_hits_ch_bPlas[4][48];
-    int ch_ID_bPlas[4][32];
-    double coarse_T_edge_lead_bPlas[4][48];
-    double coarse_T_edge_trail_bPlas[4][48];
-    double fine_T_edge_lead_bPlas[4][48];
-    double fine_T_edge_trail_bPlas[4][48];
-    double lead_T_bPlas[4][48];
-    double trail_T_bPlas[4][48];
-    double ToT[4][48];
-    bool fired_tamex_bPlas[4];
+    int         amount_hit_tamex_bPlas;
+    int         tamex_id_bPlas[100];
+    int         iterator_bPlas[4];
+    double      trigger_coarse_bPlas[48];
+    double      trigger_fine_bPlas[48];
+    int         leading_array_bPlas[4][48];
+    int         leading_hits_bPlas[4];
+    int         trailing_hits_bPlas[4];
+    int         phys_channel_bPlas[4][48];
+    int         leading_hits_ch_bPlas[4][48];
+    int         trailing_hits_ch_bPlas[4][48];
+    int         ch_ID_bPlas[4][32];
+    double      coarse_T_edge_lead_bPlas[4][48];
+    double      coarse_T_edge_trail_bPlas[4][48];
+    double      fine_T_edge_lead_bPlas[4][48];
+    double      fine_T_edge_trail_bPlas[4][48];
+    double      lead_T_bPlas[4][48];
+    double      trail_T_bPlas[4][48];
+    double      ToT[4][48];
+    bool        fired_tamex_bPlas[4];
 
 	//Germanium
-        int Ge_FIRED;
-        int Germanium_Det_Nums[Germanium_MAX_HITS];
-        int Germanium_Crystal_Nums[Germanium_MAX_HITS];
-        ULong64_t Germanium_sum_time[Germanium_MAX_HITS];
-        int Germanium_hit_pattern[Germanium_MAX_HITS];
-        ULong64_t Germanium_chan_time[Germanium_MAX_HITS];
-        double Germanium_chan_energy[Germanium_MAX_HITS];
-        bool Germanium_Pileup[Germanium_MAX_HITS];
-        bool Germanium_Overflow[Germanium_MAX_HITS];
-        ULong64_t Germanium_chan_cf[Germanium_MAX_HITS];
-	int Event_Type;
+        int         Ge_FIRED;
+        int         Germanium_Det_Nums[Germanium_MAX_HITS];
+        int         Germanium_Crystal_Nums[Germanium_MAX_HITS];
+        ULong64_t   Germanium_sum_time[Germanium_MAX_HITS];
+        int         Germanium_hit_pattern[Germanium_MAX_HITS];
+        ULong64_t   Germanium_chan_time[Germanium_MAX_HITS];
+        double      Germanium_chan_energy[Germanium_MAX_HITS];
+        bool        Germanium_Pileup[Germanium_MAX_HITS];
+        bool        Germanium_Overflow[Germanium_MAX_HITS];
+        ULong64_t   Germanium_chan_cf[Germanium_MAX_HITS];
+        int Event_Type;
 
 
 public:
@@ -297,16 +313,18 @@ public:
 	void set_DATA_MUSIC(Float_t*,Float_t*,Int_t*,Int_t*,Int_t*,Int_t*);
 	void set_DATA_SCI(Float_t*,Float_t*,Float_t*,Float_t*,Float_t*);
 	void set_DATA_SCI_dT(Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t);
-	void set_DATA_SCI_ToF(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
-    void set_DATA_TPC(Int_t**,Int_t**,Float_t*,Float_t*,Float_t,Float_t);
+	void set_DATA_SCI_ToF(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
+    void set_DATA_TPC(Int_t***,Int_t***,Float_t*,Float_t*,Float_t,Float_t);
 	void set_DATA_ID_2_4(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
 	void set_DATA_ID_Beta_Rho(Float_t*,Float_t*,Float_t,Float_t,Float_t);
 	void set_DATA_ID_Z_AoQ(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
 	void set_DATA_ID_Timestamp(Float_t,Float_t,Float_t);
     void set_DATA_FRS_SCALERS(Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,UInt_t*);
     void set_DATA_VFTX(Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t*);
-     
-     void set_DATA_ID_MHTDC(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t); 
+   
+    void set_DATA_RAW_MHTDC(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t); 
+   
+    void set_DATA_ID_MHTDC(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t); 
 	// FRS STUFF //
 
 
@@ -383,10 +401,16 @@ public:
 
 	Float_t get_FRS_tofll2();
 	Float_t get_FRS_tofll3();
-	Float_t get_FRS_tof2();
+	Float_t get_FRS_tofll5();
 	Float_t get_FRS_tofrr2();
 	Float_t get_FRS_tofrr3();
+    Float_t get_FRS_tofrr5();
+    Float_t get_FRS_tof2();
 	Float_t get_FRS_tof3();
+    Float_t get_FRS_tof5();
+    Float_t get_FRS_tof2_calib();
+	Float_t get_FRS_tof3_calib();
+    Float_t get_FRS_tof5_calib();
 
 	Float_t get_FRS_x2();
 	Float_t get_FRS_y2();
@@ -400,8 +424,8 @@ public:
     
     Float_t get_FRS_tpcX(int);
     Float_t get_FRS_tpcY(int);
-    Int_t   get_FRS_tpclt(int,int);
-    Int_t   get_FRS_tpcrt(int,int);
+    Int_t   get_FRS_tpclt(int,int,int);
+    Int_t   get_FRS_tpcrt(int,int,int);
     Float_t get_FRS_tpcx0();
     Float_t get_FRS_tpcx1();
 
@@ -444,6 +468,15 @@ public:
     Double_t get_FRS_TRaw_vftx_42r();
     Double_t get_FRS_TRaw_vftx(int i);
     
+    Float_t get_FRS_Raw_mhtdc_sc21lr_dt();
+    Float_t get_FRS_Raw_mhtdc_sc21lr_x();
+    Float_t get_FRS_Raw_mhtdc_sc22lr_dt();
+    Float_t get_FRS_Raw_mhtdc_sc22lr_x();
+    Float_t get_FRS_Raw_mhtdc_sc41lr_dt();
+    Float_t get_FRS_Raw_mhtdc_sc41lr_x();
+    Float_t get_FRS_Raw_mhtdc_sc42lr_dt();
+    Float_t get_FRS_Raw_mhtdc_sc42lr_x();
+    
     Float_t get_FRS_id_mhtdc_aoq();
     Float_t get_FRS_id_mhtdc_aoq_corr();
     Float_t get_FRS_id_mhtdc_z1();
@@ -453,6 +486,7 @@ public:
     Float_t get_FRS_id_mhtdc_beta();
     Float_t get_FRS_id_mhtdc_tof4121();
     Float_t get_FRS_id_mhtdc_tof4221();
+    Float_t get_FRS_id_mhtdc_tof4122();
     
     
 	// ####################################################
@@ -565,13 +599,13 @@ public:
 
 // 	PLASTIC_VME_DataStruct* PassPLASTIC_VME();
 // 	PLASTIC_DataStruct* PassPLASTIC();
-    int     get_plastic_VME_QDC_fired();
-    int     get_plastic_VME_TDC_fired();
-    double  get_plastic_VME_QDC_dat1(int);
-    double  get_plastic_VME_QDC_dat2(int);
-    int     get_plastic_VME_QDC_cha(int);
-    double  get_plastic_VME_TDC_dat(int);
-    int     get_plastic_VME_TDC_cha(int);
+//     int     get_plastic_VME_QDC_fired();
+//     int     get_plastic_VME_TDC_fired();
+//     double  get_plastic_VME_QDC_dat1(int);
+//     double  get_plastic_VME_QDC_dat2(int);
+//     int     get_plastic_VME_QDC_cha(int);
+//     double  get_plastic_VME_TDC_dat(int);
+//     int     get_plastic_VME_TDC_cha(int);
 
     int     get_scaler_iterator();
     double  get_scaler_data(int);

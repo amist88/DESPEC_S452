@@ -131,9 +131,9 @@ CalibParameter::CalibParameter(const Text_t *name)
   }
   file.close();
   //------------------------------------------------------------------------------//
-  file.open("Configuration_Files/FATIMA/FATIMA_Ref_Time_Calibration.dat");
+  file.open("Configuration_Files/FATIMA/FATIMA_Ref_Time_Correction.dat");
   if (file.fail()) {
-    cout << "ERROR:  Could not open file: FATIMA_Ref_Time_Calibration.dat ! (param set 0)\n";
+    cout << "ERROR:  Could not open file: FATIMA_Ref_Time_Correction.dat ! (param set 0)\n";
     for (i = 0; i < FAT_MAX_VME_CHANNELS; i++){
        TDCfatID = i;
        TFatTDC_Chref_dT[i] = 0;
@@ -142,10 +142,10 @@ CalibParameter::CalibParameter(const Text_t *name)
   }
   
    else {
-    cout << "CalibParameter - reading calibration from: FATIMA_Ref_Time_Calibration.dat\n";
+    cout << "CalibParameter - reading calibration from: FATIMA_Ref_Time_Correction.dat\n";
     for (i = 0; i < FAT_MAX_VME_CHANNELS; i++){
       if(IsData(file)) file >> TDCfatID >> TFatTDC_Chref_dT[i];
-       if (file.fail()) cout << "ERROR reading FATIMA_Ref_Time_Calibration.dat\n";
+       if (file.fail()) cout << "ERROR reading FATIMA_Ref_Time_Correction.dat\n";
     }
   }
   file.close();

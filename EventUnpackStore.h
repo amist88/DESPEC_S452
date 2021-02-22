@@ -64,6 +64,15 @@ public:
     Float_t fFRS_AoQ, fFRS_AoQ_corr;
     Float_t fFRS_z, fFRS_z2;
     Float_t fFRS_dEdeg, fFRS_dEdegoQ;
+    
+    Float_t fFRS_AoQ_mhtdc, fFRS_AoQ_corr_mhtdc;
+    Float_t fFRS_z_mhtdc, fFRS_z2_mhtdc;
+    Float_t fFRS_dEdeg_mhtdc;
+    Float_t fFRS_dEdegoQ_mhtdc;
+    Float_t fFRS_beta_mhtdc;
+    Float_t fFRS_tof4121_mhtdc;
+    Float_t fFRS_tof4221_mhtdc;
+    
   //  Float_t fFRS_timestamp, fFRS_ts, fFRS_ts2;  
     Long64_t     fFRS_WR;
     Float_t      fFRS_TPC_x[7];

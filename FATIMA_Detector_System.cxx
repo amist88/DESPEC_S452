@@ -223,7 +223,7 @@ void FATIMA_Detector_System::get_Event_data(Raw_Event* RAW){
                         TDC_Time_raw, TDC_Time_ns, QDC_Time_Coarse,QDC_Time_Fine,
                         det_ids_QDC,det_ids_TDC);
     
-    RAW->set_DATA_SCALER(Scaler_iterator, Scaler_Data);
+    //RAW->set_DATA_SCALER(Scaler_iterator, Scaler_Data);
                         
     //QDC_TDC->get_Detector_Data(RAW);
 }

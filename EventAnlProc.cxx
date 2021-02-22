@@ -238,20 +238,36 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
 //        // FRS_ID_brho[i] = pInput->fFRS_ID_brho[i];
 //       //  FRS_ID_rho[i] = pInput->fFRS_ID_rho[i];
 //         }
-         FRS_beta = pInput->fFRS_beta;
+       
 //         FRS_beta3 = pInput->fFRS_beta3;
       //  FRS_gamma  = pInput->fFRS_gamma;
             ///ID Z AoQ
+        if(MHTDC_OR_TAC==0){
         FRS_AoQ = pInput->fFRS_AoQ;
         FRS_AoQ_corr = pInput->fFRS_AoQ_corr;
-//         if(FRS_AoQ_corr>0){
-// //cout<<"ANL STAGE FRS_AoQ_corr " <<pInput->fevent_number <<" AoQ CORR " << FRS_AoQ_corr << endl;
-//            // cout<<" " << endl;
-//         }
         FRS_z = pInput->fFRS_z;
         FRS_z2 = pInput->fFRS_z2;
         FRS_dEdeg = pInput->fFRS_dEdeg;
         FRS_dEdegoQ = pInput->fFRS_dEdegoQ;
+        FRS_beta = pInput->fFRS_beta;
+        }
+        else if (MHTDC_OR_TAC==1){
+        FRS_AoQ = pInput->fFRS_AoQ_mhtdc;
+        FRS_AoQ_corr = pInput->fFRS_AoQ_corr_mhtdc;
+        FRS_z = pInput->fFRS_z_mhtdc;
+        FRS_z2 = pInput->fFRS_z2_mhtdc;
+        FRS_dEdeg = pInput->fFRS_dEdeg_mhtdc;
+        FRS_dEdegoQ = pInput->fFRS_dEdegoQ_mhtdc;
+        FRS_beta = pInput->fFRS_beta_mhtdc;
+        }
+        else {cout<<"TOF vs TAC Parameter not set correctly in DESPEC_Setup_File.h"<<endl; exit(0);}
+        FRS_AoQ_mhtdc = pInput->fFRS_AoQ_mhtdc;
+        FRS_AoQ_corr_mhtdc = pInput->fFRS_AoQ_corr_mhtdc;
+        FRS_z_mhtdc = pInput->fFRS_z_mhtdc;
+        FRS_z2_mhtdc = pInput->fFRS_z2_mhtdc;
+        FRS_dEdeg_mhtdc = pInput->fFRS_dEdeg_mhtdc;
+        FRS_dEdegoQ_mhtdc = pInput->fFRS_dEdegoQ_mhtdc;
+        FRS_beta_mhtdc = pInput->fFRS_beta_mhtdc;
        // FRS_z3 = pInput->fFRS_z3;
             ///ID Timestamp
        // FRS_timestamp = pInput->fFRS_timestamp;
@@ -549,6 +565,7 @@ if(Fatmult > 0){
  /**--------------------------------------    FRS   ---------------------------------------------**/
  /**----------------------------------------------------------------------------------------------**/
 void EventAnlProc::Make_FRS_Histos(){
+     
     hID_x2AoQ = MakeTH2('D',"FRS/ID/ID_x2AoQ", "X2 vs A/Q",1500,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 200,-100.,100.,"A/Q s2-s4", "X at S2 [mm]");
 //     ('F', Form("AIDA/Implants/DSSD%d_implants_y_ey", i+1), Form("DSSD %d Ey vs Y position", i+1), 128, 0, 128, 1000, 0, 10000, "Y Strip", "Y Energy");
 //     MakeTH2('D', "bPlastic/FIMP_ToT_Correlation_Comb1", "ToT vs ToT for 2 FIMP channels, combination 1",500,0,100000,500,0,100000);
@@ -561,6 +578,8 @@ void EventAnlProc::Make_FRS_Histos(){
     
     hID_Z_AoQ_zsame = MakeTH2('D',"FRS/ID/ID_Z1_AoQ_zsame","Z1 vs Z2: mod(Z1-Z2)<0.4", 1500,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"Z1==Z2 A/Q s2-s4", "Z s2-s4");
     
+
+    
     hID_Z_AoQ_corr = MakeTH2('D',"FRS/ID/ID_Z1_AoQ_S2-S4corr", "",1500,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot, "A/Q s2-s4", "Z s2-s4");
     
     //High-Z charge state
@@ -569,7 +588,7 @@ void EventAnlProc::Make_FRS_Histos(){
     hdEdeg_Z   = MakeTH2('D',"FRS/ID/ID_dEdeg_Z1" ,"dE in s2 degrader vs. Z1" , 1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z from MUSIC41", "dE(S2deg) [a.u.]");
    
     
-    hID_Z_Z2 = MakeTH2('D',"FRS/ID/ID_Z1_Z2","Z1 vs. Z2", 2000,frs_id->min_z_plot,frs_id->max_z_plot, 2000,frs_id->min_z_plot,frs_id->max_z_plot,"Z1", "Z2");
+    hID_Z_Z2 = MakeTH2('D',"FRS/ID/ID_Z1_Z2","Z1 vs. Z2", 2000,frs_id->min_z_plot,frs_id->max_z_plot, 400,frs_id->min_z_plot,frs_id->max_z_plot,"Z1", "Z2");
     
     
     int num_ID_x2AoQ = {MAX_FRS_GATE};
@@ -608,6 +627,7 @@ void EventAnlProc::Make_FRS_Histos(){
 //        hID_Z_AoQgate[i] = MakeTH2('D',"FRS/ID_Gated/Z1AoQ/Z1AoQGated/ID_Z1_AoQgate%d",i,  1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z s2-s4");
        
         hID_Z_AoQgate[i] = MakeTH2('I', Form("FRS/ID_Gated/Z1AoQ/Z1AoQGated/ID_Z1_AoQgate%d",i), Form("Z1 A/Q gated, Z1 A/Q Gate %d", i), 1000,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z s2-s4");
+        
 
         hID_dEdegoQ_Z1_Z1AoQgate[i] = MakeTH2('I', Form("FRS/ID_Gated/dEdegoQ/dEdegoQZ1_Z1AoQGated/dEdegoQZ1_Z1AoQgate%d",i), Form("dEdegoQZ1_Z1AoQgate%d",i),1000,frs_id->min_z_plot,frs_id->max_z_plot, 1000, 10.,50., "Z1 from MUSIC41", "dE(S2deg)/Q [a.u.]");
        
@@ -720,7 +740,24 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
     ///Defined in the setup file.
      if(FRS_CORR==true) FRS_AoQ = FRS_AoQ_corr;
    
+     if(MHTDC_OR_TAC==0){
      pOutput->pFRS_AoQ = FRS_AoQ;
+     pOutput->pFRS_z = FRS_z;
+     pOutput->pFRS_z2 = FRS_z2;
+     pOutput->pFRS_beta = FRS_beta;
+     pOutput->pFRS_dEdeg = FRS_dEdeg;
+     pOutput->pFRS_dEdegoQ = FRS_dEdegoQ;
+     }
+     
+     else if (MHTDC_OR_TAC==1){
+     pOutput->pFRS_AoQ = FRS_AoQ_mhtdc;
+     pOutput->pFRS_z = FRS_z_mhtdc;
+     pOutput->pFRS_z2 = FRS_z2_mhtdc;
+     pOutput->pFRS_beta = FRS_beta_mhtdc;
+     pOutput->pFRS_dEdeg = FRS_dEdeg_mhtdc;
+     pOutput->pFRS_dEdegoQ = FRS_dEdegoQ_mhtdc;
+     }
+      else {cout<<"TOF vs TAC Parameter not set correctly in DESPEC_Setup_File.h"<<endl; exit(0);}
     
      pOutput->pFRS_ID_x2 = FRS_ID_x2;
      pOutput->pFRS_ID_y2 = FRS_ID_y2;
@@ -731,12 +768,9 @@ void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
      pOutput->pFRS_ID_y4 = FRS_ID_y4;
      pOutput->pFRS_ID_a4 = FRS_ID_a4;
      pOutput->pFRS_ID_b4 = FRS_ID_b4;
+
      
-     pOutput->pFRS_z = FRS_z;
-     pOutput->pFRS_z2 = FRS_z2;
-     pOutput->pFRS_dEdeg = FRS_dEdeg;
-     pOutput->pFRS_dEdegoQ = FRS_dEdegoQ;
-     pOutput->pFRS_beta = FRS_beta;
+     
     
      for(int l=0; l<12;l++){
      pOutput->pFRS_sci_l[l] = FRS_sci_l[l];
@@ -1808,7 +1842,7 @@ if(Fatmult > 0){
        
        hGe_dTgammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_dT","Germanium Gamma-Gamma dT",400,-200,200);
        
-       hGe_CFdT_gammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_CF_dT","Germanium Gamma-Gamma dT",400,-200,200);
+       hGe_CFdT_gammagamma = MakeTH1('I',"Germanium/Sum/Germanium_GammaGamma_CF_dT","Germanium Gamma-Gamma dT",800,-200,200);
     
       for (int i=0; i<Germanium_MAX_DETS; i++)
       {
@@ -1819,6 +1853,10 @@ if(Fatmult > 0){
           hGe_Chan_E_halfkev[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_0_5keV/Germanium_E_0_5keV_Det_%2d_%1d",i, j), Form("Germanium Channel 0.5keV Energy Detector %2d Crystal %1d",i, j),10000,0,5000);
           
           hGe_Chan_Time_Diff[i][j] = MakeTH1('D',Form("Germanium/Time_diff/Germanium_Chan_Time_Diff_Det_%2d_Chan_%2d",i,j), Form("Germanium Channel Time Difference for Detector %2d Channel %2d",i,j),200,-1000,1000);
+          
+          hGe_Chan_Time_Diff_CF[i][j] = MakeTH1('D',Form("Germanium/Time_diff_CF/Germanium_Chan_Time_CF_Diff_Det_%2d_Chan_%2d",i,j), Form("Germanium Channel Time Difference with Const Frac for Detector %2d Channel %2d",i,j),4000,-1000,1000);
+          
+          
         }
       //  hGe_FatdT[j] = MakeTH1('I',Form("Correlations/Fatima_Geilieo/Fat_GAldT%2d",j),Form("Germanium Fatima dT Ch. %2d",j),2000,-1000,1000);
        // hGe_Chan_E2[j] = MakeTH1('D',Form("Germanium/Germanium_Energy2/Germanium_E2%2d",j), Form("Germanium Channel Energy Channel %2d",j),5000,0,5000);
@@ -1849,14 +1887,14 @@ if(Fatmult > 0){
               pOutput->pGePileUp[i]=GePileUp[i];
               pOutput->pGeOverFlow[i]=GeOverFlow[i];
            // Skip pileup/overflow events
-           if (GePileUp[i] && (det!=Germanium_SC41_Det  || det!=Germanium_SC41_Det_Digi || det!=Germanium_TimeMachine_Det))
+           if (GePileUp[i] && (det!=Germanium_SC41_Det  && det!=Germanium_SC41_Det_Digi && det!=Germanium_TimeMachine_Det))
            {
               hGe_ESum_largerange_PU->Fill(GeE_Cal[i]);
               continue;
    
             }
   
-           if (GeOverFlow[i]&& (det!=Germanium_SC41_Det  || det!=Germanium_SC41_Det_Digi || det!=Germanium_TimeMachine_Det))
+           if (GeOverFlow[i]&& (det!=Germanium_SC41_Det  && det!=Germanium_SC41_Det_Digi && det!=Germanium_TimeMachine_Det))
            {
              hGe_ESum_largerange_OF->Fill(GeE_Cal[i]);
              continue;
@@ -1869,15 +1907,25 @@ if(Fatmult > 0){
            pOutput->pGe_E[det][crys] = GeE_Cal[i];
            pOutput->pGe_E_Raw[det][crys] = GeE[i];
   
+          
            hGe_Hit_Pat->Fill(det * Germanium_CRYSTALS + crys);
+         
+           if(det!=Germanium_SC41_Det  && det!=Germanium_SC41_Det_Digi && det!=Germanium_TimeMachine_Det){
            hGe_ESum->Fill(GeE_Cal[i]);
+         
            hGe_ESum_halfkev->Fill(GeE_Cal[i]);
+//            cout<<"det " << det <<endl;
+            hGe_Chan_E_vsDet->Fill(det,GeE_Cal[i]);
+           }
            hGe_Chan_E[det][crys]->Fill(GeE_Cal[i]);
            hGe_Chan_E_halfkev[det][crys]->Fill(GeE_Cal[i]);
            
-           hGe_Chan_E_vsDet->Fill(det,GeE_Cal[i]);
-    
+          
+     
            // 2D Matrix generation
+    if (det!=Germanium_SC41_Det  && det!=Germanium_SC41_Det_Digi && det!=Germanium_TimeMachine_Det){
+        Gam_mult++;
+     
            for (int j = 0; j < GeFired; j++)
            {
               if (i == j) continue;
@@ -1885,12 +1933,14 @@ if(Fatmult > 0){
               hGe_dTgammagamma->Fill(GeT[i]-GeT[j]);
               ///Constant fraction time testing 03.02.21
               hGe_CFdT_gammagamma->Fill(GeCF_T[i]-GeCF_T[j]);
-              
-              Gam_mult++;
-              //cout<<"Gam_mult " << Gam_mult<<endl;
+
               hGe_Mult->Fill(Gam_mult);
               hGe_Chan_Time_Diff[det][crys]->Fill(GeT[i]-GeT[j]);
+              hGe_Chan_Time_Diff_CF[det][crys]->Fill(GeCF_T[i]-GeCF_T[j]);
+//               cout<<"GeCF_T[i] " <<GeCF_T[i] <<" GeCF_T[j] " <<GeCF_T[j] <<endl;
               hGe_MultvsdT->Fill(Gam_mult,GeT[i]-GeT[j]);
+              
+              
               ///Gamma-Gamma Time gate
               if((GeT[i]-GeT[j])>fCorrel->GGe1_Ge2_Low && (GeT[i]-GeT[j])< fCorrel->GGe1_Ge2_High){
               hGe_Chan_E_Mat->Fill(GeE_Cal[i], GeE_Cal[j]);
@@ -1899,6 +1949,7 @@ if(Fatmult > 0){
                 }
             }  
        }
+    }
        
        
        ////ADDBACK
@@ -1963,7 +2014,7 @@ if(Fatmult > 0){
                
                  if(GePileUp[i]==0 && GeOverFlow[i]==0 ){
            
-            if(i!=Germanium_SC41_Det)   {     
+            if(i!=Germanium_SC41_Det && i!=Germanium_SC41_Det_Digi && i!=Germanium_TimeMachine_Det)   {     
                 hGe_AddbackSum->Fill(E[j]);
                 hGe_AddbackSum_halfkev->Fill(E[j]);
                     }
