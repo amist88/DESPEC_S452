@@ -31,16 +31,10 @@
 #include "Configuration_Files/DESPEC_General_Setup/DESPEC_Setup_File.h"
 #include "TFRSParameter.h"
 
+//These are for TAMEX
 #define CYCLE_TIME  (Double_t) 5000
 #define COARSE_CT_RANGE  0x800  // 11 bits
-
-///Temp definitions for combined crate
-#define bPLAS1_TAMEX_NUM 3
-#define bPLAS2_TAMEX_NUM 3
-#define bPLAS_TAMEX_ID 2
-#define FAT_TAMEX_ID 0
   
-
 class EventAnlStore;
 
 
@@ -59,6 +53,12 @@ class EventAnlProc : public TGo4EventProcessor {
       
       void get_used_systems();
 
+      long long lastFatWR = 0;
+	  long long lastFatTAMWR = 0;
+	  long long lastGeWR = 0;
+      long long lastbPlastWR = 0;
+      long long lastFRSWR = 0;
+     
         //double lead_lead_bplas[48][100], trail_trail_bplas[48][100];
       //  double lead_lead_fat[48][100];
         
@@ -71,15 +71,20 @@ class EventAnlProc : public TGo4EventProcessor {
         double lead_lead_bplas_Ref3[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         
         
-        double lead_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS], trail_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
-        double lead_lead_fat_Ref1[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
-        double ToT_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
-        double FatTam_RefCh0[FATIMA_TAMEX_HITS];
+        double lead_fast_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS], trail_fast_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double lead_slow_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS], trail_slow_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double lead_lead_slow_fat_Ref1[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double lead_lead_fast_fat_Ref1[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double ToT_fast_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double ToT_slow_fat[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double ToT_slow_fat_calib[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+        double FatTam_Fast_RefCh0[FATIMA_TAMEX_HITS];
+        double FatTam_Slow_RefCh0[FATIMA_TAMEX_HITS];
         double SC41L_ANA_lead_fat[FATIMA_TAMEX_HITS], SC41R_ANA_lead_fat[FATIMA_TAMEX_HITS];
         double SC41L_DIG_lead_fat[FATIMA_TAMEX_HITS], SC41R_DIG_lead_fat[FATIMA_TAMEX_HITS];
         double bPlasDet1_coin_lead_Fat[FATIMA_TAMEX_HITS], bPlasDet2_coin_lead_Fat[FATIMA_TAMEX_HITS] ;
         int hits_fat_lead, hits_fat_trail;
-        int Fat_tot_hits;
+        int Fat_tot_hits[FATIMA_TAMEX_CHANNELS+1];
         
         double SC41L_ANA_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_ANA_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double SC41L_DIG_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_DIG_lead_bPlas[3][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
@@ -91,6 +96,8 @@ class EventAnlProc : public TGo4EventProcessor {
         double bPlas_TAM_SC41R_ANA;
         double bPlas_TAM_SC41L_DIG;
         double bPlas_TAM_SC41R_DIG;
+        double bPlas_TAM_FATVME;
+        double bPlas_TAM_FATTAM;
        
         double bPlas_RefCh0_Det1[bPLASTIC_TAMEX_HITS];
         double bPlas_RefCh0_Det2[bPLASTIC_TAMEX_HITS];
@@ -148,7 +155,7 @@ class EventAnlProc : public TGo4EventProcessor {
 
       void get_used_Systems();
       void load_GermaniumMap_File();
-      void checkTAMEXorVME();
+      //void checkTAMEXorVME();
 
       Float_t  FRS_dE[2],  FRS_dE_cor[2];
       Float_t  FRS_sci_l[12],  FRS_sci_r[12],  FRS_sci_e[12],  FRS_sci_tx[12],  FRS_sci_x[12];
@@ -203,7 +210,9 @@ class EventAnlProc : public TGo4EventProcessor {
       int    Fat_QDC_ID[FAT_MAX_VME_CHANNELS];
       double Fat_QDC_E[FAT_MAX_VME_CHANNELS];
       double Fat_QDC_E_Raw[FAT_MAX_VME_CHANNELS];
-
+      ULong64_t timeLAST_Fat, timeFIRST_Fat;
+       double FatRealTime;
+      
       Long64_t Fat_QDC_T_coarse[FAT_MAX_VME_CHANNELS];
       double Fat_QDC_T_fine[FAT_MAX_VME_CHANNELS];
       
@@ -216,6 +225,7 @@ class EventAnlProc : public TGo4EventProcessor {
       Long64_t Fat_WR;
       double SC40[FAT_VME_MAX_MULTI];
       double SC41[FAT_VME_MAX_MULTI];
+      double Fat_VME_bPlast[6];
 
 
       int Fat_TDC_Singles_ID[FAT_VME_MAX_MULTI];
@@ -234,14 +244,20 @@ class EventAnlProc : public TGo4EventProcessor {
           int    GeCrys[Germanium_MAX_HITS];
           double GeE[Germanium_MAX_HITS];
           double GeE_Cal[Germanium_MAX_HITS];
-          double GeE_Cal_Test[Germanium_MAX_DETS][Germanium_CRYSTALS];
           ULong64_t GeT[Germanium_MAX_HITS];
           ULong64_t GeCF_T[Germanium_MAX_HITS];
+        
           double GeEventT[Germanium_MAX_HITS];
           bool GePileUp[Germanium_MAX_HITS];
           bool GeOverFlow[Germanium_MAX_HITS];
+          
+          ULong64_t timeLAST_Ge, timeFIRST_Ge;
+          double GeRealTime;
           int Gam_mult;
-
+            Long64_t dT_Ge,dT_Ge_cfd;
+            Long64_t dT_Align,dT_CFD_Align;
+            Long64_t Ge_Talign[Germanium_MAX_HITS],Ge_cfd_Talign[Germanium_MAX_HITS];
+            Long64_t dT_Addback;
      
       Long64_t Ge_WR;
 
@@ -353,6 +369,12 @@ class EventAnlProc : public TGo4EventProcessor {
            
 
             //WR histograms
+            
+            TH1 *hFat_deadtime;
+            TH1 *hFatTAM_deadtime;
+            TH1 *hGe_deadtime;
+            TH1 *hbPlast_deadtime;
+            TH1 *hFRS_deadtime;
             TH1 *hAida_Fat_WRdT;
             TH1 *hAida_Ge_WRdT;
             TH1 *hAida_bPlas_WRdT;
@@ -426,6 +448,7 @@ class EventAnlProc : public TGo4EventProcessor {
             
             TH1 *hbPlas_Lead_T[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Trail_T[4][bPLASTIC_CHAN_PER_DET];
+            TH1 *hbPlas_Lead_dT_coinc[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Multiplicity_Det1;
             TH1 *hbPlas_Multiplicity_Det2; 
             TH1 *hbPlas_Multiplicity_Det3; 
@@ -457,13 +480,21 @@ class EventAnlProc : public TGo4EventProcessor {
 	    TH2 *hFIMP_ToT_Correlation_Comb2;
 	    
              
-             TH1 *hFat_Lead_T[FATIMA_TAMEX_CHANNELS];
-             TH1 *hFat_Trail_T[FATIMA_TAMEX_CHANNELS];
-             TH1 *hFat_lead_lead_ref[FATIMA_TAMEX_CHANNELS];
-             TH1 *hFat_ToT_det[FATIMA_TAMEX_CHANNELS];
-             TH1 *hFat_ToT_Sum;
+             TH1 *hFat_Lead_Fast_T[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_Lead_Slow_T[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_Trail_Fast_T[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_Trail_Slow_T[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_lead_lead_fast_ref[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_lead_lead_slow_ref[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_ToT_Fast_det[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_ToT_Slow_det[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_ToT_Slow_det_calib[FATIMA_TAMEX_CHANNELS];
+             TH1 *hFat_ToT_Fast_Sum;
+             TH1 *hFat_ToT_Slow_Sum;
+             TH1 *hFat_ToT_Slow_Sum_Calib;
              TH1 *hFat_tamex_hit_pattern;
              TH1 *hFat_tamex_multiplicity;
+             TH2 *hFat_ToT_Slow_vs_Fast;
 
             TH1 *hScalar_hit_pattern;
             //Fatima Histograms
@@ -474,9 +505,11 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hFAT_hits_QDC;
             TH1 *hFAT_TDCdt_refCha[FAT_MAX_VME_CHANNELS];
             TH1 *hFat_SC41L_TDC_dT[FAT_MAX_VME_CHANNELS];
+            TH1 *hFAT_TDC_bPlast_Cha[FAT_MAX_VME_CHANNELS][6];
             
             TH1 *hFAT_Multipl;
             TH1 *hFAT_hits_TDC;
+            TH1 *hFat_Chan_E_vsTime;
 
             TH1 *hFAT_SC41_check;
 
@@ -502,6 +535,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hGe_dTaddback;
             TH1 *hGe_dTgammagamma;
             TH1 *hGe_CFdT_gammagamma;
+            TH1 *hGe_Chan_E_vsTime;
             TH1 *hGe_SC41L;
             TH1 *hGe_SC41R;
             TH1 *hGe_SC41L_digi;

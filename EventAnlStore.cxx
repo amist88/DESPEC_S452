@@ -98,17 +98,21 @@ void EventAnlStore::Clear(Option_t *t)
     
     pstdcmult=0;
     psqdcmult=0;
-    pFat_Tamex_chan=0;
+    ZERO_ARRAY(pFat_Tamex_chan);
     pFat_LeadHits = 0;
 
-    ZERO_ARRAY(pFat_ToTCalib);  
-    ZERO_ARRAY(pFat_LeadT);  
-    ZERO_ARRAY(pFat_TrailT);  
+    ZERO_ARRAY(pFat_Fast_ToTCalib);  
+    ZERO_ARRAY(pFat_Fast_LeadT);  
+    ZERO_ARRAY(pFat_Fast_TrailT); 
+    ZERO_ARRAY(pFat_Slow_ToTCalib);  
+    ZERO_ARRAY(pFat_Slow_LeadT);  
+    ZERO_ARRAY(pFat_Slow_TrailT); 
     
     pFat_TMCh1mult=0;
     pFat_TMCh2mult=0;
     ZERO_ARRAY(pFat_TMCh1);
     ZERO_ARRAY(pFat_TMCh2);
+    ZERO_ARRAY(pFat_bplastChanT);
  
   
     pbPlas_LeadHits = 0;
@@ -127,6 +131,8 @@ void EventAnlStore::Clear(Option_t *t)
 ///         pFat_TrailT[i][j] = 0;
     
     ZERO_ARRAY(pGe_T);
+    ZERO_ARRAY(pGe_T_Aligned);
+    ZERO_ARRAY(pGe_CF_T_Aligned);
     ZERO_ARRAY(pGe_CF_T);
     ZERO_ARRAY(pGe_E);
     ZERO_ARRAY(pGe_E_Raw);

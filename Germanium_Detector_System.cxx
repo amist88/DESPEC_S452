@@ -213,7 +213,7 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
             Chan_Time[fired_FEBEX_amount] = ((fbx_Ch_TS->chan_ts)+(tmp_ext_chan_ts<<32))*10; // in nanoseconds
             
            
-          // cout<<"fbx_Ch_TS->chan_ts " <<fbx_Ch_TS->chan_ts << " tmp_ext_chan_ts " <<tmp_ext_chan_ts << endl;
+          //cout<<"fbx_Ch_TS->chan_ts " <<fbx_Ch_TS->chan_ts << " tmp_ext_chan_ts " <<tmp_ext_chan_ts<<32 << endl;
           // cout<<"Chan_Time[fired_FEBEX_amount] " <<Chan_Time[fired_FEBEX_amount]<< endl;
         
 	   
@@ -223,9 +223,9 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
             
             Chan_Energy[fired_FEBEX_amount] = fbx_Ch_En->chan_en;
            // cout<<"Chan_Energy[fired_FEBEX_amount] " <<Chan_Energy[fired_FEBEX_amount] << endl;
-             Chan_CF[fired_FEBEX_amount] = 10.0*((tmp_ext_chan_ts<<32)+(fbx_Ch_En->cf)/64.0);
+             Chan_CF[fired_FEBEX_amount] = 10.0*((fbx_Ch_TS->chan_ts)+(fbx_Ch_En->cf)/64.0);
             
-           // if(Chan_CF[fired_FEBEX_amount]!=0)cout<<"Chan_CF[fired_FEBEX_amount] " <<Chan_CF[fired_FEBEX_amount]<< endl;
+            //if(Chan_CF[fired_FEBEX_amount]!=0)cout<<"Chan_CF[fired_FEBEX_amount] " <<Chan_CF[fired_FEBEX_amount]<< endl;
                        // Sign extend the 24-bit energy so negative energies work properly
             if (fbx_Ch_En->chan_en & 0x00800000)
             {
@@ -243,7 +243,7 @@ void Germanium_Detector_System::Process_MBS(int* pdata){
             //std::cout << "pdata = " << std::hex << *this->pdata << std::dec << std::endl;
             //if ((*this->pdata & 0x80000000) != 0) cout<<" Bit 31 set "<<endl;
             //if ((*this->pdata & 0x40000000) != 0) cout<<" Bit 30 set "<<endl;
-            //std::cout << "Pileup = " << fbx_Ch_En->pileup << ", OF = " << fbx_Ch_En->overflow << std::endl;
+           // std::cout << "Pileup = " << fbx_Ch_En->pileup << ", OF = " << fbx_Ch_En->overflow << std::endl;
     
             this->pdata++; // Moves to Future Use //
     
@@ -294,14 +294,14 @@ void Germanium_Detector_System::reset_fired_channels(){
 
 //---------------------------------------------------------------
 
-void Germanium_Detector_System::Calibrate_FEBEX(int id){
-
-    Sum_Time[id] = Germanium_T_CALIB->Calibrate_FEBEX_Sum_T(Sum_Time[id],id);
-
-    Chan_Time[id] = Germanium_T_CALIB->Calibrate_FEBEX_Chan_T(Chan_Time[id],id);
-   // Chan_Energy[id] = Germanium_E_CALIB->Calibrate_FEBEX_E(Chan_Energy[id],id);
-   // cout << "2) Chan_Energy[id] " <<Chan_Energy[id] << " id " << id << endl;
-}
+// void Germanium_Detector_System::Calibrate_FEBEX(int id){
+// 
+// //     Sum_Time[id] = Germanium_T_CALIB->Calibrate_FEBEX_Sum_T(Sum_Time[id],id);
+// // 
+// //     Chan_Time[id] = Germanium_T_CALIB->Calibrate_FEBEX_Chan_T(Chan_Time[id],id);
+//    // Chan_Energy[id] = Germanium_E_CALIB->Calibrate_FEBEX_E(Chan_Energy[id],id);
+//    // cout << "2) Chan_Energy[id] " <<Chan_Energy[id] << " id " << id << endl;
+// }
 
 //---------------------------------------------------------------
 

@@ -7,7 +7,7 @@ using namespace std;
 //----------------------------------------------------------
 
 Germanium_Time_Calibration::Germanium_Time_Calibration(){
-    load_Calibration_File();
+    //load_Calibration_File();
 }
 
 //----------------------------------------------------------

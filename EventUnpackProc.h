@@ -298,6 +298,7 @@ using namespace std;
             TH1 *hID_BRho[2];
 
             TH1* hvftx_TRaw[32];
+            TH1* hvftx_Hit_Pattern;
             TH1* hvftx_Sci21PosRaw;
             TH1* hvftx_Sci22PosRaw;
            
@@ -486,7 +487,7 @@ using namespace std;
 			void checkPADI_or_PADIWA();
 	
             
-            void checkTAMEXorVME();
+           // void checkTAMEXorVME();
             void PrintDespecParameters();
 			void print_MBS(int*,int);
 

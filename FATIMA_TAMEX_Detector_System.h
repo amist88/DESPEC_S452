@@ -9,7 +9,7 @@
 #include "Raw_Event.h"
 
 #include "TAMEX.h"
-
+#define MAX_CHA_INPUT 33                // A) maximum physical input channels per module. must be modulo 4
 
 
 typedef unsigned long long ULong64_t;
@@ -61,9 +61,17 @@ private:
 
     int** lead_arr;
 
+    Bool_t leading_hit;
     double** edge_coarse;
     double** edge_fine;
     unsigned int** ch_ID_edge;
+    
+    unsigned int ch_ID_edge_lead[100][100];
+    unsigned int ch_ID_edge_trail[100][100];
+    
+//     double** edge_coarse_slow;
+//     double** edge_fine_slow;
+//     unsigned int** ch_ID_edge_slow;
 
     double* coarse_T;
     double* fine_T;

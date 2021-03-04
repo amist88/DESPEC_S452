@@ -52,14 +52,33 @@
 /// Setup of VFTX channels
 #define SCI_MOD 0
 ///SOFIA L
-#define SCI21L_CH 0 ///SCI21 L
-#define SCI21R_CH 2 ///SCI21 R
-#define SCI22L_CH 24 ///SCI22 L
-#define SCI22R_CH 26 ///SCI22 R
-#define SCI41L_CH 4 ///SCI41 L
-#define SCI41R_CH 6 ///SCI41 R
-#define SCI42L_CH 8 ///SCI42 L
-#define SCI42R_CH 10 ///SCI42 R
+// #define SCI21L_CH 0 ///SCI21 L
+// #define SCI21R_CH 2 ///SCI21 R
+// #define SCI22L_CH 24 ///SCI22 L
+// #define SCI22R_CH 26 ///SCI22 R
+// #define SCI41L_CH 4 ///SCI41 L
+// #define SCI41R_CH 6 ///SCI41 R
+// #define SCI42L_CH 8 ///SCI42 L
+// #define SCI42R_CH 10 ///SCI42 R
+
+
+// #define SCI21L_CH 6 ///SCI21 L //6
+// #define SCI21R_CH 7 ///SCI21 R //7
+// #define SCI22L_CH 13 ///SCI22 L //13
+// #define SCI22R_CH 14 ///SCI22 R //14
+// #define SCI41L_CH 8 ///SCI41 L //8
+// #define SCI41R_CH 9 ///SCI41 R //9
+// #define SCI42L_CH 4 ///SCI42 L //4 
+// #define SCI42R_CH 5 ///SCI42 R //5
+
+#define SCI21L_CH 5 ///SCI21 L //6
+#define SCI21R_CH 6 ///SCI21 R //7
+#define SCI22L_CH 12 ///SCI22 L //13
+#define SCI22R_CH 13 ///SCI22 R //14
+#define SCI41L_CH 7 ///SCI41 L //8
+#define SCI41R_CH 8 ///SCI41 R //9
+#define SCI42L_CH 3 ///SCI42 L //4 
+#define SCI42R_CH 4 ///SCI42 R //5
 
 class FRS_Detector_System : public Detector_System{
     

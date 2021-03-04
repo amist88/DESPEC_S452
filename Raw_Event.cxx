@@ -584,6 +584,8 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
                 this->FAT_t[dets_fired] = TDC_ns[j];
                 this->FAT_t_qdc[dets_fired] = QDC_c[i];
                 dets_fired++;
+                
+                
             }
         }
     }
@@ -591,6 +593,7 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
 
     for (int i=0; i<TDC_FIRED; i++) {
         this->FAT_TDC_id[i]        = det_ids_TDC[i];
+     
         this->FAT_TDC_timestamp[i] = TDC[i];
         this->FAT_TDC_timestamp_raw[i] = TDC[i];
      tdc_dets_fired++;
@@ -646,26 +649,28 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
         for(int j = 0;j < iterator_fat[i];++j){
             ch_ID_fat[i][j] = ch_ed_fat[i][j];
             leading_array_fat[i][j] = Lead_Arr_fat[i][j];
-            if(ch_ID_fat[i][j] % 2 == 1){
+         //   cout<<"ch_ID_fat[i][j] " <<ch_ID_fat[i][j] << " i " << i << " j " << j << " j % 2 " <<j % 2 << endl;
+            
+            if(ch_ID_fat[i][j] <33 && j % 2 == 0){
 
                 coarse_T_edge_lead_fat[i][j] = (double) Edge_Coarse_fat[i][j];
                 fine_T_edge_lead_fat[i][j] = (double) Edge_fine_fat[i][j];
 
-                phys_channel_fat[i][j] = (ch_ID_fat[i][j]+1)/2 -1;
-                //cout <<"RAW Ch Lead " << ch_ID_fat[i][j] <<" phys_channel_fat[i][j] " << phys_channel_fat[i][j]<<endl;
+                phys_channel_fat[i][j] = (ch_ID_fat[i][j]);
+           // cout <<"LEAD RAW Ch " << ch_ID_fat[i][j] <<" phys_channel_fat[i][j] " << phys_channel_fat[i][j]<<" coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] <<" fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] <<" i " << i << " j " << j <<   endl;
                 leading_hits_fat[i]++;
                 leading_hits_ch_fat[i][phys_channel_fat[i][j]]++;
                   // cout <<"RAW Lead" << "coarse_T_edge_lead_fat[i][j] " << coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] <<" phys_channel_fat[i][j] " <<phys_channel_fat[i][j]<< " i " << i << " j " << j << endl;
                  }
-            else{
+            if(ch_ID_fat[i][j] >33 && j % 2 == 1){
 
                 coarse_T_edge_trail_fat[i][j] = (double)  Edge_Coarse_fat[i][j];
                 fine_T_edge_trail_fat[i][j] =(double)  Edge_fine_fat[i][j];
 
                 trailing_hits_fat[i]++;
-                phys_channel_fat[i][j] = (ch_ID_fat[i][j])/2-1;
+                phys_channel_fat[i][j] = (ch_ID_fat[i][j])-33;
                 trailing_hits_ch_fat[i][phys_channel_fat[i][j]]++;
-                //cout <<"RAW Ch Trail " << ch_ID_fat[i][j] <<" phys_channel_fat[i][j] " << phys_channel_fat[i][j] << endl;
+               // cout <<"TRAIL RAW Ch " << ch_ID_fat[i][j] <<" phys_channel_fat[i][j] " << phys_channel_fat[i][j]<<" coarse_T_edge_trail_fat[i][j] " <<coarse_T_edge_trail_fat[i][j] <<" fine_T_edge_trail_fat[i][j] " <<fine_T_edge_trail_fat[i][j] <<" i " << i << " j " << j <<   endl;
                //cout <<"RAW Trail" << "coarse_T_edge_trail_fat[i][j] " << coarse_T_edge_trail_fat[i][j] << " fine_T_edge_trail_fat[i][j] " <<fine_T_edge_trail_fat[i][j] << " i " << i << " j " << j << endl;
           }
         }
@@ -875,7 +880,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
     int Raw_Event::get_FATIMA_CH_ID(int i,int j){return ch_ID_fat[i][j];}
 
     double Raw_Event::get_FATIMA_lead_T(int i,int j){
-        //cout << "SEND l" << coarse_T_edge_lead[i][j] << " " << fine_T_edge_lead[i][j]  << " " <<  coarse_T_edge_lead[i][j]*5 - fine_T_edge_lead[i][j] << endl;
+//         
   
         return (coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j]);
         
@@ -897,8 +902,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
    }
    
     double Raw_Event::get_FATIMA_trail_T(int i,int j){
-        //cout << "SEND t" << coarse_T_edge_trail[i][j] << " " << fine_T_edge_trail[i][j] << endl;
-        return (coarse_T_edge_trail_fat[i][j] - fine_T_edge_trail_fat[i][j]); 
+         return (coarse_T_edge_trail_fat[i][j] - fine_T_edge_trail_fat[i][j]);
                     }
                     
     double Raw_Event::get_FATIMA_Lead_Lead(int i,int j){

@@ -101,6 +101,8 @@ public:
         UInt_t    fFat_SC41mult;
         Int_t    fFat_TMCh1mult;
         Int_t    fFat_TMCh2mult;
+        
+        
        
         UInt_t    fFat_QDC_Multiplicity;
         Int_t     fFat_QDC_ID[FAT_MAX_VME_CHANNELS];
@@ -116,6 +118,9 @@ public:
         double_t  fSC41[10];
         double_t  fFat_TMCh1[10];
         double_t  fFat_TMCh2[10];
+        double_t  fFat_bplastChanT[6];
+        
+        
         
         Long64_t  fFat_TDC_Time[FAT_MAX_VME_CHANNELS];
         Long64_t  fFat_TDC_Time_Raw [FAT_MAX_VME_CHANNELS];
@@ -164,11 +169,20 @@ public:
          
 //        Double_t fFat_SC41_lead[2][50];
 //        Double_t fFat_SC41_trail[2][50];
-       Int_t fFat_PMT_Lead_N[FATIMA_TAMEX_CHANNELS];
-       Int_t fFat_PMT_Trail_N[FATIMA_TAMEX_CHANNELS];
-       Double_t fFat_Lead_PMT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
-       Double_t fFat_Trail_PMT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+//        Int_t fFat_PMT_Lead_N[FATIMA_TAMEX_CHANNELS];
+//        Int_t fFat_PMT_Trail_N[FATIMA_TAMEX_CHANNELS];
+//        Double_t fFat_Lead_PMT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+//        Double_t fFat_Trail_PMT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
        Long64_t fFat_Tamex_WR;
+       
+       Int_t fFat_Fast_Lead_N[FATIMA_TAMEX_CHANNELS+1];
+       Int_t fFat_Slow_Lead_N[FATIMA_TAMEX_CHANNELS+1];
+       Int_t fFat_Fast_Trail_N[FATIMA_TAMEX_CHANNELS+1];
+       Int_t fFat_Slow_Trail_N[FATIMA_TAMEX_CHANNELS+1];
+       Double_t fFat_Lead_Fast[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+       Double_t fFat_Lead_Slow[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+       Double_t fFat_Trail_Fast[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+       Double_t fFat_Trail_Slow[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
        
         //bPlas TAMEX 
        Long64_t fbPlas_WR;

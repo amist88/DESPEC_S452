@@ -64,6 +64,8 @@ class EventCorrelStore : public TGo4EventElement {
       Double_t cFatE[50];
       Double_t cbPlastE[48];
       
+      
+      
       Long64_t cAIDA_WR;
       Long64_t cbPlast_WR;
       Long64_t cFAT_WR;

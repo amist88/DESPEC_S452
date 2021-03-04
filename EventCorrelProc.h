@@ -191,7 +191,9 @@ class EventCorrelProc : public TGo4EventProcessor {
         double FatE_Prm_Long[FAT_VME_MAX_MULTI];
         double FatT_Prm_Long[FAT_VME_MAX_MULTI];
         Long64_t ts_fat;
+        long long lastAIDAWR;
       
+        TH1 *hAida_Implant_deadtime;
         TH1 *hFatVME_TMdT;
         TH1 *hFatTAMEX_TMdT;
         TH1 *hGe_TMdT;

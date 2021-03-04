@@ -134,6 +134,7 @@ void  EventUnpackStore::Clear(Option_t *t)
             ZERO_ARRAY(fSC41);
             ZERO_ARRAY(fFat_TMCh1);
             ZERO_ARRAY(fFat_TMCh2);
+            ZERO_ARRAY(fFat_bplastChanT);
             ZERO_ARRAY(fFat_TDC_Multiplicity);
             ZERO_ARRAY(fFat_TDC_Time);
             ZERO_ARRAY(fFat_TDC_Time_Raw);
@@ -183,10 +184,14 @@ void  EventUnpackStore::Clear(Option_t *t)
         ZERO_ARRAY(fFing_Lead_Down);
         
         ///Fatima Tamex
-        ZERO_ARRAY(fFat_PMT_Lead_N);
-        ZERO_ARRAY(fFat_PMT_Trail_N);
-        ZERO_ARRAY(fFat_Lead_PMT);
-        ZERO_ARRAY(fFat_Trail_PMT);
+        ZERO_ARRAY(fFat_Fast_Lead_N);
+        ZERO_ARRAY(fFat_Slow_Lead_N);
+        ZERO_ARRAY(fFat_Fast_Trail_N);
+        ZERO_ARRAY(fFat_Slow_Trail_N);
+        ZERO_ARRAY(fFat_Lead_Fast);
+        ZERO_ARRAY(fFat_Lead_Slow);
+        ZERO_ARRAY(fFat_Trail_Fast);
+        ZERO_ARRAY(fFat_Trail_Slow);
         fFat_Tamex_WR=0;
         
         ///bPlastic Tamex

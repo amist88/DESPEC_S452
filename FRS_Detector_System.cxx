@@ -601,8 +601,8 @@ FRS_Detector_System::FRS_Detector_System(){
  for(int module=0; module<VFTX_N; module++){
     for(int channel=0; channel<VFTX_MAX_CHN; channel++) {
       for(int hit=0; hit<VFTX_MAX_HITS; hit++) { 
-	vftx_cc[module][channel][hit] = 0;
-	vftx_ft[module][channel][hit] = 0;
+    vftx_cc[module][channel][hit] = 0;
+    vftx_ft[module][channel][hit] = 0;
       }      
       vftx_mult[module][channel] = 0;
     }
@@ -1284,7 +1284,8 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
             Int_t vme_type = getbits(*pdata,2,9,3);
             Int_t vme_nlw =  getbits(*pdata,2,3,6);
             pdata++; len++;
-            if(vme_type!=4){   std::cout<<"E> Scaler type missed match ! GEO"<<vme_geo<<" "<<" type 4 =/="<<vme_type<<std::endl; }
+            ///HEY ANDREW, FIX THIS!!!!
+         ///   if(vme_type!=4){   std::cout<<"E> Scaler type missed match ! GEO"<<vme_geo<<" "<<" type 4 =/="<<vme_type<<std::endl; }
             for(int i_ch=0; i_ch<vme_nlw; i_ch++){
               scaler_frs[i_ch] = *pdata;
              // cout<<"11scaler_frs[i_ch] " <<scaler_frs[i_ch] <<" i_ch " <<i_ch<< endl;
@@ -1460,10 +1461,11 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
       Int_t vme_nlw =  getbits(*pdata,2,3,6);
 
           pdata++; len++;
-if(vme_type!=4){  
-    std::cout<<"E> Scaler type missed match ! GEO"<<vme_geo<<" "<<" type 4 =/="<<vme_type<<std::endl; 
-    
-}
+          ///HEY ANDREW FIX THIS!!!!
+// if(vme_type!=4){  
+//     std::cout<<"E> Scaler type missed match ! GEO"<<vme_geo<<" "<<" type 4 =/="<<vme_type<<std::endl; 
+//     
+// }
         for(int i_ch=0; i_ch<vme_nlw; i_ch++){
           scaler_main[i_ch] = *pdata;
           //////         printf("scaler_main[ch=%d] = %d\n",i_ch,*pdata);
@@ -1556,7 +1558,9 @@ if(vme_type!=4){
         for(int ii=0;ii<128;ii++)nhit_v1190_tpcs2[ii]=0;
       // check if end of this procid (with/without barrier)
       if(lenMax == len){ break; }
-      if(*pdata != 0xbabababa){ std::cout<<"E> ProcID 20 : Barrier missed !" << *pdata  << std::endl;} pdata++; len++;
+      ///HEY ANDREW FIX THIS!!!!!
+     /// if(*pdata != 0xbabababa){ std::cout<<"E> ProcID 20 : Barrier missed !" << *pdata  << std::endl;} 
+     pdata++; len++;
       if(lenMax == len){ break; }
 
       // from here V1190
@@ -1639,40 +1643,40 @@ if(vme_type!=4){
             uint32_t p32_tmp, marker;
             uint16_t cnt, channel;
             int      word;
-      if((psubevt->GetType() == 12) && (psubevt->GetSubtype() == 1)) // in this case, time stamp data.
-	  {
+    ///  if((psubevt->GetType() == 12) && (psubevt->GetSubtype() == 1)) // in this case, time stamp data.
+    ///  {
            for(int module=0; module<VFTX_N; module++)
             for(int channel=0; channel<VFTX_MAX_CHN; channel++) {
              for(int hit=0; hit<VFTX_MAX_HITS; hit++) { 
-	       vftx_cc[module][channel][hit] = 0;
-	       vftx_ft[module][channel][hit] = 0;
+           vftx_cc[module][channel][hit] = 0;
+           vftx_ft[module][channel][hit] = 0;
              }      
              vftx_mult[module][channel] = 0;
             }
-           pdata++;
+         //  pdata++;
            for(int module=0; module<VFTX_N; module++){      
 
 
   // first 32-bit word is a marker
-  p32_tmp = *pdata++;
+  p32_tmp = (uint32_t)*pdata++;
   marker  = (uint32_t)(p32_tmp & 0xff000000);
   cnt     = (uint16_t)((p32_tmp & 0x0003fe00)>>9);
 
- // printf("1: 0x%x    %d \n",p32_tmp, cnt);
+  //printf("1: 0x%x    %d %x\n",p32_tmp, cnt,marker);
 
   if(marker==0xab000000) {
       
     // second 32-bit word is the trigger window
-    p32_tmp = *pdata++;
+    p32_tmp = (uint32_t)*pdata++;
     //printf("2: 0x%x\n",p32_tmp);
     // third 32-bit word is a header we don't care of
-    p32_tmp = *pdata++;
+ //   p32_tmp = *pdata++;
   //printf("3: 0x%x\n",p32_tmp);
     // DATA BLOCK
-    for(word=0; word<cnt;word++) {
-      p32_tmp = *pdata++;
-      channel = (uint16_t)((p32_tmp & 0x3e000000)>>25);
-      
+    for(word=0; word<cnt-1;word++) {
+      p32_tmp = (uint32_t)*pdata++;
+     // channel = (uint16_t)((p32_tmp & 0x3e000000)>>25);
+      channel = getbits(p32_tmp,2,11,5);
      // printf("3: 0x%x  %d  \n",p32_tmp,channel);
       //printf("error in UNPACK TDC/VFTX_%02d,  %02d: %02d \n",module,channel, vftx_mult[module][channel]);
       
@@ -1680,7 +1684,7 @@ if(vme_type!=4){
           ///Coarse clock
         vftx_cc[module][channel][vftx_mult[module][channel]] = (uint16_t)((p32_tmp & 0x00fff800)>>11);
         ///Fine time
-	    vftx_ft[module][channel][vftx_mult[module][channel]] = (uint16_t)(p32_tmp & 0x07ff);
+        vftx_ft[module][channel][vftx_mult[module][channel]] = (uint16_t)(p32_tmp & 0x07ff);
         h1_vftx_ft[module][channel]->Fill(vftx_ft[module][channel][0]);
         
 //  cout<<"vftx_ft " <<vftx_ft[module][channel][vftx_mult[module][channel]] << " CC " << vftx_cc[module][channel][vftx_mult[module][channel]]<< " channel " << channel<< " vftx_mult[module][channel] " <<vftx_mult[module][channel] << endl;
@@ -1706,11 +1710,12 @@ if(vme_type!=4){
 //   else {
 //     printf("error in UNPACK TDC/VFTX_%02d marker: 0x%x\n",module,p32_tmp);
 //   }
-	    
-//	    break;
+        
+//      break;
         }
-      }
-      
+      ///}
+      pdata++; len++;
+      if(lenMax == len){ break; }
       {//----- Mesytec MQDC-32 -----
      Int_t vme_geo = 11;
      while(len < lenMax){
@@ -1721,7 +1726,9 @@ if(vme_type!=4){
          Int_t vme_nlw = getbits(*pdata,1,1,12); //indicates amount n of following 32-bit words: n-1 events +1 end of event marker)
          pdata++;len++;
          
-         if ((vme_type == 0)  && (vme_nlw > 0)){// data
+         //
+          Int_t  vme_type = getbits(*pdata,2,15,2);
+          if ((vme_type == 0)  && (vme_nlw > 0)){// data
           for(int i=0;i<vme_nlw;i++) {
         Int_t vme_chn = getbits(*pdata,2,1,5); //number of ADC channel
           Int_t value = getbits(*pdata,1,1,12);
@@ -1734,7 +1741,8 @@ if(vme_type!=4){
           }
          }
          else if(vme_type==3) printf("This is end of module 0.\n");// event mark
-        else printf("Unknown data\n");
+         ///ANDREW FIX THIS!!!!
+       /// else printf("Unknown data for Mesytec MQDC32\n");
        }
      }
     } //----- end of Mesytec MQDC-32 -----
@@ -1768,7 +1776,7 @@ if(vme_type!=4){
            */
            //printf("TDC data !!! vme_ch = %2d, TDC = %d \n",vme_ch, tdc_data);
            }else if(3 == getbits(*pdata,2,15,2)) printf("This is end of module 0.\n");
-           else printf("Unknown data\n");
+           else printf("Unknown data for vmetof\n");
          }
        }
      }
@@ -2366,7 +2374,7 @@ void FRS_Detector_System::FRS_Sort(){
   de_81r = vme_main[4][14] & 0xfff;
   de_81l = vme_main[4][0] & 0xfff; // sweapped with SC22L. This channel has problem!!! 21 Feb 2021
   de_81r = vme_main[4][14] & 0xfff;
-	  
+      
 //  tgt->de_22l = src->vme_main[4][0] & 0xfff; // changed on 17/Feb/2021
   de_22l = vme_main[4][15] & 0xfff; // changed on 17 Feb 2021, ch0 QDC seems to have a problem
   de_22r = vme_main[4][8] & 0xfff;
@@ -3351,12 +3359,12 @@ void FRS_Detector_System::FRS_Anal(){
     if(b_de1){
       power = 1., Corr = 0.;
       for(int i=0;i<4;i++) {
-	Corr += music->pos_a1[i] * power;
-	power *= music1_x_mean;
+    Corr += music->pos_a1[i] * power;
+    power *= music1_x_mean;
       }
       if (Corr!=0) {
-	Corr = music->pos_a1[0] / Corr;
-	de_cor[0] = de[0] * Corr;
+    Corr = music->pos_a1[0] / Corr;
+    de_cor[0] = de[0] * Corr;
       }
       
     }
@@ -3365,24 +3373,24 @@ void FRS_Detector_System::FRS_Anal(){
     if(b_de2){
       power = 1., Corr = 0.;
       for(int i=0;i<4;i++) {
-	Corr += music->pos_a2[i] * power;
-	power *= music2_x_mean;
+    Corr += music->pos_a2[i] * power;
+    power *= music2_x_mean;
       }
       if (Corr!=0) {
-	Corr = music->pos_a2[0] / Corr;
-	de_cor[1] = de[1] * Corr;
+    Corr = music->pos_a2[0] / Corr;
+    de_cor[1] = de[1] * Corr;
       }
         }
     // correction for MUSIC43
     if(b_de3){
       power = 1., Corr = 0.;
       for(int i=0;i<4;i++) {
-	Corr += music->pos_a3[i] * power;
-	power *= music3_x_mean;
+    Corr += music->pos_a3[i] * power;
+    power *= music3_x_mean;
       }
       if (Corr!=0) {
-	Corr = music->pos_a3[0] / Corr;
-	de_cor[2] = de[2] * Corr;
+    Corr = music->pos_a3[0] / Corr;
+    de_cor[2] = de[2] * Corr;
       }
      
             }
@@ -3538,11 +3546,11 @@ void FRS_Detector_System::FRS_Anal(){
      case 0:        /* SC21 */
        idx = 2; 
         // posref from tpc
-	   if(b_tpc_xy[0]&&b_tpc_xy[1]){
-	     posref =  tpc21_22_sc21_x ;
-	   }else if(b_tpc_xy[2]&&b_tpc_xy[3]){
-	     posref =  tpc23_24_sc21_x ;
-	   }
+       if(b_tpc_xy[0]&&b_tpc_xy[1]){
+         posref =  tpc21_22_sc21_x ;
+       }else if(b_tpc_xy[2]&&b_tpc_xy[3]){
+         posref =  tpc23_24_sc21_x ;
+       }
        //mw_idx = 2;
        //mwx = mw_sc21_x;
        break;    
@@ -3555,22 +3563,22 @@ void FRS_Detector_System::FRS_Anal(){
      case 2:        /* SC41 */
        idx = 5; 
        if(b_tpc_xy[4]&&b_tpc_xy[5]){
-	     posref =  tpc_sc41_x ;
-	   }
+         posref =  tpc_sc41_x ;
+       }
        //mw_idx = 5;
        //mwx = tpc_sc41_x;
        break;    
      case 3:        /* SC42 */
            idx = 6;
        if(b_tpc_xy[4]&&b_tpc_xy[5]){
-	     posref =  tpc_sc42_x ;
-	   }
+         posref =  tpc_sc42_x ;
+       }
        break;
      case 4:
        idx = 7;     /* SC43 */
        if(b_tpc_xy[4]&&b_tpc_xy[5]){
-	     posref =  tpc_sc43_x ;
-	   }
+         posref =  tpc_sc43_x ;
+       }
        break;
      case 5:
        idx = 10;    /* SC81 */
@@ -3919,22 +3927,22 @@ void FRS_Detector_System::FRS_Anal(){
      
       
       if ((id_beta>0.0) && (id_beta<1.0)){
-  	  id_gamma = 1./sqrt(1. - id_beta * id_beta);
-  	  id_AoQ   = id_brho[1]/id_beta/id_gamma/f ;
-  	  id_AoQ_corr = id_AoQ - id->a2AoQCorr * id_a2;  //correction for id_a2, JK 16.9.11
-  	
-//   	cout<<"id_AoQ " << id_AoQ << " id_brho[1] " <<id_brho[1] <<" id_beta " << id_beta << " id_gamma " <<id_gamma << " f " << f << endl;
-  	  
-  	  
-  	  // if (!b_tpc_xy[4] || !b_tpc_xy[5]) // no sense to do "if TPC4142 dont work, correct with S4 angle ... "
-  	  //   id_AoQ_corr = id_AoQ - id->a4AoQCorr * id_a4;
-//   	  if(bDrawHist)
-//   	    {
-//   	      hID_AoQ->Fill(id_AoQ);
-//   	      hID_AoQcorr->Fill(id_AoQ_corr);
-// 	      hID_DeltaBrho_AoQ->Fill(id_AoQ,id_brho[0]-id_brho[1]);
-//   	    }
-  	  id_b_AoQ = true;
+      id_gamma = 1./sqrt(1. - id_beta * id_beta);
+      id_AoQ   = id_brho[1]/id_beta/id_gamma/f ;
+      id_AoQ_corr = id_AoQ - id->a2AoQCorr * id_a2;  //correction for id_a2, JK 16.9.11
+    
+//      cout<<"id_AoQ " << id_AoQ << " id_brho[1] " <<id_brho[1] <<" id_beta " << id_beta << " id_gamma " <<id_gamma << " f " << f << endl;
+      
+      
+      // if (!b_tpc_xy[4] || !b_tpc_xy[5]) // no sense to do "if TPC4142 dont work, correct with S4 angle ... "
+      //   id_AoQ_corr = id_AoQ - id->a4AoQCorr * id_a4;
+//        if(bDrawHist)
+//          {
+//            hID_AoQ->Fill(id_AoQ);
+//            hID_AoQcorr->Fill(id_AoQ_corr);
+//        hID_DeltaBrho_AoQ->Fill(id_AoQ,id_brho[0]-id_brho[1]);
+//          }
+      id_b_AoQ = true;
       }
   }
 
@@ -3944,9 +3952,9 @@ void FRS_Detector_System::FRS_Anal(){
 //       id_gamma_s2s8 = 1./sqrt(1. - id_beta_s2s8 * id_beta_s2s8);
 //       id_AoQ_s2s8      = id_brho[2]/id_beta_s2s8/id_gamma_s2s8/ f ;
 //       if(bDrawHist)
-// 	{
-// 	  hID_AoQ_s2s8->Fill(id_AoQ_s2s8);
-// 	}
+//  {
+//    hID_AoQ_s2s8->Fill(id_AoQ_s2s8);
+//  }
 //       id_b_AoQ_s2s8 = kTRUE;
 //     }
 //   }
@@ -3962,15 +3970,15 @@ void FRS_Detector_System::FRS_Anal(){
     {
       Double_t power = 1., sum = 0.;
       for (int i=0;i<4;i++){
-  	  sum += power * id->vel_a[i];
-  	  power *= id_beta;
+      sum += power * id->vel_a[i];
+      power *= id_beta;
       }
       id_v_cor = sum;
       if (id_v_cor > 0.0){
-  	id_z = frs->primary_z * sqrt(de[0]/id_v_cor) + id->offset_z;
+    id_z = frs->primary_z * sqrt(de[0]/id_v_cor) + id->offset_z;
       }
       if ((id_z>0.0) && (id_z<100.0)){
-	id_b_z = kTRUE;
+    id_b_z = kTRUE;
       }
     }
 
@@ -3981,8 +3989,8 @@ void FRS_Detector_System::FRS_Anal(){
     Double_t power = 1., sum = 0.;
     for (int i=0;i<4;i++)
       {
-	sum += power * id->vel_a2[i];
-	power *= id_beta;
+    sum += power * id->vel_a2[i];
+    power *= id_beta;
       }
     id_v_cor2 = sum;
     
@@ -4939,7 +4947,7 @@ void FRS_Detector_System::m_VFTX_Bin2Ps(){
   for(int i=0; i<VFTX_N; i++)
     for(int j=0; j<VFTX_MAX_CHN; j++)
       for(int k=0; k<1000; k++)
-	VFTX_Bin2Ps[i][j][k]=0.;
+    VFTX_Bin2Ps[i][j][k]=0.;
 
   int b; double ft_ps; 
   for(int mod=0; mod<VFTX_N; mod++){
@@ -4947,17 +4955,17 @@ void FRS_Detector_System::m_VFTX_Bin2Ps(){
       std::ifstream in;
       in.open(Form("Configuration_Files/FRS/VFTX_Calib/VFTX_%05d_Bin2Ps_ch%02d.dat",l_VFTX_SN[mod],ch));
       if(!in.is_open()){
-	for(int bin=0; bin<1000; bin++)
-	  VFTX_Bin2Ps[mod][ch][bin] = 0.; // no data in ps if we don't have the files
-	printf("WARNING : VFTX %05d ch %02d file not found, you will not have precise data\n",l_VFTX_SN[mod],ch);
+    for(int bin=0; bin<1000; bin++)
+      VFTX_Bin2Ps[mod][ch][bin] = 0.; // no data in ps if we don't have the files
+    printf("WARNING : VFTX %05d ch %02d file not found, you will not have precise data\n",l_VFTX_SN[mod],ch);
       }
       else {
-	while(!in.eof()) {
-	  in >>b >>ft_ps;
-	  VFTX_Bin2Ps[mod][ch][b] = ft_ps;
-	  if(b>1000) printf(" !!! WARNING !!!! file Configuration_Files/VFTX_Calib/VFTX%02d_Bin2Ps_ch%2d.dat, overflow b=%i \n",mod,ch,b);
-	}// end of for (ch over VFTX_CHN)
-	in.close();
+    while(!in.eof()) {
+      in >>b >>ft_ps;
+      VFTX_Bin2Ps[mod][ch][b] = ft_ps;
+      if(b>1000) printf(" !!! WARNING !!!! file Configuration_Files/VFTX_Calib/VFTX%02d_Bin2Ps_ch%2d.dat, overflow b=%i \n",mod,ch,b);
+    }// end of for (ch over VFTX_CHN)
+    in.close();
       }
     }//end of for (ch)
   }// end of for (mod over VFTX_N

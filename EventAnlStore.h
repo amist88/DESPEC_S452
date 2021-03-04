@@ -117,16 +117,21 @@ class EventAnlStore : public TGo4EventElement {
       Long64_t pFat_TMCh2[10];
       Int_t    pFat_TMCh1mult;
       Int_t    pFat_TMCh2mult;
+      
+      double_t pFat_bplastChanT[6];
 //       Int_t    pSC40mult;
 //       Int_t    pSC41mult;
       
 
-      Double_t pFat_ToTCalib[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
-      Double_t pFat_LeadT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
-      Double_t pFat_TrailT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+      Double_t pFat_Fast_ToTCalib[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+      Double_t pFat_Slow_ToTCalib[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+      Double_t pFat_Fast_LeadT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+      Double_t pFat_Slow_LeadT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+      Double_t pFat_Fast_TrailT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
+      Double_t pFat_Slow_TrailT[FATIMA_TAMEX_CHANNELS][FATIMA_TAMEX_HITS];
       Int_t    pFat_LeadHits;
      // Int_t    pFat_TrailHits;
-      Int_t    pFat_Tamex_chan;
+      Int_t    pFat_Tamex_chan[FATIMA_TAMEX_HITS];
      
       Int_t    pbPlasDetNum;
       Int_t    pbPlasChan[4];
@@ -141,7 +146,9 @@ class EventAnlStore : public TGo4EventElement {
       
           ULong64_t pGe_Event_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
           ULong64_t pGe_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
+          ULong64_t pGe_T_Aligned[Germanium_MAX_DETS][Germanium_CRYSTALS];
           ULong64_t pGe_CF_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
+          ULong64_t pGe_CF_T_Aligned[Germanium_MAX_DETS][Germanium_CRYSTALS];
           double   pGe_E[Germanium_MAX_DETS][Germanium_CRYSTALS];
           double   pGe_E_Raw[Germanium_MAX_DETS][Germanium_CRYSTALS];
           double   pGe_EAddback[Germanium_MAX_DETS][Germanium_CRYSTALS];

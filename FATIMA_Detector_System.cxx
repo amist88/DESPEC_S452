@@ -136,6 +136,7 @@ void FATIMA_Detector_System::load_board_channel_file(){
                     &channel_num,&board_id_TDC,&TDC_ch,&enabled);
         if (enabled == 1) {
             det_ID_QDC[board_id][channel_num] = detector_number;
+         
             det_ID_TDC[board_id_TDC][TDC_ch] = detector_number;
         }
     }
@@ -429,6 +430,8 @@ void FATIMA_Detector_System::Check_QDC_DATA(QDC_Header* QDChead){
                 Fired_QDC_Channels[num_channels_fired][0] = board_ID; 
                 Fired_QDC_Channels[num_channels_fired][1] = j;
                 num_channels_fired++;
+              
+                
             }
             else{
                 Fired_QDC_Channels[num_channels_fired][0] = board_ID; 
@@ -470,7 +473,6 @@ void FATIMA_Detector_System::Check_QDC_DATA(QDC_Header* QDChead){
     
             active_det = det_ID_QDC[active_board][active_Channel];
                     
-            //cout<<"Channel Number = "<<active_Channel<<" Board ID = "<<active_board<<endl;
             //cout<<"Channel Number = "<<active_det<<endl;
         
             det_ids_QDC[fired_QDC_amount] = active_det;

@@ -87,7 +87,7 @@ void FATIMA_TAMEX_Calibrator::load_Calibration_Files(){
 
 	int tamex_id,ch_id;
 
-	int used_ids[100][100];
+	int used_ids[250][250];
 	iter = 0;
 
 	wired_tamex_ch = new bool*[100];
@@ -99,11 +99,13 @@ void FATIMA_TAMEX_Calibrator::load_Calibration_Files(){
 	while(map_file.good()){
 		getline(map_file,line,'\n');
 		if(line[0] == '#') continue;
+        
 		sscanf(line.c_str(),format_MAP,&tamex_id,&ch_id);
+        
 		used_ids[iter][0] = tamex_id;
 		used_ids[iter][1] = ch_id;
-
-		//cout << used_ids[iter][0] << " " << used_ids[iter][1]  << endl;
+ //cout<<"tamex_id " <<tamex_id << endl;
+		//cout << used_ids[iter][0] << " " << used_ids[iter][1]  <<" " << iter << endl;
 
 		wired_tamex_ch[tamex_id][ch_id] = true;
 
@@ -186,7 +188,9 @@ void FATIMA_TAMEX_Calibrator::get_data(double** fine_T,UInt** ch_id,int tamex_it
 	for(int i = 0;i < tamex_iter;++i){
 		for(int j = 0;j < iterator[i];++j){
            // cout << "tamex_iter " << tamex_iter<< " i " << i << " iterator[i] "<< iterator[i]<< " j " << j <<endl; 
+            
  			Fine_Hist[i][ch_id[i][j]]->Fill(fine_T[i][j]);
+            
 			fired[i][ch_id[i][j]] = true;
 		}
 	}

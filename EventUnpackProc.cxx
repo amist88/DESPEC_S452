@@ -82,7 +82,7 @@ EventUnpackProc::EventUnpackProc(const char* name) : TGo4EventProcessor(name)
   ///get_WR_Config();
 
 
-    checkTAMEXorVME();
+   /// checkTAMEXorVME();
   //create White Rabbit obj
   WR = new White_Rabbit();
 
@@ -222,7 +222,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
   isValid=kTRUE;
   event_number=fInput->GetCount();
   fOutput-> fevent_number = event_number;
- // cout<<"event_number " << event_number << endl;
+ //cout<<"event_number " << event_number << endl;
   fOutput->fTrigger = fInput->GetTrigger();
 
   fInput->ResetIterator();
@@ -262,12 +262,13 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         PrcID = psubevt->GetProcid();
         Type = psubevt->GetType();
         SubType = psubevt->GetSubtype(); 
-        
+       
         PrcID_Conv = get_Conversion(PrcID);
-    
+ //   cout<<"PrcID_Conv " <<PrcID_Conv << " PrcID " <<PrcID << endl;
 	if(PrcID_Conv==-1) continue;
          
         fOutput -> fProcID[PrcID_Conv] = PrcID_Conv;
+   
         sub_evt_length  = (psubevt->GetDlen() - 2) / 2;
 
     ///------------------------------WHITE RABBIT --------------------------------------////
@@ -305,11 +306,11 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         //=================================================================
         //UNPACKING
         ///send subevent to respective unpacker
-
+// cout<<"Detector_Systems[PrcID_Conv] " <<Detector_Systems[PrcID_Conv] <<" PrcID_Conv " <<PrcID_Conv<<endl;
         if(Detector_Systems[PrcID_Conv] !=0){
         Detector_Systems[PrcID_Conv]->Process_MBS(psubevt);
         Detector_Systems[PrcID_Conv]->Process_MBS(pdata);
-       // cout<<"Detector_Systems[PrcID_Conv] " <<Detector_Systems[PrcID_Conv] <<" PrcID_Conv " <<PrcID_Conv<<endl;
+       
         ///get mbs stream data from unpacker (pointer copy solution)
         pdata = Detector_Systems[PrcID_Conv]->get_pdata();
 
@@ -556,8 +557,11 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         ///--------------------------------------------------------------------------------------------///
         int Fatfired[4];
     
-        int Phys_Channel_Lead_Fat[4][256];
-        int Phys_Channel_Trail_Fat[4][256];
+       
+        int Phys_Channel_Lead_Fast_Fat[4][256];
+        int Phys_Channel_Trail_Fast_Fat[4][256];
+        int Phys_Channel_Lead_Slow_Fat[4][256];
+        int Phys_Channel_Trail_Slow_Fat[4][256];
         
      if (Used_Systems[4]&& PrcID_Conv==4){
 
@@ -569,38 +573,85 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
 		
                 Fatfired[i] = RAW->get_FATIMA_am_Fired(i);
 
-                    for(int j = 0;j < Fatfired[i];j++){///Loop over hits per board
-
-              if(RAW->get_FATIMA_CH_ID(i,j) % 2 == 1){ //Lead 
-		
-                Phys_Channel_Lead_Fat[i][j] =TAMEX_Fat_ID[i][RAW->get_FATIMA_physical_channel(i, j)]; 
-		///if(RAW->get_FATIMA_physical_channel(i, j)==0&&RAW->get_FATIMA_tamex_hits()==0)cout<<"Phys_Channel_Lead_Fat[i][j] " <<Phys_Channel_Lead_Fat[i][j] << endl;
-           
-		int chan_fat = Phys_Channel_Lead_Fat[i][j];
-/// 	if(chan_fat==0)	cout<<"!!!!!!!!chan_fat "<<chan_fat<<" Phys_Channel_Lead_Fat[i][j] " <<Phys_Channel_Lead_Fat[i][j] << " i " << i << " j " << j << endl;
-	
-           if(chan_fat>-1) {
+        for(int j = 0;j < Fatfired[i];j++){///Loop over hits per board
+               // cout<<"Input UNPACK RAW->get_FATIMA_CH_ID(i,j) " <<RAW->get_FATIMA_CH_ID(i,j) <<" RAW->get_FATIMA_lead_T(i,j) " <<RAW->get_FATIMA_lead_T(i,j) <<  " RAW->get_FATIMA_trail_T(i,j) " <<RAW->get_FATIMA_trail_T(i,j) << " i " << i << " j " << j <<  endl;
+                
+               
+          ////NOW DEFINE FAST (ODD CHANNELS) AND SLOW  (EVEN)     
+              if(j % 2 == 0 ){ //Lead even hits
+                 
+                  ///Fast lead channels odd
+        if(RAW->get_FATIMA_CH_ID(i,j) % 2==1){
+                        
+                Phys_Channel_Lead_Fast_Fat[i][j] =TAMEX_Fat_ID[i][(RAW->get_FATIMA_physical_channel(i, j)+1)/2]; 
+                        
+                int chan_fat_fast_lead = Phys_Channel_Lead_Fast_Fat[i][j];
+                         
+                if(chan_fat_fast_lead>-1) {
 	      
-               int N1 = fOutput->fFat_PMT_Lead_N[chan_fat]++;
-            fOutput->fFat_Lead_PMT[chan_fat][N1] = RAW->get_FATIMA_lead_T(i,j);
-            //if(chan_fat==0)cout<<" !!!!!fOutput->fFat_Lead_PMT[chan_fat][N1] " << fOutput->fFat_Lead_PMT[chan_fat][N1] << " chan_fat " << chan_fat << " N1 " << N1 << endl;
-           }
+                    int N1_fast = fOutput->fFat_Fast_Lead_N[chan_fat_fast_lead]++;
+          
+                    fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast] = RAW->get_FATIMA_lead_T(i,j);
+                    
+                    //cout<<"FAST LEAD RAW->get_FATIMA_physical_channel(i, j) " << RAW->get_FATIMA_physical_channel(i, j) << " chan_fat_fast_lead " <<chan_fat_fast_lead << " N1_fast " <<N1_fast << " fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast]  " <<fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast]  << " i " << i << " j " << j << endl;
+            
+                        }
+            }
+                    ///Slow lead channels, even 
+        if(RAW->get_FATIMA_CH_ID(i,j) % 2==0){
+                        
+                Phys_Channel_Lead_Slow_Fat[i][j] =TAMEX_Fat_ID[i][RAW->get_FATIMA_physical_channel(i, j)/2]; 
+                        
+                int chan_fat_slow_lead = Phys_Channel_Lead_Slow_Fat[i][j];
+                         
+                if(chan_fat_slow_lead>-1) {
 	      
-              }
-              else{ //Trail even j
-                Phys_Channel_Trail_Fat[i][j] = TAMEX_Fat_ID[i][RAW->get_FATIMA_physical_channel(i, j)];
-                int chan_fat = Phys_Channel_Trail_Fat[i][j];
-      
-                // PMT allocation succeeded
-		if(chan_fat>-1){
-		// cout<<"chan_fat " << chan_fat <<endl;
-                int N1 = fOutput->fFat_PMT_Trail_N[chan_fat]++;
-	     
-                fOutput->fFat_Trail_PMT[chan_fat][N1] = RAW->get_FATIMA_trail_T(i,j);
-		
-            /// if(chan_fat==0) cout<<"!!!fOutput->fFat_Trail_PMT[chan_fat][N1] " << fOutput->fFat_Trail_PMT[chan_fat][N1] << " chan_fat " << chan_fat << " N1 "<< N1 <<endl;
+                    int N1_slow = fOutput->fFat_Slow_Lead_N[chan_fat_slow_lead]++;
+          
+                    fOutput->fFat_Lead_Slow[chan_fat_slow_lead][N1_slow] = RAW->get_FATIMA_lead_T(i,j);
+                    
+                   // cout<<"SLOW LEAD RAW->get_FATIMA_physical_channel(i, j) " << RAW->get_FATIMA_physical_channel(i, j) << " chan_fat_slow_lead " <<chan_fat_slow_lead << " N1_slow " <<N1_slow << " fOutput->fFat_Lead_Slow[chan_fat_slow_lead][N1_slow]  " <<fOutput->fFat_Lead_Slow[chan_fat_slow_lead][N1_slow]  << " i " << i << " j " << j << endl;
+            
+                        }
+                    }
+              }///End of lead hits
+              
+               if(j % 2 == 1){ //TRAIL 
+                              ///Fast trail channels even
+        if(RAW->get_FATIMA_CH_ID(i,j) % 2==0){
+                        
+                Phys_Channel_Trail_Fast_Fat[i][j] =TAMEX_Fat_ID[i][(RAW->get_FATIMA_physical_channel(i, j)+1)/2]; 
+                        
+                int chan_fat_fast_trail = Phys_Channel_Trail_Fast_Fat[i][j];
+                         
+                if(chan_fat_fast_trail>-1) {
+	      
+                    int N1_fast = fOutput->fFat_Fast_Trail_N[chan_fat_fast_trail]++;
+          
+                    fOutput->fFat_Trail_Fast[chan_fat_fast_trail][N1_fast] = RAW->get_FATIMA_trail_T(i,j);
+                    
+                  //  cout<<"FAST TRAIL RAW->get_FATIMA_physical_channel(i, j) " << RAW->get_FATIMA_physical_channel(i, j) << " chan_fat_fast_trail " <<chan_fat_fast_trail << " N1_fast " <<N1_fast << " fOutput->fFat_Trail_Fast[chan_fat_fast_trail][N1_fast]  " <<fOutput->fFat_Trail_Fast[chan_fat_fast_trail][N1_fast]  << " i " << i << " j " << j << endl;
+            
+                        }
+            }
+          ///Slow trail channels even
+          if(RAW->get_FATIMA_CH_ID(i,j) % 2==1){
+                        
+                Phys_Channel_Trail_Slow_Fat[i][j] =TAMEX_Fat_ID[i][RAW->get_FATIMA_physical_channel(i, j)/2]; 
+                        
+                int chan_fat_slow_trail = Phys_Channel_Trail_Slow_Fat[i][j];
+                         
+                if(chan_fat_slow_trail>-1) {
+	      
+                    int N1_slow = fOutput->fFat_Slow_Trail_N[chan_fat_slow_trail]++;
+          
+                    fOutput->fFat_Trail_Slow[chan_fat_slow_trail][N1_slow] = RAW->get_FATIMA_trail_T(i,j);
+                    
+                    //cout<<"SLOW TRAIL RAW->get_FATIMA_physical_channel(i, j) " << RAW->get_FATIMA_physical_channel(i, j) << " chan_fat_slow_trail " <<chan_fat_slow_trail << " N1_slow " <<N1_slow << " fOutput->fFat_Trail_Slow[chan_fat_slow_trail][N1_slow]  " <<fOutput->fFat_Trail_Slow[chan_fat_slow_trail][N1_slow]  << " i " << i << " j " << j << endl;
+            
+                                        }
                                 }
-                            }       
+                           }       
                     }
             }
      }
@@ -639,11 +690,14 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fbPlasDetNum = bPlasdetnum;
                 fOutput->fbPlasChan[bPlasdetnum]=  chan; 
                 N1 = fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan]++;
-		
+               // cout<<"fOutput->fbPlasDetNum " <<fOutput->fbPlasDetNum << endl;
+// 		cout<<"Phys_Channel_Lead_bPlas[i][j] " <<Phys_Channel_Lead_bPlas[i][j] << " i " << i << " j " << j <<" RAW->get_PLASTIC_physical_channel(i, j) " <<RAW->get_PLASTIC_physical_channel(i, j) << endl;
+        
+//         cout<<"bPlasdetnum " <<bPlasdetnum << " chan " << chan << " RAW->get_PLASTIC_physical_channel(i, j) " <<RAW->get_PLASTIC_physical_channel(i, j) << " fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan] " <<fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan] <<endl;
 		 if(N1>-1 && N1<15){
 		
                fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] = RAW->get_PLASTIC_lead_T(i,j);
-
+//cout<<"fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] " <<fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] << " chan " << chan << " N1 " << N1 << endl;
                     }
                 }
                 
@@ -736,7 +790,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
           dum_tdc_t_raw[i] = 0;
 
           dum_qdc_id[i] = -1;
-          dum_tdc_id[i] = -2;
+          dum_tdc_id[i] = -1;
           
           dummy_qdc_t_coarse[i] = 0;
           dummy_qdc_t_fine[i] = 0;       
@@ -764,12 +818,14 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                
 
          if(RAW->get_FAT_TDC_id(i) > -1 ){
+             
              ///Remove Additional Channels
-          if(RAW->get_FAT_TDC_id(i) !=  FatVME_TimeMachineCh2 && RAW->get_FAT_TDC_id(i) != FatVME_TimeMachineCh1 && RAW->get_FAT_TDC_id(i) != SC41L_FatVME && RAW->get_FAT_TDC_id(i) != SC41R_FatVME && RAW->get_FAT_TDC_id(i) != SC41L_FatVME_Digi && RAW->get_FAT_TDC_id(i) != SC41R_FatVME_Digi && RAW->get_FAT_TDC_id(i) != FatVME_bPlast_MASTER){
+          if(RAW->get_FAT_TDC_id(i) !=  FatVME_TimeMachineCh2 && RAW->get_FAT_TDC_id(i) != FatVME_TimeMachineCh1 && RAW->get_FAT_TDC_id(i) != SC41L_FatVME && RAW->get_FAT_TDC_id(i) != SC41R_FatVME && RAW->get_FAT_TDC_id(i) != SC41L_FatVME_Digi && RAW->get_FAT_TDC_id(i) != SC41R_FatVME_Digi && RAW->get_FAT_TDC_id(i) != FatVME_bPlast_MASTER && RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh &&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+1&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+2&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+3&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+4&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+5&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StopCh){
            
              fOutput->fFat_TDC_Singles_t[singlestdcmult] = RAW->get_FAT_TDC_timestamp(i);
             fOutput->fFat_TDC_Singles_t_Raw[singlestdcmult] = RAW->get_FAT_TDC_timestamp_raw(i);
             fOutput->fFat_TDC_Singles_ID[singlestdcmult] = RAW->get_FAT_TDC_id(i);
+           
 
             singlestdcmult++;
           
@@ -780,6 +836,9 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                     dummy_tdc_t_raw[dummytdcmult] = RAW->get_FAT_TDC_timestamp_raw(i);
                     dummy_tdc_id[dummytdcmult] =  RAW->get_FAT_TDC_id(i);  
                     dummytdcmult++;
+                    
+                   
+                   // cout<<"RAW->get_FAT_TDC_id(i) " <<RAW->get_FAT_TDC_id(i) << endl;
                     //cout << "Event no: " << event_number << " tdc time: " << dummy_tdc_t[i] << " tdc id: " << dummy_tdc_id[i] << endl;
                 }//end if good event
                 //cout << dummy_tdc_id[i] << endl;
@@ -790,12 +849,12 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fSC40[sc40count] =  RAW->get_FAT_TDC_timestamp(i);
                 sc40count++;
                
-            }// end if statement to check for SC40 hits
+            }// end if statement to check for SC41L hits
             
             if(RAW->get_FAT_TDC_id(i) == SC41R_FatVME && RAW->get_FAT_TDC_timestamp(i) !=0.){
                 fOutput->fSC41[sc41count] =  RAW->get_FAT_TDC_timestamp(i);
                 sc41count++;
-            }// end if statement to check for SC41 hits
+            }// end if statement to check for SC41R hits
             
             if(RAW->get_FAT_TDC_id(i) == FatVME_TimeMachineCh1 && RAW->get_FAT_TDC_timestamp(i) !=0.){
                 fOutput->fFat_TMCh1[FatVmeTMCh1_count] =  RAW->get_FAT_TDC_timestamp(i)*0.025;
@@ -808,9 +867,18 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 FatVmeTMCh2_count++;
             }// end if statement to check for TimeMachine hits
             
+            ///Include bPlast VME channels
+            if (RAW->get_FAT_TDC_id(i)>=FatVME_bPlast_StartCh && RAW->get_FAT_TDC_id(i)<=FatVME_bPlast_StopCh){
+                for (int j=0; j<6; j++){
+               if(RAW->get_FAT_TDC_id(i)==FatVME_bPlast_StartCh+j) fOutput->fFat_bplastChanT[j]=RAW->get_FAT_TDC_timestamp(i);
+                //FatVme_bPlastCount[j]++;
+                
+                }
+            }//endo of bplast TDC channels
+            
         }// end dummy TDC for loop
         
-        
+       
         
         for (int i=0; i< RAW->get_FAT_QDCs_fired(); i++){
             
@@ -832,8 +900,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
             fOutput->fFat_QDC_Singles_t_coarse[singlesqdcmult] = RAW->get_FAT_QDC_t_Coarse(i);
             fOutput->fFat_QDC_Singles_t_fine[singlesqdcmult] = RAW->get_FAT_QDC_t_Fine(i);
             fOutput->fFat_QDC_Singles_E_Raw[singlesqdcmult] = RAW->get_FAT_QLong_Raw(i);
-
-
+            
             singlesqdcmult++;
           
 		
@@ -980,7 +1047,6 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fFat_TDC_ID[i] =  dum_tdc_id[i];
                 fOutput->fFat_TDC_Time[i] = dum_tdc_t[i];
                 fOutput->fFat_TDC_Time_Raw[i] = dum_tdc_t_raw[i];
-
                 //cout << "event no: " << event_number << " mult = " << matchedmult <<  " i: " << i << " QDCID: " << dum_qdc_id[i] << " TDCID " << dum_tdc_id[i] << " energy " << dum_qdc_E[i] << " timestamp " << dum_tdc_t[i] << endl;
 
                 if(dum_tdc_t[i] == 0.)cerr << "Something is wrong in Unpack Fatima pointer out (dum_tdc_t==0)!!" << endl;
@@ -1627,6 +1693,7 @@ for(int i=0;i<7;i++)
      {
        hvftx_TRaw[i] = MakeTH1('D', Form("FRS/VFTXSCI/TRaw/TRaw%2d",i), Form("T Raw %2d",i), 2000,1E6,1E8);
      }
+   hvftx_Hit_Pattern= MakeTH1('D',"FRS/VFTXSCI/HitPattern","Hit Pattern",16,0.,16);
    
    hvftx_Sci21PosRaw = MakeTH1('D',"FRS/VFTXSCI/PosRaw21","Sci21_PosRaw",1000,-20000.,20000,"PosRaw = Left - Right [10ps/bin]");
    hvftx_Sci22PosRaw = MakeTH1('D',"FRS/VFTXSCI/PosRaw22","Sci22_PosRaw",1000,-20000.,20000,"PosRaw = Left - Right [10ps/bin]");
@@ -1636,15 +1703,15 @@ for(int i=0;i<7;i++)
    hvftx_Sci41PosRaw = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/PosRaw41","Sci41_PosRaw",1000,-20000.,20000,"PosRaw = Left - Right [10ps/bin]"); 
    hvftx_Sci42PosRaw = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/PosRaw42","Sci42_PosRaw",1000,-20000.,20000,"PosRaw = Left - Right [10ps/bin]"); 
   
-   hvftx_ToFraw_2141 = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2141","ToFraw_41-21_mult1",1000,-20000.,20000,"ToFraw [10ps] ");
+   hvftx_ToFraw_2141 = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2141","ToFraw_41-21_mult1",20000,-20000.,230000,"ToFraw [10ps] ");
    
-   hvftx_ToFraw_2141LL = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2141LL","ToFraw_41-21_mult1_LL",1000,-20000.,20000,"ToFraw [10ps] ");
+   hvftx_ToFraw_2141LL = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2141LL","ToFraw_41-21_mult1_LL",20000,-20000.,230000,"ToFraw [10ps] ");
    
-   hvftx_ToFraw_2141RR = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2141RR","ToFraw_41-21_mult1_RR",1000,-20000.,20000,"ToFraw [10ps] ");
+   hvftx_ToFraw_2141RR = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2141RR","ToFraw_41-21_mult1_RR",20000,-20000.,230000,"ToFraw [10ps] ");
    
-   hvftx_ToFraw_2142LL = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2142LL","ToFraw_42-21_mult1_LL",1000,-20000.,20000,"ToFraw [10ps] ");
+   hvftx_ToFraw_2142LL = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2142LL","ToFraw_42-21_mult1_LL",20000,-20000.,230000,"ToFraw [10ps] ");
    
-   hvftx_ToFraw_2142RR = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2142RR","ToFraw_42-21_mult1_RR",1000,-20000.,20000,"ToFraw [10ps] ");
+   hvftx_ToFraw_2142RR = (TH1D*)MakeTH1('D',"FRS/VFTXSCI/ToFraw_2142RR","ToFraw_42-21_mult1_RR",20000,-20000.,230000,"ToFraw [10ps] ");
   
 
 //     htimestamp = MakeTH1('D',"FRS/timestamp","timestamp",30,0.,300.);
@@ -2069,14 +2136,16 @@ if (PrcID == 35 && !scalers_done)
       if(TRaw_vftx[i]!=0){
       hvftx_TRaw[i]->Fill(TRaw_vftx[i]);
      //cout<<"TRaw_vftx[i] " <<TRaw_vftx[i] << " i " << i << endl;
+      hvftx_Hit_Pattern->Fill(i);
       }          
     }
       
       
   ///  SCI21 Position
+  //cout<<"TRaw_vftx_21l " <<TRaw_vftx_21l << " TRaw_vftx_21r " <<TRaw_vftx_21r <<" dT " <<TRaw_vftx_21l-TRaw_vftx_21r<< endl;
    if(TRaw_vftx_21l!=0. && TRaw_vftx_21r!=0.){
    hvftx_Sci21PosRaw->Fill((TRaw_vftx_21l-TRaw_vftx_21r)); ///1ps
-
+//cout<<"TRaw_vftx_21l " <<TRaw_vftx_21l << " TRaw_vftx_21r " <<TRaw_vftx_21r << endl;
    }
     /// SCI22 Position
      if(TRaw_vftx_22l!=0. && TRaw_vftx_22r!=0.){
@@ -2092,7 +2161,7 @@ if (PrcID == 35 && !scalers_done)
    hvftx_Sci42PosRaw->Fill((TRaw_vftx_42l-TRaw_vftx_42r)); ///1ps
 
     }
-    
+   // cout<<" TRaw_vftx_41l "<<TRaw_vftx_41l << " TRaw_vftx_41r "<<TRaw_vftx_41r <<" TRaw_vftx_21l "<<TRaw_vftx_21l <<" TRaw_vftx_21r " <<TRaw_vftx_21r  << "TOF " <<(0.5*((TRaw_vftx_41l+TRaw_vftx_41r)-(TRaw_vftx_21l+TRaw_vftx_21r)))<< endl;
    ///SCI41 -SCI21 ToF
   if(TRaw_vftx_41l!=0.&&TRaw_vftx_41r!=0.&&TRaw_vftx_21l!=0.&&TRaw_vftx_21r!=0.){
    hvftx_ToFraw_2141->Fill((0.5*((TRaw_vftx_41l+TRaw_vftx_41r)-(TRaw_vftx_21l+TRaw_vftx_21r))));//ps
@@ -2230,76 +2299,77 @@ void EventUnpackProc::Fill_AIDA_Histos() {
 /**----------------------------------------------------------------------------------------------**/
 /**-----------------------------------------  FATIMA TAMEX  ------------------------------------------**/
 /**----------------------------------------------------------------------------------------------**/
+///This can be enabled for testing purposes, otherwise not needed
  void EventUnpackProc::Make_FATIMA_TAMEX_Histos(){
 
 
-        for(int i=0; i<FATIMA_TAMEX_CHANNELS; i++){
-             hFATlead_Coarse[i]= MakeTH1('D', Form("FATIMA_TAMEX/Lead_Coarse/Lead-CoarseCh.%02d", i), Form("Lead Coarse %2d", i), 5000, -5000., 5000.);
-             hFATlead_Fine[i]= MakeTH1('D', Form("FATIMA_TAMEX/Lead_Fine/Lead-FineCh.%02d", i), Form("Lead Fine %2d", i), 600, -1., 2.);
-//              hFATtrail_Coarse[i]= MakeTH1('D', Form("FATIMA_TAMEX/Trail_Coarse/Trail-CoarseCh.%02d", i), Form("Trail Coarse %2d", i), 5000, -5000., 5000.);
-//              hFATtrail_Fine[i]= MakeTH1('D', Form("FATIMA_TAMEX/Trail_Fine/Trail-FineCh.%02d", i), Form("Trail Fine %2d", i), 600, -1., 2.);
-
-
-            }
+//         for(int i=0; i<FATIMA_TAMEX_CHANNELS; i++){
+//              hFATlead_Coarse[i]= MakeTH1('D', Form("FATIMA_TAMEX/Lead_Coarse/Lead-CoarseCh.%02d", i), Form("Lead Coarse %2d", i), 5000, -5000., 5000.);
+//              hFATlead_Fine[i]= MakeTH1('D', Form("FATIMA_TAMEX/Lead_Fine/Lead-FineCh.%02d", i), Form("Lead Fine %2d", i), 600, -1., 2.);
+// //              hFATtrail_Coarse[i]= MakeTH1('D', Form("FATIMA_TAMEX/Trail_Coarse/Trail-CoarseCh.%02d", i), Form("Trail Coarse %2d", i), 5000, -5000., 5000.);
+// //              hFATtrail_Fine[i]= MakeTH1('D', Form("FATIMA_TAMEX/Trail_Fine/Trail-FineCh.%02d", i), Form("Trail Fine %2d", i), 600, -1., 2.);
+// 
+// 
+//             }
         }
   //-----------------------------------------------------------------------------------------------------------------------------//
 
   void EventUnpackProc::Fill_FATIMA_TAMEX_Histos(){
 
       ///TAMEX
-    //get amount of fired Tamex modules
-    int TamexHits_Fatima = RAW->get_FATIMA_tamex_hits();
-
-    int Lead_Fatima_Coarse[4][32];
-    double Lead_Fatima_Fine[4][32];
-    int Trail_Fatima_Coarse[4][32];
-    double Trail_Fatima_Fine[4][32];
-    int Phys_Channel_Fatima[32];
-    int leadHits_Fatima = 0,leadHitsCh_Fatima = 0;
-    int trailHits_Fatima = 0,trailHitsCh_Fatima = 0;
-
-
-    for(int i=0; i<32; i++){
-     Phys_Channel_Fatima[i] = 0;
-    }
-
-    for(int i =0; i<4; i++){
-        for(int j=0; j<32;j++){
-     Lead_Fatima_Coarse[i][j] = 0;
-     Lead_Fatima_Fine[i][j] = 0;
-     Trail_Fatima_Coarse[i][j] = 0;
-     Trail_Fatima_Fine[i][j] = 0;
-        }
-
-    for(int i = 0;i < TamexHits_Fatima;++i){
-
-      leadHits_Fatima = RAW->get_FATIMA_lead_hits(i);
-      trailHits_Fatima = RAW->get_FATIMA_trail_hits(i);
-
-
-        //Box diagrams for leading and trailing
-      for(int j = 0;j < RAW->get_FATIMA_am_Fired(i);j++){
-         if(RAW->get_FATIMA_CH_ID(i,j) % 2 == 1){
-            Phys_Channel_Fatima[j] =TAMEX_Fat_ID[i][RAW->get_FATIMA_physical_channel(i, j)];
-          //  Lead_Fatima[i][j] = RAW->get_FATIMA_lead_T(i,j);
-            Lead_Fatima_Coarse[i][j] = RAW->get_FATIMA_coarse_lead(i,j);
-            Lead_Fatima_Fine[i][j] = RAW->get_FATIMA_fine_lead(i,j);
-            
-            hFATlead_Coarse[Phys_Channel_Fatima[j]]->Fill(Lead_Fatima_Coarse[i][j]);
-            hFATlead_Fine[Phys_Channel_Fatima[j]]->Fill(Lead_Fatima_Fine[i][j]);
-
-        }
-         if(RAW->get_FATIMA_CH_ID(i,j) % 2 == 0){
-            Phys_Channel_Fatima[j] = RAW->get_FATIMA_physical_channel(i,j);
-          //  Trail_Fatima[Phys_Channel_Fatima[j]] = RAW->get_FATIMA_trail_T(i,j);
-            Trail_Fatima_Coarse[i][j] = RAW->get_FATIMA_coarse_trail(i,j);
-            Trail_Fatima_Fine[i][j] = RAW->get_FATIMA_fine_trail(i,j);
-//          hFATtrail_Coarse[Phys_Channel_Fatima[j]]->Fill(Trail_Fatima_Coarse[i][j]);
-      //    hFATtrail_Fine[Phys_Channel_Fatima[j]]->Fill(Trail_Fatima_Fine[i][j]);
-                }
-            }
-        }
-    }
+//     //get amount of fired Tamex modules
+//     int TamexHits_Fatima = RAW->get_FATIMA_tamex_hits();
+// 
+//     int Lead_Fatima_Coarse[4][32];
+//     double Lead_Fatima_Fine[4][32];
+//     int Trail_Fatima_Coarse[4][32];
+//     double Trail_Fatima_Fine[4][32];
+//     int Phys_Channel_Fatima[32];
+//     int leadHits_Fatima = 0,leadHitsCh_Fatima = 0;
+//     int trailHits_Fatima = 0,trailHitsCh_Fatima = 0;
+// 
+// 
+//     for(int i=0; i<32; i++){
+//      Phys_Channel_Fatima[i] = 0;
+//     }
+// 
+//     for(int i =0; i<4; i++){
+//         for(int j=0; j<32;j++){
+//      Lead_Fatima_Coarse[i][j] = 0;
+//      Lead_Fatima_Fine[i][j] = 0;
+//      Trail_Fatima_Coarse[i][j] = 0;
+//      Trail_Fatima_Fine[i][j] = 0;
+//         }
+// 
+//     for(int i = 0;i < TamexHits_Fatima;++i){
+// 
+//       leadHits_Fatima = RAW->get_FATIMA_lead_hits(i);
+//       trailHits_Fatima = RAW->get_FATIMA_trail_hits(i);
+// 
+// 
+//         //Box diagrams for leading and trailing
+//       for(int j = 0;j < RAW->get_FATIMA_am_Fired(i);j++){
+//          if(RAW->get_FATIMA_CH_ID(i,j) % 2 == 1){
+//             Phys_Channel_Fatima[j] =TAMEX_Fat_ID[i][RAW->get_FATIMA_physical_channel(i, j)];
+//           //  Lead_Fatima[i][j] = RAW->get_FATIMA_lead_T(i,j);
+//             Lead_Fatima_Coarse[i][j] = RAW->get_FATIMA_coarse_lead(i,j);
+//             Lead_Fatima_Fine[i][j] = RAW->get_FATIMA_fine_lead(i,j);
+//             
+// //             hFATlead_Coarse[Phys_Channel_Fatima[j]]->Fill(Lead_Fatima_Coarse[i][j]);
+// //             hFATlead_Fine[Phys_Channel_Fatima[j]]->Fill(Lead_Fatima_Fine[i][j]);
+// 
+//         }
+//          if(RAW->get_FATIMA_CH_ID(i,j) % 2 == 0){
+//             Phys_Channel_Fatima[j] = RAW->get_FATIMA_physical_channel(i,j);
+//           //  Trail_Fatima[Phys_Channel_Fatima[j]] = RAW->get_FATIMA_trail_T(i,j);
+//             Trail_Fatima_Coarse[i][j] = RAW->get_FATIMA_coarse_trail(i,j);
+//             Trail_Fatima_Fine[i][j] = RAW->get_FATIMA_fine_trail(i,j);
+// //          hFATtrail_Coarse[Phys_Channel_Fatima[j]]->Fill(Trail_Fatima_Coarse[i][j]);
+//       //    hFATtrail_Fine[Phys_Channel_Fatima[j]]->Fill(Trail_Fatima_Fine[i][j]);
+//                 }
+//             }
+//         }
+//     }
 
   }
   /**----------------------------------------------------------------------------------------------**/
@@ -2418,8 +2488,8 @@ void EventUnpackProc::Fill_Germanium_Histos(){
     cout<<"\tNumber of bPlastic TAMEX Channels: " <<bPLASTIC_TAMEX_CHANNELS<< endl;
     cout<<"\tbPlastic SC41 L Analogue Channel:  " <<SC41L_bPLASTIC<< endl;
     cout<<"\tbPlastic SC41 R Analogue Channel:  " <<SC41R_bPLASTIC<< endl;
-    cout<<"\tbPlastic SC41 L Digital Channel:  " <<SC41L_bPLASTIC_Digi<< endl;
-    cout<<"\tbPlastic SC41 R Digital Channel:  " <<SC41R_bPLASTIC_Digi<< endl;
+//     cout<<"\tbPlastic SC41 L Digital Channel:  " <<SC41L_bPLASTIC_Digi<< endl;
+//     cout<<"\tbPlastic SC41 R Digital Channel:  " <<SC41R_bPLASTIC_Digi<< endl;
     cout<<"\tbPlastic Upstream OR Downstream Channel:  " <<bPLASTIC_OR_UP_DOWN<< endl;
     cout<<"\tbPlastic Coin. Upstream Channel:  " <<bPLASTIC_UP_COIN<< endl;
     cout<<"\tbPlastic Coin. Downstream Channel:  " <<bPLASTIC_DOWN_COIN<< endl;
@@ -2441,47 +2511,47 @@ void EventUnpackProc::Fill_Germanium_Histos(){
    }
 //-----------------------------------------------------------------------------------------------------------------------------//
 
-void EventUnpackProc::checkTAMEXorVME(){
-
-  std::ifstream PL_FILE("Configuration_Files/DESPEC_General_Setup/TAMEX_or_VME.txt");
-
-  std::string line;
-
-  if(PL_FILE.fail()){
-    std::cerr << "Could not find Configuration_Files/DESPEC_General_Setup/TAMEX_or_VME.txt file" << std::endl;
-    exit(1);
-  }
-  bool T_or_V_bPlas = false;
-  bool T_or_V_Fatima = false;
-  bool T_and_V_Fatima = false;
-  while(std::getline(PL_FILE,line)){
-    if(line[0] == '#') continue;
-
-    if(line == "VME_bPlas") T_or_V_bPlas = true;
-    if(line == "TAMEX_bPlas") T_or_V_bPlas = false;
-
-    if(line == "VME_Fatima") T_or_V_Fatima = true;
-    if(line == "TAMEX_Fatima") T_or_V_Fatima = false;
-
-    if(line == "VME_AND_TAMEX_Fatima") T_or_V_Fatima = false;
-    if(line == "VME_AND_TAMEX_Fatima") T_and_V_Fatima = true;
-
-    if(line == "VME_Fatima") T_and_V_Fatima = false;
-    if(line == "TAMEX_Fatima") T_and_V_Fatima = false;
-
-
-//     if(line != "VME_bPlas" && line != "TAMEX_bPlas"){
-//       std::cerr << line << " module of PLASTIC not known!" <<std::endl;
-//       exit(1);
-//     }
-  }
-
-  VME_TAMEX_bPlas = T_or_V_bPlas;
-  VME_TAMEX_Fatima = T_or_V_Fatima;
-  VME_AND_TAMEX_Fatima = T_and_V_Fatima;
-
-
-}
+// void EventUnpackProc::checkTAMEXorVME(){
+// 
+//   std::ifstream PL_FILE("Configuration_Files/DESPEC_General_Setup/TAMEX_or_VME.txt");
+// 
+//   std::string line;
+// 
+//   if(PL_FILE.fail()){
+//     std::cerr << "Could not find Configuration_Files/DESPEC_General_Setup/TAMEX_or_VME.txt file" << std::endl;
+//     exit(1);
+//   }
+//   bool T_or_V_bPlas = false;
+//   bool T_or_V_Fatima = false;
+//   bool T_and_V_Fatima = false;
+//   while(std::getline(PL_FILE,line)){
+//     if(line[0] == '#') continue;
+// 
+//     if(line == "VME_bPlas") T_or_V_bPlas = true;
+//     if(line == "TAMEX_bPlas") T_or_V_bPlas = false;
+// 
+//     if(line == "VME_Fatima") T_or_V_Fatima = true;
+//     if(line == "TAMEX_Fatima") T_or_V_Fatima = false;
+// 
+//     if(line == "VME_AND_TAMEX_Fatima") T_or_V_Fatima = false;
+//     if(line == "VME_AND_TAMEX_Fatima") T_and_V_Fatima = true;
+// 
+//     if(line == "VME_Fatima") T_and_V_Fatima = false;
+//     if(line == "TAMEX_Fatima") T_and_V_Fatima = false;
+// 
+// 
+// //     if(line != "VME_bPlas" && line != "TAMEX_bPlas"){
+// //       std::cerr << line << " module of PLASTIC not known!" <<std::endl;
+// //       exit(1);
+// //     }
+//   }
+// 
+//   VME_TAMEX_bPlas = T_or_V_bPlas;
+//   VME_TAMEX_Fatima = T_or_V_Fatima;
+//   VME_AND_TAMEX_Fatima = T_and_V_Fatima;
+// 
+// 
+// }
 
 
 

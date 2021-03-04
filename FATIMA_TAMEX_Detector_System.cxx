@@ -1,5 +1,5 @@
 #include "FATIMA_TAMEX_Detector_System.h"
-
+//Set for twin peaks 25.02.21 AKM
 using namespace std;
 
 //---------------------------------------------------------------
@@ -38,10 +38,20 @@ FATIMA_TAMEX_Detector_System::FATIMA_TAMEX_Detector_System(){
     edge_coarse = new double*[100];
     edge_fine = new double*[100];
     ch_ID_edge = new unsigned int*[100];
+    
+//     edge_coarse_slow = new double*[100];
+//     edge_fine_slow = new double*[100];
+//     ch_ID_edge_slow = new unsigned int*[100];
+    
     for(int o = 0;o < 100;++o){
         edge_coarse[o] = new double[100];
         edge_fine[o] = new double[100];
         ch_ID_edge[o] = new unsigned int[100];
+        
+//         edge_coarse_slow[o] = new double[100];
+//         edge_fine_slow[o] = new double[100];
+//         ch_ID_edge_slow[o] = new unsigned int[100];
+        
         lead_arr[o] = new int[100];
         leading_hits[o] = new int[100];
         trailing_hits[o] = new int[100];
@@ -55,6 +65,11 @@ FATIMA_TAMEX_Detector_System::~FATIMA_TAMEX_Detector_System(){
         delete[] edge_coarse[i];
         delete[] edge_fine[i];
         delete[] ch_ID_edge[i];
+        
+//         delete[] edge_coarse_slow[i];
+//         delete[] edge_fine_slow[i];
+//         delete[] ch_ID_edge_slow[i];
+        
         delete[] lead_arr[i];
         delete[] leading_hits[i];
         delete[] trailing_hits[i];
@@ -63,6 +78,9 @@ FATIMA_TAMEX_Detector_System::~FATIMA_TAMEX_Detector_System(){
     delete[] edge_fine;
     delete[] ch_ID_edge;
 
+//     delete[] edge_coarse_slow;
+//     delete[] edge_fine_slow;
+//     delete[] ch_ID_edge_slow;
     delete[] coarse_T;
     delete[] fine_T;
     delete[] ch_ID;
@@ -84,7 +102,7 @@ void FATIMA_TAMEX_Detector_System::Process_MBS(int* pdata){
 
    this->pdata = pdata;
    
-  
+  // printf(" pdata 0x%08x\n", (unsigned int*) pdata); 
 
     //reset old iterator array and old TAMEX data
     for(int i = 0;i < tamex_iter;i++) iterator[i] = 0;
@@ -125,7 +143,7 @@ void FATIMA_TAMEX_Detector_System::Process_TAMEX(){
         pdata++;
         //skip padding in stream
         skip_padding();
-       // printf(" head 0x%08x\n", (unsigned int*) pdata); 
+      //  printf(" head 0x%08x\n", (unsigned int*) pdata); 
     }
     //get tamex_id, sfp_id and trigger type
     TAMEX_CHANNEL_HEADER* head = (TAMEX_CHANNEL_HEADER*) pdata;
@@ -217,7 +235,7 @@ void FATIMA_TAMEX_Detector_System::get_trigger(){
     coarse_T[tamex_iter] = (double) data->coarse_T;
     fine_T[tamex_iter] = (double) data->fine_T;
     ch_ID[tamex_iter] = data->ch_ID;
-   ///cout<<"1) fine_T[tamex_iter] " << fine_T[tamex_iter]<< " tamex_iter " << tamex_iter << " ch_ID[tamex_iter]  " <<ch_ID[tamex_iter]  <<endl;
+//cout<<"TRIGGER fine_T[tamex_iter] " << fine_T[tamex_iter]<< " tamex_iter " << tamex_iter << " ch_ID[tamex_iter]  "" coarse_T[tamex_iter] " <<coarse_T[tamex_iter] <<ch_ID[tamex_iter]  <<endl;
  
     //next word
     pdata++;
@@ -233,6 +251,9 @@ void FATIMA_TAMEX_Detector_System::reset_edges(){
             edge_coarse[i][j] = 131313;
             edge_fine[i][j] = 131313;
             ch_ID_edge[i][j] = 131313;
+//             edge_coarse_slow[i][j] = 131313;
+//             edge_fine_slow[i][j] = 131313;
+//             ch_ID_edge_slow[i][j] = 131313;
         }
     }
 }
@@ -248,15 +269,17 @@ void FATIMA_TAMEX_Detector_System::get_edges(){
     written = false;
 
     while(no_error_reached()){
+        
         //check place holder in stream
         PLACE_HOLDER* hold = (PLACE_HOLDER*) pdata;
-
-        if(hold->six_eight != six_f && written){
-            //cerr << "***Multiple single channel fire***" << endl;
+// // 
+        if(hold->six_eight == six_f ){
+           // cerr << "***Only single channel fired!***" << endl;
             pdata++;
             continue;
         }
-        else if(hold->six_eight == six_f) written = false;
+//       //  pdata++;
+     if(hold->six_eight != six_f) written = false;
 
 //         if(hold->six_eight != six_f){
 //             cerr << dec << hold->six_eight << endl;
@@ -267,23 +290,55 @@ void FATIMA_TAMEX_Detector_System::get_edges(){
 //         }
 
         //next word
-        pdata++;
+      
 
         //extract data
         TAMEX_DATA* data = (TAMEX_DATA*) pdata;
-
+      //  printf(" pdata 0x%08x\n", (unsigned int*) pdata); 
+//         cout<<"LEADING PDATA " << ((*pdata & 0x800) >> 11) << endl;
+       
+       // cout<<"data->leading_E " <<data->leading_E << "  data->coarse_T "<<(double) data->coarse_T<<" data->ch_ID "<<data->ch_ID << endl;
+       
+//         cout<<"FAST EDGE " << data->leading_E << endl;
+//         leading_edge
+            if(data->leading_E ==1){
+            leading_hit=data->leading_E;
         edge_coarse[tamex_iter][iterator[tamex_iter]] = (double) data->coarse_T;
         edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
         ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID;
         lead_arr[tamex_iter][iterator[tamex_iter]] = (data->ch_ID % 2);
-      // cout << "coarse " << edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] << endl;  
+     
+                 
+       //   cout << "LEAD EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
+        }
+  if(data->leading_E ==1)  ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
+  if(data->leading_E ==0)ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
+  // cout<<"ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]] " <<ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]] << " ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]] " <<ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]] << endl;
+      //   if(data->leading_E ==0 && ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]==ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]){
+  if(data->leading_E ==0 ){
+             
+             leading_hit=data->leading_E;
+              //cout<<"TRAIL EDGE " << data->leading_E << endl;
+        edge_coarse[tamex_iter][iterator[tamex_iter]] = (double) data->coarse_T;
+        edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
+        ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID+MAX_CHA_INPUT;
+        
+             //  cout << "TRAIL EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
+         
+      
+            
+              
+        }
+//        cout << "coarse " << edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<"  lead_arr[tamex_iter][iterator[tamex_iter]] " << lead_arr[tamex_iter][iterator[tamex_iter]] <<  endl;  
          
         iterator[tamex_iter]++;
 
         written = true;
 
         //next word
-        pdata++;
+        pdata++; 
+        //pdata++; 
+       
     }
 }
 
@@ -334,7 +389,7 @@ void FATIMA_TAMEX_Detector_System::calibrate_ONLINE(){
 
     //send data to ROOT histograms in Calibrator object
     FATIMA_TAMEX_Calibration->get_data(edge_fine,ch_ID_edge,tamex_iter,iterator);
-    double max_count = 500000.;
+    double max_count = 1000000.;
     cal_count++;
     if(cal_count % 1000 == 0){
         cout << dec << "=========================\n";
@@ -361,6 +416,8 @@ void FATIMA_TAMEX_Detector_System::calibrate_OFFLINE(){
             channel_ID_tmp = (int) ch_ID_edge[i][j];
             if(edge_coarse[i][j] != 131313) edge_fine[i][j] = FATIMA_TAMEX_Calibration->get_Calibration_val(edge_fine[i][j],i,channel_ID_tmp);
             else edge_fine[i][j] = 131313;
+            
+            
  
         }
     }

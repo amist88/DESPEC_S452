@@ -9,7 +9,7 @@
 ## FRS Germanium 'prompt' gammas [1 0] only singles, [1 1] include gamma-gamma matrices 
 1 1
 
-## FRS Germanium 'delayed' gammas [1 0] only 'delayed' gammas, [1 1] include 'prompt' gammas) ##
+## FRS Germanium/FATIMA 'delayed' (>20mus) gammas ([1 0] only 'delayed' gammas, [1 1] include 'prompt' gammas) ##
 1 1
 
 ## FRS Fatima 'prompt' gammas ##
@@ -24,7 +24,6 @@
 ## Include Fatima Lifetime Analysis for Beta-delayed gammas ##
 1
 
-
 ## Combined Z1 Z2 AND X2/X4 AoQ gates, define which Z1 Z2 PID gate number will be used ##
 1
 ##############################################################
@@ -38,7 +37,7 @@
 ## dT Germanium-FRS White Rabbit ##
 -1000 20000
 
-# dT (Fat/Ge T - SC41 T) is defined in Configuration_Files/2D_Gates/dT_Det_SC41.txt ##
+# dT (Fat/Ge T - SC41 T) gates are defined with the 2D SC41-Det cut gates in 2D_Gates/GePromptFlashCut.txt and FatimaPromptFlashCut.txt (window selects events) ##
 
 ## Gamma-Gamma Germanium Time gate (Low, High (ns))
 -50 50
@@ -46,12 +45,12 @@
 ## Gamma-Gamma Germanium 2D Histogram Binning (Histogram Bins, Histogram Min, Histogram Max (keV))
 2000 0 2000
 
-################# Germanium Long isomers #############
+################# Germanium/FATIMA Long isomers #############
 
-## FRS-Galileo Long Isomer PID Gate Number ##
+## FRS Long Isomer PID Gate Number ##
 1
 
-## dT FRS-Galileo Time Gate (in ns) Long Isomers (Low, High, Histogram Bins, Histogram Min, Histogram Max, Time Scale Parameter)
+## dT FRS-Germanium/Fatima Time Gate (in ns) Long Isomers (Low, High, Histogram Bins, Histogram Min, Histogram Max, Time Scale Parameter)
 0 1000000 1000 0 1000 1000
 
 #############################################################
@@ -68,7 +67,7 @@
 ## PID Gate Number
 6
 
-## Lifetime Energy Gates (Start E low, E high: Stop E low, E High) ####
+## Lifetime Energy Gates (Start E low, E high: Stop E low, E High)[keV] ####
 ## Start/stop Lifetime 1 (Low-High):
 1378 1460 667 711
 
