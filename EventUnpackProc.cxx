@@ -684,12 +684,14 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                   //Phys_Channel_Lead_bPlas[TAMID][Hit]
                 Phys_Channel_Lead_bPlas[i][j] = TAMEX_bPlast_Chan[i][RAW->get_PLASTIC_physical_channel(i, j)];                
                 chan = (Phys_Channel_Lead_bPlas[i][j]);
-
+                if(chan>-1){
                 /// PMT allocation succeeded
                 bPlasdetnum=TAMEX_bPlast_Det[i][RAW->get_PLASTIC_physical_channel(i, j)];
                 fOutput->fbPlasDetNum = bPlasdetnum;
                 fOutput->fbPlasChan[bPlasdetnum]=  chan; 
                 N1 = fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan]++;
+                
+                
                // cout<<"fOutput->fbPlasDetNum " <<fOutput->fbPlasDetNum << endl;
 // 		cout<<"Phys_Channel_Lead_bPlas[i][j] " <<Phys_Channel_Lead_bPlas[i][j] << " i " << i << " j " << j <<" RAW->get_PLASTIC_physical_channel(i, j) " <<RAW->get_PLASTIC_physical_channel(i, j) << endl;
         
@@ -700,19 +702,19 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
 //cout<<"fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] " <<fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] << " chan " << chan << " N1 " << N1 << endl;
                     }
                 }
-                
+              }
                if(RAW->get_PLASTIC_CH_ID(i,j) % 2 == 0){ //Trail even j
                   
                 Phys_Channel_Trail_bPlas[i][j] = TAMEX_bPlast_Chan[i][RAW->get_PLASTIC_physical_channel(i, j)]; 
                 chan = (Phys_Channel_Trail_bPlas[i][j]);
                 
-               
+               if(chan>-1){
 		 
                 /// PMT allocation succeeded
                  N1 = fOutput->fbPlas_PMT_Trail_N[bPlasdetnum][chan]++;
                 if(N1>-1&& N1<15){
              fOutput->fbPlas_Trail_PMT[bPlasdetnum][chan][N1] = RAW->get_PLASTIC_trail_T(i,j);  
-            
+                }
               }            
             }
           }
@@ -1047,6 +1049,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fFat_TDC_ID[i] =  dum_tdc_id[i];
                 fOutput->fFat_TDC_Time[i] = dum_tdc_t[i];
                 fOutput->fFat_TDC_Time_Raw[i] = dum_tdc_t_raw[i];
+
                 //cout << "event no: " << event_number << " mult = " << matchedmult <<  " i: " << i << " QDCID: " << dum_qdc_id[i] << " TDCID " << dum_tdc_id[i] << " energy " << dum_qdc_E[i] << " timestamp " << dum_tdc_t[i] << endl;
 
                 if(dum_tdc_t[i] == 0.)cerr << "Something is wrong in Unpack Fatima pointer out (dum_tdc_t==0)!!" << endl;
