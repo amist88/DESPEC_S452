@@ -1868,7 +1868,10 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
             ///Gain matching  (slow branch): I have to scale it
               
               ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i] * pow(ToT_slow_fat[i][j],3)+ fCal->Bfat_TAMEX[i]* pow(ToT_slow_fat[i][j],2) + fCal->Cfat_TAMEX[i] *ToT_slow_fat[i][j] + fCal->Dfat_TAMEX[i])*0.01;
-//                 cout<<"ToT_slow_fat[i][j] " << ToT_slow_fat[i][j]<< endl;
+//                 
+       
+              
+              //cout<<"ToT_slow_fat[i][j] " << ToT_slow_fat[i][j]<< endl;
 //                pOutput-> pFat_Slow_ToTCalib[i][j] =ToT_slow_fat[i][j];
               // cout<<"ToT_slow_fat[i][j] " <<ToT_slow_fat[i][j] << " i " << i << " j " << j <<" pInput->fFat_Trail_Slow[i][j] " <<pInput->fFat_Trail_Slow[i][j] << " pInput->fFat_Lead_Slow[i][j] " <<pInput->fFat_Lead_Slow[i][j] << endl;
                        if(ToT_slow_fat[i][j]>0) {
