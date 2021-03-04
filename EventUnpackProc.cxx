@@ -579,14 +579,14 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                
           ////NOW DEFINE FAST (ODD CHANNELS) AND SLOW  (EVEN)     
               if(j % 2 == 0 ){ //Lead even hits
-                 
+               //  cout<<"RAW->get_FATIMA_CH_ID(i,j)  " <<RAW->get_FATIMA_CH_ID(i,j)  << endl;
                   ///Fast lead channels odd
         if(RAW->get_FATIMA_CH_ID(i,j) % 2==1){
                         
                 Phys_Channel_Lead_Fast_Fat[i][j] =TAMEX_Fat_ID[i][(RAW->get_FATIMA_physical_channel(i, j)+1)/2]; 
                         
                 int chan_fat_fast_lead = Phys_Channel_Lead_Fast_Fat[i][j];
-                         
+   //  cout<<"Phys_Channel_Lead_Fast_Fat[i][j] " <<Phys_Channel_Lead_Fast_Fat[i][j] << " i " << i << " j " << j <<" RAW->get_FATIMA_physical_channel(i, j) " <<RAW->get_FATIMA_physical_channel(i, j) <<  endl;
                 if(chan_fat_fast_lead>-1) {
 	      
                     int N1_fast = fOutput->fFat_Fast_Lead_N[chan_fat_fast_lead]++;
@@ -1284,7 +1284,7 @@ void EventUnpackProc::load_FatTamex_Allocationfile(){
     if(line[0] == '#') continue;
     sscanf(line.c_str(),format,&TamID,&TamCh,&Sys_ch);
     TAMEX_Fat_ID[TamID][TamCh] = Sys_ch;
-    //cout<<"TAMEX_Fat_ID[TamID][TamCh] " <<TAMEX_Fat_ID[TamID][TamCh] << " TamID " << TamID <<" Sys_ch " << Sys_ch<<endl;
+//     cout<<"TAMEX_Fat_ID[TamID][TamCh] " <<TAMEX_Fat_ID[TamID][TamCh] << " TamID " << TamID <<" Sys_ch " << Sys_ch<< endl;
   }
 }
 //---------------------------------------------------------------------------------------------------

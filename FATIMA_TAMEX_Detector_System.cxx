@@ -303,16 +303,16 @@ void FATIMA_TAMEX_Detector_System::get_edges(){
 //         leading_edge
             if(data->leading_E ==1){
             leading_hit=data->leading_E;
-        edge_coarse[tamex_iter][iterator[tamex_iter]] = (double) data->coarse_T;
-        edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
-        ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID;
-        lead_arr[tamex_iter][iterator[tamex_iter]] = (data->ch_ID % 2);
+            edge_coarse[tamex_iter][iterator[tamex_iter]] = (double) data->coarse_T;
+            edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
+            ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID;
+            lead_arr[tamex_iter][iterator[tamex_iter]] = (data->ch_ID % 2);
      
-                 
-       //   cout << "LEAD EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
+        //  cout << "LEAD EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
         }
-  if(data->leading_E ==1)  ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
-  if(data->leading_E ==0)ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
+        
+//   if(data->leading_E ==1)  ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
+//   if(data->leading_E ==0)ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
   // cout<<"ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]] " <<ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]] << " ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]] " <<ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]] << endl;
       //   if(data->leading_E ==0 && ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]==ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]){
   if(data->leading_E ==0 ){
@@ -323,11 +323,7 @@ void FATIMA_TAMEX_Detector_System::get_edges(){
         edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
         ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID+MAX_CHA_INPUT;
         
-             //  cout << "TRAIL EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
-         
-      
-            
-              
+              // cout << "TRAIL EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
         }
 //        cout << "coarse " << edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<"  lead_arr[tamex_iter][iterator[tamex_iter]] " << lead_arr[tamex_iter][iterator[tamex_iter]] <<  endl;  
          

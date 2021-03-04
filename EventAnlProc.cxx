@@ -1404,7 +1404,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
                
               if(i<3){//Take only cards with bPlast channels
             
-            hbPlas_Lead_dT_coinc[i][j] = MakeTH1('D', Form("bPlastic/Lead-LeadCoinChan/Lead dT Plas Det. %2d Ch %d Ref Coinc",i,j), Form("Lead dT Plas Det. %2d Ch %d Ref Coinc",i,j),500,-100,100);
+            hbPlas_Lead_dT_coinc[i][j] = MakeTH1('D', Form("bPlastic/Lead-LeadCoinChan/Lead dT Plas Det. %2d Ch %d Ref Coinc",i,j), Form("Lead dT Plas Det. %2d Ch %d Ref Coinc",i,j),500,-200,200);
             
         }
                
@@ -1867,8 +1867,7 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
                        }    
             ///Gain matching  (slow branch): I have to scale it
               
-              ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i] * pow(ToT_slow_fat[i][j],3)+ fCal->Bfat_TAMEX[i]* pow(ToT_slow_fat[i][j],2) + fCal->Cfat_TAMEX[i] *ToT_slow_fat[i][j] + fCal->Dfat_TAMEX[i])*0.01;
-//                 
+       ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i-1] * pow(ToT_slow_fat[i][j]*0.01,3)+ fCal->Bfat_TAMEX[i-1] *pow(ToT_slow_fat[i][j]*0.01,2) + fCal->Cfat_TAMEX[i-1] *ToT_slow_fat[i][j]*0.01 + fCal->Dfat_TAMEX[i-1]);      
        
               
               //cout<<"ToT_slow_fat[i][j] " << ToT_slow_fat[i][j]<< endl;
