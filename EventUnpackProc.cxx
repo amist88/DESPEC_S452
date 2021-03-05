@@ -265,7 +265,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
        
         PrcID_Conv = get_Conversion(PrcID);
  //   cout<<"PrcID_Conv " <<PrcID_Conv << " PrcID " <<PrcID << endl;
-	if(PrcID_Conv==-1) continue;
+    if(PrcID_Conv==-1) continue;
          
         fOutput -> fProcID[PrcID_Conv] = PrcID_Conv;
    
@@ -366,8 +366,8 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 if(RAW->get_FRS_sci_e(l)!=0) fOutput->fFRS_sci_e[l] = RAW->get_FRS_sci_e(l);
                 if(RAW->get_FRS_sci_tx(l)!=0) fOutput->fFRS_sci_tx[l] = RAW->get_FRS_sci_tx(l);
                 if(RAW->get_FRS_sci_x(l)!=0)  fOutput->fFRS_sci_x[l] = RAW->get_FRS_sci_x(l);
-	    }
-	}
+        }
+    }
            
              if(PrcID==35){
     if(RAW->get_FRS_TRaw_vftx_21l()!=0)fOutput->fTRaw_vftx_21l = RAW->get_FRS_TRaw_vftx_21l();
@@ -570,7 +570,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         ///---------------------------------------------------------///
   
   for (int i=0; i<RAW->get_FATIMA_tamex_hits(); i++){///Loop over tamex ID's
-		
+        
                 Fatfired[i] = RAW->get_FATIMA_am_Fired(i);
 
         for(int j = 0;j < Fatfired[i];j++){///Loop over hits per board
@@ -587,10 +587,10 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                         
                 int chan_fat_fast_lead = Phys_Channel_Lead_Fast_Fat[i][j];
    //  cout<<"Phys_Channel_Lead_Fast_Fat[i][j] " <<Phys_Channel_Lead_Fast_Fat[i][j] << " i " << i << " j " << j <<" RAW->get_FATIMA_physical_channel(i, j) " <<RAW->get_FATIMA_physical_channel(i, j) <<  endl;
-                if(chan_fat_fast_lead>-1) {
-	    //  cout<<"chan_fat_fast_lead " << chan_fat_fast_lead <<endl;
+                if(chan_fat_fast_lead>-1 && chan_fat_fast_lead<FATIMA_TAMEX_CHANNELS) {
+        //  cout<<"chan_fat_fast_lead " << chan_fat_fast_lead <<" i " << i << " j " << j <<" (RAW->get_FATIMA_physical_channel(i, j)+1)/2 " <<(RAW->get_FATIMA_physical_channel(i, j)+1)/2<< endl;
                     int N1_fast = fOutput->fFat_Fast_Lead_N[chan_fat_fast_lead]++;
-          
+           
                     fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast] = RAW->get_FATIMA_lead_T(i,j);
                     
                     //cout<<"FAST LEAD RAW->get_FATIMA_physical_channel(i, j) " << RAW->get_FATIMA_physical_channel(i, j) << " chan_fat_fast_lead " <<chan_fat_fast_lead << " N1_fast " <<N1_fast << " fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast]  " <<fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast]  << " i " << i << " j " << j << endl;
@@ -604,8 +604,8 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                         
                 int chan_fat_slow_lead = Phys_Channel_Lead_Slow_Fat[i][j];
                          
-                if(chan_fat_slow_lead>-1) {
-	      
+                if(chan_fat_slow_lead>-1&& chan_fat_slow_lead<FATIMA_TAMEX_CHANNELS) {
+       
                     int N1_slow = fOutput->fFat_Slow_Lead_N[chan_fat_slow_lead]++;
           
                     fOutput->fFat_Lead_Slow[chan_fat_slow_lead][N1_slow] = RAW->get_FATIMA_lead_T(i,j);
@@ -623,9 +623,9 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 Phys_Channel_Trail_Fast_Fat[i][j] =TAMEX_Fat_ID[i][(RAW->get_FATIMA_physical_channel(i, j)+1)/2]; 
                         
                 int chan_fat_fast_trail = Phys_Channel_Trail_Fast_Fat[i][j];
-                         
-                if(chan_fat_fast_trail>-1) {
-	      
+                      
+                if(chan_fat_fast_trail>-1&& chan_fat_fast_trail<FATIMA_TAMEX_CHANNELS) {
+            
                     int N1_fast = fOutput->fFat_Fast_Trail_N[chan_fat_fast_trail]++;
           
                     fOutput->fFat_Trail_Fast[chan_fat_fast_trail][N1_fast] = RAW->get_FATIMA_trail_T(i,j);
@@ -641,8 +641,8 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                         
                 int chan_fat_slow_trail = Phys_Channel_Trail_Slow_Fat[i][j];
                          
-                if(chan_fat_slow_trail>-1) {
-	      
+                if(chan_fat_slow_trail>-1&& chan_fat_slow_trail<FATIMA_TAMEX_CHANNELS) {
+          
                     int N1_slow = fOutput->fFat_Slow_Trail_N[chan_fat_slow_trail]++;
           
                     fOutput->fFat_Trail_Slow[chan_fat_slow_trail][N1_slow] = RAW->get_FATIMA_trail_T(i,j);
@@ -693,11 +693,11 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 
                 
                // cout<<"fOutput->fbPlasDetNum " <<fOutput->fbPlasDetNum << endl;
-// 		cout<<"Phys_Channel_Lead_bPlas[i][j] " <<Phys_Channel_Lead_bPlas[i][j] << " i " << i << " j " << j <<" RAW->get_PLASTIC_physical_channel(i, j) " <<RAW->get_PLASTIC_physical_channel(i, j) << endl;
+//      cout<<"Phys_Channel_Lead_bPlas[i][j] " <<Phys_Channel_Lead_bPlas[i][j] << " i " << i << " j " << j <<" RAW->get_PLASTIC_physical_channel(i, j) " <<RAW->get_PLASTIC_physical_channel(i, j) << endl;
         
 //         cout<<"bPlasdetnum " <<bPlasdetnum << " chan " << chan << " RAW->get_PLASTIC_physical_channel(i, j) " <<RAW->get_PLASTIC_physical_channel(i, j) << " fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan] " <<fOutput->fbPlas_PMT_Lead_N[bPlasdetnum][chan] <<endl;
-		 if(N1>-1 && N1<15){
-		
+         if(N1>-1 && N1<15){
+        
                fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] = RAW->get_PLASTIC_lead_T(i,j);
 //cout<<"fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] " <<fOutput->fbPlas_Lead_PMT[bPlasdetnum][chan][N1] << " chan " << chan << " N1 " << N1 << endl;
                     }
@@ -709,7 +709,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 chan = (Phys_Channel_Trail_bPlas[i][j]);
                 
                if(chan>-1){
-		 
+         
                 /// PMT allocation succeeded
                  N1 = fOutput->fbPlas_PMT_Trail_N[bPlasdetnum][chan]++;
                 if(N1>-1&& N1<15){
@@ -739,10 +739,10 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         Double_t dummy_tdc_t_raw[FAT_MAX_VME_CHANNELS];
 
 
-		Long64_t dummy_qdc_t_coarse[FAT_MAX_VME_CHANNELS];
+        Long64_t dummy_qdc_t_coarse[FAT_MAX_VME_CHANNELS];
         Double_t dummy_qdc_t_fine[FAT_MAX_VME_CHANNELS];
 
-		Long64_t dum_qdc_t_coarse[FAT_MAX_VME_CHANNELS];
+        Long64_t dum_qdc_t_coarse[FAT_MAX_VME_CHANNELS];
         Double_t dum_qdc_t_fine[FAT_MAX_VME_CHANNELS];
         
         int dummy_qdc_id[FAT_MAX_VME_CHANNELS];
@@ -844,7 +844,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                     //cout << "Event no: " << event_number << " tdc time: " << dummy_tdc_t[i] << " tdc id: " << dummy_tdc_id[i] << endl;
                 }//end if good event
                 //cout << dummy_tdc_id[i] << endl;
-			}//End if correct ID range
+            }//End if correct ID range
          }
             
             if(RAW->get_FAT_TDC_id(i) == SC41L_FatVME && RAW->get_FAT_TDC_timestamp(i) != 0. ){
@@ -892,7 +892,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
         }
             
         for (int i=0; i< RAW->get_FAT_QDCs_fired(); i++){
-		
+        
           if(RAW->get_FAT_QDC_id(i) > -1 ){
               ///Remove Additional Channels
           if(RAW->get_FAT_QDC_id(i) !=  FatVME_TimeMachineCh2 && RAW->get_FAT_QDC_id(i) != FatVME_TimeMachineCh1 && RAW->get_FAT_QDC_id(i) != SC41L_FatVME && RAW->get_FAT_QDC_id(i) != SC41R_FatVME && RAW->get_FAT_QDC_id(i) != SC41L_FatVME_Digi && RAW->get_FAT_QDC_id(i) != SC41R_FatVME_Digi && RAW->get_FAT_QDC_id(i) != FatVME_bPlast_MASTER){
@@ -905,7 +905,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
             
             singlesqdcmult++;
           
-		
+        
             if(RAW->get_FAT_QLong(i) > 10. && qdc_multi_hit_exclude[RAW->get_FAT_QDC_id(i)] == 0 ){
                 dummy_qdc_E[dummyqdcmult] = RAW->get_FAT_QLong(i);
                 dummy_qdc_E_raw[dummyqdcmult] = RAW->get_FAT_QLong_Raw(i);
@@ -1068,7 +1068,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 fOutput->fGe_T[i] = RAW->get_Germanium_Chan_T(i);
                 fOutput->fGe_cfT[i] = RAW->get_Germanium_Channel_cf(i);
     
-		
+        
                 fOutput->fGe_Event_T[i] = RAW->get_Germanium_Event_T(i);
                 fOutput->fGe_Pileup[i] = RAW->get_Germanium_Pileup(i);
                 fOutput->fGe_Overflow[i] = RAW->get_Germanium_Overflow(i);
@@ -1966,16 +1966,16 @@ for(int i=0;i<7;i++)
 //     
 //     if(AoQ_corr!=0) hID_AoQ_corr->Fill(AoQ_corr);
          scalers_done = false;
-	      if(sci_l[idx]!=0)   hSCI_L[idx]->Fill(sci_l[idx]); 
-	      if(sci_r[idx]!=0)   hSCI_R[idx]->Fill(sci_r[idx]);
-	      if(sci_e[idx]!=0)   hSCI_E[idx]->Fill(sci_e[idx]);
-	        if(sci_e[2]!=0 && sci_e[5]!=0)    hSCI_dE24->Fill(sci_e[2],sci_e[5]);
-	            
-	      
-	    if(PrcID==30){
-	      if(sci_tx[idx]!=0)  hSCI_Tx[idx]->Fill(sci_tx[idx]);
-	      if(sci_x[idx]!=0)   hSCI_X[idx]->Fill(sci_x[idx]);
-	       }
+          if(sci_l[idx]!=0)   hSCI_L[idx]->Fill(sci_l[idx]); 
+          if(sci_r[idx]!=0)   hSCI_R[idx]->Fill(sci_r[idx]);
+          if(sci_e[idx]!=0)   hSCI_E[idx]->Fill(sci_e[idx]);
+            if(sci_e[2]!=0 && sci_e[5]!=0)    hSCI_dE24->Fill(sci_e[2],sci_e[5]);
+                
+          
+        if(PrcID==30){
+          if(sci_tx[idx]!=0)  hSCI_Tx[idx]->Fill(sci_tx[idx]);
+          if(sci_x[idx]!=0)   hSCI_X[idx]->Fill(sci_x[idx]);
+           }
     }
      }
      
@@ -2468,12 +2468,12 @@ void EventUnpackProc::Fill_Germanium_Histos(){
      /**------------------Germanium Raw Energy -----------------------------------------**/
       Germanium_hits = RAW->get_Germanium_am_Fired();
          for(int i=0; i<Germanium_hits; i++){
-	   if(RAW->get_Germanium_Det_id(i)>-1){
+       if(RAW->get_Germanium_Det_id(i)>-1){
          //  hFebTime->Fill(RAW->get_Germanium_Chan_T(i)*10E-9);
-	     GeID = RAW->get_Germanium_Det_id(i) * 3 + RAW->get_Germanium_Crystal_id(i);
+         GeID = RAW->get_Germanium_Det_id(i) * 3 + RAW->get_Germanium_Crystal_id(i);
         tmpGe[GeID] = RAW->get_Germanium_Chan_E(i);
         }
-	 }
+     }
    }
    
    

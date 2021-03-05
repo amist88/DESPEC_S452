@@ -1267,7 +1267,7 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
   
             lenMax = (psubevt->GetDlen()-2)/2;
             Int_t event_flag = *pdata++;  len++;  *pdata++;  len++;// skip the first two words of an event
-            if(*pdata != ((Int_t) 0xbabababa)){ std::cout<<"E> ProcID :"<< psubevt->GetProcid() << "First Barrier missed!" << *pdata<< std::endl; }
+           // if(*pdata != ((Int_t) 0xbabababa)){ std::cout<<"E> ProcID :"<< psubevt->GetProcid() << "First Barrier missed!" << *pdata<< std::endl; }
             pdata++; len++;
    
   
@@ -1425,13 +1425,13 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
 #ifdef DEBUG
               std::cout<<"\n";
 #endif
-              if(vme_type != 3 && vme_type !=16)
-            std::cout<<"E> MTDC strange type :"<<vme_type<<std::endl;
+           //   if(vme_type != 3 && vme_type !=16)
+            //std::cout<<"E> MTDC strange type :"<<vme_type<<std::endl;
               if(vme_type==16)
             {
               Int_t vme_geoEnd = getbits(*pdata,1,1,5);
-              if(vme_geo!=vme_geoEnd)
-                std::cout<<"E> MTDC strange end buffer header :"<<vme_type<<" "<<vme_geo<<" != "<<vme_geoEnd<<std::endl;
+             // if(vme_geo!=vme_geoEnd)
+            //    std::cout<<"E> MTDC strange end buffer header :"<<vme_type<<" "<<vme_geo<<" != "<<vme_geoEnd<<std::endl;
 
               pdata++; len++;
               break;
@@ -1444,11 +1444,11 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
     
       
 
-  if(*pdata != 0xbabababa) {
-    std::cout<<"E> ProcID 10 : Barrier-3 missed !" << std::endl;
-  
-     // break;
-}
+//   if(*pdata != 0xbabababa) {
+//     std::cout<<"E> ProcID 10 : Barrier-3 missed !" << std::endl;
+//   
+//      // break;
+// }
       pdata++; len++;
 
       //----- Next is V830 Scaler-----
@@ -1782,7 +1782,7 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
      }
        // check if end of this procid (with/without barrier)
       if(lenMax == len){ break; }
-      if(*pdata != 0xbabababa){ std::cout<<"E> ProcID 35 : 3rd barrier missed !" << *pdata  << std::endl;} pdata++; len++;
+      if(*pdata != 0xbabababa){/* std::cout<<"E> ProcID 35 : 3rd barrier missed !" << *pdata  << std::endl;*/} pdata++; len++;
       if(lenMax == len){ break; }} //----- end of Mesytec MTDC-32 -----
 
       break; 
@@ -3858,7 +3858,7 @@ void FRS_Detector_System::FRS_Anal(){
   if (sci_b_tofll2 && sci_b_tofrr2){
     //// id_beta = id->id_path2 /(id->id_tofoff2 - sci_tof2);
     id_beta = id->id_path2 /  sci_tof2_calib ;// calculate non-inverted "real" tof already in sci analysis.
-    cout<<"id_beta " <<id_beta <<" id->id_path2 " <<id->id_path2 << " sci_tof2_calib " <<sci_tof2_calib << endl;
+   // cout<<"id_beta " <<id_beta <<" id->id_path2 " <<id->id_path2 << " sci_tof2_calib " <<sci_tof2_calib << endl;
 //     if(bDrawHist){
 //       hID_beta->Fill(id_beta*1000.);
     }
