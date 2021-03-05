@@ -52,7 +52,7 @@ class EventAnlProc : public TGo4EventProcessor {
       TIDParameter* frs_id;
       
       void get_used_systems();
-
+    void Fat_TimeCorrection(EventUnpackStore* pInput);
       long long lastFatWR = 0;
 	  long long lastFatTAMWR = 0;
 	  long long lastGeWR = 0;
@@ -246,6 +246,7 @@ class EventAnlProc : public TGo4EventProcessor {
           double GeE_Cal[Germanium_MAX_HITS];
           ULong64_t GeT[Germanium_MAX_HITS];
           ULong64_t GeCF_T[Germanium_MAX_HITS];
+          ULong64_t RefTGe, RefCFDGe;
         
           double GeEventT[Germanium_MAX_HITS];
           bool GePileUp[Germanium_MAX_HITS];

@@ -33,7 +33,7 @@ public:
  Double_t AGe[Germanium_MAX_CHANNELS], BGe[Germanium_MAX_CHANNELS], CGe[Germanium_MAX_CHANNELS];
  
  Int_t DetIDGe_cfdalign,DetIDGe_talign;
- Double_t Ge_cfd_align_par[Germanium_MAX_CHANNELS], Ge_T_align_par[Germanium_MAX_CHANNELS];
+ long long Ge_cfd_align_par[Germanium_MAX_CHANNELS], Ge_T_align_par[Germanium_MAX_CHANNELS];
 //  Double_t Aff[60], Bff[60];
 //  Double_t Ab[32], Bb[32];
 //  Double_t Ag[4], Bg[4];

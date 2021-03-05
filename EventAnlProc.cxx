@@ -152,6 +152,7 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
         
         create = true;
         Do_WR_Histos(pInput);
+        Fat_TimeCorrection(pInput);
                  /** Now extract the data from the stored Unpacker array (root tree)**/
     ///--------------------------------------/**FRS Input**/------------------------------------------///
  
@@ -409,6 +410,7 @@ if(Fatmult > 0){
     for (int i = 0; i<Fatmult; i++){
       Fat_TDC_ID[i] = pInput->fFat_TDC_ID[i];
       Fat_TDC_T[i] = pInput->fFat_TDC_Time[i];
+     // cout<<"Fat_TDC_T[i] " <<Fat_TDC_T[i] << " i " << i << endl;
        if(Fat_TDC_ID[i]==FAT_TDC_REF_CHANNEL)Fat_Cha_Ref_TDC = Fat_TDC_T[i]; 
     }//End TDC for loop
 }
@@ -459,7 +461,7 @@ if(Fatmult > 0){
 
   ///--------------------------------------/**Germanium Input**/------------------------------------------///
        GeFired = -1;
-       
+       RefTGe=0;
        //Ge_WR = 0;
        for(int g = 0; g<Germanium_MAX_HITS; g++){
           GeDet[g] = -1;
@@ -469,6 +471,7 @@ if(Fatmult > 0){
           GeT[g] =-1;
           GePileUp[g] = false;
           GeOverFlow[g] = false;
+          Ge_Talign[g]=0;
        }
     
        if ( PrcID_Conv[5]==5){
@@ -491,10 +494,16 @@ if(Fatmult > 0){
           GeE_Cal[i] = (fCal->AGe[id]* pow( GeE[i],2) + fCal->BGe[id]*  GeE[i] + fCal->CGe[id]);
           
             // int id_Ge = det * Germanium_CRYSTALS +  crys;
-     Ge_Talign[i] = GeT[i]+fCal->Ge_T_align_par[id];
-                 //  cout<<"Ge_Talign[i] " <<Ge_Talign[i] << "  GeT[i] "<<GeT[i]  <<" fCal->Ge_T_align_par[id] "<< fCal->Ge_T_align_par[id] << " id " <<id << " i " << i <<endl;   
-                   pOutput->pGe_T_Aligned[GeDet[i]][GeCrys[i]]=Ge_Talign[i];
-                   
+    
+     if(id==1) {
+         RefTGe=GeT[i];
+         RefCFDGe=GeCF_T[i];
+     }
+    
+      Ge_Talign[i] = (GeT[i]-fCal->Ge_T_align_par[id]);
+     
+             pOutput->pGe_T_Aligned[GeDet[i]][GeCrys[i]]=Ge_Talign[i];
+               
                    //Do the CFD time alignment (detector vs all)
               Ge_cfd_Talign[i] = GeCF_T[i]+fCal->Ge_cfd_align_par[id];
               pOutput->pGe_CF_T_Aligned[GeDet[i]][GeCrys[i]] = Ge_cfd_Talign[i];
@@ -1908,7 +1917,7 @@ void EventAnlProc::Make_Fatima_Histos(){
    // hFAT_QDCdt[i]   = MakeTH1('D', Form("FATIMA_VME/Timing/QDCdt/QDCdt%2d",i), Form("QDCdT Ch.%2d",i), 3201,-40,40);
     //hFAT_TDCCalib1[i] =  MakeTH1('D', Form("FATIMA/Timing/TDCCalib/LaBr_Tcalib%2d",i), Form("TDC channel Calib %2d",i), 1E5,0,2E5);
    
-    hFAT_TDCdt_refCha[i] = MakeTH1('D', Form("FATIMA_VME/Timing/TDC_REF-TDC_dT/TDCdT_Cha_LaBr%02d_LaBr%02d", FAT_TDC_REF_CHANNEL, i), Form("TDC dt Channel All Multip LaBr%02d - LaBr%02d",FAT_TDC_REF_CHANNEL , i),250,-2E4,2E4);
+    hFAT_TDCdt_refCha[i] = MakeTH1('D', Form("FATIMA_VME/Timing/TDC_REF-TDC_dT/TDCdT_Cha_LaBr%02d_LaBr%02d", FAT_TDC_REF_CHANNEL, i), Form("TDC dt Channel All Multip LaBr%02d - LaBr%02d",FAT_TDC_REF_CHANNEL , i),4E4,-2E4,2E4);
     
     hFat_SC41L_TDC_dT[i] = MakeTH1('D', Form("FATIMA_VME/Timing/SC41-TDC_dT/TDCdT_SCI41_Cha_LaBr%02d", i), Form("TDC dt Channel All Multip SCI41 - LaBr%02d", i),250,-2E4,2E4);
     for (int j=0; j<6; j++){
@@ -1990,11 +1999,34 @@ if(Fatmult > 0){
                    
             }
      
-             Fat_Ch_dT[Fat_TDC_ID[i]] =  (Fat_Cha_Ref_TDC - Fat_TDC_T[i]);
+     
+      double t2, t1;
+      if(Fat_TDC_T[i]!=0){
+    t1 = Fat_TDC_T[i];
+  
+    if (Fat_TDC_ID[i] == 1){
+        //  cout<<"t1 " << t1 << endl;
+         //if (Fat_TDC_ID[i] == 1 && Fat_QDC_E[i] > 1310 && Fat_QDC_E[i] < 1390) {
+     //cout << " t1 " << t1 << endl;
+           for(int j = 0; j < Fatmult; j++){
+                   if(Fat_TDC_T[j]){
+                // if (Fat_QDC_E[j] > 1160 && Fat_QDC_E[j] < 1215) {
+                 t2 = Fat_TDC_T[j];
+        // cout << " t2 " << t2 << endl;
+         //cout << " diff " << t1-t2 << endl;
+                 hFAT_TDCdt_refCha[Fat_TDC_ID[j]]->Fill(int(t1-t2));
+
+                 }
+             // }
+          }
+        }
+      }
+     
+          //   Fat_Ch_dT[Fat_TDC_ID[i]] =  (Fat_Cha_Ref_TDC - Fat_TDC_T[i]);
                     ///Reference channel dT
-                    if( Fat_TDC_ID[i]!=0){
-                        hFAT_TDCdt_refCha[Fat_TDC_ID[i]]->Fill(Fat_Ch_dT[Fat_TDC_ID[i]]);
-                    }
+//                     if( Fat_TDC_ID[i]!=0){
+//                       //  hFAT_TDCdt_refCha[Fat_TDC_ID[i]]->Fill(Fat_Ch_dT[Fat_TDC_ID[i]]);
+//                     }
                     
                     ///bPlast channels dT VME
                      for(int j = 0; j < 6; j++){
@@ -2197,37 +2229,37 @@ if(Fatmult > 0){
     if ( det!=Germanium_TimeMachine_Det&& det!=Germanium_SC41_Det  && det!=Germanium_SC41_Det_Digi){
         Gam_mult++;
         
-      
+         //Time alignment (detector vs all)
+                   
+                 //Aligned dT 
+        if(det!=0 && crys!=1){
+            if(RefTGe!=0){
+                   dT_Align= Ge_Talign[i]-RefTGe;
+                   hGe_dTgammagamma->Fill(dT_Align);
+                   hGe_Chan_Time_Diff[det][crys]->Fill(dT_Align);
+            }
+                    ///Constant fraction time testing 03.02.21
+                    if(RefCFDGe!=0){
+                        //CFD Time alignment
+                     
+                        //Aligned CFD dT
+                        dT_CFD_Align= Ge_cfd_Talign[i]-RefCFDGe;
+                        hGe_CFdT_gammagamma->Fill(dT_CFD_Align);
+                        hGe_Chan_Time_Diff_CF[det][crys]->Fill(dT_CFD_Align);
+                    }
+        }      
            for (int j = 0; j < GeFired; j++)
            {
               if (i == j) continue;
       
               if(GeE_Cal[i]>0 && GeE_Cal[j]>0){
                   //dT Germanium raw
-                   dT_Ge= GeT[i]-GeT[j];
-                 //Time alignment (detector vs all)
-                   
-                 //Aligned dT  
-                   dT_Align= Ge_Talign[i]-Ge_Talign[j];
-                   hGe_dTgammagamma->Fill(dT_Align);
-                    
-            
-                   
-        ///Constant fraction time testing 03.02.21
-            //CFD Time alignment
-              dT_Ge_cfd= GeCF_T[i]-GeCF_T[j];
-               
-             
-            //Aligned CFD dT
-              dT_CFD_Align= Ge_cfd_Talign[i]-Ge_cfd_Talign[j];
-              hGe_CFdT_gammagamma->Fill(dT_CFD_Align);
+                  // dT_Ge= GeT[i]-GeT[j];
          
               hGe_Mult->Fill(Gam_mult);
-              hGe_Chan_Time_Diff[det][crys]->Fill(dT_Align);
-              // cout<<"det " << det << " crys " << crys << " i " << i << " j " << j << " GeT[i] " <<GeT[i] << " GeT[j] " <<GeT[j]<<" dT_Align  " <<dT_Align << " Ge_Talign[i] " <<Ge_Talign[i] << " Ge_Talign[j] " <<Ge_Talign[j] << endl;
-              hGe_Chan_Time_Diff_CF[det][crys]->Fill(dT_CFD_Align);
+           
 
-              hGe_MultvsdT->Fill(Gam_mult,dT_Ge);
+              hGe_MultvsdT->Fill(Gam_mult,dT_CFD_Align);
               
               
               
@@ -2549,6 +2581,25 @@ void EventAnlProc::get_used_systems(){
 
 }
 
+void EventAnlProc::Fat_TimeCorrection(EventUnpackStore* pInput){
+   ///Do the dT time corrections
+    for(int k=0; k<pInput->fFat_mult; k++){
+      // cout<<" BEFORE pInput->fFat_TDC_Time[i] " << pInput->fFat_TDC_Time[k] << " k " << k << endl;
+        ///This was for S480
+//         if(cInputMain->pFat_TDC_ID[k] == 6 || cInputMain->pFat_TDC_ID[k] == 10 || cInputMain->pFat_TDC_ID[k] == 13 || cInputMain->pFat_TDC_ID[k] == 22 || cInputMain->pFat_TDC_ID[k] == 23 || cInputMain->pFat_TDC_ID[k] == 32 || cInputMain->pFat_TDC_ID[k] == 33 || cInputMain->pFat_TDC_ID[k] == 34 || cInputMain->pFat_TDC_ID[k] == 35 ){
+//         cInputMain->pFat_TDC_T[k] = 0.;
+//            }
+           
+        if(pInput->fFat_TDC_Time[k]>0){
+
+     pInput->fFat_TDC_Time[k] = pInput->fFat_TDC_Time[k]+fCal->TFatTDC_Chref_dT[pInput->fFat_TDC_ID[k]];
+       // cout<<" FTER  pInput->fFat_TDC_Time[k] " << pInput->fFat_TDC_Time[k] << " k " << k <<" fCal->TFatTDC_Chref_dT[pInput->fFat_TDC_ID[k]] " <<fCal->TFatTDC_Chref_dT[pInput->fFat_TDC_ID[k]] << " pInput->fFat_TDC_ID[k] " <<pInput->fFat_TDC_ID[k] << endl;
+//      cout<<"1111 Event " << cInputMain->pEvent_Number << " cInputMain->pFat_TDC_T[k] " << cInputMain->pFat_TDC_T[k] << " fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]] " <<fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]] << " cInputMain->pFat_TDC_ID[k] " <<cInputMain->pFat_TDC_ID[k] << " k " << k << endl;
+     
+   
+        }
+     }
+  }
 //-----------------------------------------------------------------------------------------------------------------------------//
 //                                                            END                                                              //
 //-----------------------------------------------------------------------------------------------------------------------------//

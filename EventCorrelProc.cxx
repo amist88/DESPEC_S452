@@ -122,7 +122,7 @@ Bool_t EventCorrelProc::BuildEvent(TGo4EventElement* dest)
    
       if(Used_Systems[0]==1) { 
 ///Demand at least FRS to be activated to do correlations
-          Fat_TimeCorrection(cInput);
+         // Fat_TimeCorrection(cInput);
           if(fCorrel->GSetup_corr_FRS_Aida==true)Process_FRS_AIDA(cInput, cOutput); 
        
           if(fCorrel->GSetup_corr_FRS_Ge==true) Process_FRS_Prompt_Ge(cInput, cOutput);
@@ -2043,24 +2043,24 @@ file.open("Configuration_Files/2D_Gates/Fatima_PromptFlashCut.txt");
   file.close();
   }
   ///-------------------------------------------------------------------------------------------------///
-  void EventCorrelProc::Fat_TimeCorrection(EventAnlStore* cInputMain){
-   ///Do the dT time corrections
-    for(int k=0; k<cInputMain->pFatmult; k++){
-        ///This was for S480
-//         if(cInputMain->pFat_TDC_ID[k] == 6 || cInputMain->pFat_TDC_ID[k] == 10 || cInputMain->pFat_TDC_ID[k] == 13 || cInputMain->pFat_TDC_ID[k] == 22 || cInputMain->pFat_TDC_ID[k] == 23 || cInputMain->pFat_TDC_ID[k] == 32 || cInputMain->pFat_TDC_ID[k] == 33 || cInputMain->pFat_TDC_ID[k] == 34 || cInputMain->pFat_TDC_ID[k] == 35 ){
-//         cInputMain->pFat_TDC_T[k] = 0.;
-//            }
-           
-        if(cInputMain->pFat_TDC_T[k]>0){
-
-     cInputMain->pFat_TDC_T[k] = cInputMain->pFat_TDC_T[k]-fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]];
-     
-//      cout<<"1111 Event " << cInputMain->pEvent_Number << " cInputMain->pFat_TDC_T[k] " << cInputMain->pFat_TDC_T[k] << " fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]] " <<fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]] << " cInputMain->pFat_TDC_ID[k] " <<cInputMain->pFat_TDC_ID[k] << " k " << k << endl;
-     
-   
-        }
-     }
-  }
+//   void EventCorrelProc::Fat_TimeCorrection(EventAnlStore* cInputMain){
+//    ///Do the dT time corrections
+//     for(int k=0; k<cInputMain->pFatmult; k++){
+//         ///This was for S480
+// //         if(cInputMain->pFat_TDC_ID[k] == 6 || cInputMain->pFat_TDC_ID[k] == 10 || cInputMain->pFat_TDC_ID[k] == 13 || cInputMain->pFat_TDC_ID[k] == 22 || cInputMain->pFat_TDC_ID[k] == 23 || cInputMain->pFat_TDC_ID[k] == 32 || cInputMain->pFat_TDC_ID[k] == 33 || cInputMain->pFat_TDC_ID[k] == 34 || cInputMain->pFat_TDC_ID[k] == 35 ){
+// //         cInputMain->pFat_TDC_T[k] = 0.;
+// //            }
+//            
+//         if(cInputMain->pFat_TDC_T[k]>0){
+// 
+//      cInputMain->pFat_TDC_T[k] = cInputMain->pFat_TDC_T[k]-fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]];
+//      
+// //      cout<<"1111 Event " << cInputMain->pEvent_Number << " cInputMain->pFat_TDC_T[k] " << cInputMain->pFat_TDC_T[k] << " fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]] " <<fCal->TFatTDC_Chref_dT[cInputMain->pFat_TDC_ID[k]] << " cInputMain->pFat_TDC_ID[k] " <<cInputMain->pFat_TDC_ID[k] << " k " << k << endl;
+//      
+//    
+//         }
+//      }
+//   }
 
 
 ///-------------------------------------------------------------------------------------------------///

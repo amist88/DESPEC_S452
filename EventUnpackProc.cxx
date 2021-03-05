@@ -588,7 +588,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
                 int chan_fat_fast_lead = Phys_Channel_Lead_Fast_Fat[i][j];
    //  cout<<"Phys_Channel_Lead_Fast_Fat[i][j] " <<Phys_Channel_Lead_Fast_Fat[i][j] << " i " << i << " j " << j <<" RAW->get_FATIMA_physical_channel(i, j) " <<RAW->get_FATIMA_physical_channel(i, j) <<  endl;
                 if(chan_fat_fast_lead>-1) {
-	      
+	    //  cout<<"chan_fat_fast_lead " << chan_fat_fast_lead <<endl;
                     int N1_fast = fOutput->fFat_Fast_Lead_N[chan_fat_fast_lead]++;
           
                     fOutput->fFat_Lead_Fast[chan_fat_fast_lead][N1_fast] = RAW->get_FATIMA_lead_T(i,j);

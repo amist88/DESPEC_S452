@@ -105,7 +105,7 @@ class EventCorrelProc : public TGo4EventProcessor {
     void get_used_systems();
     void Ge_2DPromptFlashCut();
     void Fat_2DPromptFlashCut();
-    void Fat_TimeCorrection(EventAnlStore* cInput);
+  //  void Fat_TimeCorrection(EventAnlStore* cInput);
     void FRS_Gates_corrProc();
     int  IsData(std::ifstream &f);
             
