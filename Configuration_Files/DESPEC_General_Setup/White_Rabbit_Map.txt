@@ -1,0 +1,8 @@
+#Detector System White Rabbit IDs 
+FRS             0x100 
+AIDA            0x700
+PLASTIC         0x500
+FATIMA          0x1500
+FATIMA_TAMEX    0x1600
+GERMANIUM         0x400
+FINGER 	        0x1200

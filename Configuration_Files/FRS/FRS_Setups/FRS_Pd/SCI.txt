@@ -1,0 +1,93 @@
+#Scintillator Parameters
+#Index 2 for Sc21
+#
+sci->x_a[0][2]: 2066.2
+sci->x_a[1][2]: -0.73
+sci->x_a[2][2]: 0
+sci->x_a[3][2]: 0
+sci->x_a[4][2]: 0
+sci->x_a[5][2]: 0
+sci->x_a[6][2]: 0
+#
+#Index 5 for Sc41
+#
+sci->x_a[0][5]: -1928.28
+sci->x_a[1][5]: 0.00558294
+sci->x_a[2][5]: 0
+sci->x_a[3][5]: 0
+sci->x_a[4][5]: 0
+sci->x_a[5][5]: 0
+sci->x_a[6][5]: 0
+#
+#Index 6 for Sc42
+#
+sci->x_a[0][6]: 0
+sci->x_a[1][6]: 1
+sci->x_a[2][6]: 0
+sci->x_a[3][6]: 0
+sci->x_a[4][6]: 0
+sci->x_a[5][6]: 0
+sci->x_a[6][6]: 0
+#
+#Index 7 for Sc43
+#
+sci->x_a[0][7]: 0
+sci->x_a[1][7]: 1
+sci->x_a[2][7]: 0
+sci->x_a[3][7]: 0
+sci->x_a[4][7]: 0
+sci->x_a[5][7]: 0
+sci->x_a[6][7]: 0
+#
+#Index 10 for Sc81
+#
+sci->x_a[0][10]: 0
+sci->x_a[1][10]: 1
+sci->x_a[2][10]: 0
+sci->x_a[3][10]: 0
+sci->x_a[4][10]: 0
+sci->x_a[5][10]: 0
+sci->x_a[6][10]: 0
+#
+#Time of Flight Offsets
+#
+sci->tac_off[0]  (SC21L-R): 2327.95
+sci->tac_off[1]  (SC41L-R): 1447.37
+sci->tac_off[2]  (SC41L-SC21L): 1833.28
+sci->tac_off[3]  (SC41R-SC21R): 1972.59
+sci->tac_off[4]  (SC42L-R): 2073.4
+sci->tac_off[5]  (SC42L-SC21L): 1542.25
+sci->tac_off[6]  (SC42R-SC21R): 1729.58
+sci->tac_off[7]  (SC43L-R): 1441.13
+sci->tac_off[8]  (SC81L-R): 1777.77
+sci->tac_off[9]  (SC81L-SC21L): 3020.83
+sci->tac_off[10] (SC81R-SC21R): 1740.21
+#
+#Time of Flight Factors
+#
+sci->tac_factor[0]  (SC21L-R): 20.6895
+sci->tac_factor[1]  (SC41L-R): 26.3158
+sci->tac_factor[2]  (SC41L-SC21L): 22.0238
+sci->tac_factor[3]  (SC41R-SC21R): 21.6549
+sci->tac_factor[4]  (SC42L-R): 20.8798
+sci->tac_factor[5]  (SC42L-SC21L): 21.3739
+sci->tac_factor[6]  (SC42R-SC21R): 21.0525
+sci->tac_factor[7]  (SC43L-R): 21.8067
+sci->tac_factor[8]  (SC81L-R): 20.911
+sci->tac_factor[9]  (SC81L-SC21L): 20.8333
+sci->tac_factor[10] (SC81R-SC21R): 20.1292
+#
+#Time of Flight Factors not for online
+#
+sci->tof_bll2  (not used online): 1
+sci->tof_brr2  (not used online): 1
+sci->tof_bll3  (not used online): 1
+sci->tof_brr3  (not used online): 1
+sci->tof_bll4  (not used online): 1
+sci->tof_brr4  (not used online): 1
+#Time of Flight Offsets
+#
+sci->tof_a2  (Tof S41-S21): 0
+sci->tof_a3  (Tof S42-S21): 0
+sci->tof_a4  (Tof S81-S21): 0
+#

@@ -1,0 +1,54 @@
+#FRS Parameters
+#
+frs->dist_focS2: 2013
+#
+frs->dist_MW21: 604
+frs->dist_MW22: 1782.5
+#
+frs->dist_SC21: 1554.5
+#
+frs->dist_focS4: 2349
+#
+frs->dist_MUSIC1: 555
+frs->dist_MUSIC2: 1210
+frs->dist_MUSIC3: 1210
+#
+#DO NOT CHANGE
+frs->dist_MUSICa1: 52.5
+frs->dist_MUSICa2: 157.5
+frs->dist_MUSICa3: 262.5
+frs->dist_MUSICa4: 367.5
+#
+#
+#Magnetic Field Values
+#
+frs->bfield[0] FRS D3 Field: 0.734
+frs->bfield[1] FRS D4 Field: 0.72174
+frs->bfield[2] FRS D3 Field: 0.7071
+frs->bfield[3] FRS D4 Field: 0.7186
+#
+#Dispersion
+#
+frs->dispersion[0]: -6.47427
+frs->dispersion[1]: 7.7064
+#
+#Magnification
+#
+frs->magnification[1]: 1.1903
+#
+#Rho 0 Values
+#
+frs->rho0[0] FRS (D1+D2)/2 radius: 11.1374
+frs->rho0[1] FRS (D3+D4)/2 radius: 11.3516
+#
+#Z Offsets
+#
+frs->primary_z: 3.84
+frs->offset_z: 0.85
+frs->offset_z2: 3
+frs->offset_z3: 0
+#
+#AoQ Corr
+#
+frs->a2AoQCorr: 0.00095
+frs->a4AoQCorr: 0.00095

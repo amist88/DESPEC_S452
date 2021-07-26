@@ -1,0 +1,166 @@
+                    #############################################################
+                    ################# Correlations Setup File ###################
+                    #############################################################
+                    
+################# Active of correlations of interest (0 = Off, 1 = On ###################
+
+## FRS_Aida
+1
+## FRS Germanium 'prompt' gammas [1 0] only singles, [1 1] include gamma-gamma matrices 
+1 1
+
+## FRS Germanium/FATIMA 'delayed' (>20mus) gammas ([1 0] only 'delayed' gammas, [1 1] include 'prompt' gammas) ##
+1 1
+
+## FRS Fatima 'prompt' gammas ##
+1
+
+## Include Fatima Lifetime Analysis for 'prompt' gammas ##
+1
+
+## Beta-Delayed Gammas (bPlast Spill off Gammas) ##
+0
+
+## Beta-Delayed Gammas (AIDA Implant-Decay) (FRS-AIDA-bPlast gammas) 1 1 1 = [On], [Include Ge Gam-Gam], [Include Fatima] ##
+1 1 1
+
+## Include Fatima Lifetime Analysis for Beta-delayed gammas ##
+0
+
+## Combined Z1 Z2 AND X2/X4 AoQ gates, define which Z1 Z2 PID gate number will be used ##
+1
+##############################################################
+#### Setup correlation conditions for each detector array  ###
+##############################################################
+
+##############################################################
+################# WHITE RABBIT dT GATES  #####################
+##############################################################
+
+## 1. AIDA(Implants)-FRS  ##
+10000 20000
+
+## 2.  Germanium - FRS  ##
+0 1000
+
+## 3. FATIMA(VME) - FRS  ##
+-300 100
+
+## 4. FATIMA(TAMEX) - FRS ##
+-400 0
+
+## 5. bPlast - FRS ##
+-450 -300
+
+## 6. AIDA(Decays) - Germanium [Note: dT histogram gated on front-back dT/dE and Decay Max energy] ##
+11000 17000
+
+## 7. AIDA(Decays) - FATIMA(VME) [Note: dT histogram gated on front-back dT/dE and Decay Max energy] ##
+11000 18000
+
+## 8. AIDA(Implants) - bPlast ##
+7500 19000
+
+## 9. AIDA(Decays) - bPlast [Note: dT histogram gated on front-back dT] ##
+12000 18000
+
+## 10. bPlast - FATIMA(VME)  ##
+-350 -150
+
+## 11. bPlast - FATIMA(TAMEX) ##
+-300 -150
+
+## 12. bPlast - Germanium  ##
+-1000 0
+
+## 13. FATIMA(VME)- FATIMA(TAMEX) ##
+0 100
+
+## 14. FATIMA(VME) - Germanium ##
+-800 0 
+
+## 15. FATIMA(TAMEX) - Germanium  ##
+-1000 1000 
+
+## Below gates for AIDA Timemachine analysis (WR AIDA Timemachine - Det WR)
+## 16. AIDA(Time Machine) - FRS  
+-550 -480
+## 17. AIDA(Time Machine) - Germanium  
+-1100 -600
+## 18. AIDA(Time Machine) - FATIMA (VME)  
+-400 -300
+## 19. AIDA(Time Machine) - FATIMA (TAMEX)  
+-360 -260
+## 20.  AIDA(Time Machine) - bPlast 
+-160 -80
+
+##############################################################
+
+# Note: dT (Fat/Ge T - SC41 T) gates are defined with the 2D SC41-Det cut gates in 2D_Gates/GePromptFlashCut.txt and FatimaPromptFlashCut.txt (window selects events) ##
+
+## Gamma-Gamma Germanium Time gate (Low, High (ns))
+-50 50
+
+## Gamma-Gamma Germanium 2D Histogram Binning (Histogram Bins, Histogram Min, Histogram Max (keV))
+4000 0 4000
+
+################# Germanium/FATIMA Long isomers #############
+
+## FRS Long Isomer PID Gate Number ##
+#5 is 190W, 7 192W
+7
+
+## dT FRS-Germanium/Fatima Time Gate (in ns) Long Isomers (Low, High, Histogram Bins, Histogram Min, Histogram Max, Time Scale Parameter)
+0 2000000 2000 0 2000 1000
+
+#############################################################
+## Gamma-Gamma Fatima Time gate (Low, High (ns))
+-50 50
+#############################################################
+######### Fatima prompt lifetime analysis gates #############
+
+## PID Gate Number
+6
+
+## Lifetime Energy Gates (Start E low, E high: Stop E low, E High)[keV] ####
+## Start/stop Lifetime 1 (Low-High):
+1378 1460 667 711
+
+## Start-stop Lifetime 2:
+670 695 305 345
+
+## Start-stop Lifetime 3:
+305 345 96 118
+
+#############################################################
+############## Beta-delayed gamma conditions ################
+#############################################################
+#### Define PID gate type:###############
+#### ZvsA/Q =1, Z1 vs Z2:X2vsA/Q=2, Z1vsZ2:X4vsA/Q=3
+1
+###
+#### dT Implant-Decay Time Window: Low, High, dT Histogram Binning (in seconds) ####
+0.5 5 450
+
+#### Aida Front-Back Matching conditions (dT, dE) ####
+2000 2000
+
+#### Aida Max Decay Energy conditions (Front, Back) ####
+0 2000 0 2000 
+
+#### bPlastic ToT Gate ####
+4000 60000
+
+## Fatima Beta-delayed gammas lifetime analysis gates ########
+#### PID Gate Number
+5
+
+#### Lifetime Energy Gates (BDG Fatima) (Start E low, E high: Stop E low, E High) ####
+#### Start/stop Lifetime 1:
+365 413 706 743
+
+#### Start-stop Lifetime 2:
+706 743 1315 1382
+
+################################ End of Correlations Config ##################################
+

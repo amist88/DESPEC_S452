@@ -1,0 +1,107 @@
+#TPC Parameters
+#
+#TPC1at S2 (TPC21) in vacuum
+#
+#Factors
+#
+tpc->x_factor[0][0]: 0.070623
+tpc->x_factor[0][1]: 0.07248
+tpc->y_factor[0][0]: -0.035723
+tpc->y_factor[0][1]: -0.034725
+#Offsets
+#
+tpc->x_offset[0][0]: -0.5
+tpc->x_offset[0][1]: -1.058
+tpc->y_offset[0][0]: 38.1838
+tpc->y_offset[0][1]: 38.37
+#
+#TPC2at S2 (TPC22) in vacuum
+#
+#Factors
+#
+tpc->x_factor[1][0]: 0.0716
+tpc->x_factor[1][1]: 0.070329
+tpc->y_factor[1][0]: -0.0362752
+tpc->y_factor[1][1]: -0.0365182
+#Offsets
+#
+tpc->x_offset[1][0]: -0.81
+tpc->x_offset[1][1]: 1.9
+tpc->y_offset[1][0]: 36.77
+tpc->y_offset[1][1]: 38
+#
+#TPC3at S2 (TPC23) in air
+#
+#Factors
+#
+tpc->x_factor[2][0]: 0.070128
+tpc->x_factor[2][1]: 0.071489
+tpc->y_factor[2][0]: -0.036481
+tpc->y_factor[2][1]: -0.036863
+#Offsets
+#
+tpc->x_offset[2][0]: -4.09
+tpc->x_offset[2][1]: -4.87
+tpc->y_offset[2][0]: 69
+tpc->y_offset[2][1]: 69.5
+#
+#TPC4at S2 (TPC24) in air
+#
+#Factors
+#
+tpc->x_factor[3][0]: 0.068179
+tpc->x_factor[3][1]: 0.066689
+tpc->y_factor[3][0]: -0.0412
+tpc->y_factor[3][1]: -0.0411
+#Offsets
+#
+tpc->x_offset[3][0]: -0.47
+tpc->x_offset[3][1]: 2.2
+tpc->y_offset[3][0]: 76.9
+tpc->y_offset[3][1]: 77.3
+#
+#TPC5at S4 (TPC41) in air
+#
+#Factors
+#
+tpc->x_factor[4][0]: 0.069442
+tpc->x_factor[4][1]: 0.070509
+tpc->y_factor[4][0]: -0.045657
+tpc->y_factor[4][1]: -0.044335
+#Offsets
+#
+tpc->x_offset[4][0]: -0.556613
+tpc->x_offset[4][1]: -4.09796
+tpc->y_offset[4][0]: 78.4325
+tpc->y_offset[4][1]: 76.4206
+#
+#TPC6at S4 (TPC42) in air
+#
+#Factors
+#
+tpc->x_factor[5][0]: 0.069366
+tpc->x_factor[5][1]: 0.069374
+tpc->y_factor[5][0]: -0.038537
+tpc->y_factor[5][1]: -0.038826
+#Offsets
+#
+tpc->x_offset[5][0]: -0.067895
+tpc->x_offset[5][1]: 0.789764
+tpc->y_offset[5][0]: 53.682
+tpc->y_offset[5][1]: 50.0913
+#
+#TPC at S3 (TPC31)
+#
+#Factors
+#
+tpc->x_factor[6][0]: 1
+tpc->x_factor[6][1]: 1
+tpc->y_factor[6][0]: 1
+tpc->y_factor[6][1]: 1
+#Offsets
+#
+tpc->x_offset[6][0]: 0
+tpc->x_offset[6][1]: 0
+tpc->y_offset[6][0]: 0
+tpc->y_offset[6][1]: 0
+#

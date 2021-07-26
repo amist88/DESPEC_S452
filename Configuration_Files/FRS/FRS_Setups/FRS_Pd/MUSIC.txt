@@ -1,0 +1,63 @@
+#MUSIC Parameters
+#
+#MUSIC41 Offsets
+#
+music->e1_off[0]: 0
+music->e1_off[1]: 0
+music->e1_off[2]: 0
+music->e1_off[3]: 0
+music->e1_off[4]: 0
+music->e1_off[5]: 0
+music->e1_off[6]: 0
+music->e1_off[7]: 0
+#MUSIC41 Gains
+#
+music->e1_gain[0]: 1
+music->e1_gain[1]: 1
+music->e1_gain[2]: 1
+music->e1_gain[3]: 1
+music->e1_gain[4]: 1
+music->e1_gain[5]: 1
+music->e1_gain[6]: 1
+music->e1_gain[7]: 1
+#MUSIC42 Offsets
+#
+music->e2_off[0]: 0
+music->e2_off[1]: 0
+music->e2_off[2]: 0
+music->e2_off[3]: 0
+music->e2_off[4]: 0
+music->e2_off[5]: 0
+music->e2_off[6]: 0
+music->e2_off[7]: 0
+#MUSIC42 Gains
+#
+music->e2_gain[0]: 1
+music->e2_gain[1]: 1
+music->e2_gain[2]: 1
+music->e2_gain[3]: 1
+music->e2_gain[4]: 1
+music->e2_gain[5]: 1
+music->e2_gain[6]: 1
+music->e2_gain[7]: 1
+#MUSIC43 Offsets
+#
+music->e3_off[0]: 0
+music->e3_off[1]: 0
+music->e3_off[2]: 0
+music->e3_off[3]: 0
+#MUSIC43 Gains
+#
+music->e3_gain[0]: 1
+music->e3_gain[1]: 1
+music->e3_gain[2]: 1
+music->e3_gain[3]: 1
+#MUSIC Position Correction
+#
+music->pos_a1[0]: 1
+music->pos_a1[1]: 0
+music->pos_a1[2]: 0
+music->pos_a1[3]: 0
+music->pos_a1[4]: 0
+music->pos_a1[5]: 0
+music->pos_a1[6]: 0

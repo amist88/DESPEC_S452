@@ -1,0 +1,1233 @@
+// Do NOT change. Changes will be lost next time file is generated
+
+#define R__DICTIONARY_FILENAME G__SCN
+#define R__NO_DEPRECATION
+
+/*******************************************************************/
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#define G__DICTIONARY
+#include "RConfig.h"
+#include "TClass.h"
+#include "TDictAttributeMap.h"
+#include "TInterpreter.h"
+#include "TROOT.h"
+#include "TBuffer.h"
+#include "TMemberInspector.h"
+#include "TInterpreter.h"
+#include "TVirtualMutex.h"
+#include "TError.h"
+
+#ifndef G__ROOT
+#define G__ROOT
+#endif
+
+#include "RtypesImp.h"
+#include "TIsAProxy.h"
+#include "TFileMergeInfo.h"
+#include <algorithm>
+#include "TCollectionProxyInfo.h"
+/*******************************************************************/
+
+#include "TDataMember.h"
+
+// The generated code does not explicitly qualifies STL entities
+namespace std {} using namespace std;
+
+// Header files passed as explicit arguments
+#include "./AIDA_Headers.h"
+#include "./FEBEX.h"
+#include "./TAMEX.h"
+#include "./DESPECAnalysis.h"
+#include "./AIDA_Processor.h"
+#include "./FATIMA_Energy_Calibration.h"
+#include "./TFRSParameter.h"
+#include "./CorrelParameter.h"
+#include "./WR_Structure.h"
+#include "./FATIMA_Time_Calibration.h"
+#include "./Germanium_Detector_System.h"
+#include "./QDC_751.h"
+#include "./FRS_Detector_System.h"
+#include "./EventCorrelProc.h"
+#include "./EventUnpackProc.h"
+#include "./White_Rabbit.h"
+#include "./EventUnpackStore.h"
+#include "./FINGER_Detector_System.h"
+#include "./AIDA_Detector_System.h"
+#include "./AIDA_Decay_Event_Store.h"
+#include "./FATIMA_Detector_System.h"
+#include "./EventAnlProc.h"
+#include "./PLASTIC_TAMEX_Detector_System.h"
+#include "./FINGER_Calibrator.h"
+#include "./Timestamp.h"
+#include "./TDC_1290.h"
+#include "./Germanium_Time_Calibration.h"
+#include "./EventCorrelStore.h"
+#include "./AIDA_Event.h"
+#include "./Germanium_Energy_Calibration.h"
+#include "./QDC.h"
+#include "./FATIMA_TAMEX_Calibrator.h"
+#include "./FATIMA_TAMEX_Detector_System.h"
+#include "./EventAnlStore.h"
+#include "./PLASTIC_TAMEX_Calibrator.h"
+#include "./TAidaConfiguration.h"
+#include "./EventUnpackFact.h"
+#include "./Raw_Event.h"
+#include "./AIDA_Data_Types.h"
+#include "./CalibParameter.h"
+
+// Header files passed via #pragma extra_include
+
+namespace ROOT {
+   static void *new_AidaEvent(void *p = 0);
+   static void *newArray_AidaEvent(Long_t size, void *p);
+   static void delete_AidaEvent(void *p);
+   static void deleteArray_AidaEvent(void *p);
+   static void destruct_AidaEvent(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AidaEvent*)
+   {
+      ::AidaEvent *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::AidaEvent >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("AidaEvent", ::AidaEvent::Class_Version(), "AIDA_Decay_Event_Store.h", 10,
+                  typeid(::AidaEvent), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::AidaEvent::Dictionary, isa_proxy, 4,
+                  sizeof(::AidaEvent) );
+      instance.SetNew(&new_AidaEvent);
+      instance.SetNewArray(&newArray_AidaEvent);
+      instance.SetDelete(&delete_AidaEvent);
+      instance.SetDeleteArray(&deleteArray_AidaEvent);
+      instance.SetDestructor(&destruct_AidaEvent);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AidaEvent*)
+   {
+      return GenerateInitInstanceLocal((::AidaEvent*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AidaEvent*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_AidaHit(void *p = 0);
+   static void *newArray_AidaHit(Long_t size, void *p);
+   static void delete_AidaHit(void *p);
+   static void deleteArray_AidaHit(void *p);
+   static void destruct_AidaHit(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AidaHit*)
+   {
+      ::AidaHit *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::AidaHit >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("AidaHit", ::AidaHit::Class_Version(), "AIDA_Decay_Event_Store.h", 75,
+                  typeid(::AidaHit), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::AidaHit::Dictionary, isa_proxy, 4,
+                  sizeof(::AidaHit) );
+      instance.SetNew(&new_AidaHit);
+      instance.SetNewArray(&newArray_AidaHit);
+      instance.SetDelete(&delete_AidaHit);
+      instance.SetDeleteArray(&deleteArray_AidaHit);
+      instance.SetDestructor(&destruct_AidaHit);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AidaHit*)
+   {
+      return GenerateInitInstanceLocal((::AidaHit*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AidaHit*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_AidaScaler(void *p = 0);
+   static void *newArray_AidaScaler(Long_t size, void *p);
+   static void delete_AidaScaler(void *p);
+   static void deleteArray_AidaScaler(void *p);
+   static void destruct_AidaScaler(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AidaScaler*)
+   {
+      ::AidaScaler *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::AidaScaler >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("AidaScaler", ::AidaScaler::Class_Version(), "AIDA_Decay_Event_Store.h", 116,
+                  typeid(::AidaScaler), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::AidaScaler::Dictionary, isa_proxy, 4,
+                  sizeof(::AidaScaler) );
+      instance.SetNew(&new_AidaScaler);
+      instance.SetNewArray(&newArray_AidaScaler);
+      instance.SetDelete(&delete_AidaScaler);
+      instance.SetDeleteArray(&deleteArray_AidaScaler);
+      instance.SetDestructor(&destruct_AidaScaler);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AidaScaler*)
+   {
+      return GenerateInitInstanceLocal((::AidaScaler*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AidaScaler*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_AIDA_Event(void *p = 0);
+   static void *newArray_AIDA_Event(Long_t size, void *p);
+   static void delete_AIDA_Event(void *p);
+   static void deleteArray_AIDA_Event(void *p);
+   static void destruct_AIDA_Event(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AIDA_Event*)
+   {
+      ::AIDA_Event *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::AIDA_Event >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("AIDA_Event", ::AIDA_Event::Class_Version(), "AIDA_Event.h", 11,
+                  typeid(::AIDA_Event), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::AIDA_Event::Dictionary, isa_proxy, 4,
+                  sizeof(::AIDA_Event) );
+      instance.SetNew(&new_AIDA_Event);
+      instance.SetNewArray(&newArray_AIDA_Event);
+      instance.SetDelete(&delete_AIDA_Event);
+      instance.SetDeleteArray(&deleteArray_AIDA_Event);
+      instance.SetDestructor(&destruct_AIDA_Event);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AIDA_Event*)
+   {
+      return GenerateInitInstanceLocal((::AIDA_Event*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AIDA_Event*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static TClass *AidaUnpackData_Dictionary();
+   static void AidaUnpackData_TClassManip(TClass*);
+   static void *new_AidaUnpackData(void *p = 0);
+   static void *newArray_AidaUnpackData(Long_t size, void *p);
+   static void delete_AidaUnpackData(void *p);
+   static void deleteArray_AidaUnpackData(void *p);
+   static void destruct_AidaUnpackData(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AidaUnpackData*)
+   {
+      ::AidaUnpackData *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::AidaUnpackData));
+      static ::ROOT::TGenericClassInfo 
+         instance("AidaUnpackData", "EventUnpackStore.h", 25,
+                  typeid(::AidaUnpackData), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &AidaUnpackData_Dictionary, isa_proxy, 4,
+                  sizeof(::AidaUnpackData) );
+      instance.SetNew(&new_AidaUnpackData);
+      instance.SetNewArray(&newArray_AidaUnpackData);
+      instance.SetDelete(&delete_AidaUnpackData);
+      instance.SetDeleteArray(&deleteArray_AidaUnpackData);
+      instance.SetDestructor(&destruct_AidaUnpackData);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AidaUnpackData*)
+   {
+      return GenerateInitInstanceLocal((::AidaUnpackData*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AidaUnpackData*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+
+   // Dictionary for non-ClassDef classes
+   static TClass *AidaUnpackData_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::AidaUnpackData*)0x0)->GetClass();
+      AidaUnpackData_TClassManip(theClass);
+   return theClass;
+   }
+
+   static void AidaUnpackData_TClassManip(TClass* ){
+   }
+
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventUnpackStore(void *p = 0);
+   static void *newArray_EventUnpackStore(Long_t size, void *p);
+   static void delete_EventUnpackStore(void *p);
+   static void deleteArray_EventUnpackStore(void *p);
+   static void destruct_EventUnpackStore(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventUnpackStore*)
+   {
+      ::EventUnpackStore *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventUnpackStore >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventUnpackStore", ::EventUnpackStore::Class_Version(), "EventUnpackStore.h", 36,
+                  typeid(::EventUnpackStore), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventUnpackStore::Dictionary, isa_proxy, 4,
+                  sizeof(::EventUnpackStore) );
+      instance.SetNew(&new_EventUnpackStore);
+      instance.SetNewArray(&newArray_EventUnpackStore);
+      instance.SetDelete(&delete_EventUnpackStore);
+      instance.SetDeleteArray(&deleteArray_EventUnpackStore);
+      instance.SetDestructor(&destruct_EventUnpackStore);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventUnpackStore*)
+   {
+      return GenerateInitInstanceLocal((::EventUnpackStore*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventUnpackStore*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_CalibParameter(void *p = 0);
+   static void *newArray_CalibParameter(Long_t size, void *p);
+   static void delete_CalibParameter(void *p);
+   static void deleteArray_CalibParameter(void *p);
+   static void destruct_CalibParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::CalibParameter*)
+   {
+      ::CalibParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::CalibParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("CalibParameter", ::CalibParameter::Class_Version(), "CalibParameter.h", 7,
+                  typeid(::CalibParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::CalibParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::CalibParameter) );
+      instance.SetNew(&new_CalibParameter);
+      instance.SetNewArray(&newArray_CalibParameter);
+      instance.SetDelete(&delete_CalibParameter);
+      instance.SetDeleteArray(&deleteArray_CalibParameter);
+      instance.SetDestructor(&destruct_CalibParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::CalibParameter*)
+   {
+      return GenerateInitInstanceLocal((::CalibParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::CalibParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_CorrelParameter(void *p = 0);
+   static void *newArray_CorrelParameter(Long_t size, void *p);
+   static void delete_CorrelParameter(void *p);
+   static void deleteArray_CorrelParameter(void *p);
+   static void destruct_CorrelParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::CorrelParameter*)
+   {
+      ::CorrelParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::CorrelParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("CorrelParameter", ::CorrelParameter::Class_Version(), "CorrelParameter.h", 9,
+                  typeid(::CorrelParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::CorrelParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::CorrelParameter) );
+      instance.SetNew(&new_CorrelParameter);
+      instance.SetNewArray(&newArray_CorrelParameter);
+      instance.SetDelete(&delete_CorrelParameter);
+      instance.SetDeleteArray(&deleteArray_CorrelParameter);
+      instance.SetDestructor(&destruct_CorrelParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::CorrelParameter*)
+   {
+      return GenerateInitInstanceLocal((::CorrelParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::CorrelParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TFRSParameter(void *p = 0);
+   static void *newArray_TFRSParameter(Long_t size, void *p);
+   static void delete_TFRSParameter(void *p);
+   static void deleteArray_TFRSParameter(void *p);
+   static void destruct_TFRSParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TFRSParameter*)
+   {
+      ::TFRSParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TFRSParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TFRSParameter", ::TFRSParameter::Class_Version(), "TFRSParameter.h", 8,
+                  typeid(::TFRSParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TFRSParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TFRSParameter) );
+      instance.SetNew(&new_TFRSParameter);
+      instance.SetNewArray(&newArray_TFRSParameter);
+      instance.SetDelete(&delete_TFRSParameter);
+      instance.SetDeleteArray(&deleteArray_TFRSParameter);
+      instance.SetDestructor(&destruct_TFRSParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TFRSParameter*)
+   {
+      return GenerateInitInstanceLocal((::TFRSParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TFRSParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_Map1(void *p = 0);
+   static void *newArray_Map1(Long_t size, void *p);
+   static void delete_Map1(void *p);
+   static void deleteArray_Map1(void *p);
+   static void destruct_Map1(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::Map1*)
+   {
+      ::Map1 *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::Map1 >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("Map1", ::Map1::Class_Version(), "TFRSParameter.h", 68,
+                  typeid(::Map1), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::Map1::Dictionary, isa_proxy, 4,
+                  sizeof(::Map1) );
+      instance.SetNew(&new_Map1);
+      instance.SetNewArray(&newArray_Map1);
+      instance.SetDelete(&delete_Map1);
+      instance.SetDeleteArray(&deleteArray_Map1);
+      instance.SetDestructor(&destruct_Map1);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::Map1*)
+   {
+      return GenerateInitInstanceLocal((::Map1*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::Map1*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TMWParameter(void *p = 0);
+   static void *newArray_TMWParameter(Long_t size, void *p);
+   static void delete_TMWParameter(void *p);
+   static void deleteArray_TMWParameter(void *p);
+   static void destruct_TMWParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TMWParameter*)
+   {
+      ::TMWParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TMWParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TMWParameter", ::TMWParameter::Class_Version(), "TFRSParameter.h", 80,
+                  typeid(::TMWParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TMWParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TMWParameter) );
+      instance.SetNew(&new_TMWParameter);
+      instance.SetNewArray(&newArray_TMWParameter);
+      instance.SetDelete(&delete_TMWParameter);
+      instance.SetDeleteArray(&deleteArray_TMWParameter);
+      instance.SetDestructor(&destruct_TMWParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TMWParameter*)
+   {
+      return GenerateInitInstanceLocal((::TMWParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TMWParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TTPCParameter(void *p = 0);
+   static void *newArray_TTPCParameter(Long_t size, void *p);
+   static void delete_TTPCParameter(void *p);
+   static void deleteArray_TTPCParameter(void *p);
+   static void destruct_TTPCParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TTPCParameter*)
+   {
+      ::TTPCParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TTPCParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TTPCParameter", ::TTPCParameter::Class_Version(), "TFRSParameter.h", 99,
+                  typeid(::TTPCParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TTPCParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TTPCParameter) );
+      instance.SetNew(&new_TTPCParameter);
+      instance.SetNewArray(&newArray_TTPCParameter);
+      instance.SetDelete(&delete_TTPCParameter);
+      instance.SetDeleteArray(&deleteArray_TTPCParameter);
+      instance.SetDestructor(&destruct_TTPCParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TTPCParameter*)
+   {
+      return GenerateInitInstanceLocal((::TTPCParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TTPCParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TMUSICParameter(void *p = 0);
+   static void *newArray_TMUSICParameter(Long_t size, void *p);
+   static void delete_TMUSICParameter(void *p);
+   static void deleteArray_TMUSICParameter(void *p);
+   static void destruct_TMUSICParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TMUSICParameter*)
+   {
+      ::TMUSICParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TMUSICParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TMUSICParameter", ::TMUSICParameter::Class_Version(), "TFRSParameter.h", 142,
+                  typeid(::TMUSICParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TMUSICParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TMUSICParameter) );
+      instance.SetNew(&new_TMUSICParameter);
+      instance.SetNewArray(&newArray_TMUSICParameter);
+      instance.SetDelete(&delete_TMUSICParameter);
+      instance.SetDeleteArray(&deleteArray_TMUSICParameter);
+      instance.SetDestructor(&destruct_TMUSICParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TMUSICParameter*)
+   {
+      return GenerateInitInstanceLocal((::TMUSICParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TMUSICParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TSCIParameter(void *p = 0);
+   static void *newArray_TSCIParameter(Long_t size, void *p);
+   static void delete_TSCIParameter(void *p);
+   static void deleteArray_TSCIParameter(void *p);
+   static void destruct_TSCIParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TSCIParameter*)
+   {
+      ::TSCIParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TSCIParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TSCIParameter", ::TSCIParameter::Class_Version(), "TFRSParameter.h", 181,
+                  typeid(::TSCIParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TSCIParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TSCIParameter) );
+      instance.SetNew(&new_TSCIParameter);
+      instance.SetNewArray(&newArray_TSCIParameter);
+      instance.SetDelete(&delete_TSCIParameter);
+      instance.SetDeleteArray(&deleteArray_TSCIParameter);
+      instance.SetDestructor(&destruct_TSCIParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TSCIParameter*)
+   {
+      return GenerateInitInstanceLocal((::TSCIParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TSCIParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TIDParameter(void *p = 0);
+   static void *newArray_TIDParameter(Long_t size, void *p);
+   static void delete_TIDParameter(void *p);
+   static void deleteArray_TIDParameter(void *p);
+   static void destruct_TIDParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TIDParameter*)
+   {
+      ::TIDParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TIDParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TIDParameter", ::TIDParameter::Class_Version(), "TFRSParameter.h", 238,
+                  typeid(::TIDParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TIDParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TIDParameter) );
+      instance.SetNew(&new_TIDParameter);
+      instance.SetNewArray(&newArray_TIDParameter);
+      instance.SetDelete(&delete_TIDParameter);
+      instance.SetDeleteArray(&deleteArray_TIDParameter);
+      instance.SetDestructor(&destruct_TIDParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TIDParameter*)
+   {
+      return GenerateInitInstanceLocal((::TIDParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TIDParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TSIParameter(void *p = 0);
+   static void *newArray_TSIParameter(Long_t size, void *p);
+   static void delete_TSIParameter(void *p);
+   static void deleteArray_TSIParameter(void *p);
+   static void destruct_TSIParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TSIParameter*)
+   {
+      ::TSIParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TSIParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TSIParameter", ::TSIParameter::Class_Version(), "TFRSParameter.h", 317,
+                  typeid(::TSIParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TSIParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TSIParameter) );
+      instance.SetNew(&new_TSIParameter);
+      instance.SetNewArray(&newArray_TSIParameter);
+      instance.SetDelete(&delete_TSIParameter);
+      instance.SetDeleteArray(&deleteArray_TSIParameter);
+      instance.SetDestructor(&destruct_TSIParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TSIParameter*)
+   {
+      return GenerateInitInstanceLocal((::TSIParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TSIParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_TMRTOFMSParameter(void *p = 0);
+   static void *newArray_TMRTOFMSParameter(Long_t size, void *p);
+   static void delete_TMRTOFMSParameter(void *p);
+   static void deleteArray_TMRTOFMSParameter(void *p);
+   static void destruct_TMRTOFMSParameter(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::TMRTOFMSParameter*)
+   {
+      ::TMRTOFMSParameter *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::TMRTOFMSParameter >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("TMRTOFMSParameter", ::TMRTOFMSParameter::Class_Version(), "TFRSParameter.h", 364,
+                  typeid(::TMRTOFMSParameter), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::TMRTOFMSParameter::Dictionary, isa_proxy, 4,
+                  sizeof(::TMRTOFMSParameter) );
+      instance.SetNew(&new_TMRTOFMSParameter);
+      instance.SetNewArray(&newArray_TMRTOFMSParameter);
+      instance.SetDelete(&delete_TMRTOFMSParameter);
+      instance.SetDeleteArray(&deleteArray_TMRTOFMSParameter);
+      instance.SetDestructor(&destruct_TMRTOFMSParameter);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::TMRTOFMSParameter*)
+   {
+      return GenerateInitInstanceLocal((::TMRTOFMSParameter*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::TMRTOFMSParameter*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static TClass *FRS_Detector_System_Dictionary();
+   static void FRS_Detector_System_TClassManip(TClass*);
+   static void *new_FRS_Detector_System(void *p = 0);
+   static void *newArray_FRS_Detector_System(Long_t size, void *p);
+   static void delete_FRS_Detector_System(void *p);
+   static void deleteArray_FRS_Detector_System(void *p);
+   static void destruct_FRS_Detector_System(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::FRS_Detector_System*)
+   {
+      ::FRS_Detector_System *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::FRS_Detector_System));
+      static ::ROOT::TGenericClassInfo 
+         instance("FRS_Detector_System", "FRS_Detector_System.h", 83,
+                  typeid(::FRS_Detector_System), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &FRS_Detector_System_Dictionary, isa_proxy, 4,
+                  sizeof(::FRS_Detector_System) );
+      instance.SetNew(&new_FRS_Detector_System);
+      instance.SetNewArray(&newArray_FRS_Detector_System);
+      instance.SetDelete(&delete_FRS_Detector_System);
+      instance.SetDeleteArray(&deleteArray_FRS_Detector_System);
+      instance.SetDestructor(&destruct_FRS_Detector_System);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::FRS_Detector_System*)
+   {
+      return GenerateInitInstanceLocal((::FRS_Detector_System*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::FRS_Detector_System*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+
+   // Dictionary for non-ClassDef classes
+   static TClass *FRS_Detector_System_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::FRS_Detector_System*)0x0)->GetClass();
+      FRS_Detector_System_TClassManip(theClass);
+   return theClass;
+   }
+
+   static void FRS_Detector_System_TClassManip(TClass* ){
+   }
+
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventUnpackProc(void *p = 0);
+   static void *newArray_EventUnpackProc(Long_t size, void *p);
+   static void delete_EventUnpackProc(void *p);
+   static void deleteArray_EventUnpackProc(void *p);
+   static void destruct_EventUnpackProc(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventUnpackProc*)
+   {
+      ::EventUnpackProc *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventUnpackProc >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventUnpackProc", ::EventUnpackProc::Class_Version(), "EventUnpackProc.h", 71,
+                  typeid(::EventUnpackProc), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventUnpackProc::Dictionary, isa_proxy, 4,
+                  sizeof(::EventUnpackProc) );
+      instance.SetNew(&new_EventUnpackProc);
+      instance.SetNewArray(&newArray_EventUnpackProc);
+      instance.SetDelete(&delete_EventUnpackProc);
+      instance.SetDeleteArray(&deleteArray_EventUnpackProc);
+      instance.SetDestructor(&destruct_EventUnpackProc);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventUnpackProc*)
+   {
+      return GenerateInitInstanceLocal((::EventUnpackProc*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventUnpackProc*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventUnpackFact(void *p = 0);
+   static void *newArray_EventUnpackFact(Long_t size, void *p);
+   static void delete_EventUnpackFact(void *p);
+   static void deleteArray_EventUnpackFact(void *p);
+   static void destruct_EventUnpackFact(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventUnpackFact*)
+   {
+      ::EventUnpackFact *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventUnpackFact >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventUnpackFact", ::EventUnpackFact::Class_Version(), "EventUnpackFact.h", 15,
+                  typeid(::EventUnpackFact), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventUnpackFact::Dictionary, isa_proxy, 4,
+                  sizeof(::EventUnpackFact) );
+      instance.SetNew(&new_EventUnpackFact);
+      instance.SetNewArray(&newArray_EventUnpackFact);
+      instance.SetDelete(&delete_EventUnpackFact);
+      instance.SetDeleteArray(&deleteArray_EventUnpackFact);
+      instance.SetDestructor(&destruct_EventUnpackFact);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventUnpackFact*)
+   {
+      return GenerateInitInstanceLocal((::EventUnpackFact*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventUnpackFact*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_DESPECAnalysis(void *p = 0);
+   static void *newArray_DESPECAnalysis(Long_t size, void *p);
+   static void delete_DESPECAnalysis(void *p);
+   static void deleteArray_DESPECAnalysis(void *p);
+   static void destruct_DESPECAnalysis(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::DESPECAnalysis*)
+   {
+      ::DESPECAnalysis *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::DESPECAnalysis >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("DESPECAnalysis", ::DESPECAnalysis::Class_Version(), "DESPECAnalysis.h", 30,
+                  typeid(::DESPECAnalysis), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::DESPECAnalysis::Dictionary, isa_proxy, 4,
+                  sizeof(::DESPECAnalysis) );
+      instance.SetNew(&new_DESPECAnalysis);
+      instance.SetNewArray(&newArray_DESPECAnalysis);
+      instance.SetDelete(&delete_DESPECAnalysis);
+      instance.SetDeleteArray(&deleteArray_DESPECAnalysis);
+      instance.SetDestructor(&destruct_DESPECAnalysis);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::DESPECAnalysis*)
+   {
+      return GenerateInitInstanceLocal((::DESPECAnalysis*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::DESPECAnalysis*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static TClass *AidaAnlData_Dictionary();
+   static void AidaAnlData_TClassManip(TClass*);
+   static void *new_AidaAnlData(void *p = 0);
+   static void *newArray_AidaAnlData(Long_t size, void *p);
+   static void delete_AidaAnlData(void *p);
+   static void deleteArray_AidaAnlData(void *p);
+   static void destruct_AidaAnlData(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AidaAnlData*)
+   {
+      ::AidaAnlData *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TIsAProxy(typeid(::AidaAnlData));
+      static ::ROOT::TGenericClassInfo 
+         instance("AidaAnlData", "EventAnlStore.h", 24,
+                  typeid(::AidaAnlData), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &AidaAnlData_Dictionary, isa_proxy, 4,
+                  sizeof(::AidaAnlData) );
+      instance.SetNew(&new_AidaAnlData);
+      instance.SetNewArray(&newArray_AidaAnlData);
+      instance.SetDelete(&delete_AidaAnlData);
+      instance.SetDeleteArray(&deleteArray_AidaAnlData);
+      instance.SetDestructor(&destruct_AidaAnlData);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AidaAnlData*)
+   {
+      return GenerateInitInstanceLocal((::AidaAnlData*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AidaAnlData*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+
+   // Dictionary for non-ClassDef classes
+   static TClass *AidaAnlData_Dictionary() {
+      TClass* theClass =::ROOT::GenerateInitInstanceLocal((const ::AidaAnlData*)0x0)->GetClass();
+      AidaAnlData_TClassManip(theClass);
+   return theClass;
+   }
+
+   static void AidaAnlData_TClassManip(TClass* ){
+   }
+
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventAnlStore(void *p = 0);
+   static void *newArray_EventAnlStore(Long_t size, void *p);
+   static void delete_EventAnlStore(void *p);
+   static void deleteArray_EventAnlStore(void *p);
+   static void destruct_EventAnlStore(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventAnlStore*)
+   {
+      ::EventAnlStore *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventAnlStore >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventAnlStore", ::EventAnlStore::Class_Version(), "EventAnlStore.h", 28,
+                  typeid(::EventAnlStore), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventAnlStore::Dictionary, isa_proxy, 4,
+                  sizeof(::EventAnlStore) );
+      instance.SetNew(&new_EventAnlStore);
+      instance.SetNewArray(&newArray_EventAnlStore);
+      instance.SetDelete(&delete_EventAnlStore);
+      instance.SetDeleteArray(&deleteArray_EventAnlStore);
+      instance.SetDestructor(&destruct_EventAnlStore);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventAnlStore*)
+   {
+      return GenerateInitInstanceLocal((::EventAnlStore*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventAnlStore*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_AidaHitPID(void *p = 0);
+   static void *newArray_AidaHitPID(Long_t size, void *p);
+   static void delete_AidaHitPID(void *p);
+   static void deleteArray_AidaHitPID(void *p);
+   static void destruct_AidaHitPID(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::AidaHitPID*)
+   {
+      ::AidaHitPID *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::AidaHitPID >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("AidaHitPID", ::AidaHitPID::Class_Version(), "EventCorrelProc.h", 43,
+                  typeid(::AidaHitPID), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::AidaHitPID::Dictionary, isa_proxy, 4,
+                  sizeof(::AidaHitPID) );
+      instance.SetNew(&new_AidaHitPID);
+      instance.SetNewArray(&newArray_AidaHitPID);
+      instance.SetDelete(&delete_AidaHitPID);
+      instance.SetDeleteArray(&deleteArray_AidaHitPID);
+      instance.SetDestructor(&destruct_AidaHitPID);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::AidaHitPID*)
+   {
+      return GenerateInitInstanceLocal((::AidaHitPID*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::AidaHitPID*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventCorrelProc(void *p = 0);
+   static void *newArray_EventCorrelProc(Long_t size, void *p);
+   static void delete_EventCorrelProc(void *p);
+   static void deleteArray_EventCorrelProc(void *p);
+   static void destruct_EventCorrelProc(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventCorrelProc*)
+   {
+      ::EventCorrelProc *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventCorrelProc >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventCorrelProc", ::EventCorrelProc::Class_Version(), "EventCorrelProc.h", 92,
+                  typeid(::EventCorrelProc), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventCorrelProc::Dictionary, isa_proxy, 4,
+                  sizeof(::EventCorrelProc) );
+      instance.SetNew(&new_EventCorrelProc);
+      instance.SetNewArray(&newArray_EventCorrelProc);
+      instance.SetDelete(&delete_EventCorrelProc);
+      instance.SetDeleteArray(&deleteArray_EventCorrelProc);
+      instance.SetDestructor(&destruct_EventCorrelProc);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventCorrelProc*)
+   {
+      return GenerateInitInstanceLocal((::EventCorrelProc*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventCorrelProc*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventAnlProc(void *p = 0);
+   static void *newArray_EventAnlProc(Long_t size, void *p);
+   static void delete_EventAnlProc(void *p);
+   static void deleteArray_EventAnlProc(void *p);
+   static void destruct_EventAnlProc(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventAnlProc*)
+   {
+      ::EventAnlProc *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventAnlProc >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventAnlProc", ::EventAnlProc::Class_Version(), "EventAnlProc.h", 45,
+                  typeid(::EventAnlProc), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventAnlProc::Dictionary, isa_proxy, 4,
+                  sizeof(::EventAnlProc) );
+      instance.SetNew(&new_EventAnlProc);
+      instance.SetNewArray(&newArray_EventAnlProc);
+      instance.SetDelete(&delete_EventAnlProc);
+      instance.SetDeleteArray(&deleteArray_EventAnlProc);
+      instance.SetDestructor(&destruct_EventAnlProc);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventAnlProc*)
+   {
+      return GenerateInitInstanceLocal((::EventAnlProc*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventAnlProc*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+namespace ROOT {
+   static void *new_EventCorrelStore(void *p = 0);
+   static void *newArray_EventCorrelStore(Long_t size, void *p);
+   static void delete_EventCorrelStore(void *p);
+   static void deleteArray_EventCorrelStore(void *p);
+   static void destruct_EventCorrelStore(void *p);
+
+   // Function generating the singleton type initializer
+   static TGenericClassInfo *GenerateInitInstanceLocal(const ::EventCorrelStore*)
+   {
+      ::EventCorrelStore *ptr = 0;
+      static ::TVirtualIsAProxy* isa_proxy = new ::TInstrumentedIsAProxy< ::EventCorrelStore >(0);
+      static ::ROOT::TGenericClassInfo 
+         instance("EventCorrelStore", ::EventCorrelStore::Class_Version(), "EventCorrelStore.h", 21,
+                  typeid(::EventCorrelStore), ::ROOT::Internal::DefineBehavior(ptr, ptr),
+                  &::EventCorrelStore::Dictionary, isa_proxy, 4,
+                  sizeof(::EventCorrelStore) );
+      instance.SetNew(&new_EventCorrelStore);
+      instance.SetNewArray(&newArray_EventCorrelStore);
+      instance.SetDelete(&delete_EventCorrelStore);
+      instance.SetDeleteArray(&deleteArray_EventCorrelStore);
+      instance.SetDestructor(&destruct_EventCorrelStore);
+      return &instance;
+   }
+   TGenericClassInfo *GenerateInitInstance(const ::EventCorrelStore*)
+   {
+      return GenerateInitInstanceLocal((::EventCorrelStore*)0);
+   }
+   // Static variable to force the class initialization
+   static ::ROOT::TGenericClassInfo *_R__UNIQUE_DICT_(Init) = GenerateInitInstanceLocal((const ::EventCorrelStore*)0x0); R__UseDummy(_R__UNIQUE_DICT_(Init));
+} // end of namespace ROOT
+
+//______________________________________________________________________________
+atomic_TClass_ptr AidaEvent::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *AidaEvent::Class_Name()
+{
+   return "AidaEvent";
+}
+
+//______________________________________________________________________________
+const char *AidaEvent::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AidaEvent*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int AidaEvent::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AidaEvent*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *AidaEvent::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AidaEvent*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *AidaEvent::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AidaEvent*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr AidaHit::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *AidaHit::Class_Name()
+{
+   return "AidaHit";
+}
+
+//______________________________________________________________________________
+const char *AidaHit::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AidaHit*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int AidaHit::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AidaHit*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *AidaHit::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AidaHit*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *AidaHit::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AidaHit*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr AidaScaler::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *AidaScaler::Class_Name()
+{
+   return "AidaScaler";
+}
+
+//______________________________________________________________________________
+const char *AidaScaler::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AidaScaler*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int AidaScaler::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AidaScaler*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *AidaScaler::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AidaScaler*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *AidaScaler::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AidaScaler*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr AIDA_Event::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *AIDA_Event::Class_Name()
+{
+   return "AIDA_Event";
+}
+
+//______________________________________________________________________________
+const char *AIDA_Event::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AIDA_Event*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int AIDA_Event::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::AIDA_Event*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *AIDA_Event::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AIDA_Event*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *AIDA_Event::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::AIDA_Event*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr EventUnpackStore::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *EventUnpackStore::Class_Name()
+{
+   return "EventUnpackStore";
+}
+
+//______________________________________________________________________________
+const char *EventUnpackStore::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::EventUnpackStore*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int EventUnpackStore::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::EventUnpackStore*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *EventUnpackStore::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::EventUnpackStore*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *EventUnpackStore::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::EventUnpackStore*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr CalibParameter::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *CalibParameter::Class_Name()
+{
+   return "CalibParameter";
+}
+
+//______________________________________________________________________________
+const char *CalibParameter::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::CalibParameter*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int CalibParameter::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::CalibParameter*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *CalibParameter::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::CalibParameter*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *CalibParameter::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::CalibParameter*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr CorrelParameter::fgIsA(0);  // static to hold class pointer
+
+//______________________________________________________________________________
+const char *CorrelParameter::Class_Name()
+{
+   return "CorrelParameter";
+}
+
+//______________________________________________________________________________
+const char *CorrelParameter::ImplFileName()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::CorrelParameter*)0x0)->GetImplFileName();
+}
+
+//______________________________________________________________________________
+int CorrelParameter::ImplFileLine()
+{
+   return ::ROOT::GenerateInitInstanceLocal((const ::CorrelParameter*)0x0)->GetImplFileLine();
+}
+
+//______________________________________________________________________________
+TClass *CorrelParameter::Dictionary()
+{
+   fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::CorrelParameter*)0x0)->GetClass();
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+TClass *CorrelParameter::Class()
+{
+   if (!fgIsA.load()) { R__LOCKGUARD(gInterpreterMutex); fgIsA = ::ROOT::GenerateInitInstanceLocal((const ::CorrelParameter*)0x0)->GetClass(); }
+   return fgIsA;
+}
+
+//______________________________________________________________________________
+atomic_TClass_ptr TFRSParameter::fgIsA(0);  // static to hold class pointer

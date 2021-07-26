@@ -1,0 +1,113 @@
+#MWPC Parameters
+#
+#MWPC X Factors
+#
+mw->x_factor[0]: 5
+mw->x_factor[1]: 0.25
+mw->x_factor[2]: 0.25
+mw->x_factor[3]: 0.25
+mw->x_factor[4]: 0.25
+mw->x_factor[5]: 0.25
+mw->x_factor[6]: 0.25
+mw->x_factor[7]: 0.125
+#
+#MWPC X Offsets
+#
+mw->x_offset[0]: 5.0
+mw->x_offset[1]: -2.0
+mw->x_offset[2]: -1.5
+mw->x_offset[3]: 5.0
+mw->x_offset[4]: -0.205
+mw->x_offset[5]:  1.642
+mw->x_offset[6]: 1
+mw->x_offset[7]: -5
+#
+#MWPC Y Factors
+#
+mw->y_factor[0]: 0.25
+mw->y_factor[1]: 0.25
+mw->y_factor[2]: 0.25
+mw->y_factor[3]: 0.25
+mw->y_factor[4]: 0.25
+mw->y_factor[5]: 0.25
+mw->y_factor[6]: 0.25
+mw->y_factor[7]: 0.125
+#
+#MWPC Y Offsets
+#
+ mw->y_offset[0] = -14.0;  
+  mw->y_offset[1] = 21.0;   
+  mw->y_offset[2] = -1.0;   
+  mw->y_offset[3] = -14.0;   
+  mw->y_offset[4] = 0.0;     
+  mw->y_offset[5] = -2.736; 
+  mw->y_offset[6] = 3.2;     
+  mw->y_offset[7] = 0.764;  
+#
+#MWPC TDC Gains
+#
+  mw->gain_tdc[0][0] = 0.302929; 
+  mw->gain_tdc[1][0] = 0.303253; 
+  mw->gain_tdc[2][0] = 0.303975; 
+  mw->gain_tdc[3][0] = 0.308414; 
+  mw->gain_tdc[4][0] = 0.309826; 
+  mw->gain_tdc[0][1] = 0.306064; 
+  mw->gain_tdc[1][1] = 0.306958; 
+  mw->gain_tdc[2][1] = 0.307799; 
+  mw->gain_tdc[3][1] = 0.297774; 
+  mw->gain_tdc[4][1] = 0.310235; 
+  mw->gain_tdc[0][2] = 0.301179;  
+  mw->gain_tdc[1][2] = 0.311121; 
+  mw->gain_tdc[2][2] = 0.303233; 
+  mw->gain_tdc[3][2] = 0.300558; 
+  mw->gain_tdc[4][2] = 0.301105; 
+  mw->gain_tdc[0][3] = 0.304426; 
+  mw->gain_tdc[1][3] = 0.312163;
+  mw->gain_tdc[2][3] = 0.305609;
+  mw->gain_tdc[3][3] = 0.304716;
+  mw->gain_tdc[4][3] = 0.293695;
+  mw->gain_tdc[0][4] = 0.298871; 
+  mw->gain_tdc[1][4] = 0.284086;
+  mw->gain_tdc[2][4] = 0.288656; 
+  mw->gain_tdc[3][4] = 0.286589; 
+  mw->gain_tdc[4][4] = 0.29269;  
+  mw->gain_tdc[0][5] = 0.297881; 
+  mw->gain_tdc[1][5] = 0.287364; 
+  mw->gain_tdc[2][5] = 0.289636; 
+  mw->gain_tdc[3][5] = 0.291135; 
+  mw->gain_tdc[4][5] = 0.289867; 
+  mw->gain_tdc[0][6] = 0.307892; 
+  mw->gain_tdc[1][6] = 0.289894; 
+  mw->gain_tdc[2][6] = 0.292366; 
+  mw->gain_tdc[3][6] = 0.284708; 
+  mw->gain_tdc[4][6] = 0.28186;  
+  mw->gain_tdc[0][7] = 0.298266; 
+  mw->gain_tdc[1][7] = 0.311; 
+  mw->gain_tdc[2][7] = 0.305;
+  mw->gain_tdc[3][7] = 0.337; 
+  mw->gain_tdc[4][7] = 0.289; 
+  mw->gain_tdc[0][8] = 0.303602;
+  mw->gain_tdc[1][8] = 0.300082; 
+  mw->gain_tdc[2][8] = 0.286092; 
+  mw->gain_tdc[3][8] = 0.294287; 
+  mw->gain_tdc[4][8] = 0.291341; 
+  mw->gain_tdc[0][9] = 0.306041; 
+  mw->gain_tdc[1][9] = 0.288468; 
+  mw->gain_tdc[2][9] = 0.293831; 
+  mw->gain_tdc[3][9] = 0.281296; 
+  mw->gain_tdc[4][9] = 0.279099; 
+  mw->gain_tdc[0][10] = 0.31314;  
+  mw->gain_tdc[1][10] = 0.287279; 
+  mw->gain_tdc[2][10] = 0.284028; 
+  mw->gain_tdc[3][10] = 0.28051;  
+  mw->gain_tdc[4][10] = 0.28743;  
+  mw->gain_tdc[0][11] = 0.299973; 
+  mw->gain_tdc[1][11] = 0.311; 
+  mw->gain_tdc[2][11] = 0.305; 
+  mw->gain_tdc[3][11] = 0.337; 
+  mw->gain_tdc[4][11] = 0.289; 
+  mw->gain_tdc[0][12] = 0.306923; 
+  mw->gain_tdc[1][12] = 0.311; 
+  mw->gain_tdc[2][12] = 0.305;
+  mw->gain_tdc[3][12] = 0.337;
+  mw->gain_tdc[4][12] = 0.289; 
