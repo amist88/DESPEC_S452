@@ -858,7 +858,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
 
          if(RAW->get_FAT_TDC_id(i) > -1 ){
              
-             ///Remove Additional Channels
+             ///Remove Additional Channels. This is messy...
           if(RAW->get_FAT_TDC_id(i) !=  FatVME_TimeMachineCh2 && RAW->get_FAT_TDC_id(i) != FatVME_TimeMachineCh1 && RAW->get_FAT_TDC_id(i) != SC41L_FatVME && RAW->get_FAT_TDC_id(i) != SC41R_FatVME && RAW->get_FAT_TDC_id(i) != SC41L_FatVME_Digi && RAW->get_FAT_TDC_id(i) != SC41R_FatVME_Digi && RAW->get_FAT_TDC_id(i) != FatVME_bPlast_MASTER && RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh &&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+1&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+2&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+3&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+4&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StartCh+5&&RAW->get_FAT_TDC_id(i) !=FatVME_bPlast_StopCh){
            
              fOutput->fFat_TDC_Singles_t[singlestdcmult] = RAW->get_FAT_TDC_timestamp(i);
@@ -1103,7 +1103,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
          for (int i=fOutput->fGe_fired; i<RAW->get_Germanium_am_Fired() && i < Germanium_MAX_HITS; i++){
                 fOutput->fGe_Detector[i] =  RAW->get_Germanium_Det_id(i);
                 fOutput->fGe_Crystal[i] =  RAW->get_Germanium_Crystal_id(i);
-                fOutput->fGe_E[i] = RAW->get_Germanium_Chan_E(i);
+                fOutput->fGe_E[i] = RAW->get_Germanium_Chan_E(i)/100;
                 fOutput->fGe_T[i] = RAW->get_Germanium_Chan_T(i);
                 fOutput->fGe_cfT[i] = RAW->get_Germanium_Channel_cf(i);
     
