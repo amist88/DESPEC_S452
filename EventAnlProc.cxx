@@ -2253,7 +2253,7 @@ if(Fatmult > 0){
         
         for(int k = 0; k < SC41mult; k++){
             
-            pOutput->pSC41ki] = SC41[k];    
+            pOutput->pSC41[k] = SC41[k];    
             
         }//End sc41 for fill        
     }     
