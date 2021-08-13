@@ -2245,15 +2245,15 @@ if(Fatmult > 0){
       pOutput->pSC40mult =  SC40mult;
       pOutput->pSC41mult =  SC41mult; 
  
-        for(int i = 0; i < SC40mult; i++){
+        for(int k = 0; k < SC40mult; k++){
             
-            pOutput->pSC40[i] = SC40[i];    
+            pOutput->pSC40[k] = SC40[k];    
             
         }//End sc40 for fill
         
-        for(int i = 0; i < SC41mult; i++){
+        for(int k = 0; k < SC41mult; k++){
             
-            pOutput->pSC41[i] = SC41[i];    
+            pOutput->pSC41ki] = SC41[k];    
             
         }//End sc41 for fill        
     }     
@@ -2338,6 +2338,9 @@ if(Fatmult > 0){
         {
           hGe_Chan_E[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_1keV/Germanium_E_Det_%2d_%1d",i, j), Form("Germanium Channel Energy Detector %2d Crystal %1d",i, j),5000,0,5000);
           
+          hGe_ERaw[i][j]= MakeTH1('D',Form("Germanium/Raw/Germanium_ERaw_Det_%2d_%1d",i, j), Form("Germanium Channel Energy Detector %2d Crystal %1d",i, j),200000,0,100000);
+          
+          
           hGe_Chan_E_halfkev[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_0_5keV/Germanium_E_0_5keV_Det_%2d_%1d",i, j), Form("Germanium Channel 0.5keV Energy Detector %2d Crystal %1d",i, j),10000,0,5000);
           
           hGe_Chan_Time_Diff[i][j] = MakeTH1('D',Form("Germanium/Time_diff/Germanium_Chan_Time_Diff_Det_%2d_Chan_%2d",i,j), Form("Germanium Channel Time Difference for Detector %2d Channel %2d",i,j),200,-1000,1000);
@@ -2405,8 +2408,8 @@ if(Fatmult > 0){
            pOutput->pGe_E[det][crys] = GeE_Cal[i];
            pOutput->pGe_E_Raw[det][crys] = GeE[i];
   
-          
-         
+           hGe_ERaw[det][crys]->Fill(GeE[i]);
+        
          
            if(det!=Germanium_SC41_Det  && det!=Germanium_SC41_Det_Digi && det!=Germanium_TimeMachine_Det){
            hGe_ESum->Fill(GeE_Cal[i]);

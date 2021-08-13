@@ -1,0 +1,34 @@
+{ decls }
+namespace std {  }
+
+[ libGo4UserAnalysis.so ]
+# List of selected classes
+class AIDA_Event
+class AidaAnlData
+class AidaEvent
+class AidaHit
+class AidaHitPID
+class AidaScaler
+class AidaUnpackData
+class CalibParameter
+class CorrelParameter
+class DESPECAnalysis
+class EventAnlProc
+class EventAnlStore
+class EventCorrelProc
+class EventCorrelStore
+class EventUnpackFact
+class EventUnpackProc
+class EventUnpackStore
+class FRS_Detector_System
+class Map1
+class TFRSParameter
+class TIDParameter
+class TMRTOFMSParameter
+class TMUSICParameter
+class TMWParameter
+class TSCIParameter
+class TSIParameter
+class TTPCParameter
+class vector<AidaAnlData>
+class vector<AidaScaler>

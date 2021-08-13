@@ -562,6 +562,7 @@ class EventAnlProc : public TGo4EventProcessor {
 
             ///Germanium Histograms
             TH1 *hGe_Chan_E[Germanium_MAX_DETS][Germanium_CRYSTALS];
+            TH1 *hGe_ERaw[Germanium_MAX_DETS][Germanium_CRYSTALS];
             TH1 *hGe_Chan_E_halfkev[Germanium_MAX_DETS][Germanium_CRYSTALS];
             //TH1 *hGe_Chan_E2;
             TH1 *hGe_Chan_Egate;
