@@ -1103,7 +1103,7 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
          for (int i=fOutput->fGe_fired; i<RAW->get_Germanium_am_Fired() && i < Germanium_MAX_HITS; i++){
                 fOutput->fGe_Detector[i] =  RAW->get_Germanium_Det_id(i);
                 fOutput->fGe_Crystal[i] =  RAW->get_Germanium_Crystal_id(i);
-                fOutput->fGe_E[i] = RAW->get_Germanium_Chan_E(i)/100;
+                fOutput->fGe_E[i] = RAW->get_Germanium_Chan_E(i);
                 fOutput->fGe_T[i] = RAW->get_Germanium_Chan_T(i);
                 fOutput->fGe_cfT[i] = RAW->get_Germanium_Channel_cf(i);
     

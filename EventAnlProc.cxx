@@ -2336,16 +2336,15 @@ if(Fatmult > 0){
       {
         for (int j = 0; j < Germanium_CRYSTALS; j++)
         {
-          hGe_Chan_E[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_1keV/Germanium_E_Det_%2d_%1d",i, j), Form("Germanium Channel Energy Detector %2d Crystal %1d",i, j),5000,0,5000);
+          hGe_Chan_E[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_1keV/Germanium_E_Det_%1d_%1d",i, j), Form("Germanium Channel Energy Detector %1d Crystal %1d",i, j),5000,0,5000);
           
-          hGe_ERaw[i][j]= MakeTH1('D',Form("Germanium/Raw/Germanium_ERaw_Det_%2d_%1d",i, j), Form("Germanium Channel Energy Detector %2d Crystal %1d",i, j),200000,0,100000);
+          hGe_ERaw[i][j]= MakeTH1('D',Form("Germanium/Raw/Germanium_ERaw_Det_%1d_%1d",i, j), Form("Germanium Channel Energy Detector %1d Crystal %1d",i, j),20000,0,10000);
           
+          hGe_Chan_E_halfkev[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_0_5keV/Germanium_E_0_5keV_Det_%1d_%1d",i, j), Form("Germanium Channel 0.5keV Energy Detector %1d Crystal %1d",i, j),10000,0,5000);
           
-          hGe_Chan_E_halfkev[i][j] = MakeTH1('D',Form("Germanium/Energy_Ch_0_5keV/Germanium_E_0_5keV_Det_%2d_%1d",i, j), Form("Germanium Channel 0.5keV Energy Detector %2d Crystal %1d",i, j),10000,0,5000);
+          hGe_Chan_Time_Diff[i][j] = MakeTH1('D',Form("Germanium/Time_diff/Germanium_Chan_Time_Diff_Det_%1d_Chan_%1d",i,j), Form("Germanium Channel Time Difference for Detector %1d Channel %1d",i,j),200,-1000,1000);
           
-          hGe_Chan_Time_Diff[i][j] = MakeTH1('D',Form("Germanium/Time_diff/Germanium_Chan_Time_Diff_Det_%2d_Chan_%2d",i,j), Form("Germanium Channel Time Difference for Detector %2d Channel %2d",i,j),200,-1000,1000);
-          
-          hGe_Chan_Time_Diff_CF[i][j] = MakeTH1('D',Form("Germanium/Time_diff_CF/Germanium_Chan_Time_CF_Diff_Det_%2d_Chan_%2d",i,j), Form("Germanium Channel Time Difference with Const Frac for Detector %2d Channel %2d",i,j),2000,-1000,1000);
+          hGe_Chan_Time_Diff_CF[i][j] = MakeTH1('D',Form("Germanium/Time_diff_CF/Germanium_Chan_Time_CF_Diff_Det_%1d_Chan_%1d",i,j), Form("Germanium Channel Time Difference with Const Frac for Detector %1d Channel %1d",i,j),2000,-1000,1000);
           
           
         }
