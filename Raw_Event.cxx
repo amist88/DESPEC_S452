@@ -622,25 +622,78 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //-------------------------------------- FATIMA TAMEX  ------------------------------------------------//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,double** Edge_fine_fat,UInt** ch_ed_fat,double* Coarse_Trigger_fat,double* Fine_Trigger_fat,int amount_hit_tamex_fat, int** Lead_Arr_fat){
+void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,double** Edge_fine_fat,UInt** ch_ed_fat,double* Coarse_Trigger_fat,double* Fine_Trigger_fat,int amount_hit_tamex_fat, int** Lead_Arr_fat, uint** Epoch_data_ch_leading, uint** Epoch_data_ch_trailing){
 
+    uint  epoch_lead_first=0;
+    uint epoch_lead_diff = 0;
+    uint  epoch_trail_first=0;
+    uint epoch_trail_diff = 0;
     this->amount_hit_tamex_fat = amount_hit_tamex_fat;
     //reset lead and trail hits
-    for(int i = 0;i < amount_hit_tamex;i++){
+    for(int i = 0;i < 4;i++){
         iterator_fat[i] = 0;
         for(int j = 0;j < 100;j++){
             leading_hits_ch_fat[i][j] = 0;
             trailing_hits_ch_fat[i][j] = 0;
             leading_array_fat[i][j] = 0;
-//             coarse_T_edge_lead_fat[i][j] = 0;
-//             fine_T_edge_lead_fat[i][j] = 0;
+             coarse_T_edge_lead_fat[i][j] = 0;
+             fine_T_edge_lead_fat[i][j] = 0;
+             coarse_T_edge_trail_fat[i][j] = 0;
+             fine_T_edge_trail_fat[i][j] = 0;
+          
         }
     }
 
     //loop over all 4 tamex modules
-  
     for(int i = 0;i < amount_hit_tamex_fat;i++){
-       if(i<4){
+     for(int j = 0;j < it_fat[i];++j){
+         ///Lead epoch min
+            if(ch_ed_fat[i][j] <33 && j % 2 == 0){
+               //cout<<"epoch_lead_first " <<epoch_lead_first << " Epoch_data_ch_leading[i][j] " <<Epoch_data_ch_leading[i][j] << "i " <<i << " j " << j << endl;
+                
+               if(epoch_lead_first==0)  epoch_lead_first= Epoch_data_ch_leading[i][j];
+                if(epoch_lead_first> Epoch_data_ch_leading[i][j]){
+
+                    epoch_lead_first= Epoch_data_ch_leading[i][j];
+    
+                }
+//                  cout<<"Epoch_data_ch_leading[i][j] " <<Epoch_data_ch_leading[i][j] << endl;
+//                 if(epoch_lead>Epoch_data_ch_leading[i][j]){
+//                      epoch_lead= Epoch_data_ch_leading[i][j];
+//                     
+                }
+                 ///Trail epoch min
+                 
+                  //cout<<"0 epoch_trail_first " << epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j] << " i " << i << " j " << j <<" ch_ID_fat[i][j] " <<ch_ed_fat[i][j] <<  endl;
+                  
+                      if(ch_ID_fat[i][j] >33 && j % 2 == 1 ){
+               
+                
+               if(epoch_trail_first==0) { epoch_trail_first= Epoch_data_ch_trailing[i][j];
+                   
+                   
+                  // cout<<"1 epoch_trail_first " <<epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j] << " ch_ed_fat[i][j] " <<ch_ed_fat[i][j] << " i " << i << " j " << j <<  endl;
+               }
+             //  cout<<"2 epoch_trail_first " << epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j]<<" ch_ed_fat[i][j] " << ch_ed_fat[i][j]  << " i " << i << " j " << j << endl;
+               
+                if(epoch_trail_first> Epoch_data_ch_trailing[i][j] &&Epoch_data_ch_trailing[i][j]!=0 ){
+
+                    epoch_trail_first= Epoch_data_ch_trailing[i][j];
+    // cout<<"3 epoch_trail_first " <<epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j] <<" i " <<i << " j " << j <<   endl;
+                }
+//                  cout<<"Epoch_data_ch_leading[i][j] " <<Epoch_data_ch_leading[i][j] << endl;
+//                 if(epoch_lead>Epoch_data_ch_leading[i][j]){
+//                      epoch_lead= Epoch_data_ch_leading[i][j];
+//                     
+                }
+                
+            }
+         }
+       
+    
+//     cout<<"max_epoch_lead " <<max_epoch_lead << endl;
+    for(int i = 0;i < amount_hit_tamex_fat;i++){
+        if(i<4){
         iterator_fat[i] = it_fat[i];
         trigger_coarse_fat[i] = Coarse_Trigger_fat[i];
         trigger_fine_fat[i] = Fine_Trigger_fat[i];
@@ -648,38 +701,67 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
         leading_hits_fat[i] = 0;
         trailing_hits_fat[i] = 0;
 
-        for(int j = 0;j < 100;++j){
-            //cout<<"i " << i <<" j " << j << endl;
+        
+        
+        for(int j = 0;j < iterator_fat[i];++j){
+            
+           // cout<<"RAW i " << i << " j " << j << endl;
             ch_ID_fat[i][j] = ch_ed_fat[i][j];
             leading_array_fat[i][j] = Lead_Arr_fat[i][j];
-         //   cout<<"ch_ID_fat[i][j] " <<ch_ID_fat[i][j] << " i " << i << " j " << j << " j % 2 " <<j % 2 << endl;
-            
+        
+            ///This is for leads 
             if(ch_ID_fat[i][j] <33 && j % 2 == 0){
+                epoch_ch_leading[i][j] = Epoch_data_ch_leading[i][j];
+                epoch_lead_diff = (epoch_ch_leading[i][j]-epoch_lead_first);
 
                 coarse_T_edge_lead_fat[i][j] = (double) Edge_Coarse_fat[i][j];
+                
+                //coarse_T_edge_lead_fat[i][j] = (double) Edge_Coarse_fat[i][j]+(epoch_lead_diff*10240/5);
                 fine_T_edge_lead_fat[i][j] = (double) Edge_fine_fat[i][j];
-
+              
+              //  if(epoch_lead_diff>1 )cout<<"epoch_lead_diff " <<epoch_lead_diff << " Edge_Coarse_fat[i][j] " <<Edge_Coarse_fat[i][j] << " coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] << " i " << i << " j " << j << endl;
+            // if(epoch_lead_first>0) cout<<"2 LEAD FIRST EPOCH  " << epoch_lead_first <<" epoch_ch_leading[i][j] " << epoch_ch_leading[i][j] << " epoch_lead_diff " <<epoch_lead_diff <<" i " << i << " j " << j <<" Edge_Coarse_fat[i][j] " << Edge_Coarse_fat[i][j] << endl;
+           
                 phys_channel_fat[i][j] = (ch_ID_fat[i][j]);
-           // cout <<"LEAD RAW Ch " << ch_ID_fat[i][j] <<" phys_channel_fat[i][j] " << phys_channel_fat[i][j]<<" coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] <<" fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] <<" i " << i << " j " << j <<   endl;
+          
+               // cout<<"coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j]  " <<fine_T_edge_lead_fat[i][j] <<" diff "<<coarse_T_edge_lead_fat[i][j]- fine_T_edge_lead_fat[i][j]<< " i " << i << " j " << j << endl;
+                
                 leading_hits_fat[i]++;
                 leading_hits_ch_fat[i][phys_channel_fat[i][j]]++;
-                  // cout <<"RAW Lead" << "coarse_T_edge_lead_fat[i][j] " << coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] <<" phys_channel_fat[i][j] " <<phys_channel_fat[i][j]<< " i " << i << " j " << j << endl;
+                
+             // cout <<"3 RAW Lead coarse_T " << coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] << " i " << i << " j " << j << " lead hits " << leading_hits_ch_fat[i][phys_channel_fat[i][j]]<<" phys chan " << phys_channel_fat[i][j] << endl;
                  }
+                 
+                 
+                 
+                 
+                 //---------------TRAIL---------------//
             if(ch_ID_fat[i][j] >33 && j % 2 == 1 ){
-
+                
+                epoch_ch_trailing[i][j] = Epoch_data_ch_trailing[i][j];
+                epoch_trail_diff = (epoch_ch_trailing[i][j]-epoch_trail_first);
+                //if (epoch_trail_diff>1)cout<<" epoch_trail_diff " <<epoch_trail_diff << " coarse_T_edge_trail_fat[i][j] " << " Edge_Coarse_fat[i][j] " <<Edge_Coarse_fat[i][j] << " i " << i << i << " j " << j << endl;
                 coarse_T_edge_trail_fat[i][j] = (double)  Edge_Coarse_fat[i][j];
+                
+              //  coarse_T_edge_trail_fat[i][j] = (double)  Edge_Coarse_fat[i][j]+(epoch_trail_diff*10240/5);
+                
+              //if(epoch_trail_first>0) cout<<"2 TRAIL FIRST EPOCH  " << epoch_trail_first <<" epoch_ch_trailing[i][j] " << epoch_ch_trailing[i][j] << " epoch_trail_diff " <<epoch_trail_diff <<" i " << i << " j " << j <<" Edge_Coarse_fat[i][j] " << Edge_Coarse_fat[i][j] << endl;
+                
                 fine_T_edge_trail_fat[i][j] =(double)  Edge_fine_fat[i][j];
 
+              
                 trailing_hits_fat[i]++;
                 phys_channel_fat[i][j] = (ch_ID_fat[i][j])-33;
+
 		if(phys_channel_fat[i][j]<100){
                 trailing_hits_ch_fat[i][phys_channel_fat[i][j]]++;
-		}
-               // cout <<"TRAIL RAW Ch " << ch_ID_fat[i][j] <<" phys_channel_fat[i][j] " << phys_channel_fat[i][j]<<" coarse_T_edge_trail_fat[i][j] " <<coarse_T_edge_trail_fat[i][j] <<" fine_T_edge_trail_fat[i][j] " <<fine_T_edge_trail_fat[i][j] <<" i " << i << " j " << j <<   endl;
-               //cout <<"RAW Trail" << "coarse_T_edge_trail_fat[i][j] " << coarse_T_edge_trail_fat[i][j] << " fine_T_edge_trail_fat[i][j] " <<fine_T_edge_trail_fat[i][j] << " i " << i << " j " << j << endl;
+		
+            
+              // cout <<"3 RAW Trail coarse_T "  << coarse_T_edge_trail_fat[i][j] << " fine_T_edge_trail_fat[i][j] " <<fine_T_edge_trail_fat[i][j] << " i " << i << " j " << j << " trail hits " << trailing_hits_ch_fat[i][phys_channel_fat[i][j]]<<" phys chan " << phys_channel_fat[i][j] << endl;
+                }
+            }
           }
         }
-    }
     }
 
     Event_Type = 3;
@@ -887,7 +969,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
     int Raw_Event::get_FATIMA_CH_ID(int i,int j){return ch_ID_fat[i][j];}
 
     double Raw_Event::get_FATIMA_lead_T(int i,int j){
-//         
+        // cout<<"HERE " << coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j] << " coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] << endl;
   
         return (coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j]);
         

@@ -70,6 +70,13 @@ struct TAMEX_ERROR
 
 };
 
+struct EPOCH
+{
+   unsigned int epoch_count : 28;
+   unsigned int reserve : 4;
+   
+};
+
 struct TAMEX_TRAILER
 {
     unsigned long empty     : 24;

@@ -225,7 +225,8 @@ private:
     double  fine_T_edge_lead_fat[4][100];
     double  fine_T_edge_trail_fat[4][100];
     bool    fired_tamex_fat[4];
-
+    UInt epoch_ch_leading[4][100];
+    UInt epoch_ch_trailing[4][100];
 
 	//bPlastic
 //  	PLASTIC_DataStruct PLASTIC_Data;
@@ -342,7 +343,7 @@ public:
                          ULong64_t*,double*,
                          ULong64_t*,double*,
                          int*,int*);
-    void set_DATA_FATIMA_TAMEX(int*,double**,double**,UInt**,double*,double*,int,int**);
+    void set_DATA_FATIMA_TAMEX(int*,double**,double**,UInt**,double*,double*,int,int**,uint**,uint**);
 
     void set_DATA_FINGER(int*,double**,double**,UInt**,double*,double*,int,int**);
 

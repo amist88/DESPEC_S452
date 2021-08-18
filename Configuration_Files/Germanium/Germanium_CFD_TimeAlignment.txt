@@ -1,21 +1,21 @@
 #ID is (Detector Num * Max Crystals) + Crystal
 #ID Offset: CFD Time alignment (one detector vs all)
 #Det, Crystal: 0,1 
-0  0
-1  0
-2  0
-3  0
-4  0
-5  0
-6  0
+0   -0.696647
+1   -4.80354
+2   -4.78761
+3   0.492415
+4   0
+5   0.0177597
+6   0.432855
 #Det, Crystal: 1,1 
-7   0
-8   0
-9   0
-10  0
-11  0
-12  0
-13  0
+7   -4.51873
+8   -5.97499
+9   -4.9481
+10   -5.98886
+11   0
+12   -3.73046
+13   -8.87663
 #End of cluster detectors
 14	0
 15	0
