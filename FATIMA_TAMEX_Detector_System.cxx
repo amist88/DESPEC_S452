@@ -39,6 +39,9 @@ FATIMA_TAMEX_Detector_System::FATIMA_TAMEX_Detector_System(){
     edge_fine = new double*[4];
     ch_ID_edge = new unsigned int*[4];
     
+    epoch_data_ch_leading = new unsigned int*[4];
+    epoch_data_ch_trailing = new unsigned int*[4];
+    
 //     edge_coarse_slow = new double*[4];
 //     edge_fine_slow = new double*[4];
 //     ch_ID_edge_slow = new unsigned int*[4];
@@ -47,6 +50,8 @@ FATIMA_TAMEX_Detector_System::FATIMA_TAMEX_Detector_System(){
         edge_coarse[o] = new double[100];
         edge_fine[o] = new double[100];
         ch_ID_edge[o] = new unsigned int[100];
+        epoch_data_ch_leading[o] = new unsigned int[100];
+        epoch_data_ch_trailing[o] = new unsigned int[100];
         
 //         edge_coarse_slow[o] = new double[100];
 //         edge_fine_slow[o] = new double[100];
@@ -65,7 +70,8 @@ FATIMA_TAMEX_Detector_System::~FATIMA_TAMEX_Detector_System(){
         delete[] edge_coarse[i];
         delete[] edge_fine[i];
         delete[] ch_ID_edge[i];
-        
+        delete[] epoch_data_ch_leading[i];
+        delete[] epoch_data_ch_trailing[i];
 //         delete[] edge_coarse_slow[i];
 //         delete[] edge_fine_slow[i];
 //         delete[] ch_ID_edge_slow[i];
@@ -77,7 +83,8 @@ FATIMA_TAMEX_Detector_System::~FATIMA_TAMEX_Detector_System(){
     delete[] edge_coarse;
     delete[] edge_fine;
     delete[] ch_ID_edge;
-
+    delete[] epoch_data_ch_leading;
+    delete[] epoch_data_ch_trailing;
 //     delete[] edge_coarse_slow;
 //     delete[] edge_fine_slow;
 //     delete[] ch_ID_edge_slow;
@@ -91,8 +98,8 @@ FATIMA_TAMEX_Detector_System::~FATIMA_TAMEX_Detector_System(){
 //---------------------------------------------------------------
 
 void FATIMA_TAMEX_Detector_System::get_Event_data(Raw_Event* RAW){
-    RAW->set_DATA_FATIMA_TAMEX(iterator,edge_coarse,edge_fine,ch_ID_edge,coarse_T,fine_T,tamex_iter,lead_arr);
-
+    RAW->set_DATA_FATIMA_TAMEX(iterator,edge_coarse,edge_fine,ch_ID_edge,coarse_T,fine_T,tamex_iter,lead_arr,epoch_data_ch_leading,epoch_data_ch_trailing);
+ //RAW->set_DATA_FATIMA_TAMEX(iterator,edge_coarse,edge_fine,ch_ID_edge,coarse_T,fine_T,tamex_iter,lead_arr);
 
 }
 
@@ -102,23 +109,26 @@ void FATIMA_TAMEX_Detector_System::Process_MBS(int* pdata){
 
    this->pdata = pdata;
    
-  // printf(" pdata 0x%08x\n", (unsigned int*) pdata); 
+ // printf(" pdata 0x%08x\n", (unsigned int*) pdata); 
 
     //reset old iterator array and old TAMEX data
     for(int i = 0;i < tamex_iter;i++) iterator[i] = 0;
+    //cout<<"RESET NOW " << endl;
     reset_edges();
     tamex_end = false;
     tamex_iter = 0;
+    data1=0;
 
     //loop over the complete TAMEX data of the subevent
     while(!tamex_end){
+       // cout<<"PROCESS NOW "<< endl;
         Process_TAMEX();
         if(!tamex_end) tamex_iter++;
         this->pdata++;
     }
 
     //true -> do "online" calibration and exit program
-    if(CALIBRATE) calibrate_ONLINE();
+    if(CALIBRATE) calibrate_ONLINE(); 
     //false -> do normal "offline" calibration
     else calibrate_OFFLINE();
 }
@@ -196,6 +206,9 @@ void FATIMA_TAMEX_Detector_System::Process_TAMEX(){
     if(am_fired[tamex_iter] > 3) get_edges();
     else no_edges[tamex_iter] = true;
 
+ //   get_epoch();
+    
+    
     //check errors
     //if(!no_edges[tamex_iter]) pdata++;
    // check_error();
@@ -254,6 +267,10 @@ void FATIMA_TAMEX_Detector_System::reset_edges(){
 //             edge_coarse_slow[i][j] = 131313;
 //             edge_fine_slow[i][j] = 131313;
 //             ch_ID_edge_slow[i][j] = 131313;
+            
+           
+            epoch_data_ch_leading[i][j]=0;
+             epoch_data_ch_trailing[i][j]=0;
         }
     }
 }
@@ -269,6 +286,19 @@ void FATIMA_TAMEX_Detector_System::get_edges(){
     written = false;
 
     while(no_error_reached()){
+        
+        ///Epoch extraction AM AB 
+//         printf("Data word pdata 0x%08x\n", (unsigned int*) *pdata);
+//          printf("1 pdata & 0xe0000000 0x%08x\n", (*pdata & 0xe0000000 )); 
+         if((*pdata & 0xe0000000)== 0x60000000) { 
+             EPOCH* epoch = (EPOCH*) pdata;
+            // printf("A pdata 0x%08x\n", *pdata); 
+           
+           epoch_data =0; 
+           epoch_data=(*pdata & 0xffffffff );
+            // cout<<"epoch_data " << epoch_data << " epoch_count " << epoch->epoch_count << " tamex_iter " <<tamex_iter<<" iterator[tamex_iter] " <<iterator[tamex_iter]  << endl;
+          
+         }
         
         //check place holder in stream
         PLACE_HOLDER* hold = (PLACE_HOLDER*) pdata;
@@ -292,53 +322,92 @@ void FATIMA_TAMEX_Detector_System::get_edges(){
         //next word
       
 
+        
         //extract data
         TAMEX_DATA* data = (TAMEX_DATA*) pdata;
-      //  printf(" pdata 0x%08x\n", (unsigned int*) pdata); 
+       // printf(" pdata 0x%08x\n", (unsigned int*) pdata); 
 //         cout<<"LEADING PDATA " << ((*pdata & 0x800) >> 11) << endl;
        
        // cout<<"data->leading_E " <<data->leading_E << "  data->coarse_T "<<(double) data->coarse_T<<" data->ch_ID "<<data->ch_ID << endl;
        
 //         cout<<"FAST EDGE " << data->leading_E << endl;
+        
+          
+           
+           
 //         leading_edge
+      // cout<<"1 data1 " << data1 <<" data->leading_E "<<data->leading_E<<endl;
+       if(data1!=data->leading_E){
+        data1=data->leading_E ;
+        
+//        if(data1<data->leading_E){
+//            data1=data->leading_E;
+//        }
+       // cout<<"2 data1 " << data1<<endl;
+        //cout<<"data->leading_E " <<data->leading_E  << endl;
             if(data->leading_E ==1 && tamex_iter<4){
             leading_hit=data->leading_E;
             edge_coarse[tamex_iter][iterator[tamex_iter]] = (double) data->coarse_T;
             edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
             ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID;
             lead_arr[tamex_iter][iterator[tamex_iter]] = (data->ch_ID % 2);
-     
-        // cout << "LEAD EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
+            
+         
+            epoch_data_ch_leading[tamex_iter][iterator[tamex_iter]] = epoch_data;
+          //   cout<<"1 Lead " << epoch_data_ch_leading[tamex_iter][iterator[tamex_iter]] << " tamex_iter " <<tamex_iter << "  iterator " <<iterator[tamex_iter]<<"  edge_coarse " << edge_coarse[tamex_iter][iterator[tamex_iter]] <<  " edge_fine " << edge_fine[tamex_iter][iterator[tamex_iter]] <<" chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<  endl;
+           // printf("Leading pdata 0x%08x\n", (unsigned int*) *pdata); 
+          //  cout<<"Leading tamex_iter " << tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] << " channel " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] << " epoch " << epoch_data_ch_leading[tamex_iter][iterator[tamex_iter]] << endl;
+            
         }
         
-//   if(data->leading_E ==1)  ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
-//   if(data->leading_E ==0)ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]=data->ch_ID;
-  // cout<<"ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]] " <<ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]] << " ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]] " <<ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]] << endl;
-      //   if(data->leading_E ==0 && ch_ID_edge_lead[tamex_iter][iterator[tamex_iter]]==ch_ID_edge_trail[tamex_iter][iterator[tamex_iter]]){
+
   if(data->leading_E ==0 && tamex_iter<4){
              
              leading_hit=data->leading_E;
               //cout<<"TRAIL EDGE " << data->leading_E << endl;
           //   cout<<"tamex_iter " << tamex_iter <<" iterator[tamex_iter] " <<iterator[tamex_iter] << endl;
+             
+             ///tamex_iter = board number
+             ///Lead iterator[tamex_iter]
         edge_coarse[tamex_iter][iterator[tamex_iter]] = (double) data->coarse_T;
+        
+        
         edge_fine[tamex_iter][iterator[tamex_iter]] = (double) data->fine_T;
         ch_ID_edge[tamex_iter][iterator[tamex_iter]] = data->ch_ID+MAX_CHA_INPUT;
         
-              //cout << "TRAIL EDGE " <<" leading_hit "<<leading_hit<< edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" tamex_iter " <<tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] <<  endl; 
+        epoch_data_ch_trailing[tamex_iter][iterator[tamex_iter]] = epoch_data;
+         
+       // cout<<"1 trail " << epoch_data_ch_trailing[tamex_iter][iterator[tamex_iter]] << " tamex_iter " <<tamex_iter << "  iterator " <<iterator[tamex_iter]<<"  edge_coarse " << edge_coarse[tamex_iter][iterator[tamex_iter]] <<  " edge_fine " << edge_fine[tamex_iter][iterator[tamex_iter]] << " chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] << endl;
+         //printf("Trailing pdata 0x%08x\n", (unsigned int*) *pdata); 
+          //  cout<<"Trailing tamex_iter " << tamex_iter << " iterator[tamex_iter] " <<iterator[tamex_iter] << " channel " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<" epoch " << epoch_data_ch_trailing[tamex_iter][iterator[tamex_iter]] <<  endl;
+        
+        
         }
+       }
 //        cout << "coarse " << edge_coarse[tamex_iter][iterator[tamex_iter]] << " fine " << edge_fine[tamex_iter][iterator[tamex_iter]]<< " Chan " << ch_ID_edge[tamex_iter][iterator[tamex_iter]] <<"  lead_arr[tamex_iter][iterator[tamex_iter]] " << lead_arr[tamex_iter][iterator[tamex_iter]] <<  endl;  
          
         iterator[tamex_iter]++;
-
+         
         written = true;
 
         //next word
         pdata++; 
+        
+        
         //pdata++; 
+        
        
     }
 }
-
+// void FATIMA_TAMEX_Detector_System::get_epoch(){
+//    
+//   //  while(no_error_reached()){
+//     EPOCH* epoch = (EPOCH*) pdata;
+//    
+//            cout<<"epoch test " << epoch-> epoch_count<<endl;
+//             //pdata++;
+//     //}            
+// }
 //---------------------------------------------------------------
 
 bool FATIMA_TAMEX_Detector_System::no_error_reached(){

@@ -33,6 +33,8 @@ private:
     int cal_count;
 
     int* pdata;
+    
+    UInt_t l_tdc_dat;
 
     int unknown;
     int increase;
@@ -65,6 +67,11 @@ private:
     double** edge_coarse;
     double** edge_fine;
     unsigned int** ch_ID_edge;
+    unsigned int** epoch_data_ch_leading;
+    unsigned int** epoch_data_ch_trailing;
+    
+     int data1;
+    
     
 //     unsigned int ch_ID_edge_lead[100][100];
 //     unsigned int ch_ID_edge_trail[100][100];
@@ -85,6 +92,7 @@ private:
     void Process_TAMEX();
     void calibrate_ONLINE();
     void calibrate_OFFLINE();
+   // void get_epoch();
 
     void get_Calib_type();
     void reset_edges();
@@ -112,6 +120,8 @@ public:
 
     void write(){return;};
     void set_Gain_Match_Filename(std::string){return;};
+    
+    unsigned int epoch_data;
 
 };
 

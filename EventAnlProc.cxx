@@ -1837,7 +1837,9 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
           hFat_tamex_hit_pattern =  MakeTH1('D', "FATIMA_TAMEX/Fatima_Hitpattern", "Fatima Hit pattern",48,0,48);  
           hFat_tamex_multiplicity =  MakeTH1('D', "FATIMA_TAMEX/Fatima_Multiplicity", "Fatima Multiplicity",48,0,48);
           
-           hFat_FRSFatTamdT_vs_ToT_ch11 = MakeTH2('D',"FATIMA_TAMEX/FRS-FATTAM_dT_LR_vs_SlowToT","",10000,-5000,200000,500,0,4000);
+           //hFat_FRSFatTamdT_vs_ToT_ch11 = MakeTH2('D',"FATIMA_TAMEX/FRS-FATTAM_dT_LR_vs_SlowToT","",10000,-5000,200000,500,0,4000);
+          
+          hFat_Lead_Lead_Fast_T=  MakeTH1('D', "FATIMA_TAMEX/Test_dT", "Fatima Hit pattern",1000,-105000,105000);  
  }
  
  
@@ -1859,6 +1861,8 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
                         ToT_fast_fat[i][j] = 0; 
                         lead_lead_slow_fat_Ref1[i][j]=0;
                         lead_lead_fast_fat_Ref1[i][j]=0;
+                        
+                       
 //                         SC41L_ANA_lead_fat[i][j] = 0;  
 //                         SC41R_ANA_lead_fat[i][j] = 0;  
 //                         SC41L_DIG_lead_fat[i][j] = 0;  
@@ -1873,6 +1877,7 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
          SC41R_ANA_lead_fat[i] =0;
          bPlasDet1_coin_lead_Fat[i] =0;
          bPlasDet2_coin_lead_Fat[i] =0;
+         lead_lead_fast_fat_onechan[i]=0;
          
          }
                 
@@ -1905,9 +1910,24 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
    
                 for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit 
 
-                    lead_fast_fat[i][j] = pInput->fFat_Lead_Fast[i][j];  
+                    lead_fast_fat[i][j] = pInput->fFat_Lead_Fast[i][j]; 
+                    
+//               if( pInput->fFat_Lead_Fast[i][j]>0)  cout<<"lead_fast_fat[i][j] " <<lead_fast_fat[i][j] << " i " << i <<  endl;
+                              if(lead_fast_fat[i][j]!=0 && lead_fast_fat[i][j]!=0) 
+		    {
+                              
+                      lead_lead_fast_fat_onechan[j] = (lead_fast_fat[8][j]-lead_fast_fat[3][j])*5;  
+                      
+//                       cout<<"lead_lead_fast_fat_onechan[j] " <<lead_lead_fast_fat_onechan[j] << " lead_fast_fat[i][j] " <<lead_fast_fat[i][j] << " lead_fast_fat[i+1][j] " <<lead_fast_fat[i+1][j] << endl;
+                      
+                      hFat_Lead_Lead_Fast_T->Fill(lead_lead_fast_fat_onechan[j]);
+		    }
 		    
-               if(lead_fast_fat[i][j]!=0)     hFat_Lead_Fast_T[i]->Fill(lead_fast_fat[i][j]);    
+               if(lead_fast_fat[i][j]!=0)  {
+                  // cout<<"i " << i << " j " << j << " lead_fast_fat[i][j] " << lead_fast_fat[i][j]<<endl;
+                  // hFat_Lead_Fast_T[i]->Fill(lead_fast_fat[i][j]);    
+                   
+               }
                     pOutput->pFat_Fast_LeadT[i][j] = lead_fast_fat[i][j];    
                     pOutput->pFat_LeadHits = hits_fat_lead; 
                      hits_fat_lead++;  
@@ -2027,60 +2047,55 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
     ///**---------------------Fatima Slow ToT ----------------------------------**/  
               for(int j=0; j< FATIMA_TAMEX_HITS; j++){ 
                  
-                // cout<< " pInput->fFat_Trail_PMT[i][j] " << pInput->fFat_Trail_PMT[i][j]<< " pInput->fFat_Lead_PMT[i][j] " <<pInput->fFat_Lead_PMT[i][j] <<" i " <<i << " j " << j << endl;
-                  if(pInput->fFat_Trail_Slow[i][j] >0 && pInput->fFat_Lead_Slow[i][j]>0){ 
+                if(pInput->fFat_Trail_Slow[i][j] >0 && pInput->fFat_Lead_Slow[i][j]>0){ 
                 
         ToT_slow_fat[i][j] = (pInput->fFat_Trail_Slow[i][j] - pInput->fFat_Lead_Slow[i][j]);   
           
                 ///Correction for overflows 
                 if(ABS(ToT_slow_fat[i][j]) >(double)(COARSE_CT_RANGE>>1)) {   
                     
-                       ToT_slow_fat[i][j] = CYCLE_TIME*(ToT_slow_fat[i][j] + COARSE_CT_RANGE);    
+                       ToT_slow_fat[i][j] = CYCLE_TIME*(ToT_slow_fat[i][j] + COARSE_CT_RANGE)*1E-2;  
+                       // cout<<"ThisCoarse clock happened" << endl;
                       } 
                  else{  
-                           ToT_slow_fat[i][j]= CYCLE_TIME*ToT_slow_fat[i][j];                         
+                           ToT_slow_fat[i][j]= CYCLE_TIME*ToT_slow_fat[i][j]*1E-2;   
+                          
                        }    
             ///Gain matching  (slow branch): I have to scale it
               
-       ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i-1] * pow(ToT_slow_fat[i][j]*0.01,3)+ fCal->Bfat_TAMEX[i-1] *pow(ToT_slow_fat[i][j]*0.01,2) + fCal->Cfat_TAMEX[i-1] *ToT_slow_fat[i][j]*0.01 + fCal->Dfat_TAMEX[i-1]);      
-       
+          // if(ToT_slow_fat[i][j]>1.5E4)   cout<<"4 ToT_slow_fat[i][j] " <<ToT_slow_fat[i][j] << " pInput->fFat_Trail_Slow[i][j] " <<pInput->fFat_Trail_Slow[i][j] << " pInput->fFat_Lead_Slow[i][j] " <<pInput->fFat_Lead_Slow[i][j] << " i " << i << " j " << j <<  endl;
               
-              //cout<<"ToT_slow_fat[i][j] " << ToT_slow_fat[i][j]<< endl;
-//                pOutput-> pFat_Slow_ToTCalib[i][j] =ToT_slow_fat[i][j];
-              // cout<<"ToT_slow_fat[i][j] " <<ToT_slow_fat[i][j] << " i " << i << " j " << j <<" pInput->fFat_Trail_Slow[i][j] " <<pInput->fFat_Trail_Slow[i][j] << " pInput->fFat_Lead_Slow[i][j] " <<pInput->fFat_Lead_Slow[i][j] << endl;
-//         cout<<"event " << pInput->fevent_number << " i " << i <<" j" << j << endl;
-//                             pOutput->pFat_Tamex_chan[j] = i;
-//                             cout<<"pOutput->pFat_Tamex_chan[j] " <<pOutput->pFat_Tamex_chan[j]<< " j " << j <<" ToT_slow_fat[i][j]*0.01 " <<ToT_slow_fat[i][j]*0.01 << endl;
+       ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i-1] * pow(ToT_slow_fat[i][j],3)+ fCal->Bfat_TAMEX[i-1] *pow(ToT_slow_fat[i][j],2) + fCal->Cfat_TAMEX[i-1] *ToT_slow_fat[i][j] + fCal->Dfat_TAMEX[i-1]);      
+    
+            pOutput-> pFat_Slow_ToTCalib[i][j] =ToT_slow_fat[i][j];
                        if(ToT_slow_fat[i][j]>0) {
-                          // if(i==1){
-//                            cout<<"event " << pInput->fevent_number << " i " << i <<" j" << j << endl;
-//                             pOutput->pFat_Tamex_chan[j] = i;
-//                             cout<<"pOutput->pFat_Tamex_chan[j] " <<pOutput->pFat_Tamex_chan[j]<< " j " << j <<" ToT_slow_fat[i][j]*0.01 " <<ToT_slow_fat[i][j]*0.01 << endl;
-                        hFat_ToT_Slow_det[i] ->Fill(ToT_slow_fat[i][j]*0.01); 
+                        
+                        hFat_ToT_Slow_det[i] ->Fill(ToT_slow_fat[i][j]); 
                         hFat_ToT_Slow_det_calib[i] ->Fill(ToT_slow_fat_calib[i][j]); 
-                          // }
+                          
                  if(i==11)   {  hFat_ToT_Slow_vs_Fast->Fill(ToT_slow_fat[11][j]*0.01,pOutput-> pFat_Fast_ToTCalib[11][j]*0.01);
              
                  }
                         
-        if(i!=FatVME_TimeMachineCh1 || i!=FatVME_TimeMachineCh2 || i!=FATIMA_TAMEX_SC41L || i!=FATIMA_TAMEX_SC41R || i!=FATIMA_TAMEX_SC41L_Digi || i!=FATIMA_TAMEX_SC41R_Digi){ //hFat_ToT_Slow_Sum->Fill(ToT_slow_fat[i][j]*0.01);  
-          //  hFat_ToT_Slow_Sum_Calib->Fill(ToT_slow_fat_calib[i][j]);    
-             if(pInput->fFRS_WR>0 && pInput->fFat_Tamex_WR>0 && ToT_slow_fat_calib[i][j]>0 && i==11)hFat_FRSFatTamdT_vs_ToT_ch11->Fill(pInput->fFRS_WR-pInput->fFat_Tamex_WR,ToT_slow_fat_calib[11][j]);
-            
-            
-                       }
+//         if(i!=FatVME_TimeMachineCh1 || i!=FatVME_TimeMachineCh2 || i!=FATIMA_TAMEX_SC41L || i!=FATIMA_TAMEX_SC41R || i!=FATIMA_TAMEX_SC41L_Digi || i!=FATIMA_TAMEX_SC41R_Digi){ //hFat_ToT_Slow_Sum->Fill(ToT_slow_fat[i][j]*0.01);  
+//           //  hFat_ToT_Slow_Sum_Calib->Fill(ToT_slow_fat_calib[i][j]);    
+// //              if(pInput->fFRS_WR>0 && pInput->fFat_Tamex_WR>0 && ToT_slow_fat_calib[i][j]>0 && i==11)hFat_FRSFatTamdT_vs_ToT_ch11->Fill(pInput->fFRS_WR-pInput->fFat_Tamex_WR,ToT_slow_fat_calib[11][j]);
+//             
+//             
+//                        }
                        
                        // hFat_tamex_hit_pattern->Fill(i);  
                     
                          // Fat_tot_hits++; 
                          // hFat_tamex_multiplicity->Fill(Fat_tot_hits);
                             
-                            }
-                        }         
+                            }//Slow ToT>0
+     
+                        } ///if Trail AND Lead condition     
                     //end of slow fatima ToT
-                }
-              }
-}
+                } ///Loop on hits
+              }///Loop on channels 
+            }
             
   /**----------------------------------------------------------------------------------------------**/
  /**--------------------------------------  FATIMA VME ----------------------------------------------**/
