@@ -188,7 +188,7 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
         }
 
         create = true;
-        Do_WR_Histos(pInput);
+        Process_WR_Histos(pInput);
         Fat_TimeCorrection(pInput);
                  /** Now extract the data from the stored Unpacker array (root tree)**/
     ///--------------------------------------/**FRS Input**/------------------------------------------///
@@ -318,7 +318,7 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
 //         FRS_ts = pInput->fFRS_ts;
 //         FRS_ts2 = pInput->fFRS_ts2;
  // if(pOutput->pEvent_Number==42715 ){       }
-  Do_FRS_Histos(pOutput);
+  Process_FRS_Histos(pOutput);
             }
 
 
@@ -386,13 +386,13 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
                         }      
                     }
               }
-  Do_Plastic_Tamex_Histos(pInput,pOutput);
+  Process_Plastic_Tamex_Histos(pInput,pOutput);
     
    }
   
   ///--------------------------------------/**Fatima TAMEX Input**/------------------------------------------///
    if (PrcID_Conv[4] ==4 ){
-      Do_Fatima_Tamex_Histos(pInput,pOutput);  
+      Process_Fatima_Tamex_Histos(pInput,pOutput);  
         pOutput->pFAT_Tamex_WR = pInput->fFat_Tamex_WR;
         
         Fat_TAM_SC41L_ANA = pInput->fFat_Lead_Fast[FATIMA_TAMEX_SC41L][0];
@@ -495,7 +495,7 @@ if(Fatmult > 0){
         Fat_QDC_Singles_t_coarse[i] = pInput->fFat_QDC_Singles_t_coarse[i];
         Fat_QDC_Singles_t_fine[i] = pInput->fFat_QDC_Singles_t_fine[i];
        }
-        Do_Fatima_Histos(pInput, pOutput);
+        Process_Fatima_Histos(pInput, pOutput);
   }//End of proc ID
 
 
@@ -554,7 +554,7 @@ if(Fatmult > 0){
               pOutput->pGe_CF_T_Aligned[GeDet[i]][GeCrys[i]] = Ge_cfd_Talign[i];
         }
  
-            Do_Germanium_Histos(pOutput);
+            Process_Germanium_Histos(pOutput);
       }
 
  ///--------------------------------------/**Finger Input**/------------------------------------------///
@@ -604,7 +604,7 @@ if(Fatmult > 0){
 
 
 }
- void EventAnlProc::Do_WR_Histos(EventUnpackStore* pInput){
+ void EventAnlProc::Process_WR_Histos(EventUnpackStore* pInput){
      /// FATIMA DEAD TIME
        if (pInput->fFat_WR > 0) {
        
@@ -721,8 +721,6 @@ void EventAnlProc::Make_FRS_Histos(){
     hID_Z1_vs_T = MakeTH2('D',"FRS/ID/ID_Z1_Time", "Z1 vs Time",1240,16600,29000, 1500,frs_id->min_z_plot,frs_id->max_z_plot,"Time (/10 mins)", "Z1 s2-s4");
     
    // hID_AoQ_mhtdc_T = MakeTH2('D',"FRS/ID/ID_AoQmhtdc_Time", "AoQ mhtdc vs Time",1200,17000,29000,1500,frs_id->min_aoq_plot,frs_id->max_aoq_plot,"Time (/10 mins)", "AoQ mhtdc s2-s4");
-    
-    //hID_Z_AoQ = MakeTH2('D',"FRS/ID/ID_Z1_AoQ", "Z1 vs A/Q",1500,6,7, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"A/Q s2-s4", "Z1 s2-s4");
     
     hID_Z_AoQ_zsame = MakeTH2('D',"FRS/ID/ID_Z1_AoQ_zsame","Z1 vs Z2: mod(Z1-Z2)<0.4", 1500,frs_id->min_aoq_plot,frs_id->max_aoq_plot, 1000,frs_id->min_z_plot,frs_id->max_z_plot,"Z1==Z2 A/Q s2-s4", "Z s2-s4");
     
@@ -887,7 +885,7 @@ void EventAnlProc::Make_FRS_Histos(){
       
 }
 
-void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
+void EventAnlProc::Process_FRS_Histos(EventAnlStore* pOutput){
     FRS_time_mins = 0;
   
     if(pOutput->pFRS_WR>0) FRS_time_mins =(pOutput->pFRS_WR/60E9)-26900000;
@@ -1626,7 +1624,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
         
     }   
     /////////////////////////////////////////////////// 
-    void EventAnlProc::Do_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){   
+    void EventAnlProc::Process_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){   
     
          fired_det1=false, fired_det2=false;    
          //ZERO_ARRAY(bPlas_tot_hits);
@@ -1844,7 +1842,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
  
  
 //-----------------------------------------------------------------------------------------------//
-void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){   
+void EventAnlProc::Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){   
           
         //bool fired_det1=false, fired_det2=false;    
          
@@ -2130,7 +2128,7 @@ void EventAnlProc::Make_Fatima_Histos(){
     
 }
 ///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------///
-void EventAnlProc::Do_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
+void EventAnlProc::Process_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
     
     Fat_time_mins =0; 
     if(Fat_WR>0) {Fat_time_mins =(Fat_WR/60E9)-26900000;
@@ -2377,7 +2375,7 @@ if(Fatmult > 0){
       //}
         }
     ///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------///
-    void EventAnlProc::Do_Germanium_Histos(EventAnlStore* pOutput)
+    void EventAnlProc::Process_Germanium_Histos(EventAnlStore* pOutput)
     {
         Ge_time_mins=0;
       if(Ge_WR>0) Ge_time_mins =(Ge_WR/60E9)-26900000;
@@ -2575,7 +2573,7 @@ if(Fatmult > 0){
                 }
             }
         }
-    }//end of Do_Germanium_Histos()
+    }//end of Process_Germanium_Histos()
     
 //--------------------------------------------------------------------------------------------------------------------//
 // TH1I* EventAnlProc::MakeH1I(const char* fname,

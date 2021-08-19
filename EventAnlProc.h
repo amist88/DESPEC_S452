@@ -336,18 +336,18 @@ class EventAnlProc : public TGo4EventProcessor {
      void Make_Fat_Plas_Histos();
      void Make_Fing_Plas_Histos();
 
-     void Do_FRS_Histos(EventAnlStore* pOutput);
-     void Do_Plastic_VME_Histos(EventAnlStore* pOutput);
-     void Do_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Do_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Process_FRS_Histos(EventAnlStore* pOutput);
+     void Process_Plastic_VME_Histos(EventAnlStore* pOutput);
+     void Process_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Process_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
      
-     void Do_Fatima_VME_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Do_Germanium_Histos(EventAnlStore* pOutput);
-     void Do_Finger_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Do_Fing_Plas_Histos(EventAnlStore* pOutput);
-     void Do_Fat_Plas_Histos(EventAnlStore* pOutput);
-     void Do_WR_Histos(EventUnpackStore* pInput);
+     void Process_Fatima_VME_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Process_Germanium_Histos(EventAnlStore* pOutput);
+     void Process_Finger_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Process_Fing_Plas_Histos(EventAnlStore* pOutput);
+     void Process_Fat_Plas_Histos(EventAnlStore* pOutput);
+     void Process_WR_Histos(EventUnpackStore* pInput);
       // TH1 *GermaniumCal;
 
    
