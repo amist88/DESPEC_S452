@@ -102,7 +102,7 @@
 -50 50
 
 ## Gamma-Gamma Germanium 2D Histogram Binning (Histogram Bins, Histogram Min, Histogram Max (keV))
-4000 0 4000
+2000 0 2000
 
 ################# Germanium/FATIMA Long isomers #############
 

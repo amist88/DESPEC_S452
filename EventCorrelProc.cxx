@@ -63,7 +63,7 @@ EventCorrelProc::EventCorrelProc(const char* name) :
      
   tag_all.clear();
   ts_all.clear();
-  GeE_all.clear();
+  //GeE_all.clear();
 
   tag_fat_all.clear();
   ts_fat_all.clear();
@@ -617,7 +617,7 @@ Bool_t EventCorrelProc::BuildEvent(TGo4EventElement* dest)
       hA_FRS_ZAoQ_GeEvsT_all= MakeTH2('D',"Correlations/FRS-Prompt_Ge/Z1vsAoQ_Ge/GeE_vs_FRSGe_dT_Z1vsAoQ_All","Ge vs T all", 2100,-1000,20000,fCorrel->GGe1_Ge2_HistoBin,fCorrel->GGe1_Ge2_HistoMin,fCorrel->GGe1_Ge2_HistoMax,"Ge Energy (keV)", "FRS - Ge time (ns)");
       
       for(int i=0; i<MAX_FRS_GATE; i++){
-       hA_FRS_ZAoQ_GeE[i]  = MakeTH1('F', Form("Correlations/FRS-Prompt_Ge/Z1vsAoQ_Ge/SinglesEnergy/Ge_EnergySum_Z1vsAoQ_Gate%d", i), Form("Germanium Energy FRS PID gated %d", i), 6000, 0, 6000, "Energy/keV");
+       hA_FRS_ZAoQ_GeE[i]  = MakeTH1('F', Form("Correlations/FRS-Prompt_Ge/Z1vsAoQ_Ge/SinglesEnergy/Ge_EnergySum_Z1vsAoQ_Gate%d", i), Form("Germanium Energy FRS PID gated %d", i), 2000, 0, 2000, "Energy/keV");
  
        if(fCorrel->GSetup_corr_FRS_Gamma_Gamma==1){
        hA_FRS_ZAoQ_GeE1_GeE2[i]  = MakeTH2('D',Form("Correlations/FRS-Prompt_Ge/Z1vsAoQ_Ge/Gamma-Gamma/GeE1_vs_GeE2_Z1vsAoQ_Gate%d",i),Form("Gamma-Gamma PID Gated: %d",i), fCorrel->GGe1_Ge2_HistoBin,fCorrel->GGe1_Ge2_HistoMin,fCorrel->GGe1_Ge2_HistoMax,  fCorrel->GGe1_Ge2_HistoBin,fCorrel->GGe1_Ge2_HistoMin,fCorrel->GGe1_Ge2_HistoMax, "Ge Energy1 (keV)", "Ge Energy2 (keV)");

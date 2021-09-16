@@ -44,6 +44,7 @@
 #define FatVME_bPlast_MASTER 44
 #define FatVME_bPlast_StartCh 45
 #define FatVME_bPlast_StopCh 50
+#define FatGM_Offset 26916384
 ///FATIMA TAMEX
 #define FATIMA_TAMEX_MODULES 4
 #define FATIMA_TAMEX_HITS 50
