@@ -122,6 +122,9 @@ public:
     void set_Gain_Match_Filename(std::string){return;};
     
     unsigned int epoch_data;
+    
+      bool do_gain_matching(int ts_ns) {return 1;};
+    unsigned long next_ts_for_update() {return 1;}
 
 };
 

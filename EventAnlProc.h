@@ -552,7 +552,7 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hFAT_hits_TDC;
             TH1 *hFat_Energy_GainMonitor;
 
-          
+          TH2 *hFat_E_vs_T[FAT_MAX_VME_CHANNELS];
 
 //             TH1 *hFAT_lead_lead[50];
 //             TH1 *hFAT_lead_lead_ref[50];

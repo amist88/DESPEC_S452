@@ -889,7 +889,7 @@ void EventAnlProc::Process_FRS_Histos(EventAnlStore* pOutput){
     FRS_time_mins = 0;
   
     if(pOutput->pFRS_WR>0) FRS_time_mins =(pOutput->pFRS_WR/60E9)-26900000;
-   
+ 
       for(int i=0; i<Z_Shift_array; i++){
            if(FRS_time_mins >=FRS_WR_a[i] && FRS_time_mins < FRS_WR_b[i]){
                FRS_z = FRS_z - Z1_shift_value[i];
@@ -2112,6 +2112,9 @@ void EventAnlProc::Make_Fatima_Histos(){
     for (int j=0; j<6; j++){
        
     hFAT_TDC_bPlast_Cha[i][j] = MakeTH1('D', Form("FATIMA_VME/Timing/bPlastVMECh%2d/FatCh.%2d-bPlastVMECh.%2d",  j,i,j), Form("FatCh %2d -bPlast VME Ch. %2d", i,j),250, -2E4, 2E4);
+    
+//     hFat_E_vs_T[i] =  MakeTH2('D', Form("FATIMA_VME/Stats/FAtima_Energy_Time_%02d", i), Form("Energy Time LaBr%02d ", i),1240,16600,29000,4000,0,4000,"Time (minutes)","Fat Energy (keV)");
+    
     }
    
   }
@@ -2122,17 +2125,20 @@ void EventAnlProc::Make_Fatima_Histos(){
     hFAT_hits_TDC       = MakeTH1('D', "FATIMA_VME/Stats/TDC_FAThits", "FATIMA TDC hit pattern",50,0,50);
     hFAT_Multipl       = MakeTH1('D', "FATIMA_VME/Stats/Fatima_VME_Multiplicity", "FATIMA TDC Multiplicity",50,0,50);
 
-    hFat_Energy_GainMonitor= MakeTH2('D',"FATIMA_VME/Stats/Fatima_GainMonitor","FATIMA Energy-Time Matrix",1240,16600,29000,2500,0,5000,"Time (minutes)","Fat Energy (keV)");
+    hFat_Energy_GainMonitor= MakeTH2('D',"FATIMA_VME/Stats/Fatima_GainMonitor","FATIMA Energy-Time Matrix",15900,250,16150,4000,0,4000,"Time (minutes)","Fat Energy (keV)");
      
-    hFat_time= MakeTH1('D', "FATIMA_VME/Stats/Fatima_Time", "",12400,16600,29000);
+  //  hFat_time= MakeTH1('D', "FATIMA_VME/Stats/Fatima_Time", "",12400,16600,29000);
     
 }
 ///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------///
 void EventAnlProc::Process_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
     
     Fat_time_mins =0; 
-    if(Fat_WR>0) {Fat_time_mins =(Fat_WR/60E9)-26900000;
-    hFat_time->Fill(Fat_time_mins);
+    
+    if(Fat_WR>0) {Fat_time_mins =(Fat_WR/60E9)-FatGM_Offset;
+       // cout<<"Fat_time_mins " <<Fat_time_mins << endl;
+  //  hFat_time->Fill(Fat_time_mins);
+   
     }
     Long64_t Fat_Ch_dT[FAT_MAX_VME_CHANNELS];
     Long64_t Fat_Ch_SC41L_dT[FAT_MAX_VME_CHANNELS];
@@ -2215,6 +2221,14 @@ if(Fatmult > 0){
                    
             }
      
+//      for(int j = 0; j < Fatmult; j++){
+//     if(Fat_time_mins>0 && Fat_QDC_E[j]>0){ hFat_E_vs_T[Fat_QDC_ID[j]]->Fill(Fat_time_mins,pInput->fFat_QDC_E_Raw[j]*0.1);
+// 
+// //cout<< " Fat_QDC_E_Raw[j] " << Fat_QDC_E_Raw[j] <<endl;
+// //if(Fat_QDC_E_Raw[i]>0)cout<< "pInput->fFat_QDC_E_Raw[j]" <<pInput->fFat_QDC_E_Raw[j]<<endl;
+// 
+//      }
+//     }
      
       double t2, t1;
       if(Fat_TDC_T[i]!=0){

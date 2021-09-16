@@ -316,6 +316,15 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
             WR_main = WR_tmp;
        
         }
+        //Check if we need to update FATIMA gainmatching
+         if (Used_Systems[3] && WR_d==3) {
+           if(WR_tmp > Detector_Systems[3]->next_ts_for_update()) {
+             int udts = (int) (((double) WR_tmp)*1.6666667E-11);
+             //printf("FATIMA WR %llu, %d, %llu\n", WR_tmp, udts, Detector_Systems[3]->next_ts_for_update());
+             Detector_Systems[3]->do_gain_matching(udts);
+         //exit(0);
+           }
+         }
 
 ///-----------------------------------------------------------------------------------------------------------///
         //if necessary, directly print MBS for wanted Detector_System
