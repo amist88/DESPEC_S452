@@ -156,6 +156,8 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
    ///general inputs from the unpacker
     event_number = pInput->fevent_number;
     pOutput->pOnSpill = FRS_spill;
+//     cout<<"pOutput->pOnSpill " <<pOutput->pOnSpill << endl;
+//     if( pOutput->pOnSpill==1 &&  pInput->fFRS_WR>0) cout << "pInput->fFRS_WR " <<(Long64_t) ((pInput->fFRS_WR/1E9)-1615687480)<<endl;
     pOutput->pTrigger = pInput->fTrigger;
     pOutput->pEvent_Number = event_number;
 //     VMEorTAMEX_bPlas = VME_TAMEX_bPlas;
