@@ -79,7 +79,7 @@ TGo4EventProcessor(name)
            Z1_shift_value[i]=0 ;
            Z2_shift_value[i] =0;
            /// AoQ_shift 
-	   FRS_WR_i[i]=0;
+       FRS_WR_i[i]=0;
            FRS_WR_j[i]=0 ;
            AoQ_shift_value[i]=0 ;
         }
@@ -95,16 +95,16 @@ TGo4EventProcessor(name)
 //             
 //                 }
 //         }
-        for(int i=0;i<100;i++){
+     //   for(int i=0;i<100;i++){
            
             
             
-                FAT_WR_GFF_High[i]=0;
-                FAT_WR_GFF_Low[i]=0;
-                FAT_FACTOR_GFF[i]=0;
-                FAT_COEFF_GFF[i]=0;
+        //        FAT_WR_GFF_High[i]=0;
+       //         FAT_WR_GFF_Low[i]=0;
+         //       FAT_FACTOR_GFF[i]=0;
+        //        FAT_COEFF_GFF[i]=0;
                 
-        }
+       // }
         
 
    /// read_setup_parameters();
@@ -241,13 +241,13 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
         {
           FRS_spill = true;
           pOutput->pOnSpill = true;
-	 // cout<<"OnSpill " <<pOutput->pOnSpill << endl;
+     // cout<<"OnSpill " <<pOutput->pOnSpill << endl;
         }
         if (pOutput->pFRS_scaler_delta[9] > 0)
         {
           FRS_spill = false;
           pOutput->pOnSpill = false;
-	  // cout<<"Offspill " <<pOutput->pOnSpill << endl;
+      // cout<<"Offspill " <<pOutput->pOnSpill << endl;
         }
         
       
@@ -482,7 +482,7 @@ if(Fatmult > 0){
         }//End sc41 for fill
        
 
-		//Inputting singles TDC and QDC hits
+        //Inputting singles TDC and QDC hits
         stdcmult = pInput->fFat_tdcsinglescount;
         sqdcmult = pInput->fFat_qdcsinglescount;
 
@@ -531,14 +531,14 @@ if(Fatmult > 0){
           GeEventT[i]=pInput->fGe_Event_T[i];
           GeT[i] = pInput->fGe_T[i];
           GeCF_T[i] = pInput->fGe_cfT[i];
-	  
+      
           // Maybe keep this for auto calibration program purposes
           int id = GeDet[i] * Germanium_CRYSTALS + GeCrys[i];
-	  if(id<32){
+      if(id<32){
           GeE_Cal[i] = (fCal->AGe[id]* pow( GeE[i],2) + fCal->BGe[id]*  GeE[i] + fCal->CGe[id]);
           
         //  cout<<"1GeE_Cal[i] " << GeE_Cal[i] <<" i " << i << " GeDet[i] " <<GeDet[i] << " GeCrys[i] " <<GeCrys[i]<< endl;
-	  }
+      }
             // int id_Ge = det * Germanium_CRYSTALS +  crys;
     
      if(id==1) {
@@ -1258,24 +1258,24 @@ void EventAnlProc::ProcessAida(EventUnpackStore* pInputMain, EventAnlStore* pOut
       //  pOutput->pAida.Implants.push_back(hit);
         aida.Implants.push_back(hit);
         implants_strip_xy[hit.DSSD - 1]->Fill(hit.StripX, hit.StripY);
-	if (hit.Stopped)implants_strip_xy_stopped[hit.DSSD - 1]->Fill(hit.StripX, hit.StripY);
-	
-	// Helena
-	if(hit.Stopped){
-	   if(hit.DSSD==1){
-	     pOutput->pt_lastIMP_DSSD1 = hit.TimeFront;
-	     pOutput->plastIMP_DSSD1_StripX = hit.StripX;
-	   }
-	   if(hit.DSSD==2){
-	     pOutput->pt_lastIMP_DSSD2 = hit.TimeFront;
-	     pOutput->plastIMP_DSSD2_StripX = hit.StripX;
-	   }
-	   if(hit.DSSD==3){
-	     pOutput->pt_lastIMP_DSSD3 = hit.TimeFront;
-	     pOutput->plastIMP_DSSD3_StripX = hit.StripX;	     
-	  }
-	}
-	
+    if (hit.Stopped)implants_strip_xy_stopped[hit.DSSD - 1]->Fill(hit.StripX, hit.StripY);
+    
+    // Helena
+    if(hit.Stopped){
+       if(hit.DSSD==1){
+         pOutput->pt_lastIMP_DSSD1 = hit.TimeFront;
+         pOutput->plastIMP_DSSD1_StripX = hit.StripX;
+       }
+       if(hit.DSSD==2){
+         pOutput->pt_lastIMP_DSSD2 = hit.TimeFront;
+         pOutput->plastIMP_DSSD2_StripX = hit.StripX;
+       }
+       if(hit.DSSD==3){
+         pOutput->pt_lastIMP_DSSD3 = hit.TimeFront;
+         pOutput->plastIMP_DSSD3_StripX = hit.StripX;        
+      }
+    }
+    
 //       cout<<"ANALYSIS AIDA " <<pOutput->pEvent_Number<< " Energy " <<  hit.Energy << " hit.DSSD - 1 " <<hit.DSSD - 1 << endl;
         implants_pos_xy[hit.DSSD - 1]->Fill(hit.PosX, hit.PosY);
         implants_e[hit.DSSD - 1]->Fill(hit.Energy);
@@ -1914,15 +1914,15 @@ void EventAnlProc::Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAn
                     
 //               if( pInput->fFat_Lead_Fast[i][j]>0)  cout<<"lead_fast_fat[i][j] " <<lead_fast_fat[i][j] << " i " << i <<  endl;
                               if(lead_fast_fat[i][j]!=0 && lead_fast_fat[i][j]!=0) 
-		    {
+            {
                               
                       lead_lead_fast_fat_onechan[j] = (lead_fast_fat[8][j]-lead_fast_fat[3][j])*5;  
                       
 //                       cout<<"lead_lead_fast_fat_onechan[j] " <<lead_lead_fast_fat_onechan[j] << " lead_fast_fat[i][j] " <<lead_fast_fat[i][j] << " lead_fast_fat[i+1][j] " <<lead_fast_fat[i+1][j] << endl;
                       
                       hFat_Lead_Lead_Fast_T->Fill(lead_lead_fast_fat_onechan[j]);
-		    }
-		    
+            }
+            
                if(lead_fast_fat[i][j]!=0)  {
                   // cout<<"i " << i << " j " << j << " lead_fast_fat[i][j] " << lead_fast_fat[i][j]<<endl;
                   // hFat_Lead_Fast_T[i]->Fill(lead_fast_fat[i][j]);    
@@ -1952,7 +1952,7 @@ void EventAnlProc::Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAn
                 for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit 
 
                     lead_slow_fat[i][j] = pInput->fFat_Lead_Slow[i][j];  
-		    
+            
                     //hFat_Lead_Slow_T[i]->Fill(lead_slow_fat[i][j]);    
                     pOutput->pFat_Slow_LeadT[i][j] = lead_slow_fat[i][j];    
                  //   pOutput->pFat_LeadHits = hits_fat_lead; 
@@ -2178,12 +2178,12 @@ if(Fatmult > 0){
 //             }
 //       }
         
-        for(int l=0; l<Fat_Shift_array; l++){
-            if(Fat_time_mins >=FAT_WR_GFF_Low[l]&& Fat_time_mins < FAT_WR_GFF_High[l]){
-                Fat_QDC_E[i] = Fat_QDC_E[i]* FAT_FACTOR_GFF[l] + FAT_COEFF_GFF[l];
-      
-            }      
-        }
+       // for(int l=0; l<Fat_Shift_array; l++){
+        //    if(Fat_time_mins >=FAT_WR_GFF_Low[l]&& Fat_time_mins < FAT_WR_GFF_High[l]){
+           //     Fat_QDC_E[i] = Fat_QDC_E[i]* FAT_FACTOR_GFF[l] + FAT_COEFF_GFF[l];
+      //
+           // }      
+      //  }
         
       pOutput->pFat_QDC_ID[i] = Fat_QDC_ID[i];
       pOutput->pFat_QDC_E[i] = Fat_QDC_E[i];
@@ -2298,7 +2298,7 @@ if(Fatmult > 0){
        pOutput->pFat_TMCh1mult = pInput->fFat_TMCh1mult;
        pOutput->pFat_TMCh2mult = pInput->fFat_TMCh2mult;
 
-		//Outputting singles TDC and QDC data
+        //Outputting singles TDC and QDC data
       for(int i = 0; i < stdcmult; i++){
             
          pOutput->pFat_TDC_Singles_t[i] = Fat_TDC_Singles_t[i];    
@@ -2427,7 +2427,7 @@ if(Fatmult > 0){
              continue;
             }
             
-	   if(det>-1){
+       if(det>-1){
            pOutput->pGe_Event_T[det][crys] = GeEventT[i];
           
            pOutput->pGe_T[det][crys] = Ge_Talign[i];
@@ -2846,72 +2846,8 @@ void EventAnlProc::Fat_TimeCorrection(EventUnpackStore* pInput){
         }
      }
 }
-// void EventAnlProc::Fat_GainCorrection(){
-//      ifstream    file;
-//      string line;
-//      Int_t f=0;
-//      Int_t fat_det_tmp;
-//      float_t fat_peak_tmp;
-//      float_t fat_factor_tmp;
-//      float_t fat_wr_tmp_low;
-//      float_t fat_wr_tmp_high;
-//     
-//       file.open("Configuration_Files/FATIMA/Gain_Factor_Fatima.txt");
-//    while(file.good()){
-//        cout<<"file good " << endl;
-//         getline(file,line,'\n');
-//     if(line[0] == '#') continue;
-//     sscanf(line.c_str(),"%d %f %f %f %f",&fat_det_tmp,&fat_peak_tmp,&fat_factor_tmp,&fat_wr_tmp_low, &fat_wr_tmp_high);
-//       
-//     FAT_DET_GFF[f]=fat_det_tmp;
-//     //FAT_PEAK_GFF[f][fat_det_tmp]=fat_peak_tmp;
-//     FAT_FACTOR_GFF[f][fat_det_tmp]=fat_factor_tmp;
-//     FAT_WR_GFF_Low[f][fat_det_tmp]=fat_wr_tmp_low;
-//     FAT_WR_GFF_High[f][fat_det_tmp]=fat_wr_tmp_high;
-//     Fat_Shift_array=f;
-//     // cout<<"FAT_FACTOR_GFF[f][fat_det_tmp] " <<FAT_FACTOR_GFF[f][fat_det_tmp] << " f " << f << " fat_det_tmp " <<fat_det_tmp <<"  FAT_WR_GFF_Low[f][fat_det_tmp] " << FAT_WR_GFF_Low[f][fat_det_tmp] <<" FAT_WR_GFF_High[f][fat_det_tmp] "<<FAT_WR_GFF_High[f][fat_det_tmp]<< endl;
-//        f++;
-// 
-//      }
-//   
-//   file.close();
-//        
-//    }
-   
-   
-   void EventAnlProc::Fat_GainCorrection(){
-     ifstream    file;
-     string line;
-     Int_t f=0;
-     float_t fat_coeff_tmp;
-     float_t fat_factor_tmp;
-     float_t fat_wr_tmp_low;
-     float_t fat_wr_tmp_high;
-    
-      file.open("Configuration_Files/FATIMA/Gain_Factor_Fatima_Linear.txt");
-   while(file.good()){
-     
-        getline(file,line,'\n');
-    if(line[0] == '#') continue;
-    sscanf(line.c_str(),"%f %f %f %f",&fat_factor_tmp,&fat_coeff_tmp,&fat_wr_tmp_low, &fat_wr_tmp_high);
-      
-    //FAT_DET_GFF[f]=fat_det_tmp;
-    //FAT_PEAK_GFF[f][fat_det_tmp]=fat_peak_tmp;
-    FAT_FACTOR_GFF[f]=fat_factor_tmp;
-    FAT_COEFF_GFF[f]=fat_coeff_tmp;
-    FAT_WR_GFF_Low[f]=fat_wr_tmp_low;
-    FAT_WR_GFF_High[f]=fat_wr_tmp_high;
-    Fat_Shift_array=f;
-    
-   // cout<<"FAT_WR_GFF_High[f]" << FAT_WR_GFF_High[f] << " FAT_COEFF_GFF[f] " << FAT_COEFF_GFF[f] << endl;
-    // cout<<"FAT_FACTOR_GFF[f][fat_det_tmp] " <<FAT_FACTOR_GFF[f][fat_det_tmp] << " f " << f << " fat_det_tmp " <<fat_det_tmp <<"  FAT_WR_GFF_Low[f][fat_det_tmp] " << FAT_WR_GFF_Low[f][fat_det_tmp] <<" FAT_WR_GFF_High[f][fat_det_tmp] "<<FAT_WR_GFF_High[f][fat_det_tmp]<< endl;
-       f++;
 
-     }
-  
-  file.close();
-       
-   }
+   
      
   
 //-----------------------------------------------------------------------------------------------------------------------------//
