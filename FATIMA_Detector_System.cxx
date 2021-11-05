@@ -1,4 +1,4 @@
-//Changes, 24.07.18 MR
+//Changes, 24.07.18 MR long time ago
 
 //b) changed allocation file name from allocation.txt to
 //   FATIMA_allocation.txt
