@@ -15,7 +15,7 @@
 // Uncomment this to align the AIDA ASICs with a pulser
 //  Only needed if the ASICs didn't align properly
 //#define AIDA_PULSER_ALIGN
-
+//THIS IS A GITHUB TEST
 #include "EventAnlProc.h"
 
 #include <cstdlib>
