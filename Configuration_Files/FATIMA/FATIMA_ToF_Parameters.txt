@@ -12,19 +12,17 @@ USE_AIDA_POS
 
 # I M P O R T A N T:
 # The coordinate system used by the FATIMA_tofCorr Class is the same
-# as that used by AIDA.
-# It is right-handed. The Z-axis points down-stream, i.e. in beam direction.
+# as that used by AIDA and FRS go4.
+# It is left-handed. The Z-axis points down-stream, i.e. in beam direction.
 # When looking downstream, in Z-direction:
-# X points to the left, Y points up.
-# This might be confusing, so be careful. Especially when entering a
-# constant offset!
+# X points to the right, Y points up.
 #
 #               Y
 #               ^   Z
 #               |  /
 #               | /
 #               |/
-#    X <--------0
+#               0--------> X
 #       The coordinate system when looking down-stream
 
 # Set the AIDA offset for DSSDs (in mm) with respect to the focal point at (0,0,0)
