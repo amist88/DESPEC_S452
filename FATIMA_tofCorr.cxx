@@ -38,9 +38,9 @@ double FATIMA_tofCorr::length(double cx, double cy, double cz) {
 double FATIMA_tofCorr::get_t_tofCorr (int detid, double time_ns) {
   if (doToFCorr && detid < 35 && detid > -1) {
     memset(this->pvec, 0, sizeof(double)*3);
-    pvec[0] = -offset_posXYZ[0];
-    pvec[1] = -offset_posXYZ[1];
-    pvec[2] = -offset_posXYZ[2];
+    pvec[0] = +offset_posXYZ[0];
+    pvec[1] = +offset_posXYZ[1];
+    pvec[2] = +offset_posXYZ[2];
     if(useAIDA_eventbyevent) {
       pvec[0] += aida_posXYZ[0];
       pvec[1] += aida_posXYZ[1];
