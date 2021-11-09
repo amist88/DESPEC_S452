@@ -31,20 +31,33 @@ void FATIMA_tofCorr::set_AIDA_pos(int dssd_id, double posx, double posy) {
     aida_posXYZ[2] = aida_offset[dssd_id][2];
   }
 }
+double FATIMA_tofCorr::length(double cx, double cy, double cz) {
+  return sqrt(pow(cx,2) + pow(cy,2) + pow(cz,2));
+}
 
 double FATIMA_tofCorr::get_t_tofCorr (int detid, double time_ns) {
-  memset(this->pvec, 0, sizeof(double)*3);
-  pvec[0] = -offset_posXYZ[0];
-  pvec[1] = -offset_posXYZ[1];
-  pvec[2] = -offset_posXYZ[2];
-  if(useAIDA_eventbyevent) {
-    pvec[0] += aida_posXYZ[0];
-    pvec[1] += aida_posXYZ[1];
-    pvec[2] += aida_posXYZ[2];
+  if (doToFCorr && detid < 35 && detid > -1) {
+    memset(this->pvec, 0, sizeof(double)*3);
+    pvec[0] = -offset_posXYZ[0];
+    pvec[1] = -offset_posXYZ[1];
+    pvec[2] = -offset_posXYZ[2];
+    if(useAIDA_eventbyevent) {
+      pvec[0] += aida_posXYZ[0];
+      pvec[1] += aida_posXYZ[1];
+      pvec[2] += aida_posXYZ[2];
+    }
+    len_vec = this->length(pvec[0] + det_posX[detid],
+                           pvec[1] + det_posY[detid],
+                           pvec[2] + det_posZ[detid]);
+    printf("calculated l: %lf\n", len_vec);
+    printf("tabulated  l: %lf\n", distance[detid]);
+    dt = (distance[detid] - len_vec)/c_air;
+    return time_ns - dt;
+  }else{
+    return time_ns;
   }
-  len_vec = sqrt(pow(pvec[0],2) + pow(pvec[1],2) + pow(pvec[2],2));
-  dt = (distance[detid] - len_vec)/c_air;
-  return time_ns - dt;
+  printf("WARNING in FATIMA_tofCorr::get_t_tofCorr -- should never get here!\n");
+  return 0;
 }
 
 double FATIMA_tofCorr::get_dt_tofCorr (int detSTOP_id, double time_ns_detSTOP,

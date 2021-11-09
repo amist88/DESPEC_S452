@@ -23,6 +23,7 @@ private:
   double pvec[3];
   double len_vec;
   double dt;
+  double length(double cx, double cy, double cz);
   double Calc_dToF (double time_ns, int detid);
 
 public:
