@@ -10,10 +10,10 @@
 FATIMA_tofCorr::FATIMA_tofCorr(){
   useAIDA_eventbyevent = 0;
   memset(offset_posXYZ, 0, sizeof(double)*3);
-  memset(aida_offset, 0, sizeof(double)*3*9);
-  memset(det_posX, 0, sizeof(double)*35);
-  memset(det_posY, 0, sizeof(double)*35);
-  memset(det_posZ, 0, sizeof(double)*35);
+  memset(aida_offset, 0, sizeof(double)*3*FATIMA_TOFCORR_MAX_DSSD);
+  memset(det_posX, 0, sizeof(double)*FATIMA_TOFCORR_MAX_DET);
+  memset(det_posY, 0, sizeof(double)*FATIMA_TOFCORR_MAX_DET);
+  memset(det_posZ, 0, sizeof(double)*FATIMA_TOFCORR_MAX_DET);
   doToFCorr = 1;
   load_FATIMA_pos();
   load_ToF_ParameterFile();

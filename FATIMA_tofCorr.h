@@ -1,6 +1,9 @@
 #ifndef FATIMA_TOFCORR_H
 #define FATIMA_TOFCORR_H
 
+#define FATIMA_TOFCORR_MAX_DET 35
+#define FATIMA_TOFCORR_MAX_DSSD 9
+
 class FATIMA_tofCorr {
 private:
   // All distances measured in mm, all times in ns
