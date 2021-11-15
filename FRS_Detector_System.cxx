@@ -129,7 +129,7 @@ FRS_Detector_System::FRS_Detector_System(){
    
     
         }
-    }
+    } ///. sultan
     
       // VFTX parameters
   m_VFTX_Bin2Ps();
