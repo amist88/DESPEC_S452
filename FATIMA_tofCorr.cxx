@@ -46,11 +46,11 @@ double FATIMA_tofCorr::get_t_tofCorr (int detid, double time_ns) {
       pvec[1] += aida_posXYZ[1];
       pvec[2] += aida_posXYZ[2];
     }
-    len_vec = this->length(pvec[0] + det_posX[detid],
-                           pvec[1] + det_posY[detid],
-                           pvec[2] + det_posZ[detid]);
-    printf("calculated l: %lf\n", len_vec);
-    printf("tabulated  l: %lf\n", distance[detid]);
+    len_vec = this->length(pvec[0] - det_posX[detid],
+                           pvec[1] - det_posY[detid],
+                           pvec[2] - det_posZ[detid]);
+    printf("calculated l(%02d): %lf\n", detid, len_vec);
+    printf("tabulated  l(%02d): %lf\n", detid, distance[detid]);
     dt = (distance[detid] - len_vec)/c_air;
     return time_ns - dt;
   }else{
