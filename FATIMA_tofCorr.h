@@ -12,13 +12,13 @@ private:
   bool   doToFCorr;
   bool   useAIDA_eventbyevent;
   double offset_posXYZ[3];
-  double aida_offset[9][3]; //AIDA z-offset by DSSD id (max 9 detectors!)
+  double aida_offset[FATIMA_TOFCORR_MAX_DSSD][3]; //AIDA z-offset by DSSD id (max 9 detectors!)
   void   load_ToF_ParameterFile();
   // SET FROM FILE by load_FATIMA_pos()
-  double det_posX[35];
-  double det_posY[35];
-  double det_posZ[35];
-  double distance[35];
+  double det_posX[FATIMA_TOFCORR_MAX_DET];
+  double det_posY[FATIMA_TOFCORR_MAX_DET];
+  double det_posZ[FATIMA_TOFCORR_MAX_DET];
+  double distance[FATIMA_TOFCORR_MAX_DET];
   void   load_FATIMA_pos();
 
   // Dynamically set event-by-event

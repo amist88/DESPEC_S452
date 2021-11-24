@@ -8,7 +8,7 @@ USE_TOF
 # 0: Don't use AIDA position, even if it is set
 # 1: Use AIDA position
 USE_AIDA_POS
-1
+0
 
 # I M P O R T A N T:
 # The coordinate system used by the FATIMA_tofCorr Class is the same
@@ -44,7 +44,7 @@ AIDA_OFFSET
 # so set this all to 0 if it is not needed.
 CONST_OFFSET
 # const X-offset   (positive means left! when looking downstream)
-0
+30
 # const Y-offset
 0
 # const Z-offset

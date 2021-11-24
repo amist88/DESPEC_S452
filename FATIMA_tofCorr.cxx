@@ -36,7 +36,7 @@ double FATIMA_tofCorr::length(double cx, double cy, double cz) {
 }
 
 double FATIMA_tofCorr::get_t_tofCorr (int detid, double time_ns) {
-  if (doToFCorr && detid < 35 && detid > -1) {
+  if (doToFCorr && detid < FATIMA_TOFCORR_MAX_DET && detid > -1) {
     memset(this->pvec, 0, sizeof(double)*3);
     pvec[0] = +offset_posXYZ[0];
     pvec[1] = +offset_posXYZ[1];
@@ -94,7 +94,8 @@ void FATIMA_tofCorr::load_FATIMA_pos() {
 }
 
 void FATIMA_tofCorr::load_ToF_ParameterFile(){
-  printf("Loading FATIMA ToF Parameter file.\n");
+  printf("Loading FATIMA ToF Correction Parameter File.\n");
+  printf("=============================================\n");
   std::ifstream param_file("Configuration_Files/FATIMA/FATIMA_ToF_Parameters.txt");
   if(param_file.fail()){
       std::cout << "  WARNING FATIMA: Could not find Fatima ToF parameter file." << std::endl;
@@ -170,7 +171,7 @@ void FATIMA_tofCorr::load_ToF_ParameterFile(){
       printf("  AIDA_OFFSET\n");
       int max = 0;
       int det = 0;
-      while(param_file.good() && max < 9) {
+      while(param_file.good() && max < FATIMA_TOFCORR_MAX_DSSD) {
         getline(param_file,line,'\n');
         if(line[0] == '#' || line[0] == '\0') continue;
         if(sscanf(line.c_str(),"%d %lf %lf %lf",
@@ -189,7 +190,7 @@ void FATIMA_tofCorr::load_ToF_ParameterFile(){
         }
       }
       if (max < 9) {
-        printf("    Found %d/9 AIDA_OFFSET parameters. Setting rest to 0\n", max);
+        printf("    Found %d/%d AIDA_OFFSET parameters. Setting rest to 0\n", max, FATIMA_TOFCORR_MAX_DSSD);
       }
     }
   }
