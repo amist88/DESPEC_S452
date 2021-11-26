@@ -52,7 +52,7 @@ double FATIMA_tofCorr::get_t_tofCorr (int detid, double time_ns) {
     printf("calculated l(%02d): %lf\n", detid, len_vec);
     printf("tabulated  l(%02d): %lf\n", detid, distance[detid]);
     dt = (distance[detid] - len_vec)/c_air;
-    return time_ns - dt;
+    return time_ns + dt;
   }else{
     return time_ns;
   }
