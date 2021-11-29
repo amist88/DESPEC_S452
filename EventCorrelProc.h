@@ -25,6 +25,7 @@
 #include "AIDA_Event.h"
 #include "AIDA_Data_Types.h"
 #include "FATIMA_tofCorr.h"
+##include "TimingCube.h"  //includes THnSparse
 #include "Go4ConditionsBase/TGo4WinCond.h"
 #include "Go4ConditionsBase/TGo4PolyCond.h"
 #include "Configuration_Files/DESPEC_General_Setup/DESPEC_Setup_File.h"
@@ -143,9 +144,9 @@ class EventCorrelProc : public TGo4EventProcessor {
     //Includes FATIMA_tofCorrection!
     void Process_FRS_AIDA_FATIMA (EventAnlStore* cInput, EventCorrelStore* cOutput);
     FATIMA_tofCorr *fatTC;
-    TH1 *hfat_dt_nocorr[FAT_VME_MAX_MULTI];
-    TH1 *hfat_dt_tofcorr[FAT_VME_MAX_MULTI];
-    int    refid;
+    double ggtarray[3]; //Will be needed for filling the cube.
+    THnSparseD *ggt_nocorr;
+    THnSparseD *ggt_tofcorr;
     int    FAT_dt_FRS_gate;
     double Fat_t1;
     double Fat_t2;
@@ -153,8 +154,6 @@ class EventCorrelProc : public TGo4EventProcessor {
     double Fat_e2;
     int    Fat_n1;
     int    Fat_n2;
-    double Fat_e1_gate[2];
-    double Fat_e2_gate[2];
 
     TGo4WinCond* MakeWindowCond(const char* foldername,
                   const char* condname,

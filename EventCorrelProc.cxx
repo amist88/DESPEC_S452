@@ -2179,15 +2179,15 @@ for(int i=0;i<MAX_FRS_GATE;i++){
   {
     //init FATIMA_tofCorr instance
     fatTC = new FATIMA_tofCorr();
-    for(int i=0; i< FAT_VME_MAX_MULTI; i++){
-      hfat_dt_nocorr[i] =  MakeTH1('D', Form("Correlations/FATIMA/nocorr/dt_%02d_%02d_nocorr",refid, i),
-                                        Form("dt (det%02d - %02d) no corr", refid, i),
-                                        1600,-20.000,20.000, "dt (ns)", "counts per 25 ps");
-      hfat_dt_tofcorr[i] =  MakeTH1('D', Form("Correlations/FATIMA/tofcorr/dt_%02d_%02d_tofcorr",refid, i),
-                                        Form("dt (det%02d - %02d) tof corrected", refid, i),
-                                        1600,-20.000,20.000, "dt (ns)", "counts per 25 ps");
-    }
-    //Later also add the timing cube here
+    TimingCube *tc = new TimingCube(this);  //using the "this" symbol to point to it's own instance
+    FAT_dt_FRS_gate = 3;
+    int bins[3] = {1000,1000,1600};
+    double xmin[3] = {0,0,-20.};
+    double xmax[3] = {2000,2000,20.};
+    ggt_nocorr = tc->MakeHnSparse ("FATIMA_VME", "ggt_nocorr", "FATIMA E1 E2 dt, no tof correction",
+                              3, bins, xmin, xmax);
+    ggt_tofcorr = tc->MakeHnSparse ("FATIMA_VME", "ggt_tofcorr", "FATIMA E1 E2 dt, tof correction applied",
+                              3, bins, xmin, xmax);
   }
 
   void EventCorrelProc::Process_FRS_AIDA_FATIMA (EventAnlStore* cInputMain,
@@ -2220,33 +2220,24 @@ for(int i=0;i<MAX_FRS_GATE;i++){
           return;
 
         fatTC->set_AIDA_pos(hit.DSSD -1, hit.PosX, hit.PosY);
-        Fat_e1_gate[0] = 200;
-        Fat_e1_gate[1] = 1000;
-        Fat_e2_gate[0] = 200;
-        Fat_e2_gate[1] = 1000;
-        refid = 0;
         for (int i=0; i<cInputMain->pFatmult; i++) {
-          if (cInputMain->pFat_QDC_ID[i] == refid) {
-            Fat_e1 = cInputMain->pFat_QDC_E[i];
-            Fat_n1 = refid;
-            if (Fat_e1 > Fat_e1_gate[0] && Fat_e1 < Fat_e1_gate[1]) {
+          for (int j=0; j<cInputMain->pFatmult; j++) {
+            if (cInputMain->pFat_QDC_ID[i] < cInputMain->pFat_QDC_ID[j]) {
+              Fat_e1 = cInputMain->pFat_QDC_E[i];
+              Fat_n1 = cInputMain->pFat_QDC_ID[i];
               Fat_t1 = cInputMain->pFat_TDC_T[i]*0.025;
-              for (int j=0; j<cInputMain->pFatmult; j++) {
-                if (i==j) continue;
-                Fat_e2 = cInputMain->pFat_QDC_E[j];
-                Fat_n2 = cInputMain->pFat_QDC_ID[j];
-                Fat_t2 = cInputMain->pFat_TDC_T[j]*0.025;
-                if(Fat_n2 < FAT_VME_MAX_MULTI && Fat_e2 > Fat_e2_gate[0] && Fat_e2 < Fat_e2_gate[1]) {
-                  hfat_dt_nocorr[Fat_n2]->Fill(Fat_t1 - Fat_t2);
-                  double Fat_t1c = fatTC->get_t_tofCorr(Fat_n1, Fat_t1);
-                  double Fat_t2c = fatTC->get_t_tofCorr(Fat_n2, Fat_t2);
-                  //printf("  noc   dt %lf   (%lf - %lf)\n", Fat_t1 - Fat_t2, Fat_t1, Fat_t2);
-                  //printf("  corr  dt %lf   (%lf - %lf)\n", Fat_t1c - Fat_t2c, Fat_t1c, Fat_t2c);
-                  hfat_dt_tofcorr[Fat_n2]->Fill(Fat_t1c - Fat_t2c);
-                }
-              }
+              Fat_e2 = cInputMain->pFat_QDC_E[j];
+              Fat_n2 = cInputMain->pFat_QDC_ID[j];
+              Fat_t2 = cInputMain->pFat_TDC_T[j]*0.025;
+              double Fat_t1c = fatTC->get_t_tofCorr(Fat_n1, Fat_t1);
+              double Fat_t2c = fatTC->get_t_tofCorr(Fat_n2, Fat_t2);
+              ggtarray[0] = Fat_e1;
+              ggtarray[1] = Fat_e2;
+              ggtarray[2] = Fat_t1 - Fat_t2;
+              ggt_nocorr->Fill(ggtarray);
+              ggtarray[2] = Fat_t1c - Fat_t2c;
+              ggt_tofcorr->Fill(ggtarray);
             }
-            break; // break after reference detector was found.
           }
         }
 
