@@ -144,8 +144,9 @@ class EventCorrelProc : public TGo4EventProcessor {
     void Process_FRS_AIDA_FATIMA (EventAnlStore* cInput, EventCorrelStore* cOutput);
     FATIMA_tofCorr *fatTC;
     TH1 *hfat_dt_nocorr[FAT_VME_MAX_MULTI];
-    Th1 *hfat_dt_tofcorr[FAT_VME_MAX_MULTI];
-    int refid = 0;
+    TH1 *hfat_dt_tofcorr[FAT_VME_MAX_MULTI];
+    int    refid;
+    int    FAT_dt_FRS_gate;
     double Fat_t1;
     double Fat_t2;
     double Fat_e1;

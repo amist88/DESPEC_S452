@@ -2190,7 +2190,7 @@ for(int i=0;i<MAX_FRS_GATE;i++){
     //Later also add the timing cube here
   }
 
-  void EventCorrelProc::Process_FRS_AIDA_FATIMA (EventAnlStore* cInput,
+  void EventCorrelProc::Process_FRS_AIDA_FATIMA (EventAnlStore* cInputMain,
                                                  EventCorrelStore* cOutput)
   {
     // Need all three systems, check if they at least have WR time stamp.
@@ -2198,9 +2198,9 @@ for(int i=0;i<MAX_FRS_GATE;i++){
     if(cInputMain->pFRS_WR == 0 ||
        cInputMain->pFatmult < 1 ||
        cInputMain->pAIDA_WR == 0)
-         return;
+      return;
     // Check FRS PID gate
-    if(cInputMain->pFRS_ZAoQ_pass[gate]==false )
+    if(cInputMain->pFRS_ZAoQ_pass[FAT_dt_FRS_gate]==false )
       return;
     // If we have FATIMA requirements, e.g. energy thresholds, put them here!
     // get AIDA position
@@ -2224,6 +2224,7 @@ for(int i=0;i<MAX_FRS_GATE;i++){
         Fat_e1_gate[1] = 1000;
         Fat_e2_gate[0] = 200;
         Fat_e2_gate[1] = 1000;
+        refid = 0;
         for (int i=0; i<cInputMain->pFatmult; i++) {
           if (cInputMain->pFat_QDC_ID[i] == refid) {
             Fat_e1 = cInputMain->pFat_QDC_E[i];
@@ -2245,7 +2246,7 @@ for(int i=0;i<MAX_FRS_GATE;i++){
                 }
               }
             }
-            break;
+            break; // break after reference detector was found.
           }
         }
 
