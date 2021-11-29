@@ -25,7 +25,7 @@
 #include "AIDA_Event.h"
 #include "AIDA_Data_Types.h"
 #include "FATIMA_tofCorr.h"
-##include "TimingCube.h"  //includes THnSparse
+#include "TimingCube.h"  //includes THnSparse
 #include "Go4ConditionsBase/TGo4WinCond.h"
 #include "Go4ConditionsBase/TGo4PolyCond.h"
 #include "Configuration_Files/DESPEC_General_Setup/DESPEC_Setup_File.h"
