@@ -123,8 +123,10 @@ class EventCorrelProc : public TGo4EventProcessor {
     void Make_Beta_Gamma_Histos();
     void Make_Timemachine_Histos();
 
+    //
+    void Make_FRS_AIDA_FATIMA_Histos();
+
     void Process_FRS_AIDA(EventAnlStore* cInput, EventCorrelStore* cOutput);
-    //void Process_FRS_Prompt_AIDA_FATIMA_Ge(EventAnlStore* cInput, EventCorrelStore* cOutput);
 
     void Process_FRS_Prompt_Fat(EventAnlStore* cInput, EventCorrelStore* cOutput);
     void Process_FRS_Prompt_Ge(EventAnlStore* cInput, EventCorrelStore* cOutput);
@@ -136,6 +138,22 @@ class EventCorrelProc : public TGo4EventProcessor {
 
     void Process_Beta_Gamma(EventAnlStore* cInput, EventCorrelStore* cOutput);
     void Process_Timemachine(EventAnlStore* cInput, EventCorrelStore* cOutput);
+
+    //FATIMA tof corrected:
+    //Includes FATIMA_tofCorrection!
+    void Process_FRS_AIDA_FATIMA (EventAnlStore* cInput, EventCorrelStore* cOutput);
+    FATIMA_tofCorr *fatTC;
+    TH1 *hfat_dt_nocorr[FAT_VME_MAX_MULTI];
+    Th1 *hfat_dt_tofcorr[FAT_VME_MAX_MULTI];
+    int refid = 0;
+    double Fat_t1;
+    double Fat_t2;
+    double Fat_e1;
+    double Fat_e2;
+    int    Fat_n1;
+    int    Fat_n2;
+    double Fat_e1_gate[2];
+    double Fat_e2_gate[2];
 
     TGo4WinCond* MakeWindowCond(const char* foldername,
                   const char* condname,
