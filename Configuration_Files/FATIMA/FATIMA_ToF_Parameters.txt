@@ -1,0 +1,51 @@
+# Use time of flight correction at all?
+# 0: apply no correction, even if called
+# 1: apply correction.
+USE_TOF
+1
+
+# Use AIDA information event-by-event?
+# 0: Don't use AIDA position, even if it is set
+# 1: Use AIDA position
+USE_AIDA_POS
+0
+
+# I M P O R T A N T:
+# The coordinate system used by the FATIMA_tofCorr Class is the same
+# as that used by AIDA and FRS go4.
+# It is left-handed. The Z-axis points down-stream, i.e. in beam direction.
+# When looking downstream, in Z-direction:
+# X points to the right, Y points up.
+#
+#               Y
+#               ^   Z
+#               |  /
+#               | /
+#               |/
+#               0--------> X
+#       The coordinate system when looking down-stream
+
+# Set the AIDA offset for DSSDs (in mm) with respect to the focal point at (0,0,0)
+# Code currently accepts up to nine DSSDs
+# (This will only be applied if USE_AIDA_POS is set to 1)
+# For a wide AIDA configuration with several DSSDs in x-direction, these are
+# usually handled as one large DSSD in the code, so x and y correction are
+# usually not needed and should remain set to 0.
+AIDA_OFFSET
+# DSSD#  xoffset  yoffset  zoffset
+0 0 0 -10
+1 0 0   0
+3 0 0  10
+
+# Set constant offset in mm
+# This can be used to account for missalignement, as well as for correcting
+# the position with sources which are not in the centre
+# This offset will always be applied if USE_TOF is set to 1,
+# so set this all to 0 if it is not needed.
+CONST_OFFSET
+# const X-offset   (positive means left! when looking downstream)
+30
+# const Y-offset
+0
+# const Z-offset
+0
