@@ -1,5 +1,5 @@
 #include "Raw_Event.h"
-//#include "AidaMover.h" 
+//#include "AidaMover.h"
 #include <iostream>
 
 using namespace std;
@@ -40,8 +40,8 @@ void Raw_Event::set_DATA_MUSIC(Float_t* FRS_dE,Float_t* FRS_dE_cor, Int_t* Music
         MUSIC_t1[i] = 0;
         MUSIC_t2[i] =0;
     }
-    
-    
+
+
     for(int i=0; i<2; ++i){
 
     MUSIC_dE[i] = FRS_dE[i];
@@ -64,8 +64,8 @@ for(int i=0; i <6; i++){
     sci_tx[i] = 0;
     sci_x[i] = 0;
 }
-    
-    for (int cnt=0;cnt<6;cnt++) // 
+
+    for (int cnt=0;cnt<6;cnt++) //
      {
        int idx = 0 ;
        //int mw_idx = 0;
@@ -73,20 +73,20 @@ for(int i=0; i <6; i++){
        switch(cnt)
      {
      case 0:        /* SC21 */
-       idx = 2; 
+       idx = 2;
        //mw_idx = 2;
        //mwx = clb.sc21_x;
-       break;    
+       break;
      case 1:        /* SC21 delayed */
-       idx = 3; 
+       idx = 3;
        //mw_idx = 2;
        //mwx = clb.sc21_x;
-       break;    
+       break;
      case 2:        /* SC41 */
-       idx = 5; 
+       idx = 5;
        //mw_idx = 5;
        //mwx = clb.tpc_sc41_x;
-       break;    
+       break;
      case 3:        /* SC42 */
            idx = 6;
        break;
@@ -97,7 +97,7 @@ for(int i=0; i <6; i++){
        idx = 10;    /* SC81 */
        break;
      default: idx = 2;
-     }   
+     }
 
     sci_l[idx] = FRS_sci_l[idx];
     //cout<<"RAW sci_l[2]" <<  sci_l[2]  <<endl;
@@ -128,8 +128,8 @@ void Raw_Event::set_DATA_SCI_dT(Int_t FRS_dt_21l_21r, Int_t FRS_dt_41l_41r,
     dt_81l_81r = 0;
     dt_21l_81l = 0;
     dt_21r_81r = 0;
-    
-    
+
+
     dt_21l_21r = FRS_dt_21l_21r;
     dt_41l_41r = FRS_dt_41l_41r;
     dt_21l_41l = FRS_dt_21l_41l;
@@ -147,21 +147,21 @@ void Raw_Event::set_DATA_SCI_dT(Int_t FRS_dt_21l_21r, Int_t FRS_dt_41l_41r,
 
 }
 void Raw_Event::set_DATA_SCI_ToF(Float_t FRS_sci_tofll2,Float_t FRS_sci_tofll3,Float_t FRS_sci_tofll5, Float_t FRS_sci_tof2,Float_t FRS_sci_tofrr2,Float_t FRS_sci_tofrr3, Float_t FRS_sci_tofrr5, Float_t FRS_sci_tof3,Float_t FRS_sci_tof5,Float_t FRS_sci_tof2_calib,Float_t FRS_sci_tof3_calib, Float_t FRS_sci_tof5_calib){
-    
+
    // (sci_tofll2, sci_tofll3, sci_tofll5, sci_tof2, sci_tofrr2, sci_tofrr3, sci_tofrr5, sci_tof3,sci_tof5);
-    
+
     sci_tofll2 = 0;
     sci_tofll3 = 0;
     sci_tof2   = 0;
     sci_tofrr2 = 0;
     sci_tofrr3 = 0;
     sci_tof3   = 0;
-    
+
     sci_tof2_calib   = 0;
     sci_tof3_calib   = 0;
     sci_tof5_calib   = 0;
-    
-    
+
+
     sci_tofll2 = FRS_sci_tofll2;
     sci_tofll3 = FRS_sci_tofll3;
     sci_tofll5 = FRS_sci_tofll5;
@@ -176,7 +176,7 @@ void Raw_Event::set_DATA_SCI_ToF(Float_t FRS_sci_tofll2,Float_t FRS_sci_tofll3,F
     sci_tof5_calib   = FRS_sci_tof5_calib;
 }
 void Raw_Event::set_DATA_TPC(Int_t*** FRS_TPC_lt,Int_t*** FRS_TPC_rt,Float_t* FRS_TPC_x, Float_t* FRS_TPC_y ,Float_t FRS_TPC_x0,Float_t FRS_TPC_x1){
- 
+
     TPC_x0 = 0;
     TPC_x1 = 0;
 for(int i=0; i<7; i++){
@@ -196,15 +196,15 @@ for(int i=0; i<7; i++){
             for(int k=0; k<64; k++){
          TPC_lt[i][j][k] =  FRS_TPC_lt[i][j][k];
          TPC_rt[i][j][k] =  FRS_TPC_rt[i][j][k];
-                
+
             }
         }
     }
     TPC_x0 = FRS_TPC_x0;
     TPC_x1 = FRS_TPC_x1;
-    
+
 }
- 
+
 void Raw_Event::set_DATA_ID_2_4(Float_t FRS_ID_x2,Float_t FRS_ID_y2,Float_t FRS_ID_a2,Float_t FRS_ID_b2,Float_t FRS_ID_x4,Float_t FRS_ID_y4,Float_t FRS_ID_a4,Float_t FRS_ID_b4){
     ID_x2 = 0;
     ID_y2 = 0;
@@ -236,10 +236,10 @@ void Raw_Event::set_DATA_ID_Beta_Rho(Float_t* FRS_ID_brho,Float_t* FRS_ID_rho,Fl
     beta = 0;
     beta3 = 0;
     gamma = 0;
-    
+
     for(int i=0; i<2; ++i){
    // cout<<"ID_brho[i] " << ID_brho[i]<<" i " << i << endl;
-      
+
     ID_brho[i] = FRS_ID_brho[i];
     ID_rho[i] = FRS_ID_rho[i];
 
@@ -276,7 +276,7 @@ void Raw_Event::set_DATA_ID_Timestamp(Float_t FRS_timestamp,Float_t FRS_ts,Float
 }
 
 void Raw_Event::set_DATA_FRS_SCALERS(Int_t FRS_time_in_ms, Int_t FRS_spill_count,Int_t FRS_ibin_for_s, Int_t FRS_ibin_for_100ms, Int_t FRS_ibin_for_spill,Int_t FRS_ibin_clean_for_s, Int_t FRS_ibin_clean_for_100ms,Int_t FRS_ibin_clean_for_spill, UInt_t* FRS_increase_scaler_temp){
-    
+
     time_in_ms = FRS_time_in_ms;
     spill_count = FRS_spill_count;
     ibin_for_s = FRS_ibin_for_s;
@@ -286,7 +286,7 @@ void Raw_Event::set_DATA_FRS_SCALERS(Int_t FRS_time_in_ms, Int_t FRS_spill_count
     ibin_clean_for_100ms = FRS_ibin_clean_for_100ms;
     ibin_clean_for_spill = FRS_ibin_clean_for_spill;
        for (int i = 0; i < 64; i++) increase_scaler_temp[i] = FRS_increase_scaler_temp[i];
-  
+
 }
 
 void Raw_Event::set_DATA_VFTX(Double_t vftx_21l, Double_t vftx_21r,Double_t vftx_22l, Double_t vftx_22r,Double_t vftx_41l, Double_t vftx_41r, Double_t vftx_42l, Double_t vftx_42r, Double_t* vftx_t){
@@ -299,45 +299,49 @@ void Raw_Event::set_DATA_VFTX(Double_t vftx_21l, Double_t vftx_21r,Double_t vftx
     TRaw_vftx_42L = vftx_42l;
     TRaw_vftx_42R = vftx_42r;
     for(int i=0; i<32; i++){
-     TRaw_vftx[i] = vftx_t[i];   
+     TRaw_vftx[i] = vftx_t[i];
     }
 }
 
-void Raw_Event::set_DATA_RAW_MHTDC(Float_t raw_mhtdc_sc21lr_dt,Float_t raw_mhtdc_sc21lr_x,Float_t raw_mhtdc_sc22lr_dt,Float_t raw_mhtdc_sc22lr_x,Float_t raw_mhtdc_sc41lr_dt,Float_t raw_mhtdc_sc41lr_x,Float_t raw_mhtdc_sc42lr_dt,Float_t raw_mhtdc_sc42lr_x){
-    
-    Raw_mhtdc_sc21lr_dt = raw_mhtdc_sc21lr_dt;
-    Raw_mhtdc_sc21lr_x = raw_mhtdc_sc21lr_x;
+void Raw_Event::set_DATA_RAW_MHTDC(Float_t* raw_mhtdc_sc21lr_dt,Float_t* raw_mhtdc_sc21lr_x,Float_t raw_mhtdc_sc22lr_dt,Float_t raw_mhtdc_sc22lr_x,Float_t raw_mhtdc_sc41lr_dt,Float_t raw_mhtdc_sc41lr_x,Float_t raw_mhtdc_sc42lr_dt,Float_t raw_mhtdc_sc42lr_x){
+for(int i=0; i<10; i++){
+    Raw_mhtdc_sc21lr_dt[i] = raw_mhtdc_sc21lr_dt[i];
+    Raw_mhtdc_sc21lr_x[i] = raw_mhtdc_sc21lr_x[i];
+
+}
     Raw_mhtdc_sc22lr_dt = raw_mhtdc_sc22lr_dt;
     Raw_mhtdc_sc22lr_x = raw_mhtdc_sc22lr_x;
     Raw_mhtdc_sc41lr_dt = raw_mhtdc_sc41lr_dt;
     Raw_mhtdc_sc41lr_x = raw_mhtdc_sc41lr_x;
     Raw_mhtdc_sc42lr_dt = raw_mhtdc_sc42lr_dt;
     Raw_mhtdc_sc42lr_x = raw_mhtdc_sc42lr_x;
-       
+
     }
 
-void Raw_Event::set_DATA_ID_MHTDC(Float_t id_mhtdc_aoq,Float_t id_mhtdc_aoq_corr, Float_t id_mhtdc_z1,Float_t id_mhtdc_z2, Float_t id_mhtdc_dEdeg,Float_t id_mhtdc_dEdegoQ, Float_t id_mhtdc_beta, Float_t id_mhtdc_tof4121, Float_t id_mhtdc_tof4221, Float_t id_mhtdc_tof4122){
-    
+void Raw_Event::set_DATA_ID_MHTDC(Float_t* id_mhtdc_aoq,Float_t* id_mhtdc_aoq_corr, Float_t* id_mhtdc_z1,Float_t* id_mhtdc_z2, Float_t id_mhtdc_dEdeg,Float_t id_mhtdc_dEdegoQ, Float_t* id_mhtdc_beta, Float_t* id_mhtdc_tof4121, Float_t id_mhtdc_tof4221, Float_t id_mhtdc_tof4122){
+
   //  (id_mhtdc_aoq_s2s4, id_mhtdc_aoq_corr_s2s4, id_mhtdc_z_music41, id_mhtdc_z_music42, id_mhtdc_dEdeg, id_mhtdc_dEdegoQ, id_mhtdc_beta_s2s4, mhtdc_tof4121, mhtdc_tof4221,mhtdc_tof4122);
-    
-    ID_mhtdc_AoQ = id_mhtdc_aoq;
-    ID_mhtdc_AoQ_corr = id_mhtdc_aoq_corr;
-    ID_mhtdc_Z1 = id_mhtdc_z1;
-    ID_mhtdc_Z2 = id_mhtdc_z2;
+for(int i=0; i<10; i++){
+    ID_mhtdc_AoQ[i] = id_mhtdc_aoq[i];
+    ID_mhtdc_AoQ_corr[i] = id_mhtdc_aoq_corr[i];
+    ID_mhtdc_Beta[i] = id_mhtdc_beta[i];
+    ID_mhtdc_tof4121[i] = id_mhtdc_tof4121[i];
+    ID_mhtdc_Z1[i] = id_mhtdc_z1[i];
+    ID_mhtdc_Z2[i] = id_mhtdc_z2[i];
+  }
+
     ID_mhtdc_dEdeg = id_mhtdc_dEdeg;
     ID_mhtdc_dEdegoQ = id_mhtdc_dEdegoQ;
-    ID_mhtdc_Beta = id_mhtdc_beta;
-    ID_mhtdc_tof4121 = id_mhtdc_tof4121;
     ID_mhtdc_tof4221 = id_mhtdc_tof4221;
     ID_mhtdc_tof4122 = id_mhtdc_tof4122;
-   
+
 //          ID_mhtdc_AoQ = id_mhtdc_aoq;
 //          ID_mhtdc_Z1 = id_mhtdc_z1;
 //          ID_mhtdc_Z2 = id_mhtdc_z2;
 //          ID_mhtdc_dEdeg = id_mhtdc_dEdeg;
 //          ID_mhtdc_dEdegoQ = id_mhtdc_dEdegoQ;
 //          ID_mhtdc_Beta = id_mhtdc_beta;
-   
+
 }
 
 // #################################################################
@@ -419,24 +423,24 @@ void Raw_Event::set_DATA_FINGER(int* it,double** Edge_Coarse,double** Edge_fine,
         fired_tamex[i] = (iterator[i] > 0);
         leading_hits[i] = 0;
         trailing_hits[i] = 0;
-          
+
         for(int j = 0;j < iterator[i];j++){
             ch_ID[i][j] = ch_ed[i][j];
             leading_array[i][j] = Lead_Arr[i][j];
              if(ch_ID[i][j] % 2 == 1){
-               
+
                 coarse_T_edge_lead[i][j] = (double) Edge_Coarse[i][j];
                 fine_T_edge_lead[i][j] = (double) Edge_fine[i][j];
                 phys_channel[i][j] = (ch_ID[i][j]+1)/2;
                 leading_hits[i]++;
                 leading_hits_ch[i][phys_channel[i][j]]++;
                // cout<<"RAW " << " phys_channel[i][j] " << phys_channel[i][j] << " coarse_T_edge_lead[i][j] " <<coarse_T_edge_lead[i][j] << " fine_T_edge_lead[i][j] " <<fine_T_edge_lead[i][j] << " leading_hits[i] " <<leading_hits[i] << " i " << i << " j " << j <<endl;
-      
+
             }
             else{
                 coarse_T_edge_trail[i][j] = (double)  Edge_Coarse[i][j];
                 fine_T_edge_trail[i][j] =(double)  Edge_fine[i][j];
-            
+
                 trailing_hits[i]++;
                 phys_channel[i][j] = (ch_ID[i][j])/2;
                 trailing_hits_ch[i][phys_channel[i][j]]++;
@@ -460,15 +464,15 @@ void Raw_Event::set_DATA_FINGER(int* it,double** Edge_Coarse,double** Edge_fine,
 //     this->VME_QDC_DAT1[i] = VME_QDC_Dat1[i];
 //     this->VME_QDC_DAT2[i] = VME_QDC_Dat2[i];
 //     this->VME_QDC_CHA[i] = VME_QDC_Chan[i];
-//    
+//
 //       }
-// 
+//
 //     for(int j=0; j<TDC_IT; j++) {
-// 
+//
 //     this->VME_TDC_CHA[j] = VME_TDC_Chan[j];
 //     this->VME_TDC_DAT[j] = VME_TDC_Dat[j];
-// 
-// 
+//
+//
 //          }
 //        Event_Type=2;
 //         }
@@ -479,7 +483,7 @@ void Raw_Event::set_DATA_FINGER(int* it,double** Edge_Coarse,double** Edge_fine,
 
     for(int i=1; i<SCALER_ITERATOR; i++) {
     this->SCALER_DATA[i] = Scaler_Dat[i];
-    
+
 
          }*/
 /*
@@ -508,7 +512,7 @@ void Raw_Event::set_DATA_PLASTIC_TAMEX(int* it_bPlas,double** Edge_Coarse_bPlas,
     for(int i = 0;i < amount_hit_tamex_bPlas;i++){
         iterator_bPlas[i] = it_bPlas[i];
         tamex_id_bPlas[i] = tamex_id[i];
-       
+
         trigger_coarse_bPlas[i] = Coarse_Trigger_bPlas[i];
         trigger_fine_bPlas[i] = Fine_Trigger_bPlas[i];
         fired_tamex_bPlas[i] = (iterator_bPlas[i] > 0);
@@ -524,10 +528,10 @@ void Raw_Event::set_DATA_PLASTIC_TAMEX(int* it_bPlas,double** Edge_Coarse_bPlas,
 
                 leading_array_bPlas[i][j] = Lead_Arr_bPlas[i][j];
                 phys_channel_bPlas[i][j] =((ch_ID_bPlas[i][j]+1)/2-1);
-                
+
                 lead_T_bPlas[i][j] = (coarse_T_edge_lead_bPlas[i][j]-fine_T_edge_lead_bPlas[i][j]);
-                
-             
+
+
                 leading_hits_bPlas[i]++;
                 leading_hits_ch_bPlas[i][phys_channel_bPlas[i][j]]++;
                  }
@@ -538,12 +542,12 @@ void Raw_Event::set_DATA_PLASTIC_TAMEX(int* it_bPlas,double** Edge_Coarse_bPlas,
 
                 trailing_hits_bPlas[i]++;
                 phys_channel_bPlas[i][j] = (ch_ID_bPlas[i][j])/2-1;
-                
+
                 trail_T_bPlas[i][j] = (coarse_T_edge_trail_bPlas[i][j]-fine_T_edge_trail_bPlas[i][j]);
-                
+
                 trailing_hits_ch_bPlas[i][phys_channel_bPlas[i][j]]++;
           }
-    
+
         }
     }
 
@@ -562,7 +566,7 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
 
     this->FAT_QDCs_FIRED = QDC_FIRED;
     this->FAT_TDCs_FIRED = TDC_FIRED;
-    
+
     int dets_fired = 0;
     int tdc_dets_fired =0;
     for (int i=0; i<QDC_FIRED; i++) {
@@ -573,7 +577,7 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
         this->FAT_QShort_Raw[i] = Qs_Raw[i];
         this->FAT_QDC_t_coarse[i] = QDC_c[i];
         this->FAT_QDC_t_fine[i] = QDC_f[i];
-      
+
         for (int j=0; j<TDC_FIRED; j++) {
             if (det_ids_QDC[i] == det_ids_TDC[j]) {
                 this->FAT_id[dets_fired] = det_ids_QDC[i];
@@ -584,8 +588,8 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
                 this->FAT_t[dets_fired] = TDC_ns[j];
                 this->FAT_t_qdc[dets_fired] = QDC_c[i];
                 dets_fired++;
-                
-                
+
+
             }
         }
     }
@@ -593,7 +597,7 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
 
     for (int i=0; i<TDC_FIRED; i++) {
         this->FAT_TDC_id[i]        = det_ids_TDC[i];
-     
+
         this->FAT_TDC_timestamp[i] = TDC[i];
         this->FAT_TDC_timestamp_raw[i] = TDC[i];
      tdc_dets_fired++;
@@ -605,16 +609,16 @@ void Raw_Event::set_DATA_FATIMA(int QDC_FIRED,int TDC_FIRED,
 //-------------------------------------- SCALERS  ------------------------------------------------//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //   void Raw_Event::set_DATA_SCALER(int Scaler_ite,  double* Scaler_Dat){
-// // 
-//      
+// //
+//
 //     //  if(Scaler_Used==true){
-//           
+//
 //         this->SCALER_ITERATOR = Scaler_ite;
-//         
+//
 //         for(int i=0; i<Scaler_ite; i++) {
 //         this->SCALER_DATA[i] = Scaler_Dat[i];
 //          }
-// 
+//
 //     Event_Type=2;
 //       //  }
 //   }
@@ -640,7 +644,7 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
              fine_T_edge_lead_fat[i][j] = 0;
              coarse_T_edge_trail_fat[i][j] = 0;
              fine_T_edge_trail_fat[i][j] = 0;
-          
+
         }
     }
 
@@ -650,32 +654,32 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
          ///Lead epoch min
             if(ch_ed_fat[i][j] <33 && j % 2 == 0){
                //cout<<"epoch_lead_first " <<epoch_lead_first << " Epoch_data_ch_leading[i][j] " <<Epoch_data_ch_leading[i][j] << "i " <<i << " j " << j << endl;
-                
+
                if(epoch_lead_first==0)  epoch_lead_first= Epoch_data_ch_leading[i][j];
                 if(epoch_lead_first> Epoch_data_ch_leading[i][j]){
 
                     epoch_lead_first= Epoch_data_ch_leading[i][j];
-    
+
                 }
 //                  cout<<"Epoch_data_ch_leading[i][j] " <<Epoch_data_ch_leading[i][j] << endl;
 //                 if(epoch_lead>Epoch_data_ch_leading[i][j]){
 //                      epoch_lead= Epoch_data_ch_leading[i][j];
-//                     
+//
                 }
                  ///Trail epoch min
-                 
+
                   //cout<<"0 epoch_trail_first " << epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j] << " i " << i << " j " << j <<" ch_ID_fat[i][j] " <<ch_ed_fat[i][j] <<  endl;
-                  
+
                       if(ch_ID_fat[i][j] >33 && j % 2 == 1 ){
-               
-                
+
+
                if(epoch_trail_first==0) { epoch_trail_first= Epoch_data_ch_trailing[i][j];
-                   
-                   
+
+
                   // cout<<"1 epoch_trail_first " <<epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j] << " ch_ed_fat[i][j] " <<ch_ed_fat[i][j] << " i " << i << " j " << j <<  endl;
                }
              //  cout<<"2 epoch_trail_first " << epoch_trail_first <<" Epoch_data_ch_trailing[i][j] " <<Epoch_data_ch_trailing[i][j]<<" ch_ed_fat[i][j] " << ch_ed_fat[i][j]  << " i " << i << " j " << j << endl;
-               
+
                 if(epoch_trail_first> Epoch_data_ch_trailing[i][j] &&Epoch_data_ch_trailing[i][j]!=0 ){
 
                     epoch_trail_first= Epoch_data_ch_trailing[i][j];
@@ -684,13 +688,13 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
 //                  cout<<"Epoch_data_ch_leading[i][j] " <<Epoch_data_ch_leading[i][j] << endl;
 //                 if(epoch_lead>Epoch_data_ch_leading[i][j]){
 //                      epoch_lead= Epoch_data_ch_leading[i][j];
-//                     
+//
                 }
-                
+
             }
          }
-       
-    
+
+
 //     cout<<"max_epoch_lead " <<max_epoch_lead << endl;
     for(int i = 0;i < amount_hit_tamex_fat;i++){
         if(i<4){
@@ -701,62 +705,62 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
         leading_hits_fat[i] = 0;
         trailing_hits_fat[i] = 0;
 
-        
-        
+
+
         for(int j = 0;j < iterator_fat[i];++j){
-            
+
            // cout<<"RAW i " << i << " j " << j << endl;
             ch_ID_fat[i][j] = ch_ed_fat[i][j];
             leading_array_fat[i][j] = Lead_Arr_fat[i][j];
-        
-            ///This is for leads 
+
+            ///This is for leads
             if(ch_ID_fat[i][j] <33 && j % 2 == 0){
                 epoch_ch_leading[i][j] = Epoch_data_ch_leading[i][j];
                 epoch_lead_diff = (epoch_ch_leading[i][j]-epoch_lead_first);
 
                 coarse_T_edge_lead_fat[i][j] = (double) Edge_Coarse_fat[i][j];
-                
+
                 //coarse_T_edge_lead_fat[i][j] = (double) Edge_Coarse_fat[i][j]+(epoch_lead_diff*10240/5);
                 fine_T_edge_lead_fat[i][j] = (double) Edge_fine_fat[i][j];
-              
+
               //  if(epoch_lead_diff>1 )cout<<"epoch_lead_diff " <<epoch_lead_diff << " Edge_Coarse_fat[i][j] " <<Edge_Coarse_fat[i][j] << " coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] << " i " << i << " j " << j << endl;
             // if(epoch_lead_first>0) cout<<"2 LEAD FIRST EPOCH  " << epoch_lead_first <<" epoch_ch_leading[i][j] " << epoch_ch_leading[i][j] << " epoch_lead_diff " <<epoch_lead_diff <<" i " << i << " j " << j <<" Edge_Coarse_fat[i][j] " << Edge_Coarse_fat[i][j] << endl;
-           
+
                 phys_channel_fat[i][j] = (ch_ID_fat[i][j]);
-          
+
                // cout<<"coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j]  " <<fine_T_edge_lead_fat[i][j] <<" diff "<<coarse_T_edge_lead_fat[i][j]- fine_T_edge_lead_fat[i][j]<< " i " << i << " j " << j << endl;
-                
+
                 leading_hits_fat[i]++;
                 leading_hits_ch_fat[i][phys_channel_fat[i][j]]++;
-                
+
              // cout <<"3 RAW Lead coarse_T " << coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] << " i " << i << " j " << j << " lead hits " << leading_hits_ch_fat[i][phys_channel_fat[i][j]]<<" phys chan " << phys_channel_fat[i][j] << endl;
                  }
-                 
-                 
-                 
-                 
+
+
+
+
                  //---------------TRAIL---------------//
             if(ch_ID_fat[i][j] >33 && j % 2 == 1 ){
-                
+
                 epoch_ch_trailing[i][j] = Epoch_data_ch_trailing[i][j];
                 epoch_trail_diff = (epoch_ch_trailing[i][j]-epoch_trail_first);
                 //if (epoch_trail_diff>1)cout<<" epoch_trail_diff " <<epoch_trail_diff << " coarse_T_edge_trail_fat[i][j] " << " Edge_Coarse_fat[i][j] " <<Edge_Coarse_fat[i][j] << " i " << i << i << " j " << j << endl;
                 coarse_T_edge_trail_fat[i][j] = (double)  Edge_Coarse_fat[i][j];
-                
+
               //  coarse_T_edge_trail_fat[i][j] = (double)  Edge_Coarse_fat[i][j]+(epoch_trail_diff*10240/5);
-                
+
               //if(epoch_trail_first>0) cout<<"2 TRAIL FIRST EPOCH  " << epoch_trail_first <<" epoch_ch_trailing[i][j] " << epoch_ch_trailing[i][j] << " epoch_trail_diff " <<epoch_trail_diff <<" i " << i << " j " << j <<" Edge_Coarse_fat[i][j] " << Edge_Coarse_fat[i][j] << endl;
-                
+
                 fine_T_edge_trail_fat[i][j] =(double)  Edge_fine_fat[i][j];
 
-              
+
                 trailing_hits_fat[i]++;
                 phys_channel_fat[i][j] = (ch_ID_fat[i][j])-33;
 
 		if(phys_channel_fat[i][j]<100){
                 trailing_hits_ch_fat[i][phys_channel_fat[i][j]]++;
-		
-            
+
+
               // cout <<"3 RAW Trail coarse_T "  << coarse_T_edge_trail_fat[i][j] << " fine_T_edge_trail_fat[i][j] " <<fine_T_edge_trail_fat[i][j] << " i " << i << " j " << j << " trail hits " << trailing_hits_ch_fat[i][phys_channel_fat[i][j]]<<" phys chan " << phys_channel_fat[i][j] << endl;
                 }
             }
@@ -772,9 +776,9 @@ void Raw_Event::set_DATA_FATIMA_TAMEX(int* it_fat,double** Edge_Coarse_fat,doubl
 
 void Raw_Event::set_DATA_Germanium(int Ge_FIRED,ULong64_t* sum_time,int* hit_pattern,ULong64_t* chan_time,double* chan_en, int* det_ids, int* crystal_ids, bool* pileup, bool* overflow,ULong64_t* chan_cf){
         this->Ge_FIRED = Ge_FIRED;
-    
+
         for(int i = 0;i < Ge_FIRED;++i){
-    
+
         Germanium_Det_Nums[i] = det_ids[i];
         Germanium_Crystal_Nums[i] = crystal_ids[i];
         Germanium_sum_time[i] = sum_time[i];
@@ -890,8 +894,8 @@ Double_t Raw_Event::get_FRS_TRaw_vftx_42l(){return TRaw_vftx_42L;}
 Double_t Raw_Event::get_FRS_TRaw_vftx_42r(){return TRaw_vftx_42R;}
 Double_t Raw_Event::get_FRS_TRaw_vftx(int i){return TRaw_vftx[i];}
 
-Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_dt(){return Raw_mhtdc_sc21lr_dt;}
-Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_x(){return Raw_mhtdc_sc21lr_x;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_dt(int i){return Raw_mhtdc_sc21lr_dt[i];}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_x(int i){return Raw_mhtdc_sc21lr_x[i];}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_dt(){return Raw_mhtdc_sc22lr_dt;}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_x(){return Raw_mhtdc_sc22lr_x;}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc41lr_dt(){return Raw_mhtdc_sc41lr_dt;}
@@ -899,14 +903,14 @@ Float_t Raw_Event::get_FRS_Raw_mhtdc_sc41lr_x(){return Raw_mhtdc_sc41lr_x;}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc42lr_dt(){return Raw_mhtdc_sc42lr_dt;}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc42lr_x(){return Raw_mhtdc_sc42lr_x;}
 
-Float_t Raw_Event::get_FRS_id_mhtdc_aoq(){return ID_mhtdc_AoQ;}
-Float_t Raw_Event::get_FRS_id_mhtdc_aoq_corr(){return ID_mhtdc_AoQ_corr;}
-Float_t Raw_Event::get_FRS_id_mhtdc_z1(){return ID_mhtdc_Z1;}
-Float_t Raw_Event::get_FRS_id_mhtdc_z2(){return ID_mhtdc_Z2;}
+Float_t Raw_Event::get_FRS_id_mhtdc_aoq(int i){return ID_mhtdc_AoQ[i];}
+Float_t Raw_Event::get_FRS_id_mhtdc_aoq_corr(int i){return ID_mhtdc_AoQ_corr[i];}
+Float_t Raw_Event::get_FRS_id_mhtdc_z1(int i){return ID_mhtdc_Z1[i];}
+Float_t Raw_Event::get_FRS_id_mhtdc_z2(int i){return ID_mhtdc_Z2[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_dEdeg(){return ID_mhtdc_dEdeg;}
 Float_t Raw_Event::get_FRS_id_mhtdc_dEdegoQ(){return ID_mhtdc_dEdegoQ;}
-Float_t Raw_Event::get_FRS_id_mhtdc_beta(){return ID_mhtdc_Beta;}
-Float_t Raw_Event::get_FRS_id_mhtdc_tof4121(){return ID_mhtdc_tof4121;}
+Float_t Raw_Event::get_FRS_id_mhtdc_beta(int i){return ID_mhtdc_Beta[i];}
+Float_t Raw_Event::get_FRS_id_mhtdc_tof4121(int i){return ID_mhtdc_tof4121[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_tof4221(){return ID_mhtdc_tof4221;}
 Float_t Raw_Event::get_FRS_id_mhtdc_tof4122(){return ID_mhtdc_tof4122;}
 // #######################################################
@@ -969,17 +973,17 @@ ULong64_t Raw_Event::get_WR(){return WR;}
     int Raw_Event::get_FATIMA_CH_ID(int i,int j){return ch_ID_fat[i][j];}
 
     double Raw_Event::get_FATIMA_lead_T(int i,int j){
-        // cout<<"HERE " << coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j] << " coarse_T_edge_lead_fat[i][j] " <<coarse_T_edge_lead_fat[i][j] << " fine_T_edge_lead_fat[i][j] " <<fine_T_edge_lead_fat[i][j] << endl;
-  
+//
+
         return (coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j]);
-        
+
                     }
 
     double Raw_Event::get_FATIMA_coarse_lead(int i,int j){
-       // cout <<"RAW getter coarse_T_edge_lead_fat[i][0]" <<coarse_T_edge_lead_fat[i][0]<<" i " <<i << " j " << j <<endl; 
+       // cout <<"RAW getter coarse_T_edge_lead_fat[i][0]" <<coarse_T_edge_lead_fat[i][0]<<" i " <<i << " j " << j <<endl;
         return coarse_T_edge_lead_fat[i][j];
    }
-                    
+
    double Raw_Event::get_FATIMA_fine_lead(int i,int j){
         return fine_T_edge_lead_fat[i][j];
    }
@@ -989,11 +993,11 @@ ULong64_t Raw_Event::get_WR(){return WR;}
    double Raw_Event::get_FATIMA_fine_trail(int i,int j){
         return fine_T_edge_trail_fat[i][j];
    }
-   
+
     double Raw_Event::get_FATIMA_trail_T(int i,int j){
          return (coarse_T_edge_trail_fat[i][j] - fine_T_edge_trail_fat[i][j]);
                     }
-                    
+
     double Raw_Event::get_FATIMA_Lead_Lead(int i,int j){
         double T_lead_fat1 = (coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j]);
         double T_lead_fat2 = (coarse_T_edge_lead_fat[i][j+2] - fine_T_edge_lead_fat[i][j+2]);
@@ -1005,7 +1009,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
         double T_trail_fat = (coarse_T_edge_trail_fat[i][j+1] - fine_T_edge_trail_fat[i][j+1]);
                return T_trail_fat - T_lead_fat;
                    }
-                   
+
 //          double Raw_Event::get_FATIMA_TOT_added(int i,int j){
 //         double T_lead1 = (coarse_T_edge_lead_fat[i][j] - fine_T_edge_lead_fat[i][j])*5000;
 //         double T_trail1 = (coarse_T_edge_trail_fat[i][j+1] - fine_T_edge_trail_fat[i][j+1])*5000;
@@ -1044,7 +1048,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
 
         return coarse_T_edge_lead[i][j]*5000;
    }
-                    
+
    double Raw_Event::get_FINGER_fine_lead(int i,int j){
         return fine_T_edge_lead[i][j]*5000;
    }
@@ -1054,10 +1058,10 @@ ULong64_t Raw_Event::get_WR(){return WR;}
    double Raw_Event::get_FINGER_fine_trail(int i,int j){
         return fine_T_edge_trail[i][j]*5000;
    }
-   
+
     double Raw_Event::get_FINGER_trail_T(int i,int j){
         //cout << "SEND t" << coarse_T_edge_trail[i][j] << " " << fine_T_edge_trail[i][j] << endl;
-        return (coarse_T_edge_trail[i][j] - fine_T_edge_trail[i][j])*5000; 
+        return (coarse_T_edge_trail[i][j] - fine_T_edge_trail[i][j])*5000;
                     }
 
     double Raw_Event::get_FINGER_TOT(int i,int j){
@@ -1065,7 +1069,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
         double T_trail = (coarse_T_edge_trail[i][j+1] - fine_T_edge_trail[i][j+1])*5000;
                return T_trail - T_lead;
                    }
-                   
+
          double Raw_Event::get_FINGER_TOT_added(int i,int j){
         double T_lead1 = (coarse_T_edge_lead[i][j] - fine_T_edge_lead[i][j])*5000;
         double T_trail1 = (coarse_T_edge_trail[i][j+1] - fine_T_edge_trail[i][j+1])*5000;
@@ -1087,9 +1091,9 @@ ULong64_t Raw_Event::get_WR(){return WR;}
 //------------------------------------- bPlastic TAMEX ------------------------------------------//
 
     int Raw_Event::get_PLASTIC_tamex_hits(){return amount_hit_tamex_bPlas;}
-    
+
     int Raw_Event::get_PLASTIC_TAMEX_ID(int i){return tamex_id_bPlas[i];}
-    
+
     int Raw_Event::get_PLASTIC_am_Fired(int i){return iterator_bPlas[i];}
 
     double Raw_Event::get_PLASTIC_trigger_T(int i){return (trigger_coarse_bPlas[i] - trigger_fine_bPlas[i])*5000;}
@@ -1097,16 +1101,16 @@ ULong64_t Raw_Event::get_WR(){return WR;}
     int Raw_Event::get_PLASTIC_CH_ID(int i,int j){return ch_ID_bPlas[i][j];}
 
     double Raw_Event::get_PLASTIC_lead_T(int i,int j){
-       
+
         return (lead_T_bPlas[i][j]);
-        
+
                     }
 
     double Raw_Event::get_PLASTIC_coarse_lead(int i,int j){
 
         return coarse_T_edge_lead_bPlas[i][j];
    }
-                    
+
    double Raw_Event::get_PLASTIC_fine_lead(int i,int j){
         return fine_T_edge_lead_bPlas[i][j];
    }
@@ -1116,10 +1120,10 @@ ULong64_t Raw_Event::get_WR(){return WR;}
    double Raw_Event::get_PLASTIC_fine_trail(int i,int j){
         return fine_T_edge_trail_bPlas[i][j];
    }
-   
+
     double Raw_Event::get_PLASTIC_trail_T(int i,int j){
-        
-        return (trail_T_bPlas[i][j]); 
+
+        return (trail_T_bPlas[i][j]);
                     }
 
     double Raw_Event::get_PLASTIC_TOT(int i,int j){
@@ -1127,7 +1131,7 @@ ULong64_t Raw_Event::get_WR(){return WR;}
         double T_trail_bPlas = (coarse_T_edge_trail_bPlas[i][j+1] - fine_T_edge_trail_bPlas[i][j+1]);
                return T_trail_bPlas - T_lead_bPlas;
                    }
-                   
+
 //          double Raw_Event::get_PLASTIC_TOT_added(int i,int j){
 //         double T_lead1 = (coarse_T_edge_lead_bPlas[i][j] - fine_T_edge_lead_bPlas[i][j])*5000;
 //         double T_trail1 = (coarse_T_edge_trail_bPlas[i][j+1] - fine_T_edge_trail_bPlas[i][j+1])*5000;
@@ -1145,8 +1149,8 @@ ULong64_t Raw_Event::get_WR(){return WR;}
     int Raw_Event::get_PLASTIC_physical_lead_hits(int i,int j){return leading_hits_ch_bPlas[i][j];}
 
     int Raw_Event::get_PLASTIC_physical_trail_hits(int i,int j){return trailing_hits_ch_bPlas[i][j];}
-    
-    
+
+
 //------------------------------------------ bPlastic VME----------------------------------------//
 //  int Raw_Event::get_plastic_VME_QDC_fired(){return QDC_IT;}
 //  int Raw_Event::get_plastic_VME_TDC_fired(){return TDC_IT;}
@@ -1169,23 +1173,23 @@ PLASTIC_DataStruct* Raw_Event::PassPLASTIC(){ return &PLASTIC_Data;}*/
 
 
     int Raw_Event::get_Germanium_am_Fired(){return Ge_FIRED;}
-    
+
     ULong64_t Raw_Event::get_Germanium_Event_T(int i){return Germanium_sum_time[i];}
-      
-    
-    
+
+
+
     bool Raw_Event::get_Germanium_Pileup(int i){return Germanium_Pileup[i];}
-    
+
     bool Raw_Event::get_Germanium_Overflow(int i){return Germanium_Overflow[i];}
-    
+
     int Raw_Event::get_Germanium_Hit_Pattern(int i){return Germanium_hit_pattern[i];}
-    
+
     ULong64_t Raw_Event::get_Germanium_Chan_T(int i){return Germanium_chan_time[i];}
-    
+
     double Raw_Event::get_Germanium_Chan_E(int i){return Germanium_chan_energy[i];}
-    
-    int Raw_Event::get_Germanium_Det_id(int i){return Germanium_Det_Nums[i];}   
-    
+
+    int Raw_Event::get_Germanium_Det_id(int i){return Germanium_Det_Nums[i];}
+
     int Raw_Event::get_Germanium_Crystal_id(int i){return Germanium_Crystal_Nums[i];}
-    
+
     ULong64_t Raw_Event::get_Germanium_Channel_cf(int i){return Germanium_chan_cf[i];}

@@ -83,7 +83,7 @@ using namespace std;
             Bool_t BuildEvent(TGo4EventElement* dest);
              void Process_AIDA_Event(EventUnpackStore* event);
 
-            
+
              TIDParameter* frs_id;
 
 //            std::vector<AidaCluster> EventsToClusters(std::vector<AidaEvent> const&);
@@ -121,17 +121,17 @@ using namespace std;
 
         const static char* tpc_name_ext1[7];
         const static char* tpc_folder_ext1[7];
-        
+
         //--------Scaler Graphs----------
   TH1          *hScaler_per_s[64];
   TH1          *hScaler_per_100ms[64];
-  TH1          *hScaler_per_spill[64];  
+  TH1          *hScaler_per_spill[64];
   int            scaler_ch_1kHz=0;
   int            scaler_ch_spillstart=0;
   UInt_t         scaler_initial[64];
   UInt_t         scaler_previous[64];
   int            scaler_check_first_event = 1;
-  
+
    Float_t Music_dE[3], Music_dE_corr[3];
 
     Int_t Music_E1[8], Music_E2[8], Music_T1[8], Music_T2[8];
@@ -139,7 +139,7 @@ using namespace std;
     Float_t sci_l[12], sci_r[12], sci_e[12], sci_tx[12], sci_x[12];
 
     Float_t sci_tofll2,  sci_tofrr2, sci_tof2, sci_tofll3, sci_tofrr3, sci_tof3,sci_tofll5, sci_tofrr5, sci_tof5;
-    
+
     Float_t sci_tof2_calib, sci_tof3_calib, sci_tof5_calib;
 
     Float_t ID_x2, ID_y2, ID_a2, ID_b2;
@@ -162,17 +162,17 @@ using namespace std;
     Float_t AoQ, AoQ_corr;
 
     Float_t ID_z, ID_z2, ID_z3;
-    
-    Float_t AoQ_mhtdc, AoQ_corr_mhtdc;
-    
-    Float_t ID_z_mhtdc, ID_z2_mhtdc;
-    
-    Float_t beta_mhtdc;
-    
-    Float_t ID_tof4121_mhtdc, ID_tof4221_mhtdc,ID_tof4122_mhtdc;
+
+    Float_t AoQ_mhtdc[10], AoQ_corr_mhtdc[10];
+
+    Float_t ID_z_mhtdc[10], ID_z2_mhtdc[10];
+
+    Float_t beta_mhtdc[10];
+
+    Float_t ID_tof4121_mhtdc[10], ID_tof4221_mhtdc,ID_tof4122_mhtdc;
 
     Float_t timestamp, ts, ts2;
-    
+
     Int_t time_in_ms;
     Int_t spill_count;
     Int_t ibin_for_s;
@@ -241,7 +241,7 @@ using namespace std;
             TH1 *hSCI_TofRR5;
             TH1 *hSCI_Tof3;
             TH1 *hSCI_Tof5;
-            
+
             TH1 *hSCI_Tof2_calib;
             TH1 *hSCI_Tof3_calib;
             TH1 *hSCI_Tof5_calib;
@@ -257,19 +257,22 @@ using namespace std;
 
 			TH1 *hID_AoQ;
             TH1 *hID_AoQ_corr;
-            
+
             TH1 *hID_AoQ_mhtdc;
             TH1 *hID_AoQ_corr_mhtdc;
             TH1 *hID_beta_mhtdc;
-            
+	    TH1 *hID_beta_mhtdc_first_hit;
+	    TH1 *hID_beta_mhtdc_excl_first_hit;
+	    TH2 *hID_AoQ_vsAngle2_mhtdc;
+
             TH2 *hID_Z_AoQ_mhtdc;
             TH2 *hID_Z_AoQ_corr_mhtdc;
-            TH2 *hID_Z_Z2_mhtdc;
+    //        TH2 *hID_Z_Z2_mhtdc;
 
 			TH1 *hID_Z;
             TH1 *hID_Z2;
             TH1 *hID_Z3;
-            
+
             TH1 *hID_Z_mhtdc;
             TH1 *hID_Z2_mhtdc;
 
@@ -298,12 +301,14 @@ using namespace std;
             TH1 *hMultiHitTDC_TOF_42_21;
             TH1 *hMultiHitTDC_TOF_41_22;
             TH1 *hID_BRho[2];
+						TH1 *hMultiHitTDC_TOF_41_21_first_hit;
+						TH1 *hMultiHitTDC_TOF_41_21_excl_first_hit;
 
             TH1* hvftx_TRaw[32];
             TH1* hvftx_Hit_Pattern;
             TH1* hvftx_Sci21PosRaw;
             TH1* hvftx_Sci22PosRaw;
-           
+
             TH1* hvftx_Sci41PosRaw;
             TH1* hvftx_Sci42PosRaw;
             TH1* hvftx_ToFraw_2141;
@@ -311,7 +316,7 @@ using namespace std;
             TH1* hvftx_ToFraw_2141RR;
             TH1* hvftx_ToFraw_2142LL;
             TH1* hvftx_ToFraw_2142RR;
-            
+
 			TH1* htimestamp;
 			TH1* hts;
 			TH1* hts2;
@@ -346,7 +351,7 @@ using namespace std;
 			TH1* hFAT_hits_QDC;
 			TH1* hFAT_hits_TDC;
             TH1* hFAT_TDC_multi;
-	
+
 			TH1*  hFAT_Traw_VME[FAT_MAX_VME_CHANNELS];
 			TH1*  hFAT_Eraw_VME[FAT_MAX_VME_CHANNELS];
 
@@ -367,7 +372,7 @@ using namespace std;
 			TH1**** TOT_TOT;
 			TH1*** TOT_Single;
 			//TH1*** LEAD_LEAD_Total;
-			
+
 			TH1 *hFatima_test;
 
             TH1 *hFATlead_Coarse[FATIMA_TAMEX_CHANNELS];
@@ -382,7 +387,7 @@ using namespace std;
 
 		private:
 
-            
+
             int AIDA_Hits=0;
             double AIDA_Energy[AIDA_MAX_HITS] = {0};
             int AIDA_FEE[AIDA_MAX_HITS] = {0};
@@ -395,7 +400,7 @@ using namespace std;
 
 			Int_t PrcID_Array[10][9];
 			bool Used_Systems[10];
-            
+
             Int_t Type;
             Int_t SubType;
 
@@ -440,8 +445,8 @@ using namespace std;
       ///End AIDA
 			int val_it;
             int event_number;
-			
-            
+
+
 
 			bool WR_used;
 			bool WHITE_RABBIT_USED; // Read from General Setup File
@@ -473,7 +478,7 @@ using namespace std;
             void Fill_Plastic_VME_Histos();
 
 			void Make_FATIMA_Histos();
-			void Fill_FATIMA_Histos();
+			void Fill_FATIMA_Histos(EventUnpackStore* fOutput);
 
             void Make_FATIMA_TAMEX_Histos();
             void Fill_FATIMA_TAMEX_Histos();
@@ -484,11 +489,11 @@ using namespace std;
             void Make_Finger_Histos();
             void Fill_Finger_Histos();
 
-			void FILL_HISTOGRAMS(int,int,int);
+			void FILL_HISTOGRAMS(int,int,int,EventUnpackStore* fOutput);
 
 			void checkPADI_or_PADIWA();
-	
-            
+
+
            // void checkTAMEXorVME();
             void PrintDespecParameters();
 			void print_MBS(int*,int);
