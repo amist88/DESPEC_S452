@@ -6,67 +6,67 @@ void setup_s452_08_musicgate()
 
    DESPECAnalysis* an = dynamic_cast<DESPECAnalysis*> (TGo4Analysis::Instance());
   if (an==0) {
-    cout << "!!!  Script should be run in FRS analysis" << endl;
+    //cout << "!!!  Script should be run in FRS analysis" << endl;
     return;
   }
 
   TFRSParameter* frs = dynamic_cast<TFRSParameter*> (an->GetParameter("FRSPar"));
   if (frs==0) {
-    cout << "!!!  Parameter FRSPar not found" << endl;
+    //cout << "!!!  Parameter FRSPar not found" << endl;
     return;
   }
 
   TMWParameter* mw = dynamic_cast<TMWParameter*> (an->GetParameter("MWPar"));
   if (mw==0) {
-    cout << "!!!  Parameter MWPar not found" << endl;
+    //cout << "!!!  Parameter MWPar not found" << endl;
     return;
   }
 
   TMUSICParameter* music = dynamic_cast<TMUSICParameter*> (an->GetParameter("MUSICPar"));
   if (music==0) {
-    cout << "!!!  Parameter MUSICPar not found" << endl;
+    //cout << "!!!  Parameter MUSICPar not found" << endl;
     return;
   }
 
   TSCIParameter* sci = dynamic_cast<TSCIParameter*> (an->GetParameter("SCIPar"));
   if (sci==0) {
-    cout << "!!!  Parameter SCIPar not found" << endl;
+    //cout << "!!!  Parameter SCIPar not found" << endl;
     return;
   }
 
   TIDParameter* id = dynamic_cast<TIDParameter*> (an->GetParameter("IDPar"));
   if (id==0) {
-    cout << "!!!  Parameter IDPar not found" << endl;
+    //cout << "!!!  Parameter IDPar not found" << endl;
     return;
   }
 
   TTPCParameter* tpc = dynamic_cast<TTPCParameter*> (an->GetParameter("TPCPar"));
   if (tpc==0) {
-    cout << "!!!  Parameter TPCPar not found" << endl;
+    //cout << "!!!  Parameter TPCPar not found" << endl;
     return;
   }
 
 //   TLABRParameter* labr = dynamic_cast<TLABRParameter*> (an->GetParameter("LABRPar"));
 //   if (labr==0) {
-//     cout << "!!!  Parameter LABRPar not found" << endl;
+//     //cout << "!!!  Parameter LABRPar not found" << endl;
 //     return;
 //   }
 
   TSIParameter* si = dynamic_cast<TSIParameter*> (an->GetParameter("SIPar"));
   if (si==0) {
-    cout << "!!!  Parameter SIPar not found" << endl;
+    //cout << "!!!  Parameter SIPar not found" << endl;
     return;
   }
 
   TMRTOFMSParameter* mrtof = dynamic_cast<TMRTOFMSParameter*> (an->GetParameter("MRTOFMSPar"));
   if (mrtof==0) {
-    cout << "!!!  Parameter MR-TOF-MSPar not found" << endl;
+    //cout << "!!!  Parameter MR-TOF-MSPar not found" << endl;
     return;
   }
  /*
   TModParameter* ElecMod = dynamic_cast<TModParameter*>(an->GetParameter("ModPar"));
    */
-  cout << endl << "setup script started" << endl;
+  //cout << endl << "setup script started" << endl;
 
 
 
@@ -1049,6 +1049,6 @@ void setup_s452_08_musicgate()
   mrtof->MRTOFMS_t0=0;
   mrtof->MRTOFMS_tFRS=0;
 
-  cout << "Focus distance S4: " << frs->dist_focS4 << endl;
-  cout << "Setup done " << endl;
+  //cout << "Focus distance S4: " << frs->dist_focS4 << endl;
+  //cout << "Setup done " << endl;
 }

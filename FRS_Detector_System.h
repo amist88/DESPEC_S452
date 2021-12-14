@@ -1098,12 +1098,17 @@ private:
     
     Bool_t Check_PolyCond_Multi(Float_t* P, Float_t*** V, int n, int cond_num );
     Bool_t Check_PolyCond_Multi_X_Y(Float_t X, Float_t Y, Float_t*** V, int n, int cond_num);
-
-    void Setup_Conditions();
     
-    bool do_gain_matching(int ts_ns) {return 1;};
-    unsigned long next_ts_for_update() {return 1;}
+      void Setup_Conditions();
+  bool do_gain_matching(int ts_ns) {return 1;};
+      
+       ///Test to shift WR to FRS branch
+    //void WR_Check(int ts_minutes);
+  
+    unsigned long next_ts_for_update() {return 1;};
+    //bool do_gain_matching(int ts_ns) {WR_Check( ts_ns); return 1;};
 
+    
 
 };
 

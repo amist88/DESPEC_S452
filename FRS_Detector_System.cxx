@@ -3292,14 +3292,15 @@ for(int i=0; i<8; i++){
   // Y position at SC41
   //tpc_sc41_y = tpc_y[5] + dist_TPC6_SC41 * tpc_angle_y_s4 /1000.;
 
-
-//////////////////////////////////////////////////////////////////
-
 }
 
 
 
+//////////////////////////////////////////////////////////////////
 void FRS_Detector_System::FRS_Anal(){
+    
+   
+    
     
     ///==================================================================================///
                     /// Start of MUSIC  analysis
@@ -4190,6 +4191,11 @@ void FRS_Detector_System::FRS_Anal(){
 //    mhtdc_tof4122=0;
 //    mhtdc_tof4221=0;
 }
+
+  ///Test to shift WR to FRS branch
+// void FRS_Detector_System::WR_Check(int ts_minutes){
+//    // cout<<"ts_minutes " <<ts_minutes <<" tpc_s4target_y " <<tpc_s4target_y <<  endl;
+// }
 
     
 void FRS_Detector_System::get_Event_data(Raw_Event* RAW){
