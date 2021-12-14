@@ -55,7 +55,8 @@ class EventAnlProc : public TGo4EventProcessor {
       virtual void UserPostLoop();
       TIDParameter* frs_id;
       
-    //  
+     // void Fat_GainCorrection();
+      
       void get_used_systems();
     void Fat_TimeCorrection(EventUnpackStore* pInput);
       long long lastFatWR = 0;
