@@ -70,7 +70,7 @@ void setup_s452_08_musicgate()
 
 
 
- 
+
   // setup FRS parameter
   // 20.Nov.2019
   // For the momemnt, we put 1 m for radius,
@@ -83,17 +83,17 @@ void setup_s452_08_musicgate()
   frs->magnification[1] =  1.18;   // RUN81-TA2B-220CM 27.05.2016
   frs->dispersion[2]    = 12.397;   //S2-S8 (gicosy sign definition)
   frs->magnification[2] =  1.829;   //S2-S8
-  
+
   //S2
   //  frs->dist_focS2 = 2012.5; // degrader disk position stabdard
   frs->dist_focS2 = 3300.0; // low-dispersion S2-S4
   frs->dist_MW21  =  604.0;
   frs->dist_MW22  = 1782.5;
   frs->dist_SC21  = 1554.5;
-  frs->dist_SC22  = 2595.0; //BARB 2021 Feb Logbook  
+  frs->dist_SC22  = 2595.0; //BARB 2021 Feb Logbook
   frs->dist_TPC21 =  604.0;
   frs->dist_TPC22 = 1782.5;
-  frs->dist_TPC23 = 2915.0; //BARB 2021 Feb Logbook  
+  frs->dist_TPC23 = 2915.0; //BARB 2021 Feb Logbook
   frs->dist_TPC24 = 3980.0; //BARB 2021 Feb Logbook
   frs->dist_S2target = 3600.0; // Interaction Cross section (01.March 2021)
 
@@ -108,7 +108,7 @@ void setup_s452_08_musicgate()
   frs->dist_MUSIC43 = 5013.0;
   frs->dist_TPC41   =  415.0;
   //  frs->dist_TPC42   = 1535.0; moved to avoid conflict. before 2020april run.
-  frs->dist_TPC42 = 1528.0; //for s468. 2020 april 
+  frs->dist_TPC42 = 1528.0; //for s468. 2020 april
   frs->dist_S4target= 4000.0; //for some experiments
 
   //S8
@@ -120,23 +120,23 @@ void setup_s452_08_musicgate()
   id->x_s2_select   = 1; //1=tpc,2=sc21,3=sc22
   id->tof_s4_select = 1; //1=sc21-41, 2=sc21-42, 3=sc22-41
   id->tof_s8_select = 1; //1=sc21-81, 2=sc22-81
-  
+
   //=============115Te at S4 (2020/March)=============//
-  frs->primary_z = 82.;   
+  frs->primary_z = 82.;
   id->min_aoq_plot = 2;
   id->max_aoq_plot = 3;
   id->min_z_plot   = 30.0;
   id->max_z_plot   = 90.0;
-   
+
   // bfield (Tm) for new control system. (we put rho = 1)
-  //206Hg for s452 
-  frs->bfield[0] = 13.3474;//                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
-  frs->bfield[1] = 12.5166;//                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
-  frs->bfield[2] = 10.5376; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
-  frs->bfield[3] = 10.5376; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file. 
+  //206Hg for s452
+  frs->bfield[0] = 13.3474;//                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file.
+  frs->bfield[1] = 12.5166;//                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file.
+  frs->bfield[2] = 10.5376; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file.
+  frs->bfield[3] = 10.5376; //                 Please do NOT comment-out old brho and add new brho. Please make a NEW setup file.
   frs->bfield[4] = 99.999; // D5 (to ESR) not used
   frs->bfield[5] = 99.999; // D6 (to S8)
-  
+
   // TOF calibration SC21-SC81 (TAC)
   id->id_tofoff4  = 326337.1;   //SC21-81 [ps]          // quickly done from run156 and 166 (2019/Nov, YT)
   id->id_path4    = 246983.1;   //SC21-81  path/c [ps]  // quickly done from run156 and 166 (2019/Nov, YT)
@@ -158,16 +158,16 @@ void setup_s452_08_musicgate()
   id->vel_a_sc81[2] =   0.0;// this time ...
   id->vel_a_sc81[3] =   0.0;
   id->offset_z_sc81 =   0.0;
-  
+
   // From here Multi-HitTDC analysis
   id->mhtdc_length_s2s8 = 85.230; // (2019/Nov, YT)
-  id->mhtdc_s2pos_option=1; //(1: sc21x-timediff-mhtdc, 2:tpc);
+  id->mhtdc_s2pos_option=2; //(1: sc21x-timediff-mhtdc, 2:tpc);
   id->pos_offset_sc81x  = 7.0;// (2019/Nov, YT)
 
   // MHTDCAnalysis TPC@S2dE => Z estimation, velocity correction
   id->mhtdc_vel_a_s2tpc[0] =  1400.0;// TPC-A does not look promising...21-feb-2020
   id->mhtdc_vel_a_s2tpc[1] =  0.0;// put constant here
-  id->mhtdc_vel_a_s2tpc[2] =  0.0;// 
+  id->mhtdc_vel_a_s2tpc[2] =  0.0;//
   id->mhtdc_vel_a_s2tpc[3] =  0.0;
   id->mhtdc_offset_z_s2tpc =  0.0;
 
@@ -187,21 +187,21 @@ void setup_s452_08_musicgate()
 
   //  MUSIC41 velocity 06.03.21 Pb s452
   id->vel_a[0] =   20888.0; //  MUSIC41 velocity corr. s533
-  id->vel_a[1] =  -40943.0;   // 
-  id->vel_a[2] =   22456.0; // 
+  id->vel_a[1] =  -40943.0;   //
+  id->vel_a[2] =   22456.0; //
   id->vel_a[3] =   0.0;
 
 // MUSIC42 velocity 06.03.21 Pb s452
-  id->vel_a2[0] =  13490.0 ; 
+  id->vel_a2[0] =  13490.0 ;
   id->vel_a2[1] = -22027.0;
   id->vel_a2[2] =  10453.0;
   id->vel_a2[3] =  0.0;
-  
+
   id->vel_a3[0] =  13951.37; //MUSIC43 velocity corr. (old)
   id->vel_a3[1] = -38369.9;
   id->vel_a3[2] =  28396.46;
   id->vel_a3[3] =  0.0;
-  
+
   //TOF_SC42_SC21_TAC 06.03.21 Pb s452
   id->id_tofoff3  = 187701.;   // offset (ps)
   id->id_path3    = 134732.;   // path/c [ps]
@@ -211,10 +211,10 @@ void setup_s452_08_musicgate()
   id->id_path2   =  123877.;  // path/c (ps)
 
   //TOF_SC41_SC22_TAC 06.03.21 Pb s452
-  id->id_tofoff5 =  168010.;  // offset (ps) 
+  id->id_tofoff5 =  168010.;  // offset (ps)
   id->id_path5   =  119612.;  // path/c (ps)
 
-  
+
   id->mhtdc_length_s2s4 = 36.7760; // SCI 21-41 s452 E.S.
   id->mhtdc_vel_a_music41[0]=20888.0;
   id->mhtdc_vel_a_music41[1]=-40943.0;
@@ -229,7 +229,7 @@ void setup_s452_08_musicgate()
   //=====================================================//
 
 
-  
+
   //======
   //  MW
   //======
@@ -380,12 +380,12 @@ void setup_s452_08_musicgate()
     music->exclude_de2_adc_channel[ii] = kFALSE;
     music->exclude_de3_adc_channel[ii] = kFALSE;
   }
-  // music->exclude_de1_adc_channel[4] = kTRUE; //added 21:00/08/March-08. Removed 08:00/March/09 
-  //  music->exclude_de1_adc_channel[3] = kTRUE; //added 08:00/March/09     removed at 13:45, 09/March/2021  
-  //  music->exclude_de2_adc_channel[7] = kTRUE; //added 21:00/08/March-08    removed at 13:45, 09/March/2021   
+  // music->exclude_de1_adc_channel[4] = kTRUE; //added 21:00/08/March-08. Removed 08:00/March/09
+  //  music->exclude_de1_adc_channel[3] = kTRUE; //added 08:00/March/09     removed at 13:45, 09/March/2021
+  //  music->exclude_de2_adc_channel[7] = kTRUE; //added 21:00/08/March-08    removed at 13:45, 09/March/2021
   //  music->exclude_de2_adc_channel[6] = kTRUE; //added 09:00/March/09   removed at 13:45, 09/March/2021
-  music->exclude_de3_adc_channel[2] = kTRUE; // added 17.02.21 
-  
+  music->exclude_de3_adc_channel[2] = kTRUE; // added 17.02.21
+
   music->dist_MUSICa1 = 52.5;  // do not change
   music->dist_MUSICa2 = 157.5; // do not change
   music->dist_MUSICa3 = 262.5; // do not change
@@ -457,7 +457,7 @@ void setup_s452_08_musicgate()
   music->pos_a1[6]   = 0.0;
 
 
-  //========= 
+  //=========
   //  TPCs
   //=========
 
@@ -473,7 +473,7 @@ void setup_s452_08_musicgate()
   tpc->lim_timeref[6][0] = 2000.0; tpc->lim_timeref[6][1] = 48000.0;//time ref (---)
   tpc->lim_timeref[7][0] = 2000.0; tpc->lim_timeref[7][1] = 48000.0;//time ref (---)
 
-  // TPC 1 at S2 (TPC 21) in vaccuum //// (BARB 2021 Feb 15) 
+  // TPC 1 at S2 (TPC 21) in vaccuum //// (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[0] = 1; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[0][0][0] = 2000.;  tpc->lim_dt[0][0][1] = 48000.0; //A11 drift time TDC cut
@@ -486,13 +486,13 @@ void setup_s452_08_musicgate()
   tpc->lim_rt[0][1][0] = 2000.;  tpc->lim_rt[0][1][1] = 48000.0; //DL2 time TDC cut
   tpc->lim_csum1[0][0] = 13700.0;  tpc->lim_csum1[0][1] = 14600.0;
   tpc->lim_csum2[0][0] = 13900.0;  tpc->lim_csum2[0][1] = 14600.0;
-  tpc->lim_csum3[0][0] = 13500.0;  tpc->lim_csum3[0][1] = 14600.0; 
+  tpc->lim_csum3[0][0] = 13500.0;  tpc->lim_csum3[0][1] = 14600.0;
   tpc->lim_csum4[0][0] = 13500.0;  tpc->lim_csum4[0][1] = 14600.0;
   tpc->x_offset[0][0] = -0.4-0.5;
   tpc->x_offset[0][1] =  1.2-0.5-2.0;
   tpc->x_factor[0][0] = 0.00786;
   tpc->x_factor[0][1] = 0.00786;
-  tpc->y_offset[0][0] = -48.1-7.5-1.0+2.0;//s483, slit +/- 1mm 
+  tpc->y_offset[0][0] = -48.1-7.5-1.0+2.0;//s483, slit +/- 1mm
   tpc->y_offset[0][1] = -48.2-8.5    +2.0;
   tpc->y_offset[0][2] = -48.0-9.0    +2.0;
   tpc->y_offset[0][3] = -48.2-8.5    +2.0;
@@ -501,7 +501,7 @@ void setup_s452_08_musicgate()
   tpc->y_factor[0][2] = 0.004;
   tpc->y_factor[0][3] = 0.004;
 
-  // TPC 2 at S2 (TPC 22) in vaccuum (BARB 2021 Feb 15) 
+  // TPC 2 at S2 (TPC 22) in vaccuum (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[1] = 1; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
   tpc->lim_dt[1][0][0] = 2000.;  tpc->lim_dt[1][0][1] = 48000.0; //A11 drift time TDC cut
@@ -557,7 +557,7 @@ void setup_s452_08_musicgate()
   tpc->y_factor[2][2] = -0.004;
   tpc->y_factor[2][3] = -0.004;
 
-  
+
   // TPC 4 at S2 (TPC 24) in air (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[3] = 4; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
@@ -586,7 +586,7 @@ void setup_s452_08_musicgate()
   tpc->y_factor[3][1] = -0.004;
   tpc->y_factor[3][2] = -0.004;
   tpc->y_factor[3][3] = -0.004;
-  
+
   // TPC 5  at S4 (TPC 41) in air (BARB 2021 Feb 15)
   // After changing cut limits => Launch analysis again in Go4GUI
   tpc->id_tpc_timeref[4] = 4; //(0:accepttrig, 1:sc21, 2:sc22, 3:sc31, 4:sc41)
@@ -706,7 +706,7 @@ void setup_s452_08_musicgate()
   sci->x_a[4][2] =  0.000000;  //
   sci->x_a[5][2] =  0.000000;  //
   sci->x_a[6][2] =  0.000000;  //
-  
+
   //index 3 for Sc22
  // sci->x_a[0][3] =  1370;  //quickly done with run 0139
  // sci->x_a[1][3] =  -0.7;  //
@@ -747,7 +747,7 @@ void setup_s452_08_musicgate()
 
    // index 10 for Sc81
   sci->x_a[0][10] = 707.306;   // 2020/feb/20 run0110,0111,0112.lmd
-  sci->x_a[1][10] =-0.45558;   // 
+  sci->x_a[1][10] =-0.45558;   //
   sci->x_a[2][10] = 0.000000;  //
   sci->x_a[3][10] = 0.000000;  //
   sci->x_a[4][10] = 0.000000;  //
@@ -795,7 +795,7 @@ void setup_s452_08_musicgate()
   sci->tac_off[14] =  2152.6;  //SC81L-SC22L  // fix to 0
   sci->tac_off[15] = 2040.3;  //SC81R-SC22R  // fix to 0
   */
-  //2021/Feb/BARB 
+  //2021/Feb/BARB
   sci->tac_factor[0]  = 10.5293; //SC21L-R [ps/ch]     >> ch0 of ADC
   sci->tac_factor[1]  = 10.6934; //SC41L-R [ps/ch]     >> ch1 of ADC
   //sci->tac_factor[2]  = 43.6914; //SC41L-SC21L [ps/ch] >> ch5 of ADC
@@ -813,15 +813,15 @@ void setup_s452_08_musicgate()
   sci->tac_factor[14] = 20.0000; //SC81L-SC22L [ps/ch] >> ch14
   sci->tac_factor[15] = 20.0000; //SC81R-SC22R [ps/ch] >> ch15
 
-  //Interaction cross secton 1.Mar.2021 
-  sci->tac_factor[2]  = 11.35; //SC41L-SC21L [ps/ch] >> ch5 of ADC   
+  //Interaction cross secton 1.Mar.2021
+  sci->tac_factor[2]  = 11.35; //SC41L-SC21L [ps/ch] >> ch5 of ADC
   sci->tac_factor[3]  = 11.19; //SC41R-SC21R [ps/ch] >> ch6 of ADC
   sci->tac_factor[12] = 10.17; //SC41L-SC22L [ps/ch] >> ch12
   sci->tac_factor[13] = 10.78; //SC41R-SC22R [ps/ch] >> ch13
   sci->tac_factor[5]  = 10.84; //SC42L-SC21L [ps/ch] >> ch8 of ADC
   sci->tac_factor[6]  = 10.8; //SC42R-SC21R [ps/ch] >> ch7 of ADC
 
-  
+
   sci->tof_bll2  = 1.;    // not used online [ps/ch]
   sci->tof_brr2  = 1.;    // not used online
   sci->tof_bll3  = 1.;    // not used online
@@ -970,7 +970,7 @@ void setup_s452_08_musicgate()
      {40000., 4000.},
      {40000.,    0.}};
 //   an->SetupPolyCond("cID_dEToF", 4, my_cID_dEToF_points);
-// 
+//
 //   //======
 //   //LaBr
 //   //======
@@ -982,7 +982,7 @@ void setup_s452_08_musicgate()
 //    labr->labr_factor_2_6 = 0.;
 //    labr->labr_factor_2_7 = 0.;
 //    labr->labr_factor_2_8 = 0.;
-// 
+//
 //    labr->labr_factor_1_1 = 1.;
 //    labr->labr_factor_1_2 = 1.;
 //    labr->labr_factor_1_3 = 1.;
@@ -991,7 +991,7 @@ void setup_s452_08_musicgate()
 //    labr->labr_factor_1_6 = 1.;
 //    labr->labr_factor_1_7 = 1.;
 //    labr->labr_factor_1_8 = 1.;
-//   
+//
 //    labr->labr_offset1 = 0.;
 //    labr->labr_offset2 = 0.;
 //    labr->labr_offset3 = 0.;

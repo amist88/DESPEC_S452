@@ -46,7 +46,7 @@ void  EventUnpackStore::Clear(Option_t *t)
     ZERO_ARRAY(fFRS_Music_E2);
     ZERO_ARRAY(fFRS_Music_T1);
     ZERO_ARRAY(fFRS_Music_T2);
-    
+
   ZERO_ARRAY(fFRS_sci_l);
   ZERO_ARRAY(fFRS_sci_r);
   ZERO_ARRAY(fFRS_sci_e);
@@ -54,7 +54,10 @@ void  EventUnpackStore::Clear(Option_t *t)
   ZERO_ARRAY(fFRS_sci_x);
   ZERO_ARRAY(fFRS_scaler);
   ZERO_ARRAY(fFRS_scaler_delta);
-  
+
+
+
+
   fTRaw_vftx_21l=0;
   fTRaw_vftx_21r=0;
   fTRaw_vftx_22l=0;
@@ -66,7 +69,7 @@ void  EventUnpackStore::Clear(Option_t *t)
   fTRaw_vftx_42r=0;
 
    fFRS_ID_x2 = 0;
-   fFRS_ID_y2 = 0; 
+   fFRS_ID_y2 = 0;
    fFRS_ID_a2 = 0;
    fFRS_ID_b2 = 0;
    fFRS_ID_x4 = 0;
@@ -86,31 +89,37 @@ void  EventUnpackStore::Clear(Option_t *t)
     fFRS_tof4121=0;
     fFRS_tof4221=0;
 //    fFRS_beta3 = 0;
-    fFRS_gamma = 0;
+  fFRS_gamma = 0;
    fFRS_AoQ = 0;
    fFRS_AoQ_corr = 0;
    fFRS_z = 0;
    fFRS_z2 = 0;
    fFRS_dEdeg = 0;
    fFRS_dEdegoQ = 0;
-   
-   fFRS_AoQ_mhtdc= 0;
-   fFRS_AoQ_corr_mhtdc= 0;
-   fFRS_z_mhtdc= 0;
-   fFRS_z2_mhtdc= 0;
-   fFRS_dEdeg_mhtdc= 0;
-   fFRS_dEdegoQ_mhtdc= 0;
-   fFRS_beta_mhtdc= 0;
-   fFRS_tof4121_mhtdc= 0;
-   fFRS_tof4221_mhtdc= 0;
+
+  // fFRS_z_mhtdc= 0;
+  // fFRS_z2_mhtdc= 0;
+//   fFRS_dEdeg_mhtdc= 0;
+   //fFRS_dEdegoQ_mhtdc= 0;
+   //fFRS_tof4221_mhtdc= 0;
+
+ZERO_ARRAY(fFRS_AoQ_mhtdc);
+ZERO_ARRAY(fFRS_AoQ_corr_mhtdc);
+ZERO_ARRAY(fFRS_beta_mhtdc);
+ZERO_ARRAY(fFRS_tof4121_mhtdc);
+ZERO_ARRAY(fFRS_z_mhtdc);
+ZERO_ARRAY(fFRS_z2_mhtdc);
+
+
+
 //   fFRS_z3 = 0;
    /*fFRS_timestamp = 0;
    fFRS_ts = 0;
-   fFRS_ts2 = 0; */  
+   fFRS_ts2 = 0; */
     }
   fFRS_WR = 0;
- 
-   if (fAIDA_WR != 0) { 
+
+   if (fAIDA_WR != 0) {
    ///Aida
     fAIDAHits = 0;
     AIDATime = 0;
@@ -118,18 +127,18 @@ void  EventUnpackStore::Clear(Option_t *t)
     Aida.clear();
     fAidaScalers.clear();
       }
-  fAIDA_WR =0;   
+  fAIDA_WR =0;
   fevent_number = 0;
   fTrigger=0;
   memset(fProcID, -1, sizeof(fProcID));
 ///Fatima VME
-  
+
    if (fFat_WR != 0) {
         fScalar_fired = -1;
         fScalar_ID = -1;
         fFat_TMCh1mult = 0;
         fFat_TMCh1mult = 0;
-        
+
             ZERO_ARRAY(fFat_TDC_ID);
             ZERO_ARRAY(fFat_QDC_ID);
             ZERO_ARRAY(fFat_QDC_E);
@@ -147,16 +156,16 @@ void  EventUnpackStore::Clear(Option_t *t)
 
             ZERO_ARRAY(fFat_TDC_Singles_ID);
             ZERO_ARRAY(fFat_TDC_Singles_t);
-            ZERO_ARRAY(fFat_TDC_Singles_t_Raw); 
+            ZERO_ARRAY(fFat_TDC_Singles_t_Raw);
             ZERO_ARRAY(fFat_QDC_Singles_ID);
             ZERO_ARRAY(fFat_QDC_Singles_E);
             ZERO_ARRAY(fFat_QDC_Singles_E_Raw);
             ZERO_ARRAY(fFat_QDC_Singles_t_coarse);
             ZERO_ARRAY(fFat_QDC_Singles_t_fine);
             fFat_tdcsinglescount=0;
-            fFat_qdcsinglescount=0; 
-                  
-            
+            fFat_qdcsinglescount=0;
+
+
             fFat_WR = 0;
             fFat_QDC_Multiplicity = 0;
             fFat_SC40mult = 0;
@@ -166,8 +175,8 @@ void  EventUnpackStore::Clear(Option_t *t)
   fFat_WR = 0;
       ///Germanium
 //             fGe_Pileup = 0;
-            
-            
+
+
   if (fGe_WR != 0) {
         fGe_fired = 0;
         ZERO_ARRAY(fGe_Detector);
@@ -220,4 +229,3 @@ void  EventUnpackStore::Clear(Option_t *t)
         }
   fbPlas_WR = 0;
 }
-

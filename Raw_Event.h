@@ -85,7 +85,7 @@ private:
 	Float_t ID_y4;      // set_DATA_ID_2_4
 	Float_t ID_a4;      // set_DATA_ID_2_4
 	Float_t ID_b4;      // set_DATA_ID_2_4
-	
+
 	Float_t TPC_x[7];
     Float_t TPC_y[7];
     Int_t   TPC_lt[7][2][64];
@@ -106,14 +106,14 @@ private:
 	Float_t z;          // set_DATA_ID_Z_AoQ
 	Float_t z2;         // set_DATA_ID_Z_AoQ
 	Float_t z3;         // set_DATA_ID_Z_AoQ
-	
+
 	Float_t dEdeg;         // set_DATA_ID_Z_AoQ
     Float_t dEdegoQ;         // set_DATA_ID_Z_AoQ
 
 	Float_t timestamp;  // set_DATA_ID_Timestamp
 	Float_t ts;         // set_DATA_ID_Timestamp
 	Float_t ts2;        // set_DATA_ID_Timestamp
-	
+
 	Int_t   time_in_ms;
     Int_t   spill_count;
     Int_t   ibin_for_s;
@@ -123,7 +123,7 @@ private:
     Int_t   ibin_clean_for_100ms;
     Int_t   ibin_clean_for_spill;
     UInt_t  increase_scaler_temp[64];
-    
+
     Double_t TRaw_vftx_21L;
     Double_t TRaw_vftx_21R;
     Double_t TRaw_vftx_22L;
@@ -133,25 +133,25 @@ private:
     Double_t TRaw_vftx_42L;
     Double_t TRaw_vftx_42R;
     Double_t TRaw_vftx[100];
-    
-    Float_t Raw_mhtdc_sc21lr_dt;
-    Float_t Raw_mhtdc_sc21lr_x;
+
+    Float_t Raw_mhtdc_sc21lr_dt[10];
+    Float_t Raw_mhtdc_sc21lr_x[10];
     Float_t Raw_mhtdc_sc22lr_dt;
     Float_t Raw_mhtdc_sc22lr_x;
     Float_t Raw_mhtdc_sc41lr_dt;
     Float_t Raw_mhtdc_sc41lr_x;
     Float_t Raw_mhtdc_sc42lr_dt;
     Float_t Raw_mhtdc_sc42lr_x;
-    
-    Float_t ID_mhtdc_AoQ;
-    Float_t ID_mhtdc_AoQ_corr;
-    Float_t ID_mhtdc_Z1;
-    Float_t ID_mhtdc_Z2;
+
+    Float_t ID_mhtdc_AoQ[10];
+    Float_t ID_mhtdc_AoQ_corr[10];
+    Float_t ID_mhtdc_Z1[10];
+    Float_t ID_mhtdc_Z2[10];
     Float_t ID_mhtdc_dEdeg;
     Float_t ID_mhtdc_dEdegoQ;
-    Float_t ID_mhtdc_Beta;
+    Float_t ID_mhtdc_Beta[10];
     Float_t ID_mhtdc_tof4221;
-    Float_t ID_mhtdc_tof4121;
+    Float_t ID_mhtdc_tof4121[10];
     Float_t ID_mhtdc_tof4122;
 	// ##########################################################
 
@@ -203,11 +203,11 @@ private:
     //
     int    FAT_TDCs_FIRED;
     int    FAT_TDC_id[100];
-    ULong64_t FAT_TDC_timestamp[100];//tdc time 
-    ULong64_t FAT_TDC_timestamp_raw[100];//tdc time 
+    ULong64_t FAT_TDC_timestamp[100];//tdc time
+    ULong64_t FAT_TDC_timestamp_raw[100];//tdc time
     // for vector array
 	//FATIMA_DataStruct FATIMA_Data;
-	
+
 	//FATIMA TAMEX
     int     amount_hit_tamex_fat;
     int     iterator_fat[4];
@@ -262,11 +262,11 @@ private:
 //     int         VME_QDC_CHA[100];
 //     double      VME_TDC_DAT[50];
 //     int         VME_TDC_CHA[50];
-// 
+//
 //     int         SCALER_ITERATOR;
 //     double      SCALER_DATA[17];
-    
-    
+
+
     //bPlastic TAMEX
     int         amount_hit_tamex_bPlas;
     int         tamex_id_bPlas[100];
@@ -322,10 +322,10 @@ public:
 	void set_DATA_ID_Timestamp(Float_t,Float_t,Float_t);
     void set_DATA_FRS_SCALERS(Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,UInt_t*);
     void set_DATA_VFTX(Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t*);
-   
-    void set_DATA_RAW_MHTDC(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t); 
-   
-    void set_DATA_ID_MHTDC(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t); 
+
+    void set_DATA_RAW_MHTDC(Float_t*,Float_t*,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
+
+    void set_DATA_ID_MHTDC(Float_t*,Float_t*,Float_t*,Float_t*,Float_t,Float_t,Float_t*,Float_t*,Float_t,Float_t);
 	// FRS STUFF //
 
 
@@ -380,8 +380,8 @@ public:
     Int_t get_FRS_MusicE1(int);
     Int_t get_FRS_MusicE2(int);
     Int_t get_FRS_MusicT1(int);
-    Int_t get_FRS_MusicT2(int);    
-    
+    Int_t get_FRS_MusicT2(int);
+
 	Float_t get_FRS_sci_l(int);
 	Float_t get_FRS_sci_r(int);
 	Float_t get_FRS_sci_e(int);
@@ -422,7 +422,7 @@ public:
 	Float_t get_FRS_y4();
 	Float_t get_FRS_a4();
 	Float_t get_FRS_b4();
-    
+
     Float_t get_FRS_tpcX(int);
     Float_t get_FRS_tpcY(int);
     Int_t   get_FRS_tpclt(int,int,int);
@@ -448,7 +448,7 @@ public:
 	Float_t get_FRS_timestamp();
 	Float_t get_FRS_ts();
 	Float_t get_FRS_ts2();
-    
+
     Int_t   get_FRS_time_in_ms();
     Int_t   get_FRS_spill_count();
     Int_t   get_FRS_ibin_for_s();
@@ -458,7 +458,7 @@ public:
     Int_t   get_FRS_ibin_clean_for_100ms();
     Int_t   get_FRS_ibin_clean_for_spill();
     UInt_t*  get_FRS_increase_scaler_temp();
-    
+
     Double_t get_FRS_TRaw_vftx_21l();
     Double_t get_FRS_TRaw_vftx_21r();
     Double_t get_FRS_TRaw_vftx_22l();
@@ -468,28 +468,28 @@ public:
     Double_t get_FRS_TRaw_vftx_42l();
     Double_t get_FRS_TRaw_vftx_42r();
     Double_t get_FRS_TRaw_vftx(int i);
-    
-    Float_t get_FRS_Raw_mhtdc_sc21lr_dt();
-    Float_t get_FRS_Raw_mhtdc_sc21lr_x();
+
+    Float_t get_FRS_Raw_mhtdc_sc21lr_dt(int i );
+    Float_t get_FRS_Raw_mhtdc_sc21lr_x(int i);
     Float_t get_FRS_Raw_mhtdc_sc22lr_dt();
     Float_t get_FRS_Raw_mhtdc_sc22lr_x();
     Float_t get_FRS_Raw_mhtdc_sc41lr_dt();
     Float_t get_FRS_Raw_mhtdc_sc41lr_x();
     Float_t get_FRS_Raw_mhtdc_sc42lr_dt();
     Float_t get_FRS_Raw_mhtdc_sc42lr_x();
-    
-    Float_t get_FRS_id_mhtdc_aoq();
-    Float_t get_FRS_id_mhtdc_aoq_corr();
-    Float_t get_FRS_id_mhtdc_z1();
-    Float_t get_FRS_id_mhtdc_z2();
+
+    Float_t get_FRS_id_mhtdc_aoq(int);
+    Float_t get_FRS_id_mhtdc_aoq_corr(int);
+    Float_t get_FRS_id_mhtdc_z1(int);
+    Float_t get_FRS_id_mhtdc_z2(int);
     Float_t get_FRS_id_mhtdc_dEdeg();
     Float_t get_FRS_id_mhtdc_dEdegoQ();
-    Float_t get_FRS_id_mhtdc_beta();
-    Float_t get_FRS_id_mhtdc_tof4121();
+    Float_t get_FRS_id_mhtdc_beta(int);
+    Float_t get_FRS_id_mhtdc_tof4121(int);
     Float_t get_FRS_id_mhtdc_tof4221();
     Float_t get_FRS_id_mhtdc_tof4122();
-    
-    
+
+
 	// ####################################################
     double  get_AIDA_Energy(int i);
     int     get_AIDA_FEE_ID(int i);
@@ -610,12 +610,12 @@ public:
 
     int     get_scaler_iterator();
     double  get_scaler_data(int);
-    
+
 
 	//temporary Germanium getters
         int         get_Germanium_am_Fired();
         ULong64_t   get_Germanium_Event_T(int);
-     
+
         int         get_Germanium_Hit_Pattern(int);
         ULong64_t   get_Germanium_Chan_T(int);
         double      get_Germanium_Chan_E(int);

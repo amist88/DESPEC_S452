@@ -38,7 +38,7 @@
 // Uncomment this to align the AIDA ASICs with a pulser
 //  Only needed if the ASICs didn't align properly
 //#define AIDA_PULSER_ALIGN
-  
+
 class EventAnlStore;
 
 
@@ -54,9 +54,9 @@ class EventAnlProc : public TGo4EventProcessor {
       virtual Bool_t BuildEvent(TGo4EventElement* dest);
       virtual void UserPostLoop();
       TIDParameter* frs_id;
-      
-     // void Fat_GainCorrection();
-      
+
+      void Fat_GainCorrection();
+
       void get_used_systems();
     void Fat_TimeCorrection(EventUnpackStore* pInput);
       long long lastFatWR = 0;
@@ -64,19 +64,19 @@ class EventAnlProc : public TGo4EventProcessor {
 	  long long lastGeWR = 0;
       long long lastbPlastWR = 0;
       long long lastFRSWR = 0;
-     
+
         //double lead_lead_bplas[48][100], trail_trail_bplas[48][100];
       //  double lead_lead_fat[48][100];
-        
+
         double ToT_bplas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
         double lead_bplas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
         double trail_bplas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
-        //double lead_lead_bplas_gated[48][100]; 
+        //double lead_lead_bplas_gated[48][100];
         double lead_lead_bplas_Ref1[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double lead_lead_bplas_Ref2[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double lead_lead_bplas_Ref3[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
-        
-        
+
+
         double lead_fast_fat[FATIMA_TAMEX_CHANNELS+1][FATIMA_TAMEX_HITS], trail_fast_fat[FATIMA_TAMEX_CHANNELS+1][FATIMA_TAMEX_HITS];
         double lead_slow_fat[FATIMA_TAMEX_CHANNELS+1][FATIMA_TAMEX_HITS], trail_slow_fat[FATIMA_TAMEX_CHANNELS+1][FATIMA_TAMEX_HITS];
         double lead_lead_slow_fat_Ref1[FATIMA_TAMEX_CHANNELS+1][FATIMA_TAMEX_HITS];
@@ -91,13 +91,13 @@ class EventAnlProc : public TGo4EventProcessor {
         double bPlasDet1_coin_lead_Fat[FATIMA_TAMEX_HITS], bPlasDet2_coin_lead_Fat[FATIMA_TAMEX_HITS] ;
         int hits_fat_lead, hits_fat_trail;
         int Fat_tot_hits[FATIMA_TAMEX_CHANNELS+1];
-        
+
         double bPlas_fatimatamex_dT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], bPlas_fatimavme_dT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double SC41L_ANA_lead_bPlas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_ANA_lead_bPlas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double SC41L_DIG_lead_bPlas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_DIG_lead_bPlas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double lead_lead_fat_Ref0[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         int hits_bplas_lead = 0, hits_bplas_trail=0;
-        
+
 
         double bPlas_TAM_SC41L_ANA;
         double bPlas_TAM_SC41R_ANA;
@@ -105,18 +105,18 @@ class EventAnlProc : public TGo4EventProcessor {
         double bPlas_TAM_SC41R_DIG;
         double bPlas_TAM_FATVME;
         double bPlas_TAM_FATTAM;
-       
+
         double bPlas_RefCh0_Det1[bPLASTIC_TAMEX_HITS];
         double bPlas_RefCh0_Det2[bPLASTIC_TAMEX_HITS];
         double bPlas_RefCh0_Det3[bPLASTIC_TAMEX_HITS];
-        
+
         double Fat_TAM_SC41L_ANA;
         double Fat_TAM_SC41R_ANA;
         double Fat_TAM_SC41L_DIG;
         double Fat_TAM_SC41R_DIG;
         double Fat_RefCh[10];
         double bPlas_AND_Coinc[100];
-      
+
       //FRS Histograms and conditions setup
         TH1I* MakeH1I(const char* foldername,
         const char* histoname,
@@ -177,14 +177,15 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t  FRS_AoQ, FRS_AoQ_corr;
       Float_t  FRS_z, FRS_z2, FRS_z3;
       Float_t  FRS_dEdeg, FRS_dEdegoQ;
-      Float_t  FRS_AoQ_mhtdc, FRS_AoQ_corr_mhtdc;
-      Float_t  FRS_z_mhtdc, FRS_z2_mhtdc;
+//    Float_t  FRS_AoQ_mhtdc, FRS_AoQ_corr_mhtdc;
+//      Float_t  FRS_z_mhtdc, FRS_z2_mhtdc;
       Float_t  FRS_dEdeg_mhtdc, FRS_dEdegoQ_mhtdc;
       Float_t  FRS_beta_mhtdc;
       Float_t  FRS_timestamp, FRS_ts, FRS_ts2;
       bool FRS_spill;
       Long64_t FRS_time_mins;
-      
+      Float_t  FRS_AoQ_mhtdc[10], FRS_AoQ_corr_mhtdc[10] , FRS_z_mhtdc[10], FRS_z2_mhtdc[10];
+
       //Float_t  FRS_z_shifted, FRS_z2_shifted;
       int Z_Shift_array;
       Float_t FRS_WR_a[200];
@@ -196,7 +197,7 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t FRS_WR_i[200];
       Float_t FRS_WR_j[200] ;
       Float_t AoQ_shift_value[200] ;
-      
+
 //       int Fat_Shift_array;
 //       int FAT_DET_GFF[1500];
 //       Float_t FAT_WR_GFF_Low[1500][36];
@@ -208,21 +209,27 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t FAT_WR_GFF_High[100];
       Float_t FAT_FACTOR_GFF[100];
        Float_t FAT_COEFF_GFF[100];
-   
+
       Int_t ZAoQgnum,Z1Z2gnum,X2AoQgnum,X4AoQgnum,dEdeggnum;
       Float_t X_ZAoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZAoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t X_ZZ2[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZZ2[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+      Float_t X_ZZ2_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZZ2_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t XX4_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX4_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+            Float_t XX4_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX4_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t XX2_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+
       Float_t X_dEdeg[MAX_FRS_GATE][MAX_FRS_PolyPoints], Y_dEdeg[MAX_FRS_GATE][MAX_FRS_PolyPoints];
-       
+      Float_t X_ZAoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZAoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       int       Aida_Fired;
+
+
 
 //       int    bPlasQDCFired;
 //       int    bPlasQDCID[32];
 //       double bPlasQDC[32];
 //       double bPlasQDCGain[32];
-// 
+//
 //       int    bPlasTDCFired;
 //       int    bPlasTDCID[50];
 //       double bPlasTDC_TS[50][32];
@@ -233,7 +240,7 @@ class EventAnlProc : public TGo4EventProcessor {
       int    ScalarFired;
       int    ScalarID;
 
-      
+
       int   Fatmult;
       int    SC40mult;
       int    SC41mult;
@@ -245,12 +252,10 @@ class EventAnlProc : public TGo4EventProcessor {
       double Fat_QDC_E_Raw[FAT_MAX_VME_CHANNELS];
       ULong64_t timeLAST_Fat, timeFIRST_Fat;
        double FatRealTime;
-       
-       double lead_lead_fast_fat_onechan[FATIMA_TAMEX_HITS];
-      
+
       Long64_t Fat_QDC_T_coarse[FAT_MAX_VME_CHANNELS];
       double Fat_QDC_T_fine[FAT_MAX_VME_CHANNELS];
-      
+
       int    Fat_TDC_ID[FAT_VME_MAX_MULTI];
       Long64_t Fat_TDC_T[FAT_VME_MAX_MULTI];
       Long64_t Fat_TDC_T_Raw[FAT_VME_MAX_MULTI];
@@ -271,8 +276,8 @@ class EventAnlProc : public TGo4EventProcessor {
       Long64_t Fat_TDC_Singles_t_Raw[FAT_VME_MAX_MULTI];
       Long64_t Fat_QDC_Singles_t_coarse[FAT_VME_MAX_MULTI];
       double_t Fat_QDC_Singles_t_fine[FAT_VME_MAX_MULTI];
-      
-      
+
+
        // From unpacker
           int    GeFired;
           int    GeDet[Germanium_MAX_HITS];
@@ -286,14 +291,14 @@ class EventAnlProc : public TGo4EventProcessor {
           double GeEventT[Germanium_MAX_HITS];
           bool GePileUp[Germanium_MAX_HITS];
           bool GeOverFlow[Germanium_MAX_HITS];
-          
-         
+
+
           int Gam_mult;
             Long64_t dT_Ge,dT_Ge_cfd;
             Long64_t dT_Align,dT_CFD_Align;
             Long64_t Ge_Talign[Germanium_MAX_HITS],Ge_cfd_Talign[Germanium_MAX_HITS];
             Long64_t dT_Addback;
-     
+
       Long64_t Ge_WR;
 
       int    Fing_firedTamex;
@@ -336,22 +341,22 @@ class EventAnlProc : public TGo4EventProcessor {
      void Make_Fat_Plas_Histos();
      void Make_Fing_Plas_Histos();
 
-     void Process_FRS_Histos(EventAnlStore* pOutput);
-     void Process_Plastic_VME_Histos(EventAnlStore* pOutput);
-     void Process_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Process_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     
-     void Process_Fatima_VME_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Process_Germanium_Histos(EventAnlStore* pOutput);
-     void Process_Finger_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
-     void Process_Fing_Plas_Histos(EventAnlStore* pOutput);
-     void Process_Fat_Plas_Histos(EventAnlStore* pOutput);
-     void Process_WR_Histos(EventUnpackStore* pInput);
+     void Do_FRS_Histos(EventAnlStore* pOutput);
+     void Do_Plastic_VME_Histos(EventAnlStore* pOutput);
+     void Do_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Do_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+
+     void Do_Fatima_VME_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Do_Germanium_Histos(EventAnlStore* pOutput);
+     void Do_Finger_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Do_Fing_Plas_Histos(EventAnlStore* pOutput);
+     void Do_Fat_Plas_Histos(EventAnlStore* pOutput);
+     void Do_WR_Histos(EventUnpackStore* pInput);
       // TH1 *GermaniumCal;
 
-   
-     
+
+
 
     long lastTime;
     int ID;
@@ -400,12 +405,12 @@ class EventAnlProc : public TGo4EventProcessor {
 
              std::vector<AidaCluster> EventsToClusters(std::vector<AidaEvent> const&);
             AidaHit ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const&);
-            
+
             int      IsData(std::ifstream &f);
 
-           
 
-             TH1 *hFat_deadtime;
+
+            TH1 *hFat_deadtime;
             TH1 *hFatTAM_deadtime;
             TH1 *hGe_deadtime;
             TH1 *hbPlast_deadtime;
@@ -426,7 +431,9 @@ class EventAnlProc : public TGo4EventProcessor {
 
             //FRS Histograms
             TH2  *hID_Z1_vs_T;
+            TH2  *hID_AoQ_vs_T;
             TH2  *hID_AoQ_mhtdc_T;
+            TH2  *hID_Z_mhtdc_T;
              TH2  *hID_x2AoQ;
              TH2 *hID_x4AoQ;
              TH2 *hID_x4AoQ_zsame;
@@ -436,19 +443,55 @@ class EventAnlProc : public TGo4EventProcessor {
              TH2 *hID_Z_Z2;
              TH2 *hdEdegoQ_Z;
              TH2 *hdEdeg_Z;
-              
+
+             TH2 *hID_Z_Z2_mhtdc;
+             TH2 *hID_Z_AoQ_mhtdc_elif;
+             TH2 *hID_Z_AoQ_mhtdc_first_hit_elif;
+             TH2 *hID_Z_AoQ_mhtdc_excluding_first_hit_elif;
+
+             TH2 *hID_A2_AoQ_mhtdc;
+             TH2 *hID_A4_AoQ_mhtdc;
+             
+             TH2 *hID_A2_AoQ_Corr_mhtdc;
+             TH2 *hID_A4_AoQ_Corr_mhtdc;
+
+             TH2 *hID_Z_AoQ_corr_mhtdc_elif;
+             TH2 *hID_Z_AoQ_corr_mhtdc_first_hit_elif;
+             TH2 *hID_Z_AoQ_corr_mhtdc_excluding_first_hit_elif;
+
+             TH2 * hID_x2AoQ_mhtdc;
+             TH2 * hID_x4AoQ_mhtdc;
+             TH2 *hdEdegoQ_Z_MHTDC;
+             TH2 *hdEdegoQ_Z2_MHTDC;
+             TH2 *hID_Z1_Z2gate_mhtdc[MAX_FRS_GATE];
+
              TH2 *hID_Z1_Z2gate[MAX_FRS_GATE];
              TH2 *hID_x2AoQ_x2AoQgate[MAX_FRS_GATE];
              TH2 *hID_x2AoQ_x4AoQgate[MAX_FRS_GATE];
-             
+
              TH2 *hID_x4AoQ_x2AoQgate[MAX_FRS_GATE];
              TH2 *hID_x4AoQ_x4AoQgate[MAX_FRS_GATE];
-             
+
              TH2 *hID_ZAoQ_x2AoQgate[MAX_FRS_GATE];
              TH2 *hID_ZAoQ_x4AoQgate[MAX_FRS_GATE];
-             
+
              TH2 *hID_x2AoQ_Z1Z2gate[MAX_FRS_GATE];
              TH2 *hID_x2AoQ_Z1AoQgate[MAX_FRS_GATE];
+
+             TH2 *hID_x2AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+
+
+             TH2 *hID_x2AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE]; //Elif
+             TH2 *hID_x4AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_x4AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_x4AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2_X2AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2_X4AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_A2AoQ_Z1Z2_X2AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_A4AoQ_Z1Z2_X2AoQgate_mhtdc[MAX_FRS_GATE];
+
              TH2 *hID_x4AoQ_Z1Z2gate[MAX_FRS_GATE];
              TH2 *hID_x4AoQ_Z1AoQgate[MAX_FRS_GATE];
              TH2 *hID_ZAoQ_Z1Z2gate[MAX_FRS_GATE];
@@ -459,43 +502,58 @@ class EventAnlProc : public TGo4EventProcessor {
              TH2 *hID_Z1_AoQ_zsame_dEdegZgate[MAX_FRS_GATE];
              TH2 *hID_Z1_AoQcorr_dEdegZgate[MAX_FRS_GATE];
              TH2 *hID_Z1_AoQcorr_zsame_dEdegZgate[MAX_FRS_GATE];
-             
-             TGo4PolyCond  *cID_Z_AoQ[MAX_FRS_GATE];       
+
+             TGo4PolyCond  *cID_Z_AoQ[MAX_FRS_GATE];
+             TGo4PolyCond  *cID_Z_AoQ_mhtdc[MAX_FRS_GATE];
              TGo4PolyCond  *cID_Z_Z2gate[MAX_FRS_GATE];
              TGo4PolyCond  *cID_x2AoQ[MAX_FRS_GATE];
              TGo4PolyCond  *cID_x4AoQ[MAX_FRS_GATE];
              TGo4PolyCond  *cID_dEdeg_Z1[MAX_FRS_GATE];
 
+             TGo4PolyCond  *cID_Z_Z2gate_mhtdc[MAX_FRS_GATE];
+             TGo4PolyCond  *cID_x2AoQ_mhtdc[MAX_FRS_GATE];
+             TGo4PolyCond  *cID_x4AoQ_mhtdc[MAX_FRS_GATE];
+
              //TH1I *hID_Z3_gate[5];
-             TH2 *hID_Z_AoQgate[MAX_FRS_GATE];  
+             TH2 *hID_Z_AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdeg_Z1_Z1AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdeg_Z1_Z1Z2gate[MAX_FRS_GATE];
-                  
+
+             TH2 *hID_Z_AoQgate_corr_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_dEdeg_Z1_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_dEdeg_Z1_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+
              TH2 *hID_dEdeg_Z1_Z1Z2_X2AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdeg_Z1_Z1Z2_X4AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdeg_Z1_X2AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdeg_Z1_X4AoQgate[MAX_FRS_GATE];
-             
+
+             TH2 *hID_dEdegoQ_Z1_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+
+            TH2 *hID_dEdegoQ_Z1_Z1Z2gate[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_Z1AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdegoQ_Z1_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_dEdegoQ_Z1_Z1Z2gate_mhtdc[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_Z1Z2_X2AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_Z1Z2_X4AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_X2AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_X4AoQgate[MAX_FRS_GATE];
+
+             TH2 *hID_A2AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_A4AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
             //bPlast Histograms
 
             TH1 *hbPlas_ToT_det[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Multiplicity_Chan[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
-            
+
             TH1 *hbPlas_Lead_T[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Trail_T[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Lead_dT_coinc[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Multiplicity_Det1;
-            TH1 *hbPlas_Multiplicity_Det2; 
-            TH1 *hbPlas_Multiplicity_Det3; 
-           
+            TH1 *hbPlas_Multiplicity_Det2;
+            TH1 *hbPlas_Multiplicity_Det3;
+
         TH1 *hbPlas_lead_lead_ref_det[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
-            TH1 *hbPlas_lead_lead_gated[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];       
+            TH1 *hbPlas_lead_lead_gated[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_ToT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
 
             TH1 *hbPlas_trail_trail[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
@@ -506,13 +564,13 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hbPlas_SC41R_Digi_lead[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_ToT_Sum[bPLASTIC_TAMEX_MODULES+1];
        // TH1 *hbPlas_ToT_Sum_FibreCorr[bPLASTIC_TAMEX_MODULES+1];
-         
+
             TH1 *hbPlas_hit_pattern_det[bPLASTIC_TAMEX_MODULES+1];
 	    // NEW H.M.A.
 // 	    TH2 *hFIMP_ToT_Correlation_Comb1;
 // 	    TH2 *hFIMP_ToT_Correlation_Comb2;
-	    
-             
+
+
              TH1 *hFat_Lead_Fast_T[FATIMA_TAMEX_CHANNELS+1];
              TH1 *hFat_Lead_Slow_T[FATIMA_TAMEX_CHANNELS+1];
              TH1 *hFat_Trail_Fast_T[FATIMA_TAMEX_CHANNELS+1];
@@ -529,11 +587,7 @@ class EventAnlProc : public TGo4EventProcessor {
              TH1 *hFat_tamex_multiplicity;
              TH2 *hFat_ToT_Slow_vs_Fast;
              TH2 *hFat_FRSFatTamdT_vs_ToT_ch11;
-             
-             TH1 *hFat_Lead_Lead_Fast_T;
 
-             TH2 *hFat_ToT_vs_dT_fat;
-             
             TH1 *hScalar_hit_pattern;
             //Fatima Histograms
             TH1 *hFAT_Energy[FAT_MAX_VME_CHANNELS];
@@ -544,15 +598,15 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hFAT_TDCdt_refCha[FAT_MAX_VME_CHANNELS];
             TH1 *hFat_SC41L_TDC_dT[FAT_MAX_VME_CHANNELS];
             TH1 *hFAT_TDC_bPlast_Cha[FAT_MAX_VME_CHANNELS][6];
-            
-            
+
+
             TH1 *hFat_time;
-            
+
             TH1 *hFAT_Multipl;
             TH1 *hFAT_hits_TDC;
             TH1 *hFat_Energy_GainMonitor;
 
-          TH2 *hFat_E_vs_T[FAT_MAX_VME_CHANNELS];
+
 
 //             TH1 *hFAT_lead_lead[50];
 //             TH1 *hFAT_lead_lead_ref[50];
@@ -596,10 +650,10 @@ class EventAnlProc : public TGo4EventProcessor {
             TH2 *hGe_Chan_E_vsCrys;
             TH2 *hGe_Time_Diff_vs_Energy_sum;
             TH2 *hGe_Chan_E_vsDet;
-            TH2 *hGe_MultvsdT; 
+            TH2 *hGe_MultvsdT;
           //  TH1 *hGe_Chan_E_gate[32];
             TH1 *hGe_ge_time_difference_gg;
-        
+
 
             //Finger Histograms
             TH1 *hFING_Hit_Pat;
@@ -642,12 +696,12 @@ class EventAnlProc : public TGo4EventProcessor {
             TH1 *hFING_SC41_trail_trail;
             TH1 *hFING_SC41_tot;
             TH1 *hSC41FatPlas;
-     
+
 private :
-     ///TEMP 
-                    bool fired_det1, fired_det2;    
+     ///TEMP
+                    bool fired_det1, fired_det2;
                     int bPlas_tot_hits[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET] ;
-        
+
             bool FAT_dist_corr_used; // Read from General Setup File
             int  FAT_exclusion_dist; // Read from General Setup File
             int  FAT_num_TDC_modules; // Read from General Setup File
