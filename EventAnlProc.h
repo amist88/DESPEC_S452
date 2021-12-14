@@ -196,6 +196,9 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t FRS_WR_i[200];
       Float_t FRS_WR_j[200] ;
       Float_t AoQ_shift_value[200] ;
+      Float_t AoQ_shift_TPC_value[200] ;
+      Float_t AoQ_shift_Sci21_value[200] ;
+      Float_t AoQ_shift_Sci22_value[200] ;
 
 //       int Fat_Shift_array;
 //       int FAT_DET_GFF[1500];

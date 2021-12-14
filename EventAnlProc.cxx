@@ -1001,7 +1001,6 @@ void EventAnlProc::Process_FRS_Histos(EventAnlStore* pOutput){
 
     if(pOutput->pFRS_WR>0) FRS_time_mins =(pOutput->pFRS_WR/60E9)-26900000;
 
-    cout<<"FRS_time_mins " <<FRS_time_mins << endl;
       for(int i=0; i<Z_Shift_array; i++){
            if(FRS_time_mins >=FRS_WR_a[i] && FRS_time_mins < FRS_WR_b[i]){
                FRS_z = FRS_z - Z1_shift_value[i];
@@ -1028,25 +1027,52 @@ void EventAnlProc::Process_FRS_Histos(EventAnlStore* pOutput){
 // }
 
 
-        for(int i=0; i<AoQ_Shift_array; i++){
-       //   for(int k=0; k<10; k++){
+      ///MHTDC A/Q Shift
+
+            for (int k=0; k<10 ; k++) {
+                if(FRS_AoQ_corr_mhtdc[k]>0){
+      for(int i=0; i<AoQ_Shift_array; i++){
            if(FRS_time_mins >=FRS_WR_i[i] && FRS_time_mins < FRS_WR_j[i]){
-              FRS_AoQ = FRS_AoQ - AoQ_shift_value[i];
-               FRS_AoQ_corr = FRS_AoQ_corr - AoQ_shift_value[i];
-             }
-            //}
-      }
+         
+         if(2 == frs_id->x_s2_select){
+          
+               FRS_AoQ_corr_mhtdc[k] = FRS_AoQ_corr_mhtdc[k] - AoQ_shift_Sci21_value[i];
+         }
+         else if(3 == frs_id->x_s2_select) {
+               FRS_AoQ_corr_mhtdc[k] = FRS_AoQ_corr_mhtdc[k] - AoQ_shift_Sci22_value[i];      
+        }
+        else {
+               FRS_AoQ_corr_mhtdc[k] = FRS_AoQ_corr_mhtdc[k] - AoQ_shift_TPC_value[i];
+                }  
+            }
+        }
+    }
+}
 
-
-      ///MHTDC Correction Check E.S. A.K.M
-           for(int i=0; i<AoQ_Shift_array; i++){
-                 for (int k=0; k<10 ; k++) {
-                    if(FRS_time_mins >=FRS_WR_i[i] && FRS_time_mins < FRS_WR_j[i]){
-                        FRS_AoQ_mhtdc[k] = FRS_AoQ_mhtdc[k] - AoQ_shift_value[i];
-                        FRS_AoQ_corr_mhtdc[k] = FRS_AoQ_corr_mhtdc[k] - AoQ_shift_value[i];
-                    }
-             }
-      }
+       ///TAC Shift
+        if(FRS_AoQ_corr>0){
+            
+      for(int i=0; i<AoQ_Shift_array; i++){
+           if(FRS_time_mins >=FRS_WR_i[i] && FRS_time_mins < FRS_WR_j[i]){
+         
+         if(2 == frs_id->x_s2_select){
+           FRS_AoQ = FRS_AoQ - AoQ_shift_Sci21_value[i];
+               FRS_AoQ_corr = FRS_AoQ_corr - AoQ_shift_Sci21_value[i];
+               
+         }
+         else if(3 == frs_id->x_s2_select) {
+           FRS_AoQ = FRS_AoQ - AoQ_shift_Sci22_value[i];
+               FRS_AoQ_corr = FRS_AoQ_corr - AoQ_shift_Sci22_value[i];      
+                   
+        }
+        else {
+           FRS_AoQ = FRS_AoQ - AoQ_shift_TPC_value[i];
+               FRS_AoQ_corr = FRS_AoQ_corr - AoQ_shift_TPC_value[i];
+                
+            }
+        }
+    }
+}
 
 
 
@@ -2963,6 +2989,9 @@ void EventAnlProc::FRS_Gates(){
    Float_t z1_shift_value;
    Float_t z2_shift_value;
    Float_t aoq_shift_value;
+   Float_t aoq_shift_tpc_value;
+   Float_t aoq_shift_sci21_value;
+   Float_t aoq_shift_sci22_value;
    int f=0;
    int d=0;
 
@@ -2983,15 +3012,17 @@ void EventAnlProc::FRS_Gates(){
   file.close();
   ///--------------------------------------------------------------------------------
 
-     file.open("Configuration_Files/FRS/AoQ_Shift.txt");
+      file.open("Configuration_Files/FRS/AoQ_Shift.txt");
    while(file.good()){
     getline(file,line,'\n');
     if(line[0] == '#') continue;
-    sscanf(line.c_str(),"%f %f %f",&frs_wr_i,&frs_wr_j,&aoq_shift_value);
+    sscanf(line.c_str(),"%f %f %f %f %f",&frs_wr_i,&frs_wr_j,&aoq_shift_tpc_value,&aoq_shift_sci21_value,&aoq_shift_sci22_value);
 
     FRS_WR_i[d]=frs_wr_i;
     FRS_WR_j[d]=frs_wr_j;
-    AoQ_shift_value[d]=aoq_shift_value;
+    AoQ_shift_TPC_value[d]=aoq_shift_tpc_value;
+    AoQ_shift_Sci21_value[d]=aoq_shift_sci21_value;
+    AoQ_shift_Sci22_value[d]=aoq_shift_sci22_value;
     AoQ_Shift_array=d;
        d++;
      }
