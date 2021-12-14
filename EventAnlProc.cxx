@@ -15,7 +15,7 @@
 // Uncomment this to align the AIDA ASICs with a pulser
 //  Only needed if the ASICs didn't align properly
 //#define AIDA_PULSER_ALIGN
-
+//THIS IS A GITHUB TEST
 #include "EventAnlProc.h"
 
 #include <cstdlib>
@@ -110,6 +110,7 @@ TGo4EventProcessor(name)
    /// read_setup_parameters();
     get_used_systems();
     FRS_Gates();
+   // Fat_GainCorrection();
 }
 //-----------------------------------------------------------
 EventAnlProc::~EventAnlProc()
