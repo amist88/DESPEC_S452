@@ -329,6 +329,13 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
          //exit(0);
            }
          }
+                  ///Test to shift WR to FRS branch
+//           if (Used_Systems[0] && WR_d==0) {
+//              int udts2 = (int) (((double) WR_tmp)*1.6666667E-11);
+//              Detector_Systems[0]->do_gain_matching(udts2);
+//          
+//          }
+
 ///-----------------------------------------------------------------------------------------------------------///
         //if necessary, directly print MBS for wanted Detector_System
 //         if(PrcID_Conv == AIDA && false) print_MBS(pdata,lwords);
