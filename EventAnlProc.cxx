@@ -94,22 +94,11 @@ TGo4EventProcessor(name)
 //
 //                 }
 //         }
-        for(int i=0;i<100;i++){
-
-
-
-                FAT_WR_GFF_High[i]=0;
-                FAT_WR_GFF_Low[i]=0;
-                FAT_FACTOR_GFF[i]=0;
-                FAT_COEFF_GFF[i]=0;
-
-        }
-
+     
 
    /// read_setup_parameters();
     get_used_systems();
     FRS_Gates();
-    Fat_GainCorrection();
 }
 //-----------------------------------------------------------
 EventAnlProc::~EventAnlProc()
@@ -187,7 +176,7 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
         }
 
         create = true;
-        Do_WR_Histos(pInput);
+        Process_WR_Histos(pInput);
         Fat_TimeCorrection(pInput);
                  /** Now extract the data from the stored Unpacker array (root tree)**/
     ///--------------------------------------/**FRS Input**/------------------------------------------///
@@ -325,7 +314,7 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
 //         FRS_ts = pInput->fFRS_ts;
 //         FRS_ts2 = pInput->fFRS_ts2;
  // if(pOutput->pEvent_Number==42715 ){       }
-  Do_FRS_Histos(pOutput);
+  Process_FRS_Histos(pOutput);
             }
 
 
@@ -393,13 +382,13 @@ Bool_t EventAnlProc::BuildEvent(TGo4EventElement* dest)
                         }
                     }
               }
-  Do_Plastic_Tamex_Histos(pInput,pOutput);
+  Process_Plastic_Tamex_Histos(pInput,pOutput);
 
    }
 
   ///--------------------------------------/**Fatima TAMEX Input**/------------------------------------------///
    if (PrcID_Conv[4] ==4 ){
-      Do_Fatima_Tamex_Histos(pInput,pOutput);
+      Process_Fatima_Tamex_Histos(pInput,pOutput);
         pOutput->pFAT_Tamex_WR = pInput->fFat_Tamex_WR;
 
         Fat_TAM_SC41L_ANA = pInput->fFat_Lead_Fast[FATIMA_TAMEX_SC41L][0];
@@ -502,7 +491,7 @@ if(Fatmult > 0){
         Fat_QDC_Singles_t_coarse[i] = pInput->fFat_QDC_Singles_t_coarse[i];
         Fat_QDC_Singles_t_fine[i] = pInput->fFat_QDC_Singles_t_fine[i];
        }
-        Do_Fatima_Histos(pInput, pOutput);
+        Process_Fatima_Histos(pInput, pOutput);
   }//End of proc ID
 
 
@@ -561,7 +550,7 @@ if(Fatmult > 0){
               pOutput->pGe_CF_T_Aligned[GeDet[i]][GeCrys[i]] = Ge_cfd_Talign[i];
         }
 
-            Do_Germanium_Histos(pOutput);
+            Process_Germanium_Histos(pOutput);
       }
 
  ///--------------------------------------/**Finger Input**/------------------------------------------///
@@ -611,7 +600,7 @@ if(Fatmult > 0){
 
 
 }
- void EventAnlProc::Do_WR_Histos(EventUnpackStore* pInput){
+ void EventAnlProc::Process_WR_Histos(EventUnpackStore* pInput){
      /// FATIMA DEAD TIME
        if (pInput->fFat_WR > 0) {
 
@@ -1007,7 +996,7 @@ sprintf(name,"cID_Z1_Z2_Gate_mhtdc%d",i);
 
 }
 
-void EventAnlProc::Do_FRS_Histos(EventAnlStore* pOutput){
+void EventAnlProc::Process_FRS_Histos(EventAnlStore* pOutput){
     FRS_time_mins = 0;
 
     if(pOutput->pFRS_WR>0) FRS_time_mins =(pOutput->pFRS_WR/60E9)-26900000;
@@ -1922,7 +1911,7 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
 
     }
     ///////////////////////////////////////////////////
-    void EventAnlProc::Do_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
+    void EventAnlProc::Process_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
 
          fired_det1=false, fired_det2=false;
          //ZERO_ARRAY(bPlas_tot_hits);
@@ -2102,66 +2091,70 @@ AidaHit EventAnlProc::ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const
               }  ///Detector
         } ///Function
 
-    /**-----------------------------------------------------------------------------------------------**/
+    //**-----------------------------------------------------------------------------------------------**/
     /**--------------------------------------  FATIMA TAMEX ------------------------------------------**/
     /**-----------------------------------------------------------------------------------------------**/
  void EventAnlProc::Make_Fatima_Tamex_Histos(){
    //  cout<<"FATIMA_TAMEX_CHANNELS+1 " <<FATIMA_TAMEX_CHANNELS+1 << " FATIMA_TAMEX_HITS " <<FATIMA_TAMEX_HITS << endl;
-     for(int i=1; i<=FATIMA_TAMEX_CHANNELS; i++){
-
+     for(int i=1; i<=FATIMA_TAMEX_CHANNELS; i++){ 
+        
 //          hFat_Lead_Fast_T[i] =  MakeTH1('D', /*Form("FATIMA_TAMEX/Fast/LeadT/Fast/Lead Time Fast Ch.%2d",i), Form("Lead Fast time. %2d",i), 5000,0,5000);
 //          hFat_Trail_Fast_T[i] =  MakeTH1('D', Form("FATIMA_TAMEX/Fast/TrailT/Fast/Trail Time Fast Ch.%2d",i), Form("Trail Slow time. %2d",i), 5000,0,5000);
-//
+//          
 //          hFat_Lead_Slow_T[i] =  MakeTH1('D', Form("FATIMA_TAMEX/Slow/LeadT/Lead Time Slow Ch.%2d",i), Form("Lead Fast time. %2d",i), 5000,0,5000);
 //          hFat_Trail_Slow_T[i] =  MakeTH1('D', Form("FATIMA_TAMEX/Slow/TrailT/Trail Time Slow Ch.%2d",i), Form("Trail Slow time. %2d",i), 5000,0,5000);*/
-
+         
          hFat_lead_lead_fast_ref[i] =   MakeTH1('D', Form("FATIMA_TAMEX/Fast/LeadRef-Lead/Lead-Lead Fast Time Ref Ch1- Ch.%2d",i), Form("RefLead-Lead time. %2d",i), 1000,-10000,10000);
          hFat_lead_lead_slow_ref[i] =   MakeTH1('D', Form("FATIMA_TAMEX/Slow/LeadRef-Lead/Lead-Lead Slow Time Ref Ch1- Ch.%2d",i), Form("RefLead-Lead time. %2d",i), 1000,-10000,10000);
-
-        // hFat_ToT_Fast_det[i]=   MakeTH1('D', Form("FATIMA_TAMEX/Fast/ToT/ToT Fast Ch.%2d",i), Form("ToT Fast %2d",i), 5000,0,150000);
-
-         hFat_ToT_Slow_det[i]=   MakeTH1('D', Form("FATIMA_TAMEX/Slow/ToT/ToT Slow Ch.%2d",i), Form("ToT Slow %2d",i), 15000,0,150000);
-
-         hFat_ToT_Slow_det_calib[i]=   MakeTH1('D', Form("FATIMA_TAMEX/Slow/ToT_Calib/ToT Slow Calib Ch.%2d",i), Form("ToT Slow Calibrated %2d",i), 10000,0,10000);
+         
+        // hFat_ToT_Fast_det[i]=   MakeTH1('D', Form("FATIMA_TAMEX/Fast/ToT/ToT Fast Ch.%2d",i), Form("ToT Fast %2d",i), 5000,0,150000);      
+         
+         hFat_ToT_Slow_det[i]=   MakeTH1('D', Form("FATIMA_TAMEX/Slow/ToT/ToT Slow Ch.%2d",i), Form("ToT Slow %2d",i), 15000,0,150000);     
+         
+         hFat_ToT_Slow_det_calib[i]=   MakeTH1('D', Form("FATIMA_TAMEX/Slow/ToT_Calib/ToT Slow Calib Ch.%2d",i), Form("ToT Slow Calibrated %2d",i), 10000,0,10000);     
      }
           hFat_ToT_Fast_Sum= MakeTH1('D', "FATIMA_TAMEX/Fast/ToTFastSum", "ToT LaBr Fast (all detectors)",5000,0,150000);
           hFat_ToT_Slow_Sum= MakeTH1('D', "FATIMA_TAMEX/Slow/ToTSlowSum", "ToT LaBr Slow (all detectors)",15000,0,150000);
           hFat_ToT_Slow_Sum_Calib= MakeTH1('D', "FATIMA_TAMEX/Slow/ToTSlowSum_Calib", "ToT LaBr Slow calibrated (all detectors)",10000,0,10000);
-
+          
           hFat_ToT_Slow_vs_Fast=MakeTH2('D',"FATIMA_TAMEX/Fast_vs_Slow_Ch11","Fast ToT vs Slow ToT Ch.11",2000,0,20000,2000,0,20000);
-
-          hFat_tamex_hit_pattern =  MakeTH1('D', "FATIMA_TAMEX/Fatima_Hitpattern", "Fatima Hit pattern",48,0,48);
+          
+          hFat_tamex_hit_pattern =  MakeTH1('D', "FATIMA_TAMEX/Fatima_Hitpattern", "Fatima Hit pattern",48,0,48);  
           hFat_tamex_multiplicity =  MakeTH1('D', "FATIMA_TAMEX/Fatima_Multiplicity", "Fatima Multiplicity",48,0,48);
 
-           hFat_FRSFatTamdT_vs_ToT_ch11 = MakeTH2('D',"FATIMA_TAMEX/FRS-FATTAM_dT_LR_vs_SlowToT","",10000,-5000,200000,500,0,4000);
+           //hFat_FRSFatTamdT_vs_ToT_ch11 = MakeTH2('D',"FATIMA_TAMEX/FRS-FATTAM_dT_LR_vs_SlowToT","",10000,-5000,200000,500,0,4000);
+
+         // hFat_Lead_Lead_Fast_T=  MakeTH1('D', "FATIMA_TAMEX/Test_dT", "Fatima Hit pattern",1000,-105000,105000);  
  }
-
-
+ 
+ 
 //-----------------------------------------------------------------------------------------------//
-void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
-
-        //bool fired_det1=false, fired_det2=false;
-
+void EventAnlProc::Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){   
+          
+        //bool fired_det1=false, fired_det2=false;    
+         
          hits_fat_lead=0;
          hits_fat_trail=0;
                  for (int i = 0; i < 66; i++){
-
+                    
                     Fat_tot_hits[i] = 0;
                      for(int j=0; j<FATIMA_TAMEX_HITS; j++){
-                        lead_slow_fat[i][j]=0;
-                        lead_fast_fat[i][j]=0;
-                        ToT_slow_fat[i][j] = 0;
-                        ToT_slow_fat_calib[i][j] = 0;
-                        ToT_fast_fat[i][j] = 0;
+                        lead_slow_fat[i][j]=0; 
+                        lead_fast_fat[i][j]=0; 
+                        ToT_slow_fat[i][j] = 0; 
+                        ToT_slow_fat_calib[i][j] = 0; 
+                        ToT_fast_fat[i][j] = 0; 
                         lead_lead_slow_fat_Ref1[i][j]=0;
                         lead_lead_fast_fat_Ref1[i][j]=0;
-//                         SC41L_ANA_lead_fat[i][j] = 0;
-//                         SC41R_ANA_lead_fat[i][j] = 0;
-//                         SC41L_DIG_lead_fat[i][j] = 0;
-//                         SC41R_DIG_lead_fat[i][j] = 0;
+
+
+//                         SC41L_ANA_lead_fat[i][j] = 0;  
+//                         SC41R_ANA_lead_fat[i][j] = 0;  
+//                         SC41L_DIG_lead_fat[i][j] = 0;  
+//                         SC41R_DIG_lead_fat[i][j] = 0;  
                      }
                  }
-
+         
          for(int i=0; i<FATIMA_TAMEX_HITS; i++){
          FatTam_Fast_RefCh0[i] =0;
          FatTam_Slow_RefCh0[i] =0;
@@ -2169,216 +2162,226 @@ void EventAnlProc::Do_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStor
          SC41R_ANA_lead_fat[i] =0;
          bPlasDet1_coin_lead_Fat[i] =0;
          bPlasDet2_coin_lead_Fat[i] =0;
+        // lead_lead_fast_fat_onechan[i]=0;
 
          }
-
-     ///**---------------------------------------------LEAD -------------------------------------------------**/
-           ///Loop on channels First
-
+                
+     ///**---------------------------------------------LEAD -------------------------------------------------**/        
+           ///Loop on channels First    
+                           
               for(int i=1; i<=FATIMA_TAMEX_CHANNELS; i++){ ///Channel number
-
+                  
                   // Fast Branch for timing
-                 for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit
-
-
+                 for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit 
+                     
+                    
                     FatTam_Fast_RefCh0[j] = pInput->fFat_Lead_Fast[1][j];
                     SC41L_ANA_lead_fat[j]=pInput->fFat_Lead_Fast[4][j];
                     SC41R_ANA_lead_fat[j]=pInput->fFat_Lead_Fast[5][j];
                     bPlasDet1_coin_lead_Fat[j]=pInput->fFat_Lead_Fast[6][j];
                     bPlasDet2_coin_lead_Fat[j]=pInput->fFat_Lead_Fast[7][j];
-
-
-                        }
-                 for (int j = 0; j < FATIMA_TAMEX_HITS; j++){
+                 
+                   
+                        }      
+                 for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  
                         FatTam_Slow_RefCh0[j] = pInput->fFat_Lead_Slow[1][j];
               }
               }
-            ////////////////////////////
-              ///Loop over channels
+            ////////////////////////////    
+              ///Loop over channels 
               for(int i=1; i<=FATIMA_TAMEX_CHANNELS; i++){ ///Channel number
 
- ///**------------------------Fatima Lead Fast Time ----------------------**/
+ ///**------------------------Fatima Lead Fast Time ----------------------**/    
 
-                for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit
+                for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit 
 
-                    lead_fast_fat[i][j] = pInput->fFat_Lead_Fast[i][j];
+                    lead_fast_fat[i][j] = pInput->fFat_Lead_Fast[i][j]; 
 
-               if(lead_fast_fat[i][j]!=0)     hFat_Lead_Fast_T[i]->Fill(lead_fast_fat[i][j]);
-                    pOutput->pFat_Fast_LeadT[i][j] = lead_fast_fat[i][j];
-                    pOutput->pFat_LeadHits = hits_fat_lead;
-                     hits_fat_lead++;
+//               if( pInput->fFat_Lead_Fast[i][j]>0)  cout<<"lead_fast_fat[i][j] " <<lead_fast_fat[i][j] << " i " << i <<  endl;
+                              if(lead_fast_fat[i][j]!=0 && lead_fast_fat[i][j]!=0) 
+            {
+
+                    //  lead_lead_fast_fat_onechan[j] = (lead_fast_fat[8][j]-lead_fast_fat[3][j])*5;  
+
+//                       cout<<"lead_lead_fast_fat_onechan[j] " <<lead_lead_fast_fat_onechan[j] << " lead_fast_fat[i][j] " <<lead_fast_fat[i][j] << " lead_fast_fat[i+1][j] " <<lead_fast_fat[i+1][j] << endl;
+
+                      //hFat_Lead_Lead_Fast_T->Fill(lead_lead_fast_fat_onechan[j]);
+            }
+
+               if(lead_fast_fat[i][j]!=0)  {
+                  // cout<<"i " << i << " j " << j << " lead_fast_fat[i][j] " << lead_fast_fat[i][j]<<endl;
+                  // hFat_Lead_Fast_T[i]->Fill(lead_fast_fat[i][j]);    
+
+               }
+                    pOutput->pFat_Fast_LeadT[i][j] = lead_fast_fat[i][j];    
+                    pOutput->pFat_LeadHits = hits_fat_lead; 
+                     hits_fat_lead++;  
 
 
-    ///**-----------------------Fatima Lead Fast Ref dT ----------------------------**/
+    ///**-----------------------Fatima Lead Fast Ref dT ----------------------------**/          
 
-//                     if(i>15 && pInput->fFat_Lead_PMT[16][j]>0 && pInput->fFat_Lead_PMT[i][j]>0) {
+//                     if(i>15 && pInput->fFat_Lead_PMT[16][j]>0 && pInput->fFat_Lead_PMT[i][j]>0) {   
 
         if(FatTam_Fast_RefCh0[j]>0 && lead_fast_fat[i][j]>0){
-            lead_lead_fast_fat_Ref1[i][j] = (FatTam_Fast_RefCh0[j] -  lead_fast_fat[i][j])*CYCLE_TIME;
+            lead_lead_fast_fat_Ref1[i][j] = (FatTam_Fast_RefCh0[j] -  lead_fast_fat[i][j])*CYCLE_TIME; 
 
         }
 
               if(lead_lead_fast_fat_Ref1[i][j]!=0) hFat_lead_lead_fast_ref[i] ->Fill(lead_lead_fast_fat_Ref1[i][j]);
-
-
+          
+           
                 }///End of fast lead
+                
+        ///**------------------------Fatima Lead Slow Time ----------------------**/    
+   
+                for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit 
 
-        ///**------------------------Fatima Lead Slow Time ----------------------**/
-
-                for (int j = 0; j < FATIMA_TAMEX_HITS; j++){  ///Hit
-
-                    lead_slow_fat[i][j] = pInput->fFat_Lead_Slow[i][j];
-
-                    //hFat_Lead_Slow_T[i]->Fill(lead_slow_fat[i][j]);
-                    pOutput->pFat_Slow_LeadT[i][j] = lead_slow_fat[i][j];
-                 //   pOutput->pFat_LeadHits = hits_fat_lead;
-                   //  hits_fat_lead++;
-
-
-    ///**-----------------------Fatima Lead Slow Ref dT ----------------------------**/
-
-//                     if(i>15 && pInput->fFat_Lead_PMT[16][j]>0 && pInput->fFat_Lead_PMT[i][j]>0) {
-
+                    lead_slow_fat[i][j] = pInput->fFat_Lead_Slow[i][j];  
+            
+                    //hFat_Lead_Slow_T[i]->Fill(lead_slow_fat[i][j]);    
+                    pOutput->pFat_Slow_LeadT[i][j] = lead_slow_fat[i][j];    
+                 //   pOutput->pFat_LeadHits = hits_fat_lead; 
+                   //  hits_fat_lead++;  
+               
+        
+    ///**-----------------------Fatima Lead Slow Ref dT ----------------------------**/          
+                          
+//                     if(i>15 && pInput->fFat_Lead_PMT[16][j]>0 && pInput->fFat_Lead_PMT[i][j]>0) {   
+                
         if(FatTam_Slow_RefCh0[j]>0 && lead_slow_fat[i][j]>0){
-            lead_lead_slow_fat_Ref1[i][j] = (FatTam_Slow_RefCh0[j] -  lead_slow_fat[i][j])*CYCLE_TIME;
+            lead_lead_slow_fat_Ref1[i][j] = (FatTam_Slow_RefCh0[j] -  lead_slow_fat[i][j])*CYCLE_TIME; 
 
         }
-             // clear;make -j 8; go4analysis -file ~/lustre/gamma/DESPEC_S452_FILES/ts/S452f074_0062.lmd -disable-asf
-              if(lead_lead_slow_fat_Ref1[i][j]!=0){
+             // clear;make -j 8; go4analysis -file ~/lustre/gamma/DESPEC_S452_FILES/ts/S452f074_0062.lmd -disable-asf               
+              if(lead_lead_slow_fat_Ref1[i][j]!=0){ 
                    //cout<<"i " << i << " j " << j <<" lead_lead_slow_fat_Ref1[i][j] " << lead_lead_slow_fat_Ref1[i][j]<<  endl;
                   hFat_lead_lead_slow_ref[i] ->Fill(lead_lead_slow_fat_Ref1[i][j]);
-
+                  
               }
-
-
+          
+           
                 }///End of slow lead
+                         
+      ///**---------------------Fatima Fast Trail ----------------------------------**/  
+                                                            
+               // pOutput->pFat_PMT_Trail_N[a][b] = pInput->fFat_PMT_Trail_N[a][b]; 
+                
+               for(int j=0; j< FATIMA_TAMEX_HITS; j++){ ///Hits 
 
-      ///**---------------------Fatima Fast Trail ----------------------------------**/
-
-               // pOutput->pFat_PMT_Trail_N[a][b] = pInput->fFat_PMT_Trail_N[a][b];
-
-               for(int j=0; j< FATIMA_TAMEX_HITS; j++){ ///Hits
-
-
-                    trail_fast_fat[i][j] = pInput->fFat_Trail_Fast[i][j];
+                    
+                    trail_fast_fat[i][j] = pInput->fFat_Trail_Fast[i][j];  
                    // hFat_Trail_Fast_T[i]->Fill(trail_fast_fat[i][j]);
-//                    pOutput->pFat_TrailHits = hits_fat_trail;
-                    hits_fat_trail++;
-
-
-                    pOutput->pFat_Fast_TrailT[i][j] = trail_fast_fat[i][j];
+//                    pOutput->pFat_TrailHits = hits_fat_trail; 
+                    hits_fat_trail++;  
+                    
+                 
+                    pOutput->pFat_Fast_TrailT[i][j] = trail_fast_fat[i][j];  
                      }
+                     
+    ///**---------------------Fatima Slow Trail ------------------**/  
+                                                            
+               // pOutput->pFat_PMT_Trail_N[a][b] = pInput->fFat_PMT_Trail_N[a][b]; 
+                
+               for(int j=0; j< FATIMA_TAMEX_HITS; j++){ ///Hits 
 
-    ///**---------------------Fatima Slow Trail ------------------**/
-
-               // pOutput->pFat_PMT_Trail_N[a][b] = pInput->fFat_PMT_Trail_N[a][b];
-
-               for(int j=0; j< FATIMA_TAMEX_HITS; j++){ ///Hits
-
-
-                    trail_slow_fat[i][j] = pInput->fFat_Trail_Slow[i][j];
+                    
+                    trail_slow_fat[i][j] = pInput->fFat_Trail_Slow[i][j];  
                    // hFat_Trail_Slow_T[i]->Fill(trail_slow_fat[i][j]);
-//                    pOutput->pFat_TrailHits = hits_fat_trail;
-                    //hits_fat_trail++;
-
-
-                    pOutput->pFat_Slow_TrailT[i][j] = trail_slow_fat[i][j];
+//                    pOutput->pFat_TrailHits = hits_fat_trail; 
+                    //hits_fat_trail++;  
+                    
+                 
+                    pOutput->pFat_Slow_TrailT[i][j] = trail_slow_fat[i][j];  
                      }
-   ///**---------------------Fatima Fast ToT ----------------------------------**/
-              for(int j=0; j< FATIMA_TAMEX_HITS; j++){
+   ///**---------------------Fatima Fast ToT ----------------------------------**/  
+              for(int j=0; j< FATIMA_TAMEX_HITS; j++){ 
                       if(j<FATIMA_TAMEX_HITS){
                 // cout<< " pInput->fFat_Trail_PMT[i][j] " << pInput->fFat_Trail_PMT[i][j]<< " pInput->fFat_Lead_PMT[i][j] " <<pInput->fFat_Lead_PMT[i][j] <<" i " <<i << " j " << j << endl;
-                  if(pInput->fFat_Trail_Fast[i][j] >0 && pInput->fFat_Lead_Fast[i][j]>0){
-
-        ToT_fast_fat[i][j] = (pInput->fFat_Trail_Fast[i][j] - pInput->fFat_Lead_Fast[i][j]);
+                  if(pInput->fFat_Trail_Fast[i][j] >0 && pInput->fFat_Lead_Fast[i][j]>0){ 
+                
+        ToT_fast_fat[i][j] = (pInput->fFat_Trail_Fast[i][j] - pInput->fFat_Lead_Fast[i][j]);   
              // cout<<"ToT_fat[i][j] " <<ToT_fat[i][j] << " i " << i << " j " << j << endl;
-                ///Correction for overflows
-                if(ABS(ToT_fast_fat[i][j]) >(double)(COARSE_CT_RANGE>>1)) {
-
-                       ToT_fast_fat[i][j] = CYCLE_TIME*(ToT_fast_fat[i][j] + COARSE_CT_RANGE);
-                      }
-                 else{
-                           ToT_fast_fat[i][j]= CYCLE_TIME*ToT_fast_fat[i][j];
-                       }
-                       ///Gain matching
+                ///Correction for overflows 
+                if(ABS(ToT_fast_fat[i][j]) >(double)(COARSE_CT_RANGE>>1)) {   
+                    
+                       ToT_fast_fat[i][j] = CYCLE_TIME*(ToT_fast_fat[i][j] + COARSE_CT_RANGE);    
+                      } 
+                 else{  
+                           ToT_fast_fat[i][j]= CYCLE_TIME*ToT_fast_fat[i][j];                         
+                       }    
+                       ///Gain matching  
                // pOutput-> pFat_ToTCalib[i][j] = fCal->Afat_TAMEX_ZAoQ[i]* ToT_fat[i][j] + fCal->Bfat_TAMEX_ZAoQ[i];
                pOutput-> pFat_Fast_ToTCalib[i][j] =ToT_fast_fat[i][j];
                        if(ToT_fast_fat[i][j]>0) {
-                       // hFat_ToT_Fast_det[i] ->Fill(ToT_fast_fat[i][j]*0.1);
-
-//                        if(i!=FatVME_TimeMachineCh1 && i!=FatVME_TimeMachineCh2 && i!=FATIMA_TAMEX_SC41L && i!=FATIMA_TAMEX_SC41R && i!=FATIMA_TAMEX_SC41L_Digi && i!=FATIMA_TAMEX_SC41R_Digi) hFat_ToT_Fast_Sum->Fill(ToT_fast_fat[i][j]*0.1);
-//
-                       hFat_tamex_hit_pattern->Fill(i);
-
-
+                       // hFat_ToT_Fast_det[i] ->Fill(ToT_fast_fat[i][j]*0.1);   
+                        
+//                        if(i!=FatVME_TimeMachineCh1 && i!=FatVME_TimeMachineCh2 && i!=FATIMA_TAMEX_SC41L && i!=FATIMA_TAMEX_SC41R && i!=FATIMA_TAMEX_SC41L_Digi && i!=FATIMA_TAMEX_SC41R_Digi) hFat_ToT_Fast_Sum->Fill(ToT_fast_fat[i][j]*0.1);   
+//                       
+                       hFat_tamex_hit_pattern->Fill(i);  
+                      
+                    
                        ///Fill the Channel map and multiplicity here
-                          Fat_tot_hits[i]++;
+                          Fat_tot_hits[i]++; 
                           hFat_tamex_multiplicity->Fill(Fat_tot_hits[i]);
-
+                            
                             }
                           }
-                        }
+                        }         
                     }///end of fast fatima ToT
 
-    ///**---------------------Fatima Slow ToT ----------------------------------**/
-              for(int j=0; j< FATIMA_TAMEX_HITS; j++){
+    ///**---------------------Fatima Slow ToT ----------------------------------**/  
+              for(int j=0; j< FATIMA_TAMEX_HITS; j++){ 
 
-                // cout<< " pInput->fFat_Trail_PMT[i][j] " << pInput->fFat_Trail_PMT[i][j]<< " pInput->fFat_Lead_PMT[i][j] " <<pInput->fFat_Lead_PMT[i][j] <<" i " <<i << " j " << j << endl;
-                  if(pInput->fFat_Trail_Slow[i][j] >0 && pInput->fFat_Lead_Slow[i][j]>0){
+                if(pInput->fFat_Trail_Slow[i][j] >0 && pInput->fFat_Lead_Slow[i][j]>0){ 
 
-        ToT_slow_fat[i][j] = (pInput->fFat_Trail_Slow[i][j] - pInput->fFat_Lead_Slow[i][j]);
+        ToT_slow_fat[i][j] = (pInput->fFat_Trail_Slow[i][j] - pInput->fFat_Lead_Slow[i][j]);   
 
-                ///Correction for overflows
-                if(ABS(ToT_slow_fat[i][j]) >(double)(COARSE_CT_RANGE>>1)) {
+                ///Correction for overflows 
+                if(ABS(ToT_slow_fat[i][j]) >(double)(COARSE_CT_RANGE>>1)) {   
 
-                       ToT_slow_fat[i][j] = CYCLE_TIME*(ToT_slow_fat[i][j] + COARSE_CT_RANGE);
-                      }
-                 else{
-                           ToT_slow_fat[i][j]= CYCLE_TIME*ToT_slow_fat[i][j];
-                       }
+                       ToT_slow_fat[i][j] = CYCLE_TIME*(ToT_slow_fat[i][j] + COARSE_CT_RANGE)*1E-2;  
+                       // cout<<"ThisCoarse clock happened" << endl;
+                      } 
+                 else{  
+                           ToT_slow_fat[i][j]= CYCLE_TIME*ToT_slow_fat[i][j]*1E-2;   
+
+                       }    
             ///Gain matching  (slow branch): I have to scale it
 
-       ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i-1] * pow(ToT_slow_fat[i][j]*0.01,3)+ fCal->Bfat_TAMEX[i-1] *pow(ToT_slow_fat[i][j]*0.01,2) + fCal->Cfat_TAMEX[i-1] *ToT_slow_fat[i][j]*0.01 + fCal->Dfat_TAMEX[i-1]);
+          // if(ToT_slow_fat[i][j]>1.5E4)   cout<<"4 ToT_slow_fat[i][j] " <<ToT_slow_fat[i][j] << " pInput->fFat_Trail_Slow[i][j] " <<pInput->fFat_Trail_Slow[i][j] << " pInput->fFat_Lead_Slow[i][j] " <<pInput->fFat_Lead_Slow[i][j] << " i " << i << " j " << j <<  endl;
 
+       ToT_slow_fat_calib[i][j] = (fCal->Afat_TAMEX[i-1] * pow(ToT_slow_fat[i][j],3)+ fCal->Bfat_TAMEX[i-1] *pow(ToT_slow_fat[i][j],2) + fCal->Cfat_TAMEX[i-1] *ToT_slow_fat[i][j] + fCal->Dfat_TAMEX[i-1]);      
 
-              //cout<<"ToT_slow_fat[i][j] " << ToT_slow_fat[i][j]<< endl;
-//                pOutput-> pFat_Slow_ToTCalib[i][j] =ToT_slow_fat[i][j];
-              // cout<<"ToT_slow_fat[i][j] " <<ToT_slow_fat[i][j] << " i " << i << " j " << j <<" pInput->fFat_Trail_Slow[i][j] " <<pInput->fFat_Trail_Slow[i][j] << " pInput->fFat_Lead_Slow[i][j] " <<pInput->fFat_Lead_Slow[i][j] << endl;
-//         cout<<"event " << pInput->fevent_number << " i " << i <<" j" << j << endl;
-//                             pOutput->pFat_Tamex_chan[j] = i;
-//                             cout<<"pOutput->pFat_Tamex_chan[j] " <<pOutput->pFat_Tamex_chan[j]<< " j " << j <<" ToT_slow_fat[i][j]*0.01 " <<ToT_slow_fat[i][j]*0.01 << endl;
+            pOutput-> pFat_Slow_ToTCalib[i][j] =ToT_slow_fat[i][j];
                        if(ToT_slow_fat[i][j]>0) {
-                          // if(i==1){
-//                            cout<<"event " << pInput->fevent_number << " i " << i <<" j" << j << endl;
-//                             pOutput->pFat_Tamex_chan[j] = i;
-//                             cout<<"pOutput->pFat_Tamex_chan[j] " <<pOutput->pFat_Tamex_chan[j]<< " j " << j <<" ToT_slow_fat[i][j]*0.01 " <<ToT_slow_fat[i][j]*0.01 << endl;
-                        hFat_ToT_Slow_det[i] ->Fill(ToT_slow_fat[i][j]*0.01);
-                        hFat_ToT_Slow_det_calib[i] ->Fill(ToT_slow_fat_calib[i][j]);
-                          // }
+
+                        hFat_ToT_Slow_det[i] ->Fill(ToT_slow_fat[i][j]); 
+                        hFat_ToT_Slow_det_calib[i] ->Fill(ToT_slow_fat_calib[i][j]); 
+
                  if(i==11)   {  hFat_ToT_Slow_vs_Fast->Fill(ToT_slow_fat[11][j]*0.01,pOutput-> pFat_Fast_ToTCalib[11][j]*0.01);
-
+             
                  }
-
-        if(i!=FatVME_TimeMachineCh1 || i!=FatVME_TimeMachineCh2 || i!=FATIMA_TAMEX_SC41L || i!=FATIMA_TAMEX_SC41R || i!=FATIMA_TAMEX_SC41L_Digi || i!=FATIMA_TAMEX_SC41R_Digi){ //hFat_ToT_Slow_Sum->Fill(ToT_slow_fat[i][j]*0.01);
-          //  hFat_ToT_Slow_Sum_Calib->Fill(ToT_slow_fat_calib[i][j]);
-             if(pInput->fFRS_WR>0 && pInput->fFat_Tamex_WR>0 && ToT_slow_fat_calib[i][j]>0 && i==11)hFat_FRSFatTamdT_vs_ToT_ch11->Fill(pInput->fFRS_WR-pInput->fFat_Tamex_WR,ToT_slow_fat_calib[11][j]);
-
-
-                       }
-
-                       // hFat_tamex_hit_pattern->Fill(i);
-
-                         // Fat_tot_hits++;
+                        
+//         if(i!=FatVME_TimeMachineCh1 || i!=FatVME_TimeMachineCh2 || i!=FATIMA_TAMEX_SC41L || i!=FATIMA_TAMEX_SC41R || i!=FATIMA_TAMEX_SC41L_Digi || i!=FATIMA_TAMEX_SC41R_Digi){ //hFat_ToT_Slow_Sum->Fill(ToT_slow_fat[i][j]*0.01);  
+//           //  hFat_ToT_Slow_Sum_Calib->Fill(ToT_slow_fat_calib[i][j]);    
+// //              if(pInput->fFRS_WR>0 && pInput->fFat_Tamex_WR>0 && ToT_slow_fat_calib[i][j]>0 && i==11)hFat_FRSFatTamdT_vs_ToT_ch11->Fill(pInput->fFRS_WR-pInput->fFat_Tamex_WR,ToT_slow_fat_calib[11][j]);
+//             
+//             
+//                        }
+                       
+                       // hFat_tamex_hit_pattern->Fill(i);  
+                    
+                         // Fat_tot_hits++; 
                          // hFat_tamex_multiplicity->Fill(Fat_tot_hits);
 
-                            }
-                        }
-                    //end of slow fatima ToT
-                }
-              }
-}
+                            }//Slow ToT>0
 
-  /**----------------------------------------------------------------------------------------------**/
+                        } ///if Trail AND Lead condition     
+                    //end of slow fatima ToT
+                } ///Loop on hits
+              }///Loop on channels 
+            }
+/**----------------------------------------------------------------------------------------------**/
  /**--------------------------------------  FATIMA VME ----------------------------------------------**/
 
 void EventAnlProc::Make_Fatima_Histos(){
@@ -2411,7 +2414,7 @@ void EventAnlProc::Make_Fatima_Histos(){
 
 }
 ///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------///
-void EventAnlProc::Do_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
+void EventAnlProc::Process_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput){
 
     Fat_time_mins =0;
     if(Fat_WR>0) {Fat_time_mins =(Fat_WR/60E9)-FatGM_Offset;
@@ -2658,7 +2661,7 @@ if(Fatmult > 0){
       //}
         }
     ///-----------------------------------------------------------------------------------------------------------------------------------------------------------------------///
-    void EventAnlProc::Do_Germanium_Histos(EventAnlStore* pOutput)
+    void EventAnlProc::Process_Germanium_Histos(EventAnlStore* pOutput)
     {
         Ge_time_mins=0;
       if(Ge_WR>0) Ge_time_mins =(Ge_WR/60E9)-26900000;
@@ -2856,7 +2859,7 @@ if(Fatmult > 0){
                 }
             }
         }
-    }//end of Do_Germanium_Histos()
+    }//end of Process_Germanium_Histos()
 
 //--------------------------------------------------------------------------------------------------------------------//
 // TH1I* EventAnlProc::MakeH1I(const char* fname,
@@ -3154,72 +3157,8 @@ void EventAnlProc::Fat_TimeCorrection(EventUnpackStore* pInput){
         }
      }
 }
-// void EventAnlProc::Fat_GainCorrection(){
-//      ifstream    file;
-//      string line;
-//      Int_t f=0;
-//      Int_t fat_det_tmp;
-//      float_t fat_peak_tmp;
-//      float_t fat_factor_tmp;
-//      float_t fat_wr_tmp_low;
-//      float_t fat_wr_tmp_high;
-//
-//       file.open("Configuration_Files/FATIMA/Gain_Factor_Fatima.txt");
-//    while(file.good()){
-//        cout<<"file good " << endl;
-//         getline(file,line,'\n');
-//     if(line[0] == '#') continue;
-//     sscanf(line.c_str(),"%d %f %f %f %f",&fat_det_tmp,&fat_peak_tmp,&fat_factor_tmp,&fat_wr_tmp_low, &fat_wr_tmp_high);
-//
-//     FAT_DET_GFF[f]=fat_det_tmp;
-//     //FAT_PEAK_GFF[f][fat_det_tmp]=fat_peak_tmp;
-//     FAT_FACTOR_GFF[f][fat_det_tmp]=fat_factor_tmp;
-//     FAT_WR_GFF_Low[f][fat_det_tmp]=fat_wr_tmp_low;
-//     FAT_WR_GFF_High[f][fat_det_tmp]=fat_wr_tmp_high;
-//     Fat_Shift_array=f;
-//     // cout<<"FAT_FACTOR_GFF[f][fat_det_tmp] " <<FAT_FACTOR_GFF[f][fat_det_tmp] << " f " << f << " fat_det_tmp " <<fat_det_tmp <<"  FAT_WR_GFF_Low[f][fat_det_tmp] " << FAT_WR_GFF_Low[f][fat_det_tmp] <<" FAT_WR_GFF_High[f][fat_det_tmp] "<<FAT_WR_GFF_High[f][fat_det_tmp]<< endl;
-//        f++;
-//
-//      }
-//
-//   file.close();
-//
-//    }
 
 
-   void EventAnlProc::Fat_GainCorrection(){
-     ifstream    file;
-     string line;
-     Int_t f=0;
-     float_t fat_coeff_tmp;
-     float_t fat_factor_tmp;
-     float_t fat_wr_tmp_low;
-     float_t fat_wr_tmp_high;
-
-      file.open("Configuration_Files/FATIMA/Gain_Factor_Fatima_Linear.txt");
-   while(file.good()){
-
-        getline(file,line,'\n');
-    if(line[0] == '#') continue;
-    sscanf(line.c_str(),"%f %f %f %f",&fat_factor_tmp,&fat_coeff_tmp,&fat_wr_tmp_low, &fat_wr_tmp_high);
-
-    //FAT_DET_GFF[f]=fat_det_tmp;
-    //FAT_PEAK_GFF[f][fat_det_tmp]=fat_peak_tmp;
-    FAT_FACTOR_GFF[f]=fat_factor_tmp;
-    FAT_COEFF_GFF[f]=fat_coeff_tmp;
-    FAT_WR_GFF_Low[f]=fat_wr_tmp_low;
-    FAT_WR_GFF_High[f]=fat_wr_tmp_high;
-    Fat_Shift_array=f;
-
-   // cout<<"FAT_WR_GFF_High[f]" << FAT_WR_GFF_High[f] << " FAT_COEFF_GFF[f] " << FAT_COEFF_GFF[f] << endl;
-    // cout<<"FAT_FACTOR_GFF[f][fat_det_tmp] " <<FAT_FACTOR_GFF[f][fat_det_tmp] << " f " << f << " fat_det_tmp " <<fat_det_tmp <<"  FAT_WR_GFF_Low[f][fat_det_tmp] " << FAT_WR_GFF_Low[f][fat_det_tmp] <<" FAT_WR_GFF_High[f][fat_det_tmp] "<<FAT_WR_GFF_High[f][fat_det_tmp]<< endl;
-       f++;
-
-     }
-
-  file.close();
-
-   }
 
 
 //-----------------------------------------------------------------------------------------------------------------------------//

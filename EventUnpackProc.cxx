@@ -320,11 +320,9 @@ Bool_t EventUnpackProc::BuildEvent(TGo4EventElement* dest)
 
          if (Used_Systems[3] && WR_d==3) {
            if(WR_tmp > Detector_Systems[3]->next_ts_for_update()) {
-
-
-            // int udts = (int) (((double) WR_tmp)*1.6666667E-11);
-	     /////////WARNING ELIF CHECK THIS SHIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! WARNING
+            ///This is for before beam Eu data (S452)
 	   //   int udts = (int) (((double) WR_tmp)*1.6666667E-11)+26080;
+               //This is for the main experiment data
               int udts = (int) (((double) WR_tmp)*1.6666667E-11);
              //printf("FATIMA WR %llu, %d, %llu\n", WR_tmp, udts, Detector_Systems[3]->next_ts_for_update());
              Detector_Systems[3]->do_gain_matching(udts);
