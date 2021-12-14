@@ -110,7 +110,6 @@ TGo4EventProcessor(name)
    /// read_setup_parameters();
     get_used_systems();
     FRS_Gates();
-    //Fat_GainCorrection();
 }
 //-----------------------------------------------------------
 EventAnlProc::~EventAnlProc()
