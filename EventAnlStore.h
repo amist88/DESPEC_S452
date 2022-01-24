@@ -56,10 +56,14 @@ class EventAnlStore : public TGo4EventElement {
       Float_t pFRS_dEdeg;
       Float_t pFRS_dEdegoQ;
       Float_t pFRS_beta;
+      Float_t pFRS_Music_dE[2];
 
       Float_t pFRS_AoQ_mhtdc[10];
-      Float_t pFRS_z_mhtdc[10];      //Elif
+      Float_t pFRS_z_mhtdc[10];      
       Float_t pFRS_z2_mhtdc[10];
+      Float_t pFRS_beta_mhtdc[10];
+      Float_t pFRS_dEdeg_mhtdc[10];
+      Float_t pFRS_dEdegoQ_mhtdc[10];
 
       Float_t pFRS_sci_l[12];
       Float_t pFRS_sci_r[12];
@@ -83,13 +87,13 @@ class EventAnlStore : public TGo4EventElement {
       Bool_t pFRS_ZAoQ_pass[MAX_FRS_GATE];
       Bool_t pFRS_ZAoQ_pass_mhtdc[MAX_FRS_GATE];
       Bool_t pFRS_x2AoQ_pass[MAX_FRS_GATE];
+      Bool_t pFRS_x2AoQ_pass_mhtdc[MAX_FRS_GATE];
       Bool_t pFRS_x4AoQ_pass[MAX_FRS_GATE];
       Bool_t pFRS_x4AoQ_pass_mhtdc[MAX_FRS_GATE];
       Bool_t pFRS_Z_Z2_pass[MAX_FRS_GATE];
-      Bool_t pFRS_dEdeg_Z1_pass[MAX_FRS_GATE];
+      Bool_t pFRS_dEdegZ1_pass[MAX_FRS_GATE];
+      Bool_t pFRS_dEdegZ1_pass_mhtdc[MAX_FRS_GATE];
       Bool_t pFRS_Z_Z2_pass_mhtdc[MAX_FRS_GATE];
-
-
 
       //Helena
       Long64_t pt_lastSC41 = 0;
@@ -165,6 +169,24 @@ class EventAnlStore : public TGo4EventElement {
       Int_t    pbPlas_LeadHits;
       Int_t    pbPlas_TrailHits;
 
+      Int_t pbPlasDetNum_Fast;
+      Int_t pbPlasDetNum_Slow;
+      Int_t pbPlas_FastChan[bPLASTIC_TAMEX_MODULES+1];
+      Int_t pbPlas_SlowChan[bPLASTIC_TAMEX_MODULES+1];
+      Int_t pbPlas_Fast_Lead_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+      Int_t pbPlas_Slow_Lead_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+      Double_t pbPlas_FastLeadT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+      Double_t pbPlas_SlowLeadT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+      Int_t pbPlas_FastLeadHits;
+      Int_t pbPlas_SlowLeadHits;
+      Int_t pbPlast_Fast_Trail_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+      Int_t pbPlast_Slow_Trail_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+      Double_t pbPlas_Fast_TrailT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+      Double_t pbPlas_Slow_TrailT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+      Double_t pbPlas_Fast_ToTCalib[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+      Double_t pbPlas_Slow_ToTCalib[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+      
+      
           ULong64_t pGe_Event_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
           ULong64_t pGe_T[Germanium_MAX_DETS][Germanium_CRYSTALS];
           ULong64_t pGe_T_Aligned[Germanium_MAX_DETS][Germanium_CRYSTALS];

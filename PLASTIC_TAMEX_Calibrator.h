@@ -40,7 +40,7 @@ public:
     PLASTIC_TAMEX_Calibrator(bool);
     ~PLASTIC_TAMEX_Calibrator();
 
-    void get_data(double**,UInt**,int,int*, UInt**);
+    void get_data(double**,UInt**,int,int*);
 
     void ONLINE_CALIBRATION();
     double get_Calibration_val(double,int,int);

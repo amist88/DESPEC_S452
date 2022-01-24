@@ -72,7 +72,7 @@ PLASTIC_TAMEX_Calibrator::~PLASTIC_TAMEX_Calibrator(){
 //---------------------------------------------------------------
 //This only happens when calibrator off
 void PLASTIC_TAMEX_Calibrator::load_Calibration_Files(){
-    
+   
     //load calibration map for used ids
     ifstream map_file("Configuration_Files/bPlast/Calibration_PLASTIC_TAMEX/MAP.dat");
 
@@ -82,12 +82,12 @@ void PLASTIC_TAMEX_Calibrator::load_Calibration_Files(){
         cerr << "Could not find PLASTIC_TAMEX Calibration file MAP" << endl;
         exit(0);
     }
-    
+  
     const char* format_MAP = "%d %d";
 
     int tamex_id,ch_id;
-    int ch_num[100][100];
-    int used_ids[100][100];
+   // int ch_num[100][100];
+    int used_ids[1000][100];
     iter = 0;
 
     wired_tamex_ch = new bool*[100];
@@ -108,7 +108,9 @@ void PLASTIC_TAMEX_Calibrator::load_Calibration_Files(){
         wired_tamex_ch[tamex_id][ch_id] = true;
 
         iter++;
+        
     }
+    
     //Load all wired Calibration files specified by MAP
     char filename[1000];
     ifstream file;
@@ -126,6 +128,7 @@ void PLASTIC_TAMEX_Calibrator::load_Calibration_Files(){
 
         tamex_id = used_ids[i][0];
         ch_id = used_ids[i][1];
+      
         //cout << tamex_id << " " << ch_id << endl;
         //Cal_arr[tamex_id] = new double*[100];
 
@@ -167,9 +170,9 @@ double PLASTIC_TAMEX_Calibrator::get_Calibration_val(double value,int tamex_id_t
 
     for(int i = 0;i < nbins-1;++i){
 //if(ch_id_tmp=-1) break;
-     if(ch_id_tmp>-1){
+     if(ch_id_tmp>-1&&ch_id_tmp<65){
         tmp = Cal_arr[tamex_id_tmp][ch_id_tmp][i];
-	
+    
         tmp2 = Cal_arr[tamex_id_tmp][ch_id_tmp][i+1];
         //cout << "calib "<<tmp << " " << tmp2 << " " << value << " " << bins_x_arr[i]<<endl;
         if(value >= bins_x_arr[i] && value < bins_x_arr[i+1]){
@@ -184,18 +187,20 @@ double PLASTIC_TAMEX_Calibrator::get_Calibration_val(double value,int tamex_id_t
 
 //---------------------------------------------------------------
 
-void PLASTIC_TAMEX_Calibrator::get_data(double** fine_T,UInt** ch_id,int tamex_iter,int* iterator,UInt** ch_num){
+void PLASTIC_TAMEX_Calibrator::get_data(double** fine_T,UInt** ch_id,int tamex_iter,int* iterator){
     //write into corresponding root histograms
     
     for(int i = 0;i < tamex_iter;++i){
         for(int j = 0;j < iterator[i];++j){
-            if(ch_num[i][j]<32){
-           // cout << "tamex_iter " << tamex_iter<< " i " << i << " iterator[i] "<< iterator[i]<< " j " << j <<" ch_num[i][j] " << ch_num[i][j] << endl; 
-            Fine_Hist[i][ch_num[i][j]]->Fill(fine_T[i][j]);
-            if(j %2 ==1) fired[i][ch_num[i][j]] = true;
+            if(i<9 && ch_id[i][j] <66){
+           // if(ch_num[i][j]<32){
+          // cout << "tamex_iter " << tamex_iter<< " i " << i << " iterator[i] "<< iterator[i]<< " j " << j <<" ch_id[i][j] " << ch_id[i][j] << endl; 
+            Fine_Hist[i][ch_id[i][j]]->Fill(fine_T[i][j]);
+            if(j %2 ==1) fired[i][ch_id[i][j]] = true;
             
-            }
+           // }
            // cout<<"fired[i][ch_num[i][j]] " << fired[i][ch_num[i][j]] << " i " << i << " j " << j <<" ch_num[i][j] " << ch_num[i][j] << endl;}
+            }
         }
     }
 }

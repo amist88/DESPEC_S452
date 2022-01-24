@@ -1,5 +1,5 @@
 // $Id: EventCorrelProc.cxx 754 2011-05-18 11:04:52Z adamczew $
-//Adapted for DESPEC by A.K.Mistry 2020
+//Adapted for DESPEC by A.K.Mistry 2022
 //-----------------------------------------------------------------------
     //       The GSI Online Offline Object Oriented (Go4) Project
 //         Experiment Data Processing at EE department, GSI
@@ -171,7 +171,7 @@ Bool_t EventCorrelProc::BuildEvent(TGo4EventElement* dest)
 
 //
     for (int i=0; i<MAX_FRS_GATE; i++){
-    if(USE_dEdeg_Z1_GATE==0)cInput->pFRS_dEdeg_Z1_pass[i]=true;
+    if(USE_dEdeg_Z1_GATE==0)cInput->pFRS_dEdegZ1_pass[i]=true;
     }
 
   ///Gates input TESTING!!!
@@ -1596,7 +1596,7 @@ dT_frsfat_prompt = ((cInputMain->pFat_TDC_T[k]-cInputMain->pSC40[0])*0.025);
                /// Plastic On and off Spill
             if(cInputMain-> pbPlas_ToTCalib[a][b][c]>0){
                 if(cInputMain->pOnSpill==0)hbPlas_ToT_SpillOff[a][b]->Fill(cInputMain-> pbPlas_ToTCalib[a][b][c]);
-                 if(cInputMain->pOnSpill==1)hbPlas_ToT_SpillOn[a][b]->Fill(cInputMain-> pbPlas_ToTCalib[a][b][c]);
+                if(cInputMain->pOnSpill==1)hbPlas_ToT_SpillOn[a][b]->Fill(cInputMain-> pbPlas_ToTCalib[a][b][c]);
 
 
              //Beta Gate + Spill off

@@ -147,7 +147,7 @@ FRS_Detector_System::FRS_Detector_System(){
      //leading_v1290_main     =   new UInt_t*[32];             // Mtof TDC (V1290)
      //trailing_v1290_main   = new UInt_t*[32];   // Mtof TDC (V1290)
 
-    nhit5 = new Int_t*[32];            // multiplicity (V1290)
+    //nhit5 = new Int_t*[32];            // multiplicity (V1290)
 
     //#if NEW_CALIBRATION_VFTX
   for(int mod=0; mod<VFTX_N; mod++)
@@ -163,7 +163,7 @@ FRS_Detector_System::FRS_Detector_System(){
 //   leading_v1290_main[i]         = new UInt_t[10];           // Mtof TDC (V1290)
   // trailing_v1290_main[i]    = new UInt_t[10];  // Mtof TDC (V1290)
 
-    nhit5[i]        = new Int_t[2];       // multiplicity (V1290)
+  //  nhit5[i]        = new Int_t[2];       // multiplicity (V1290)
 //    nhit_v1290_main[i]    = new Int_t[2];       // multiplicity (V1290)
 
     }
@@ -172,13 +172,13 @@ FRS_Detector_System::FRS_Detector_System(){
     vme2scaler = new Int_t[32];         // User Crate Messhute
     vme3scaler = new Int_t[32];         // User Crate Messhute
 
-    firstTS = new bool[3];
+    //firstTS = new bool[3];
 
-    previousTimeStamp = new Long64_t[3];
+    //previousTimeStamp = new Long64_t[3];
 
-    currentTimeStamp = 0;
+    //currentTimeStamp = 0;
 
-    EventFlag = 0;
+    //EventFlag = 0;
 
     qlength     = 0;         /* From event header     */
     qtype   = 0;           /*                       */
@@ -218,7 +218,7 @@ FRS_Detector_System::FRS_Detector_System(){
 
     // scaler readings
     //sc_long = new UInt_t[64]; //changed from 32 to 64 (10.07.2018)
-    sc_long2 = new UInt_t[32];
+   // sc_long2 = new UInt_t[32];
 
 
     // SEETRAM calib IC energy
@@ -226,11 +226,11 @@ FRS_Detector_System::FRS_Detector_System(){
 
 
     // part of MW parameter
-    mw_an = new Int_t[13];       /*  anode time              */
-    mw_xl = new Int_t[13];       /*  Rohdaten                */
-    mw_xr = new Int_t[13];       /*                          */
-    mw_yu = new Int_t[13];       /*                          */
-    mw_yd = new Int_t[13];       /*                          */
+//     mw_an = new Int_t[13];       /*  anode time              */
+//     mw_xl = new Int_t[13];       /*  Rohdaten                */
+//     mw_xr = new Int_t[13];       /*                          */
+//     mw_yu = new Int_t[13];       /*                          */
+//     mw_yd = new Int_t[13];       /*                          */
 
     // TPC part //(HAPOL-25/03/06) 6 TPCs each one with 2 delay lines each!!
     //7 TPCs (4 at S2, 2 at S4 and one at S3) 03.07.2018 SB
@@ -239,13 +239,23 @@ FRS_Detector_System::FRS_Detector_System(){
 //     tpc_r = new Int_t*[7];
         tpc_lt= new Int_t**[7];
         tpc_rt= new Int_t**[7];
+        tpc_dt= new Int_t**[7];
+        tpc_l= new Int_t*[7];
+        tpc_r= new Int_t*[7];
+        tpc_a= new Int_t*[7];
+        
    for(int i=0; i < 7; ++i){
        tpc_lt[i] = new Int_t*[2];
        tpc_rt[i] = new Int_t*[2];
+       tpc_dt[i] = new Int_t*[4];
+       tpc_l[i] = new Int_t[2];
+       tpc_r[i] = new Int_t[2];
+       tpc_a[i] = new Int_t[4];
        for(int j=0; j < 2; ++j){
            tpc_lt[i][j] = new Int_t[64];
            tpc_rt[i][j] = new Int_t[64];
        }
+        for(int j=0; j < 4; ++j)tpc_dt[i][j] = new Int_t[64];
    }
   //  tpc_timeref = new Int_t*[7];
     // [index][anode_no]
@@ -336,16 +346,16 @@ FRS_Detector_System::FRS_Detector_System(){
 
     // MON data declarations
 
-    check_first_event        = new int[2];
-    scaler_channel_10khz = 0;//YT 20Jun
-    scaler_time_count        = new Long64_t[2];
-    scaler_spill_count       = new Long64_t[2]; //UInt_t
-    scaler_time_check_last   = new Long64_t[2];//UInt_t
-    scaler_spill_check_last      = new Long64_t[2];//UInt_t
-    check_increase_time      = new Long64_t[64];//UInt_t
-    check_increase_spill     = new Long64_t[64];//UInt_t
-    scaler_increase_event    = new Long64_t[64];//UInt_t
-    scaler_last_event        = new Long64_t[64];
+//    check_first_event        = new int[2];
+//     scaler_channel_10khz = 0;//YT 20Jun
+//     scaler_time_count        = new Long64_t[2];
+//     scaler_spill_count       = new Long64_t[2]; //UInt_t
+//     scaler_time_check_last   = new Long64_t[2];//UInt_t
+//     scaler_spill_check_last      = new Long64_t[2];//UInt_t
+//     check_increase_time      = new Long64_t[64];//UInt_t
+//     check_increase_spill     = new Long64_t[64];//UInt_t
+//     scaler_increase_event    = new Long64_t[64];//UInt_t
+//     scaler_last_event        = new Long64_t[64];
 
     scaler_ch_1kHz=39; //ch7 of 2nd scaler
     scaler_ch_spillstart=8; //ch8 of 1st scaler
@@ -359,68 +369,10 @@ FRS_Detector_System::FRS_Detector_System(){
 
    // TGo4WinCond *cTPC_SC_TIMEREF[8];
 
-    //**** keep values from previous event
-    focx_s2m        = 0;
-    focy_s2m        = 0;
-    angle_x_s2m     = 0;
-    angle_y_s2m     = 0;
+///All this MON and MW stuff I took out (also in the header) since its not used A.K.M Jan 2022
 
-
-
-    fbFirstEvent = false;
-    //unsigned int  scaler_save[64];
-    scaler_save  = new Long64_t[64];
-
-    firstsec        = 0;
-    firsttenthsec   = 0;
-    firsthundrethsec    = 0;    //mik
-    firstcycle      = 0;
-    firstseetram    = 0;
-
-    scalercycle_Sec         = 0;
-    scalercycle_TenthSec    = 0;
-    scalercycle_HundrethSec     = 0;
-    scalercycle_Cycle       = 0;
-    scalercycle_Seetram     = 0;
-
-    dtime   = 0;
-    dt_last     = 0;
-    dt_diff     = 0;
-
-
-    check_total_sc41        = 0;
-    check_total_sc21        = 0;
-    check_total_seetram     = 0;
-    check_total_mrtof_start     = 0;
-    check_total_mrtof_stop  = 0;
-
-
-    freeTrig = 0;
-    acptTrig = 0;
-    mon_inc  = new Long64_t[64];
-
-    // MON part
-//     seconds      = 0;
-//     tenthsecs        = 0;
-//     hundrethsecs     = 0;    //mik
-   // extraction_cycle  = 0;
-    coin  = new Int_t[16];
-    seetram         = 0;
-
-    // MW part
-    mw_xsum = new Float_t[13];     /*                          */
-    mw_ysum = new Float_t[13];     /*                          */
-
-    mw_x    = new Float_t[13];     /*                          */
-    mw_y    = new Float_t[13];     /*                          */
-    mw_wire = new Float_t[13];     /* special for Helmut       */
-
-    z_x_s2 = 0;
-    z_y_s2 = 0;
-    z_x_s4 = 0;
-    z_y_s4 = 0;
-    z_x_s8 = 0;
-    z_y_s8 = 0;
+    //coin  = new Int_t[16];
+   // seetram         = 0;
 
     tmp_nhit_prev=0;
         for(int i=0; i<128; i++){
@@ -428,8 +380,6 @@ FRS_Detector_System::FRS_Detector_System(){
         for(int j=0; j<64; j++) leading_v1190_tpcs2[i][j]=0;
         }
 
-    b_mw_xsum = new Bool_t[13];   /*  wc on sum               */
-    b_mw_ysum = new Bool_t[13];   /*                          */
 
     focx_s2 = 0;         /*  FRS foci                */
     focy_s2 = 0;         /*                          */
@@ -444,7 +394,7 @@ FRS_Detector_System::FRS_Detector_System(){
     angle_x_s8 = 0;      /*                          */
     angle_y_s8 = 0;      /*                          */
 
-    tpc_x_s2_foc_21_22=-999.;
+  tpc_x_s2_foc_21_22=-999.;
   tpc_y_s2_foc_21_22=-999.;
   tpc_x_s2_foc_23_24=-999.;
   tpc_y_s2_foc_23_24=-999.;
@@ -517,9 +467,7 @@ FRS_Detector_System::FRS_Detector_System(){
 //     b_tpc_csum[i] = new Bool_t[4];
 //
 //     }
-    x0 = 0;
-    x1 = 0;
-
+  
     //TPCs 21 & 22 @ S2 focus
     tpc_x_s2_foc_21_22      = 0;
     tpc_y_s2_foc_21_22      = 0;
@@ -561,24 +509,10 @@ FRS_Detector_System::FRS_Detector_System(){
     //      Float_t tpc_angle_x_s4_target2;
     //      Float_t tpc_angle_y_s4_target2;
 
-
    // tpc_mw_sc21_x = 0;      /* SC21 x                   */
     tpc_sc41_x = 0;      /* SC41 x                   */
   //  tpc_sc21_y = 0;      /* SC21 y                   */
     tpc_sc41_y = 0;      /* SC41 y                   */
-
-
-    mw_sc21_x = 0;          /* SC21                     */
-    mw_sc22_x = 0;          /* SC22 (LAND finger)       */
-    sc41_x = 0;          /* SC41                     */
-    itag_stopper_x = 0;  /* ITAG Stopper             */
-    sc42_x = 0;          /* SC42                     */
-    sc43_x = 0;          /* SC43                     */
-    sc21_y = 0;          /* tracked SC21 Y pos       */
-    sc41_y = 0;          /* SC41 Y                   */
-    sc42_y = 0;          /* SC42 Y                   */
-    sc43_y = 0;          /* SC43 Y                   */
-    sc81_x = 0;          /* SC81          positions  */
 
     music1_x1 = 0;       /* parameters to calibrate  */
     music1_x2 = 0;       /* parameters to calibrate  */
@@ -590,14 +524,6 @@ FRS_Detector_System::FRS_Detector_System(){
     music1_y4 = 0;       /* parameters to calibrate  */
     music2_x  = 0;       /* MUSIC1,2 positions       */
 
-
-    //Si detectors
-    si_e1 = 0;
-    si_e2 = 0;
-    si_e3 = 0;
-    si_e4 = 0;
-    si_e5 = 0;
-
  for(int module=0; module<VFTX_N; module++){
     for(int channel=0; channel<VFTX_MAX_CHN; channel++) {
       for(int hit=0; hit<VFTX_MAX_HITS; hit++) {
@@ -607,16 +533,6 @@ FRS_Detector_System::FRS_Detector_System(){
       vftx_mult[module][channel] = 0;
     }
  }
-
-
-//     dssd_e = new Float_t[32]; //[3][2][16]
-//     dssd_maxenergy = 0; //[3]
-//     dssd_maxindex  = 0;  //[3]
-//
-//     dssd_xmaxenergy = 0;
-//     dssd_xmaxindex  = 0;
-//     dssd_ymaxenergy = 0;
-//     dssd_ymaxindex  = 0;
 
     /******************************************************************/
     /*** ANALYSIS Parameters ***/
@@ -667,7 +583,7 @@ FRS_Detector_System::FRS_Detector_System(){
 
         x1_mean = 0;
 
-      //  b_decor = false;
+
 
     //SCI part
     sci_l = new Float_t[12];
@@ -675,12 +591,6 @@ FRS_Detector_System::FRS_Detector_System(){
     sci_e = new Float_t[12];
     sci_tx = new Float_t[12];
     sci_x = new Float_t[12];
-    itag_42_e = 0;
-    itag_43_e = 0;
-    sci_u5 = 0;
-    sci_d5 = 0;
-    sci_ty5 = 0;
-    sci_y5 = 0;
     sci_tofll2 = 0;
     sci_tofrr2 = 0;
     sci_tof2 = 0;
@@ -695,9 +605,6 @@ FRS_Detector_System::FRS_Detector_System(){
     sci_tof4 = 0;
     sci_tof2 = 0; sci_tof3 = 0; sci_tof4 = 0;
 
-    sci_veto_l = new Float_t[3];
-    sci_veto_r = new Float_t[3];
-    sci_veto_e = new Float_t[3];
 
     sci_b_l = new Bool_t[12];
     sci_b_r = new Bool_t[12];
@@ -714,10 +621,6 @@ FRS_Detector_System::FRS_Detector_System(){
     sci_b_tofrr3 = false;
     sci_b_tofll4 = false;
     sci_b_tofrr4 = false;
-    sci_b_detof = false;
-    sci_b_veto_l = new Bool_t[3];
-    sci_b_veto_r = new Bool_t[4];
-    sci_b_veto_e = new Bool_t[3];
 
     for(int i = 0; i < 12; ++i){
 
@@ -732,23 +635,9 @@ FRS_Detector_System::FRS_Detector_System(){
         sci_b_e[i] = false;
         sci_b_tx[i] = false;
         sci_b_x[i] = false;
-
-        if(i < 3){
-
-        sci_veto_l[i] = 0;
-        sci_veto_r[i] = 0;
-        sci_veto_e[i] = 0;
-
-        sci_b_veto_l[i] = false;
-        sci_b_veto_e[i] = false;
-
-        }
-
-        if(i < 4) sci_b_veto_r[i] = false;
     }
 
     // ID part
-
     id_x2 = 999;
     id_y2 = 999;
     id_a2 = 999;
@@ -767,23 +656,22 @@ FRS_Detector_System::FRS_Detector_System(){
     }
 
     tpc_sc41_x = -999.;      /* SC41                     */
-  tpc_sc41_y = -999.;      /* SC41 Y                   */
-  tpc_sc42_x = -999.;      /* SC42                     */
-  tpc_sc42_y = -999.;      /* tracked SC42 Y pos       */
-  tpc_sc43_x = -999.;      /* SC43                     */
-  tpc_sc43_y = -999.;      /* SC43 Y                   */
+    tpc_sc41_y = -999.;      /* SC41 Y                   */
+    tpc_sc42_x = -999.;      /* SC42                     */
+    tpc_sc42_y = -999.;      /* tracked SC42 Y pos       */
+    tpc_sc43_x = -999.;      /* SC43                     */
+    tpc_sc43_y = -999.;      /* SC43 Y                   */
 
-  tpc_music41_x = -999.;      /* MUSIC41 x                     */
-  tpc_music41_y = -999.;      /* tracked MUSIC41 Y pos       */
-  tpc_music42_x = -999.;      /* MUSIC42 x                     */
-  tpc_music42_y = -999.;      /* tracked MUSIC42 Y pos       */
-  tpc_music43_x = -999.;      /* MUSIC43 x                     */
-  tpc_music43_y = -999.;      /* tracked MUSIC43 Y pos       */
-  tpc_s4target_x = -999.;     /* S4 target */
-  tpc_s4target_y = -999.;     /* S4 target */
+    tpc_music41_x = -999.;      /* MUSIC41 x                     */
+    tpc_music41_y = -999.;      /* tracked MUSIC41 Y pos       */
+    tpc_music42_x = -999.;      /* MUSIC42 x                     */
+    tpc_music42_y = -999.;      /* tracked MUSIC42 Y pos       */
+    tpc_music43_x = -999.;      /* MUSIC43 x                     */
+    tpc_music43_y = -999.;      /* tracked MUSIC43 Y pos       */
+    tpc_s4target_x = -999.;     /* S4 target */
+    tpc_s4target_y = -999.;     /* S4 target */
 
    // MultiHitTDC
-
 
    mhtdc_tof8121 = -999.9;
 
@@ -791,13 +679,11 @@ FRS_Detector_System::FRS_Detector_System(){
    mhtdc_tof4321 = -999.9;
    mhtdc_tof3121 = -999.9;
 
-
    mhtdc_sc31lr_dt = -999.9;
    mhtdc_sc41lr_dt = -999.9;
    mhtdc_sc42lr_dt = -999.9;
    mhtdc_sc43lr_dt = -999.9;
    mhtdc_sc81lr_dt = -999.9;
-
 
    mhtdc_sc31lr_x = -999.9;
    mhtdc_sc41lr_x = -999.9;
@@ -807,8 +693,7 @@ FRS_Detector_System::FRS_Detector_System(){
 
     id_b_x2 = false;
     id_b_x4 = false;
-   // id_b_x8 = false;
-    id_b_detof2 = false;
+
 
    for(int i=0; i<2;i++){
     id_brho[i]=0;      /* position-corr. BRho      */
@@ -829,19 +714,15 @@ FRS_Detector_System::FRS_Detector_System(){
     id_z = 0;
     id_z2 = 0;
     id_z3 = 0;
-    id_energy_geL = 0;
-    id_tac_41_geL = 0;
-    id_stopper_x = 0;
-    id_energy_geL_raw = 0;
-    id_tac_41_geL_raw = 0;
-    id_trigger = 0;
-    id_scal_seconds = 0;
-    id_scal_geL = 0;
-    id_scal_sc21 = 0;
-    id_scal_sc41 = 0;
-    id_scal_sc42 = 0;
-    id_scal_sc43 = 0;
-    id_scal_sc81 = 0;
+ 
+   // id_trigger = 0;
+//     id_scal_seconds = 0;
+//     id_scal_geL = 0;
+//     id_scal_sc21 = 0;
+//     id_scal_sc41 = 0;
+//     id_scal_sc42 = 0;
+//     id_scal_sc43 = 0;
+//     id_scal_sc81 = 0;
     id_de_s2tpc =0.0;
     id_b_de_s2tpc = kFALSE;
     id_z_sc81 = 0.0;
@@ -853,44 +734,38 @@ FRS_Detector_System::FRS_Detector_System(){
 
     id_b_AoQ = false;
     id_b_z = false;
-    id_b_AoQ_s2s8    = kFALSE;
+   // id_b_AoQ_s2s8    = kFALSE;
 
     id_b_z2 = false;
     id_b_z3 = false;
     //id_b_x2AoQ = false;
 
-    id_b_x2AoQ = new Bool_t[5];
-    id_b_x4AoQ = new Bool_t[5];
-    id_b_x4AoQ_Z = new Bool_t[5];
-    id_b_z_AoQ = new Bool_t[5];
-    id_b_music_z = new Bool_t[5];
+//     id_b_x2AoQ = new Bool_t[5];
+//     id_b_x4AoQ = new Bool_t[5];
+//     id_b_x4AoQ_Z = new Bool_t[5];
+//     id_b_z_AoQ = new Bool_t[5];
+ //   id_b_music_z = new Bool_t[5];
 
-    id_mhtdc_beta_s2s8  = -999;
-  id_mhtdc_gamma_s2s8 = -999;
-  id_mhtdc_delta_s2s8 = -999;
-  id_mhtdc_aoq_s2s8   = -999;
-  id_mhtdc_z_s2tpc    = -999;
-  id_mhtdc_zcor_s2tpc = -999;
-  id_mhtdc_z_sc81     = -999;
-  id_mhtdc_zcor_sc81  = -999;
-  id_mhtdc_v_cor_s2tpc = 0.;
-  id_mhtdc_v_cor_sc81 = 0.;
 
-  mhtdc_sc21lr_x = new Float_t[10];
-  mhtdc_sc21lr_dt= new Float_t[10];
-mhtdc_tof4121 = new Float_t[10];
-id_mhtdc_delta_s2s4=new Float_t[10];
-id_mhtdc_beta_s2s4 = new Float_t[10];
-id_mhtdc_gamma_s2s4 = new Float_t[10];
-id_mhtdc_aoq_s2s4 = new Float_t[10];
-id_mhtdc_aoq_corr_s2s4 = new Float_t[10];
-id_mhtdc_z_music41  = new Float_t[10];
-id_mhtdc_z_music42 = new Float_t[10];
-id_mhtdc_v_cor_music41 = new Float_t[10];
-id_mhtdc_v_cor_music42= new Float_t[10];
+    mhtdc_sc21lr_x = new Float_t[10];
+    mhtdc_sc21lr_dt= new Float_t[10];
+    mhtdc_sc22lr_x = new Float_t[10];
+    mhtdc_sc22lr_dt= new Float_t[10];
+    mhtdc_tof4121 = new Float_t[10];
+    mhtdc_tof4122 = new Float_t[10];
+    id_mhtdc_delta_s2s4=new Float_t[10];
+    id_mhtdc_beta_s2s4 = new Float_t[10];
+    id_mhtdc_gamma_s2s4 = new Float_t[10];
+    id_mhtdc_aoq_s2s4 = new Float_t[10];
+    id_mhtdc_aoq_corr_s2s4 = new Float_t[10];
+    id_mhtdc_z_music41  = new Float_t[10];
+    id_mhtdc_z_music42 = new Float_t[10];
+    id_mhtdc_v_cor_music41 = new Float_t[10];
+    id_mhtdc_v_cor_music42= new Float_t[10];
 
   for(int i=0; i<10;i++) {
   mhtdc_tof4121[i] = -999.9;
+  mhtdc_tof4122[i] = -999.9;
   id_mhtdc_beta_s2s4[i]  = -999;
   id_mhtdc_gamma_s2s4[i] = -999;
   id_mhtdc_aoq_s2s4[i]   = -999;
@@ -903,26 +778,22 @@ id_mhtdc_v_cor_music42= new Float_t[10];
 
   mhtdc_sc21lr_x[i]=-999;
   mhtdc_sc21lr_dt[i]=-999;
+  mhtdc_sc22lr_x[i]=-999;
+  mhtdc_sc22lr_dt[i]=-999;
   id_mhtdc_delta_s2s4[i] = -999;
 }
 
+//     for(int i = 0; i < 5; i++){
+//         id_b_x2AoQ[i] = false;
+//         id_b_x4AoQ[i] = false;
+//         id_b_x4AoQ_Z[i] = false;
+//         id_b_z_AoQ[i] = false;
+//         id_b_music_z[i] = false;
+// 
+//     }
 
-
-
-
-
-
-    for(int i = 0; i < 5; i++){
-        id_b_x2AoQ[i] = false;
-        id_b_x4AoQ[i] = false;
-        id_b_x4AoQ_Z[i] = false;
-        id_b_z_AoQ[i] = false;
-        id_b_music_z[i] = false;
-
-    }
-
-    firsttimestamp = 0;
-    firstevent = false;
+    //firsttimestamp = 0;
+  //  firstevent = false;
 
     ts = 0;  // relative time from start of the spill
     ts2 = 0;  // relative time from start of the spill does not reset at end extraction
@@ -937,15 +808,9 @@ id_mhtdc_v_cor_music42= new Float_t[10];
     ibin_clean_for_spill=0;
     // MRTOF part :
 
-    mrtof_tof = 0;
-
-    mrtof_si_e1 = 0;
-    mrtof_si_e2 = 0;
-    mrtof_si_e3 = 0;
-    mrtof_si_e4 = 0;
-    mrtof_si_e5 = 0;
-
     Setup_Conditions();
+    FRS_GainMatching();
+    WR_Check(ts_mins);
 }
 
 //---------------------------------------------------------------
@@ -975,27 +840,28 @@ FRS_Detector_System::~FRS_Detector_System(){
    // delete[] nhit5;       // multiplicity (V1290)
   //  delete[] nhit_v1290_main;       // multiplicity (V1290)
 
-   delete[] mhtdc_sc21lr_x;
-   delete[] mhtdc_sc21lr_dt;
-   delete[] id_mhtdc_delta_s2s4;
-  delete[] mhtdc_tof4121;
-  delete[] id_mhtdc_beta_s2s4;
-  delete[] id_mhtdc_gamma_s2s4;
-  delete[] id_mhtdc_aoq_s2s4;
-  delete[] id_mhtdc_aoq_corr_s2s4;
-  delete[] id_mhtdc_z_music41;
-  delete[] id_mhtdc_z_music42;
-  delete[] id_mhtdc_v_cor_music41;
-  delete[] id_mhtdc_v_cor_music42;
-
-
+    delete[] mhtdc_sc21lr_x;
+    delete[] mhtdc_sc21lr_dt;
+    delete[] mhtdc_sc22lr_x;
+    delete[] mhtdc_sc22lr_dt;
+    delete[] id_mhtdc_delta_s2s4;
+    delete[] mhtdc_tof4121;
+    delete[] mhtdc_tof4122;
+    delete[] id_mhtdc_beta_s2s4;
+    delete[] id_mhtdc_gamma_s2s4;
+    delete[] id_mhtdc_aoq_s2s4;
+    delete[] id_mhtdc_aoq_corr_s2s4;
+    delete[] id_mhtdc_z_music41;
+    delete[] id_mhtdc_z_music42;
+    delete[] id_mhtdc_v_cor_music41;
+    delete[] id_mhtdc_v_cor_music42;
 
     delete[] vme2scaler;         // User Crate Messhure
     delete[] vme3scaler;         // User Crate Messhure
 
-    delete[] firstTS;
+    //delete[] firstTS;
 
-    delete[] previousTimeStamp;
+    //delete[] previousTimeStamp;
 
     /*******************************************************************/
     /***SORT STUFF***/
@@ -1005,38 +871,16 @@ FRS_Detector_System::~FRS_Detector_System(){
 
     // scaler readings
     //delete[] sc_long; //changed from 32 to 64 (10.07.2018)
-    delete[] sc_long2;
+   // delete[] sc_long2;
 
 
     // part of MW parameter
-    delete[]  mw_an;       /*  anode time              */
-    delete[] mw_xl;       /*  Rohdaten                */
-    delete[] mw_xr;       /*                          */
-    delete[] mw_yu;       /*                          */
-    delete[] mw_yd;       /*                          */
-
-
-
-    //delete[] tpc_timeref;
-    // TPC part //(HAPOL-25/03/06) 6 TPCs each one with 2 delay lines each!!
-    //7 TPCs (4 at S2, 2 at S4 and one at S3) 03.07.2018 SB
-
-
-//     for(int i=0; i < 7; ++i){
-//
-//     delete[] tpc_l[i];
-//     delete[] tpc_r[i];
-//
-// //     delete[] tpc_dt[i];
-// //     delete[] tpc_a[i];
-//
-//     }
-//      delete[] tpc_l;
-//      delete[] tpc_r;
-
-//      delete[] tpc_dt;
-//      delete[] tpc_a;
-
+//     delete[]  mw_an;       /*  anode time              */
+//     delete[] mw_xl;       /*  Rohdaten                */
+//     delete[] mw_xr;       /*                          */
+//     delete[] mw_yu;       /*                          */
+//     delete[] mw_yd;       /*                          */
+    
 
     // User multihit TDC
 
@@ -1068,45 +912,36 @@ FRS_Detector_System::~FRS_Detector_System(){
     delete[] music_e3;     /* Raw energy signals       */
     delete[] music_t3;     /* Raw drift times          */
 
-    delete[] dssd_adc;
 
-    id_AoQ=0;
     //Proc_iterator=0;
 
     /******************************************************************/
     /**CALIBRATION Parameters**/
+///all the MON and MW stuff I removed since it isnt used A.K.M Jan 2022
+    
+    // TPC part //(HAPOL-25/03/06) 6 TPCs each one with 2 delay lines each!!
+//     //7 TPCs (4 at S2, 2 at S4 and one at S3) 03.07.2018 SB
+    
+    for(int i=0; i < 7; ++i){
 
-    // MON data declarations
-
-    delete[] check_first_event;
-    delete[] scaler_time_count;
-    delete[] scaler_spill_count; //UInt_t
-    delete[] scaler_time_check_last;//UInt_t
-    delete[] scaler_spill_check_last;//UInt_t
-    delete[] check_increase_time;//UInt_t
-    delete[] check_increase_spill;//UInt_t
-    delete[] scaler_increase_event;//UInt_t
-    delete[] scaler_last_event;
-
-
-    delete[] scaler_save;
-
-    delete[] mon_inc;
-
-    delete[] coin;
-
-    // MW part
-   delete[]  mw_xsum;     /*                          */
-   delete[]  mw_ysum;     /*                          */
-
-   delete[]  mw_x;        /*                          */
-   delete[]  mw_y;        /*                          */
-   delete[]  mw_wire;     /* special for Helmut       */
-
-   delete[]  b_mw_xsum;   /*  wc on sum               */
-   delete[]  b_mw_ysum;   /*                          */
-
-    // TPC part
+    delete[] tpc_l[i];
+    delete[] tpc_r[i];
+    delete[] tpc_a[i];
+    for(int j=0; j < 2; ++j){
+        delete[] tpc_lt[i][j];
+        delete[] tpc_rt[i][j];
+    }
+    for(int j=0; j < 4; ++j) delete[] tpc_dt[i][j];
+    delete[] tpc_dt[i];
+    delete[] tpc_lt[i];
+    delete[] tpc_rt[i];
+    }
+    delete[] tpc_l;
+    delete[] tpc_r;
+    delete[] tpc_dt;
+    delete[] tpc_a;
+    delete[] tpc_rt;
+    delete[] tpc_lt;
 //     delete[] tpc_x;
 //     delete[] tpc_y;
 //     delete[] b_tpc_xy;
@@ -1148,79 +983,78 @@ FRS_Detector_System::~FRS_Detector_System(){
     delete[] sci_tx;
     delete[] sci_x;
 
-    delete[]  sci_veto_l;
-    delete[]  sci_veto_r;
-    delete[]  sci_veto_e;
-
     delete[]  sci_b_l;
     delete[]  sci_b_r;
     delete[]  sci_b_e;
     delete[]  sci_b_tx;
     delete[]  sci_b_x;
-    delete[]  sci_b_veto_l;
-    delete[]  sci_b_veto_r;
-    delete[]  sci_b_veto_e;
 
     // ID part
-    for(int i=0; i<2;i++){
-    id_brho[i]=0;      /* position-corr. BRho      */
-    id_rho[i]=0;       /* Position-corrected Rho   */
-    }
-
-    delete[] id_b_x2AoQ;
-    delete[] id_b_x4AoQ;
-
-    delete[] id_b_x4AoQ_Z;
-    delete[] id_b_z_AoQ;
-    delete[] id_b_music_z;
-
-}
-// void FRS_Detector_System::load_VFTX_Calibration_Files(){
-//
-//     //Load all wired Calibration files specified by MAP
-//     char filename[1000];
-//     ifstream file;
-//
-//     int b_iter = 0;
-//     double bin,val;
-//
-//     //Cal_arr = new double**[10];
-//
-//     const char* format = "%lf %lf";
-//
-//     bool first = true;
-//       string line;
-//     for(int i = 0;i < 1;++i){
-//        for(int j = 0;j < 32;++j){
-//
-//         b_iter = 0;
-//
-//
-//         sprintf(filename,"Configuration_Files/VFTX_Calib/VFTX_%05d_Bin2Ps_ch%02d.dat",i,j);
-//         file.open(filename);
-//
-//         if(file.fail()){
-//             cerr << "Could not find VFTX Calibration file " << i << " " << j << endl;
-//             exit(0);
-//         }
-//         while(file.good()){
-//          //   cout<<"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-//             getline(file,line,'\n');
-//             if(line[0] == '#') continue;
-//             sscanf(line.c_str(),format,&bin,&val);
-//             if(first) bins_x_arr[b_iter] = bin;
-//             VFTX_Cal_arr[i][j][b_iter] = val;
-//             b_iter++;
-//
-//         }
-//
-//         first = false;
-//
-//         file.close();
-//         file.clear();
-//         }
+//     for(int i=0; i<2;i++){
+//     id_brho[i]=0;      /* position-corr. BRho      */
+//     id_rho[i]=0;       /* Position-corrected Rho   */
 //     }
-// }
+
+//     delete[] id_b_x2AoQ;
+//     delete[] id_b_x4AoQ;
+// 
+//     delete[] id_b_x4AoQ_Z;
+//     delete[] id_b_z_AoQ;
+//     delete[] id_b_music_z;
+    
+    ///Setup file
+
+    for(int i = 0; i < 4; ++i){
+       for(int j = 0; j < 7; ++j) delete[] lim_csum[i][j];
+        delete[] lim_csum[i];
+       
+    }
+    for(int i = 0; i < 13; ++i){
+    delete[] lim_xsum[i];
+    delete[] lim_ysum[i];
+    }
+    delete[] lim_csum;
+    delete[] lim_xsum;
+    delete[] lim_ysum;
+    
+    for(int i = 0; i < 8; ++i){
+    delete[] cMusic1_E[i];
+    delete[] cMusic1_T[i];
+    delete[] cMusic2_E[i];
+    delete[] cMusic2_T[i];
+    if(i<4){
+    delete[] cMusic3_T[i];
+    delete[] cMusic3_E[i];
+        }
+    }
+    delete[] cMusic1_E;
+    delete[] cMusic1_T;
+    delete[] cMusic2_E;
+    delete[] cMusic2_T;
+    delete[] cMusic3_E;
+    delete[] cMusic3_T;
+    
+    delete[] cSCI_L;
+    delete[] cSCI_R;
+    delete[] cSCI_E;
+    delete[] cSCI_Tx;
+    delete[] cSCI_X;
+    
+    delete[] cSCI_LL2;
+    delete[] cSCI_RR2;
+    delete[] cSCI_LL3;
+    delete[] cSCI_RR3;
+    delete[] cSCI_LL4;
+    delete[] cSCI_RR4;
+    delete[] cSCI_LL5;
+    delete[] cSCI_RR5;
+    
+    delete[] cID_x2;
+    delete[] cID_x4;
+    delete[] cID_Z_Z;
+    
+}
+
 //---------------------------------------------------------------
 
 void FRS_Detector_System::Process_MBS(TGo4MbsSubEvent* psubevt){
@@ -1317,7 +1151,7 @@ void FRS_Detector_System::Process_MBS(TGo4MbsSubEvent* psubevt){
    // if(skip==false){
     FRS_Sort();
     FRS_Calib();
-    FRS_Anal();
+    FRS_Anl();
     //}
 
 }
@@ -1336,7 +1170,7 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
    len = 0;
    //vme_chn;
     bool skip_subevent=false;
-
+ WR_Check(ts_mins);
 // ///*    Int_t event_flag = *pdata++;  len++; // 0x200 or 0x000 etc. 20200123MERGE
 //    if( !( (psubevt->GetType() == 10) && (psubevt->GetSubtype() == 1))  &&  //(t,s)=(12,1)->(10,1) modified on 2019/11/13
 //           !( (psubevt->GetType() == 12) && (psubevt->GetSubtype() == 1))  &&  //(t,s)=(12,1)->(10,1) modified on 2019/11/13
@@ -1368,8 +1202,11 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
             }
 
        }
-       for(int i=0; i<10; i++)mhtdc_tof4121[i]=-999;
-}
+       for(int i=0; i<10; i++){
+           mhtdc_tof4121[i]=-999;
+           mhtdc_tof4122[i]=-999;
+       }
+    }
     if( (psubevt->GetType() == 36) && (psubevt->GetSubtype() == 3600) ) //tpat
    {
       Int_t lenMax = (psubevt->GetDlen()-2)/2;
@@ -1832,8 +1669,8 @@ void FRS_Detector_System::FRS_Unpack(TGo4MbsSubEvent* psubevent){
       channel = getbits(p32_tmp,2,11,5);
      // printf("3: 0x%x  %d  \n",p32_tmp,channel);
       //printf("error in UNPACK TDC/VFTX_%02d,  %02d: %02d \n",module,channel, vftx_mult[module][channel]);
-
-      if(vftx_mult[module][channel]<VFTX_MAX_HITS){
+      
+    if(vftx_mult[module][channel]<VFTX_MAX_HITS && module<VFTX_N && channel<VFTX_MAX_CHN){
           ///Coarse clock
         vftx_cc[module][channel][vftx_mult[module][channel]] = (uint16_t)((p32_tmp & 0x00fff800)>>11);
         ///Fine time
@@ -2050,38 +1887,25 @@ void FRS_Detector_System::FRS_Sort(){
 //                    //vme_tpc[i][j]=0;
 //                   // vme_frs[i][j]=0;
                    vme_main[i][j]=0;
-
                    vme_tof[i][j]=0;
 
 
                 }
            }
-                for(int i=0; i<7; i++){
-     tpc_nhit_dt[i][0] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][0][j] = -1; }
-     tpc_nhit_dt[i][1] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][1][j] = -1; }
-     tpc_nhit_dt[i][2] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][2][j] = -1; }
-     tpc_nhit_dt[i][3] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][3][j] = -1; }
-
-     tpc_nhit_lt[i][0] = 0;  for(int j=0; j<64; j++){ tpc_lt[i][0][j] = 0; }
-     tpc_nhit_lt[i][1] = 0;  for(int j=0; j<64; j++){ tpc_lt[i][1][j] = 0; }
-     tpc_nhit_rt[i][0] = 0;  for(int j=0; j<64; j++){ tpc_rt[i][0][j] = 0; }
-     tpc_nhit_rt[i][1] = 0;  for(int j=0; j<64; j++){ tpc_rt[i][1][j] = 0; }
-     tpc_nhit_calibgrid[i] = 0; //for(int j=0; j<64; j++){ tpc_calibgrid[i][j] = -1; }
-            }
-//             for(int i=0; i<32; i++){
-//                 for(int j=0; j<10; j++){
-//                     leading_v1290_main[i][j]=0;
-//                     cout<<"222 IM RESETTING !!!! " << endl;
-//
-//                                         }
-//                                     }
+            
+        tpc_x_s4 = -999;
+        tpc_y_s4 = -999;
+        tpc_angle_x_s4 = -999;
+        tpc_angle_y_s4 = -999;
+        tpc_sc41_x = -999;
+        tpc_sc41_y = -999;
+        tpc_sc42_x = -999;
+        tpc_sc42_y = -999;
 
           for(int g=0; g<4; g++){
                     timestamp_main[g]=0;
                     ts_word[g]=0;
             }
-           // cout<<"CLEAR!!"<<endl;
-
 
            }///end skip
            for(int h=0; h<128; h++){
@@ -2108,17 +1932,16 @@ void FRS_Detector_System::FRS_Sort(){
 
        for(int i=0; i<7; i++){
              for(int j=0; j<2; j++){
-           tpc_a[i][j]=0;
+           
            tpc_l[i][j]=0;
            tpc_r[i][j]=0;
-
              }
-            for(int k=0; k<4; k++){
-                tpc_a[i][k]=0;
-             //   tpc_dt[i][k]=0;
-                tpc_csum[i][k] =0;
-
+             
+             for(int j=0; j<4; j++){
+                tpc_a[i][j]=0;
+                tpc_csum[i][j] =0;
                 }
+                
             }
 
             for(int i=0; i<8; i++){
@@ -2148,7 +1971,8 @@ void FRS_Detector_System::FRS_Sort(){
 
         music_t1[i] =0;
         music_t2[i] =0;
-
+        
+        
                 }
 
         }
@@ -2163,10 +1987,9 @@ void FRS_Detector_System::FRS_Sort(){
                }
            }
 
-          dt_21l_21r =0;
+        dt_21l_21r =0;
         dt_41l_41r =0;
         dt_21l_41l =0;
-     //   std::cout<<"vme_frs[12][5] & 0xfff " << dt_21l_41l <<std::endl;
         dt_21r_41r =0;
         dt_42l_42r =0;
         dt_42l_21l =0;
@@ -2381,7 +2204,18 @@ void FRS_Detector_System::FRS_Sort(){
   // TPC part                         //
   //                                  //
   //////////////////////////////////////
+    for(int i=0; i<7; i++){
+     tpc_nhit_dt[i][0] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][0][j] = -1; }
+     tpc_nhit_dt[i][1] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][1][j] = -1; }
+     tpc_nhit_dt[i][2] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][2][j] = -1; }
+     tpc_nhit_dt[i][3] = 0;   for(int j=0; j<64; j++){ tpc_dt[i][3][j] = -1; }
 
+     tpc_nhit_lt[i][0] = 0;  for(int j=0; j<64; j++){ tpc_lt[i][0][j] = 0; }
+     tpc_nhit_lt[i][1] = 0;  for(int j=0; j<64; j++){ tpc_lt[i][1][j] = 0; }
+     tpc_nhit_rt[i][0] = 0;  for(int j=0; j<64; j++){ tpc_rt[i][0][j] = 0; }
+     tpc_nhit_rt[i][1] = 0;  for(int j=0; j<64; j++){ tpc_rt[i][1][j] = 0; }
+     tpc_nhit_calibgrid[i] = 0; //for(int j=0; j<64; j++){ tpc_calibgrid[i][j] = -1; }
+            }
   //ADC
 
   //TPC 1 at S2 (TPC 21) in vaccuum
@@ -2413,7 +2247,6 @@ void FRS_Detector_System::FRS_Sort(){
    tpc_r[2][0]= vme_tpcs2[12][21] & 0xfff;
    tpc_l[2][1]= vme_tpcs2[12][22] & 0xfff;
    tpc_r[2][1]= vme_tpcs2[12][23] & 0xfff;
-
   //TPC 4 at S2 (TPC 24) in air
    tpc_a[3][0]= vme_tpcs2[12][24] & 0xfff;
    tpc_a[3][1]= vme_tpcs2[12][25] & 0xfff;
@@ -2463,6 +2296,7 @@ void FRS_Detector_System::FRS_Sort(){
       for(int ihit=0; ihit<(tpc_nhit_dt[itpc][j]); ihit++){
         if(ihit<64){
           tpc_dt[itpc][j][ihit] = leading_v1190_tpcs2[ (v1190_channel_dt[itpc][j]) ][ihit];
+//           if(tpc_dt[itpc][j][ihit]>0) cout<<"tpc_dt[itpc][j][ihit] " <<tpc_dt[itpc][j][ihit] << " itpc " << itpc << " j " << j << " ihit " << ihit << endl;
         }
       }
     }
@@ -2476,7 +2310,9 @@ void FRS_Detector_System::FRS_Sort(){
           tpc_lt[itpc][j][ihit] = leading_v1190_tpcs2[ (v1190_channel_lt[itpc][j]) ][ihit];
 
         }
+        else tpc_lt[itpc][j][ihit]=0;
       }
+      
       //Right side
       tpc_nhit_rt[itpc][j] = nhit_v1190_tpcs2[ (v1190_channel_rt[itpc][j]) ];
       for(int ihit=0; ihit<(tpc_nhit_rt[itpc][j]); ihit++){
@@ -2484,6 +2320,7 @@ void FRS_Detector_System::FRS_Sort(){
           tpc_rt[itpc][j][ihit] = leading_v1190_tpcs2[ (v1190_channel_rt[itpc][j]) ][ihit];
 
         }
+        else tpc_rt[itpc][j][ihit]=0;
       }
     }
 
@@ -2832,155 +2669,7 @@ void FRS_Detector_System::FRS_Calib(){
         scaler_previous[ii] = sc_long[ii];
       }
    }
-  /**  for SeeTram calibration purposes:   **/
-
-
-  //10HzClock = hMON_scaler[4]->Integral();
-
-  /*   Naming conventions:  index     detector   focus #                     */
-  /*                         1         MW11        1                         */
-  /*                         2         MW21        2                         */
-  /*                         3         MW22                                  */
-  /*                         4         MW31        3                         */
-  /*                         5         MW41                                  */
-  /*                         6         MW42                                  */
-  /*                         7         MW51                                  */
-  /*                         8         MW61                                  */
-   /*                        9         MW71                                  */
-  /*                         10        MW81                                  */
-  /*                         11        MW82                                  */
-  /*                         12        MWB1                                  */
-  /*                         13        MWB2                                  */
-  /////////////////////////////////////////////////////////////////////////////
-  int max_index = 13; //upto MWB2 (09.07.2018) /*  up to S3 */
-
-  for(int i=0;i<max_index;i++)
-    {
-
-      /********************************************/
-      /* Calculate the sum spectra and conditions */
-      /********************************************/
-
-      /* better test first existence of xl, xr, an before filling of xsum */
-
-      if(mw_an[i] && mw_xl[i] && mw_xr[i])
-    {
-      mw_xsum[i] = 1000+(mw_xl[i] - mw_an[i]) + (mw_xr[i] - mw_an[i]);
-
-    }
-
-    b_mw_xsum[i] = Check_WinCond_Multi(mw_xsum[i], lim_xsum, i);
-
-      /* better test first existence of yu, yd, an before filling of ysum */
-
-      if(mw_an[i] && mw_yu[i] && mw_yd[i])
-    {
-
-      //if(mw_yu[i]&&mw_yd[i]) {
-      mw_ysum[i] = 1000+(mw_yu[i] - mw_an[i]) + (mw_yd[i] - mw_an[i]);
-
-      //mw_ysum[i] = (mw_yu[i]) + (mw_yd[i]); //when an doesn't work
-    }
-
-        b_mw_ysum[i] = Check_WinCond_Multi(mw_ysum[i], lim_ysum, i);
-
-    //if(mw_ysum[i] >= lim_ysum[i][0] && mw_ysum[i] <= lim_ysum[i][1]) b_mw_ysum[i] =  true; //cMW_YSUM[i]->Test(mw_ysum[i]);
-    //else b_mw_ysum[i] =  false;
-
-      /*******************************************************************/
-      /* If the signals in x and y are valid, calculate position spectra */
-      /*******************************************************************/
-
-      if (b_mw_xsum[i])
-    {
-      //      Int_t r_x = mw_xl[i] - mw_xr[i];
-      Float_t r_x = mw_xl[i] *  mw->gain_tdc[1][i] - mw_xr[i] *  mw->gain_tdc[2][i]; //14.09.05 CN+AM
-      mw_x[i] = mw->x_factor[i] * r_x + mw->x_offset[i];
-
-    }
-
-      if (b_mw_ysum[i])
-    {
-      //      Int_t r_y = mw_yd[i] - mw_yu[i];
-      Float_t r_y = mw_yd[i] *  mw->gain_tdc[4][i] - mw_yu[i] *  mw->gain_tdc[3][i]; //14.09.05 CN+AM
-      mw_y[i] = mw->y_factor[i] * r_y + mw->y_offset[i];
-    }
-
-
-      if(b_mw_xsum[i] && b_mw_ysum[i])
-    {
-
-    }
-
-    } // for(int i=0;i<max_index;i++)
-
-
-  /*********************************************/
-  /* S2 Angle and transformed position spectra */
-  /*********************************************/
-
-  Float_t  dist_MW21_MW22  = frs->dist_MW22  - frs->dist_MW21;
-  Float_t  dist_MW22_focS2 = frs->dist_focS2 - frs->dist_MW22;
-  Float_t  dist_MW22_SC21  = frs->dist_SC21  - frs->dist_MW22;
-  Float_t  dist_MW22_SC22  = frs->dist_SC22  - frs->dist_MW22;
-
-
-  if (b_mw_xsum[1] && b_mw_xsum[2])
-    {
-      /* MW21 and MW22 X okay */
-      /*  X angle at S2  [mrad]:  */
-      angle_x_s2 = (mw_x[2]-mw_x[1])/dist_MW21_MW22*1000.;
-
-      /*  X at nominal S2 focus:  */
-      focx_s2 = mw_x[2] + dist_MW22_focS2 * angle_x_s2/1000.;
-
-      /*  X at SC21 position:    */
-      mw_sc21_x = mw_x[2] + dist_MW22_SC21 * angle_x_s2/1000.;
-
-      /*  X at SC22 position:    */
-      mw_sc22_x = mw_x[2] + dist_MW22_SC22 * angle_x_s2/1000.;
-
-
-      /* 'real' z-position of S2 X focus (cm) */
-      Float_t rh = (angle_x_s2 - angle_x_s2m);
-      if(fabs(rh)>1e-4)
-    {
-      z_x_s2 = ((focx_s2m - focx_s2)/rh)*100. + frs->dist_focS2/10.;
-    }
-
-      /* keep values for next event */
-      focx_s2m = focx_s2;
-      angle_x_s2m = angle_x_s2;
-
-
-
-    }
-
-  if (b_mw_ysum[1] && b_mw_ysum[2])
-    {
-      /* MW21 and MW22 Y okay */
-      /*  Y angle at S2 [mrad]:   */
-      angle_y_s2 = (mw_y[2] - mw_y[1])/dist_MW21_MW22*1000.;
-
-      /*  Y at nominal S2 focus:  */
-      focy_s2 = mw_y[2] + dist_MW22_focS2 * angle_y_s2/1000.;
-
-      /* 'real' z-position of S2 Y focus (cm) */
-      Float_t rh = (angle_y_s2 - angle_y_s2m);
-      if(fabs(rh)>1.e-4)
-    {
-      z_y_s2 = ((focy_s2m - focy_s2)/rh)*100. + frs->dist_focS2/10.;
-    }
-
-      /* keep values for next event */
-      focy_s2m = focy_s2;
-      angle_y_s2m = angle_y_s2;
-    }
-
-  /*if (b_mw_ysum[1] && b_mw_ysum[2] && b_mw_xsum[1] && b_mw_xsum[2])
-    hMW_FocS2->Fill(focx_s2,focy_s2);*/
-
-
+ 
 //////////////////////////////////////////////////////////////////
 ///  ***********TPC Analysis*************************** //////////
 
@@ -3027,8 +2716,6 @@ void FRS_Detector_System::FRS_Calib(){
       // tpc_xraw[k][l]=0;
        tpc_yraw[k][l]=0;
 
-
-
     }
    }
 
@@ -3050,18 +2737,17 @@ for(int i=0; i<8; i++){
   }
 
    bool checkrange1=0;
-    bool checkrange2=0;
-     bool checkrange3=0;
-      bool checkrange4=0;
-      bool checkrange5=0;
+   bool checkrange2=0;
+   bool checkrange3=0;
+   bool checkrange4=0;
+   bool checkrange5=0;
   for(int i=0;i<7;i++)
     {
 
   for(int ihit=0; ihit<(tpc_nhit_lt[i][0] && ihit<64); ihit++){
 
          Int_t thisdata = tpc_lt[i][0][ihit];
-
-          Int_t currently_selected = tpc_lt_s[i][0];
+         Int_t currently_selected = tpc_lt_s[i][0];
         // cout<<"3 tpc_lt_s " <<tpc_lt_s[i][0]<< " thisdata " <<thisdata<< "i " << i << endl;
           if(thisdata>tpc->lim_lt[i][0][0] && thisdata<tpc->lim_lt[i][0][1]) checkrange1=true;
               /*
@@ -3286,25 +2972,46 @@ for(int i=0; i<8; i++){
 
   if (b_tpc_xy[2]&&b_tpc_xy[3])
     {
+        ///Angle X at S2 focus
        tpc_angle_x_s2_foc_23_24 = (tpc_x[3] - tpc_x[2])/dist_TPC23_TPC24*1000.;
-
+    ///Angle Y at S2 focus
        tpc_angle_y_s2_foc_23_24 = (tpc_y[3] - tpc_y[2])/dist_TPC23_TPC24*1000.;
+       
+       ///X position at S2 focus
        tpc_x_s2_foc_23_24 = -tpc_angle_x_s2_foc_23_24 * dist_TPC23_focS2/1000. + tpc_x[2]; //check
-
+        
+        ///Y position at S2 focus
        tpc_y_s2_foc_23_24 = -tpc_angle_y_s2_foc_23_24 * dist_TPC23_focS2/1000. + tpc_y[2]; //check
+       
+       /// TPC 23 24 X at SC21 focus 
        Float_t dist_SC21_focS2 = frs->dist_SC21 - frs->dist_focS2;
        tpc23_24_sc21_x = (tpc_angle_x_s2_foc_23_24/1000.*dist_SC21_focS2)+tpc_x_s2_foc_23_24;
        tpc23_24_sc21_y = (tpc_angle_y_s2_foc_23_24/1000.*dist_SC21_focS2)+tpc_y_s2_foc_23_24;
+       
+       /// TPC 23 24 X at SC22 focus ??
        Float_t dist_SC22_focS2 = frs->dist_SC22 - frs->dist_focS2;
        tpc23_24_sc22_x = (tpc_angle_x_s2_foc_23_24/1000.*dist_SC22_focS2)+tpc_x_s2_foc_23_24;
+       
        tpc23_24_sc22_y = (tpc_angle_y_s2_foc_23_24/1000.*dist_SC22_focS2)+tpc_y_s2_foc_23_24;
+       
+        /// TPC 23 24 X at target focus ??
        Float_t dist_S2target_focS2 = frs->dist_S2target - frs->dist_focS2;
        tpc23_24_s2target_x = (tpc_angle_x_s2_foc_23_24/1000.*dist_S2target_focS2)+tpc_x_s2_foc_23_24;
+       
        tpc23_24_s2target_y = (tpc_angle_y_s2_foc_23_24/1000.*dist_S2target_focS2)+tpc_y_s2_foc_23_24;
 
     }
-  else  tpc_x_s2_foc_23_24= -999 ;
-
+  else  {
+      tpc_x_s2_foc_23_24= -999 ;
+      tpc_x_s2_foc_23_24= -999 ;
+      tpc_y_s2_foc_23_24 =-999;
+      tpc_angle_x_s2_foc_23_24 =-999;
+      tpc_angle_y_s2_foc_23_24 =-999;
+      tpc23_24_sc21_x =-999;
+      tpc23_24_sc21_y =-999;
+      tpc23_24_sc22_x =-999;
+      tpc23_24_sc22_y =-999;   
+  }
 
   //=================================
   // Tracking with TPC 22 and TPC 24
@@ -3328,8 +3035,17 @@ for(int i=0; i<8; i++){
       tpc22_24_s2target_y = (tpc_angle_y_s2_foc_22_24/1000.*dist_S2target_focS2)+tpc_y_s2_foc_22_24;
 
     }
-  else  tpc_x_s2_foc_22_24= -999 ;
-
+  else {
+      tpc_x_s2_foc_22_24= -999 ;
+      tpc_y_s2_foc_22_24 =-999;
+      tpc_angle_x_s2_foc_22_24 =-999;
+      tpc_angle_y_s2_foc_22_24 =-999;
+      tpc22_24_sc21_x =-999;
+      tpc22_24_sc21_y =-999;
+      tpc22_24_sc22_x =-999;
+      tpc22_24_sc22_y =-999;
+      
+  }
 
   //=====================================================
   // Tracking with TPC 41 and TPC 42 (TPC 5 and 6) at S4
@@ -3338,6 +3054,7 @@ for(int i=0; i<8; i++){
     {
 
       tpc_angle_x_s4 = (tpc_x[5] - tpc_x[4])/dist_TPC41_TPC42*1000.;
+    
       tpc_angle_y_s4 = (tpc_y[5] - tpc_y[4])/dist_TPC41_TPC42*1000.;
       tpc_x_s4 = tpc_angle_x_s4 * dist_TPC42_focS4/1000. + tpc_x[5];
       tpc_y_s4 = tpc_angle_y_s4 * dist_TPC42_focS4/1000. + tpc_y[5];
@@ -3386,6 +3103,18 @@ for(int i=0; i<8; i++){
       //tpc_y_s4_target2 = tpc_angle_y_s4 * dist_TPC6_target2/1000. + tpc_y[5];
 
     }
+    
+     else  {
+      tpc_angle_x_s4= -999 ;
+      tpc_angle_y_s4= -999 ;
+      tpc_x_s4 =-999;
+      tpc_y_s4 =-999;
+      tpc_sc42_x =-999;
+      tpc_sc42_y =-999;
+//       tpc23_24_sc21_y =-999;
+//       tpc23_24_sc22_x =-999;
+//       tpc23_24_sc22_y =-999;   
+  }
 
 
   // tracking to musics and scis (S323,410 exp.)
@@ -3415,7 +3144,7 @@ for(int i=0; i<8; i++){
 
 
 
-void FRS_Detector_System::FRS_Anal(){
+void FRS_Detector_System::FRS_Anl(){
 
     ///==================================================================================///
                     /// Start of MUSIC  analysis
@@ -3423,6 +3152,11 @@ void FRS_Detector_System::FRS_Anal(){
   music1_anodes_cnt = 0;
   music2_anodes_cnt = 0;
   music3_anodes_cnt = 0;
+  
+  for(int i=0; i<2;i++){
+      de[i]=0;
+      de_cor[i]=0;
+  }
 
 
    // Munich MUSIC
@@ -3599,7 +3333,10 @@ void FRS_Detector_System::FRS_Anal(){
                     /// Start of Scintillator  analysis
 ///==================================================================================///
 
-for(int i=0; i<10;i++)mhtdc_sc21lr_dt[i]=0;
+for(int i=0; i<10;i++){
+    mhtdc_sc21lr_dt[i]=0;
+    mhtdc_sc22lr_dt[i]=0;
+}
    mhtdc_sc31lr_dt=0;
    mhtdc_sc41lr_dt=0;
    mhtdc_sc42lr_dt=0;
@@ -3608,30 +3345,31 @@ for(int i=0; i<10;i++)mhtdc_sc21lr_dt[i]=0;
 
    ///SCI 21
     for(int i=0; i<10; i++){
-  if(0!=tdc_sc21l[i] && 0!=tdc_sc21r[i]){
-    mhtdc_sc21lr_dt[i] = sci->mhtdc_factor_ch_to_ns*( rand3() + tdc_sc21l[i]  -  tdc_sc21r[i] );
-    mhtdc_sc21lr_x[i]  = mhtdc_sc21lr_dt[i] * sci->mhtdc_factor_21l_21r + sci->mhtdc_offset_21l_21r;
-
-    //cout<<"mhtdc_sc21lr_x[i] " <<mhtdc_sc21lr_x[i] << " i " << i << endl;
-  }
+        if(0!=tdc_sc21l[i] && 0!=tdc_sc21r[i]){
+            mhtdc_sc21lr_dt[i] = sci->mhtdc_factor_ch_to_ns*( rand3() + tdc_sc21l[i]  -  tdc_sc21r[i] );
+            mhtdc_sc21lr_x[i]  = mhtdc_sc21lr_dt[i] * sci->mhtdc_factor_21l_21r + sci->mhtdc_offset_21l_21r;
+        }
     float sc21pos_from_tpc    = -999.9;
     if(b_tpc_xy[0]&&b_tpc_xy[1]){
       sc21pos_from_tpc =  tpc21_22_sc21_x ;
     }else if(b_tpc_xy[2]&&b_tpc_xy[3]){
       sc21pos_from_tpc =  tpc23_24_sc21_x ;
     }
-  }
-  ///SCI22
-   if(0!=tdc_sc22l[0] && 0!=tdc_sc22r[0]){
-    mhtdc_sc22lr_dt = sci->mhtdc_factor_ch_to_ns*( rand3() + tdc_sc22l[0]  -  tdc_sc22r[0] );
-    mhtdc_sc22lr_x  = mhtdc_sc22lr_dt * sci->mhtdc_factor_22l_22r + sci->mhtdc_offset_22l_22r;
+    
+    ///SCI22
+    if(0!=tdc_sc22l[i] && 0!=tdc_sc22r[i]){
+        mhtdc_sc22lr_dt[i] = sci->mhtdc_factor_ch_to_ns*( rand3() + tdc_sc22l[i]  -  tdc_sc22r[i] );
+        mhtdc_sc22lr_x[i]  = mhtdc_sc22lr_dt[i] * sci->mhtdc_factor_22l_22r + sci->mhtdc_offset_22l_22r;
+    
     float sc22pos_from_tpc    = -999.9;
     if(b_tpc_xy[0]&&b_tpc_xy[1]){
       sc22pos_from_tpc =  tpc21_22_sc22_x ;
     }else if(b_tpc_xy[2]&&b_tpc_xy[3]){
       sc22pos_from_tpc =  tpc23_24_sc22_x ;
-    }
-   }
+            }
+        }
+  }
+  
 
   if(0!=tdc_sc41l[0] && 0!=tdc_sc41r[0]){
     mhtdc_sc41lr_dt = sci->mhtdc_factor_ch_to_ns*( rand3() + tdc_sc41l[0]  -  tdc_sc41r[0] );
@@ -3664,11 +3402,13 @@ for(int i=0; i<10;i++)mhtdc_sc21lr_dt[i]=0;
 for (int i=0; i<10; i++){
   if(0!=tdc_sc21l[i] && 0!=tdc_sc21r[i] && 0!=tdc_sc41l[0] && 0!=tdc_sc41r[0] ){
     mhtdc_tof4121[i] = sci->mhtdc_factor_ch_to_ns*( 0.5*(tdc_sc41l[0]+tdc_sc41r[0])  - 0.5*(tdc_sc21l[i]+tdc_sc21r[i]) ) + sci->mhtdc_offset_41_21;
+    
 
-  //  cout<<"111 mhtdc_tof4121[i] " <<mhtdc_tof4121[i] << " tdc_sc21l[i] " << tdc_sc21l[i] << " i " << i << endl;
-    //if(bDrawHist) hMultiHitTDC_TOF_41_21->Fill(mhtdc_tof4121);
-  //  cout<< " i " << i << " tdc_sc41l[0] "<<  tdc_sc41l[0] << " tdc_sc41r[0] "<< tdc_sc41r[0] << " tdc_sc21l[i] " << tdc_sc21l[i] << " tdc_sc21r[i] " << tdc_sc21r[i] << " sci->mhtdc_offset_41_21 " << sci->mhtdc_offset_41_21 << " mhtdc_tof4121[i] "<< mhtdc_tof4121[i]  <<endl;
-
+   ///22 -> 41
+  if(0!=tdc_sc22l[i] && 0!=tdc_sc22r[i] && 0!=tdc_sc41l[0] && 0!=tdc_sc41r[0]){
+    mhtdc_tof4122[i] = sci->mhtdc_factor_ch_to_ns*( 0.5*(tdc_sc41l[0]+tdc_sc41r[0])  - 0.5*(tdc_sc22l[i]+tdc_sc22r[i]) ) + sci->mhtdc_offset_41_22;
+//    if(bDrawHist) hMultiHitTDC_TOF_41_22->Fill(mhtdc_tof4122);
+    }
   }
 }
   ///21 -> 42
@@ -3692,11 +3432,7 @@ for (int i=0; i<10; i++){
     mhtdc_tof8121 = sci->mhtdc_factor_ch_to_ns*( 0.5*(tdc_sc81l[0]+tdc_sc81r[0])  - 0.5*(tdc_sc21l[0]+tdc_sc21r[0]) ) + sci->mhtdc_offset_81_21;
   //  if(bDrawHist) hMultiHitTDC_TOF_81_21->Fill(mhtdc_tof8121);
   }
-  ///22 -> 41
-  if(0!=tdc_sc22l[0] && 0!=tdc_sc22r[0] && 0!=tdc_sc41l[0] && 0!=tdc_sc41r[0]){
-    mhtdc_tof4122 = sci->mhtdc_factor_ch_to_ns*( 0.5*(tdc_sc41l[0]+tdc_sc41r[0])  - 0.5*(tdc_sc22l[0]+tdc_sc22r[0]) ) + sci->mhtdc_offset_41_22;
-//    if(bDrawHist) hMultiHitTDC_TOF_41_22->Fill(mhtdc_tof4122);
-  }
+ 
 
 
 
@@ -3706,7 +3442,7 @@ for (int i=0; i<10; i++){
     /*       0:     Sc01                                0:     TA - S1         */
     /*       1:     Sc11                                1:     S1 - S2         */
     /*       2:     Sc21                                2:     S2 - S41        */
-    /*       3:     Sc21                                3:     S2 - S42        */
+    /*       3:     Sc22                                3:     S2 - S42        */
     /*       4:     Sc31                                4:     S2 - 81         */
     /*       5:     Sc41                                5:     S2 - E1         */
     /*                                                                         */
@@ -3901,7 +3637,7 @@ for (int i=0; i<10; i++){
 
    /* check for polygon in raw detof spectrum of SC41 */
 
-   sci_b_detof = Check_PolyCond_X_Y(sci_tof2, sci_e[5], cSCI_detof, 4); // cSCI_detof->Test(sci_tof2, sci_e[5]);
+  // sci_b_detof = Check_PolyCond_X_Y(sci_tof2, sci_e[5], cSCI_detof, 4); // cSCI_detof->Test(sci_tof2, sci_e[5]);
  ///==================================================================================///
                                 /// Start of MHTDC ID analysis
 ///==================================================================================///
@@ -3920,17 +3656,19 @@ for (int i=0; i<10; i++){
   float temp_s2x = -999.; //fill in the next if part
   float temp_s2x_mhtdc[10]={0};
   float temp_a2 = 0;
+  for(int i=0; i<10; i++){
   if(1== id->mhtdc_s2pos_option){//SC21X from multihit tdc is used for S2X
-      for(int i=0; i<10; i++){
     temp_s2x_mhtdc[i] = mhtdc_sc21lr_x[i];
- //cout<<"MHTDC temp_s2x_mhtdc " << temp_s2x_mhtdc[i]<<" i " << i << endl;
-  }
+    }
+  if(3== id->mhtdc_s2pos_option){//SC22X from multihit tdc is used for S2X
+     
+    temp_s2x_mhtdc[i] = mhtdc_sc22lr_x[i];
+    }
   }
   if(2== id->mhtdc_s2pos_option){//TPCX is used
     if(b_tpc_xy[2] && b_tpc_xy[3]){//tpc2324
       temp_s2x = tpc_x_s2_foc_23_24;
       temp_a2 =tpc_angle_x_s2_foc_23_24;
-    //  cout<<"TPC temp_s2x " << temp_s2x<<" temp_a2 " <<temp_a2 << endl;
     }else if(b_tpc_xy[1] && b_tpc_xy[3]){//tpc2224
       temp_s2x = tpc_x_s2_foc_22_24;
       temp_a2 = tpc_angle_x_s2_foc_22_24;
@@ -3947,76 +3685,70 @@ for(int i=0; i<10;i++){
   id_mhtdc_aoq_s2s4[i]=0;
   id_mhtdc_gamma_s2s4[i]=0;
   id_mhtdc_aoq_corr_s2s4[i]=0;
-    id_mhtdc_z_music42[i]=0;
-    id_mhtdc_v_cor_music41[i]=0;
-    id_mhtdc_z_music41[i]=0;
-    id_mhtdc_v_cor_music42[i]=0;
-     id_mhtdc_delta_s2s4[i]=0;
+  id_mhtdc_z_music42[i]=0;
+  id_mhtdc_v_cor_music41[i]=0;
+  id_mhtdc_z_music41[i]=0;
+  id_mhtdc_v_cor_music42[i]=0;
+  id_mhtdc_delta_s2s4[i]=0;
 }
 
-
   float mean_brho_s2s4 =0;
-////ID Select SC21
+///ID Select SC21(1) TPC(2) SC22(3)
 if(1== id->mhtdc_s2pos_option){
   // Calculation of velocity beta and gamma
   for (int i=0; i<10; i++){
+       if(1==id->tof_s4_select && mhtdc_tof4121[i]>-100)id_mhtdc_beta_s2s4[i]   =  ( id->mhtdc_length_s2s4 / mhtdc_tof4121[i]) / speed_light;
+       if(3==id->tof_s4_select && mhtdc_tof4122[i]>-100)id_mhtdc_beta_s2s4[i]   =  ( id->mhtdc_length_s2s4 / mhtdc_tof4122[i]) / speed_light;
+       
+       id_mhtdc_gamma_s2s4[i]  = 1./sqrt(1. - id_mhtdc_beta_s2s4[i]*id_mhtdc_beta_s2s4[i]);
 
-    if( mhtdc_tof4121[i]>-100){
-  id_mhtdc_beta_s2s4[i]   =  ( id->mhtdc_length_s2s4 / mhtdc_tof4121[i]) / speed_light;
-  id_mhtdc_gamma_s2s4[i]  = 1./sqrt(1. - id_mhtdc_beta_s2s4[i]*id_mhtdc_beta_s2s4[i]);
-
-
- // cout<< "222 i " << i << " id_mhtdc_gamma_s2s4[i] " << id_mhtdc_gamma_s2s4[i] << " mhtdc_tof4121[i] " << mhtdc_tof4121[i] <<" id_mhtdc_beta_s2s4[i] " << id_mhtdc_beta_s2s4[i] <<endl;
-
-    }
   // calculation of delta(momentum_deviation) and AoQ
    mean_brho_s2s4 = 0.5*( frs->bfield[2] + frs->bfield[3] );
 
     
    if(temp_s4x==-999 || temp_s2x_mhtdc[i]==-999){
       id_mhtdc_aoq_s2s4[i]=0;
-        id_mhtdc_aoq_corr_s2s4[i]=0;
+      id_mhtdc_aoq_corr_s2s4[i]=0;
     }
-
   
    else if( -200<temp_s4x && temp_s4x<200. && -200.< temp_s2x_mhtdc[i] && temp_s2x_mhtdc[i]<200. ){
             ///id_mhtdc_delta_s2s4[i] = ( temp_s4x - (temp_s2x_mhtdc[i] * frs->magnification[1] ))/(-1.0 * frs->dispersion[1] *1000.0 ) ; //1000 is dispertsion from meter to mm. -1.0 is sign definition.
-     id_mhtdc_delta_s2s4[i] = ( temp_s4x - (temp_s2x_mhtdc[i] * frs->magnification[1] ))/(-1.0 * frs->dispersion[1] *1000.0 ) ; //1000 is dispertsion from meter to mm. -1.0 is sign definition.
-     
-     
-          
-// 
+     id_mhtdc_delta_s2s4[i] = ( temp_s4x - (temp_s2x_mhtdc[i] * frs->magnification[1] ))/(-1.0 * frs->dispersion[1] *1000.0 ) ; //1000 is dispersion from meter to mm. -1.0 is sign definition.
+
        if(0.0 < id_mhtdc_beta_s2s4[i] && id_mhtdc_beta_s2s4[i] < 1.0){
             id_mhtdc_aoq_s2s4[i] = mean_brho_s2s4 *( 1. + id_mhtdc_delta_s2s4[i]   ) * temp_tm_to_MeV / (temp_mu * id_mhtdc_beta_s2s4[i] * id_mhtdc_gamma_s2s4[i]);
-             id_mhtdc_aoq_corr_s2s4[i] = id_mhtdc_aoq_s2s4[i];
+        
+            for(int j=0; j<AoQ_Shift_array; j++){
+                   if(ts_mins >=FRS_WR_i[j] && ts_mins < FRS_WR_j[j]){
+            //Gain Match AoQ
+            id_mhtdc_aoq_s2s4[i] = (id_mhtdc_aoq_s2s4[i] - AoQ_shift_Sci21_value[j])-0.029100;
+            
+                }
+            }
+            ///No angle correction for SCI
+            id_mhtdc_aoq_corr_s2s4[i] = id_mhtdc_aoq_s2s4[i];
+    
+            
 
-            // if(i==0) cout<<"SINGLE HIT id_mhtdc_aoq_s2s4[i] " <<id_mhtdc_aoq_s2s4[i] << " id_mhtdc_beta_s2s4[i] " <<id_mhtdc_beta_s2s4[i] << " id_mhtdc_gamma_s2s4[i] " <<id_mhtdc_gamma_s2s4[i]<<" mean_brho_s2s4 " <<mean_brho_s2s4 <<" temp_mu " <<temp_mu <<  " id_mhtdc_delta_s2s4 " <<id_mhtdc_delta_s2s4  <<" temp_tm_to_MeV " <<temp_tm_to_MeV <<  " i " << i << endl;
-
-   // if(i>0) cout<<"MULTI HIT id_mhtdc_aoq_s2s4[i] " <<id_mhtdc_aoq_s2s4[i] << " id_mhtdc_beta_s2s4[i] " <<id_mhtdc_beta_s2s4[i] << " id_mhtdc_gamma_s2s4[i] " <<id_mhtdc_gamma_s2s4[i]<<" mean_brho_s2s4 " <<mean_brho_s2s4 <<" temp_mu " <<temp_mu <<  " id_mhtdc_delta_s2s4 " <<id_mhtdc_delta_s2s4  <<" temp_tm_to_MeV " <<temp_tm_to_MeV <<  " i " << i << endl;
-
-
-    float mhtdc_gamma1square = 1.0 + TMath::Power(((299.792458/931.494)*(id_brho[0]/id_mhtdc_aoq_s2s4[i])),2);
-               id_mhtdc_gamma_ta_s2 = TMath::Sqrt(mhtdc_gamma1square);
-               id_mhtdc_dEdegoQ     =  (id_mhtdc_gamma_ta_s2  - id_mhtdc_gamma_s2s4[i])*id_mhtdc_aoq_s2s4[i];
-               id_mhtdc_dEdeg       =  id_mhtdc_dEdegoQ * id_mhtdc_z_music41[i];
+     mhtdc_gamma1square[i]  = 1.0 + TMath::Power(((299.792458/931.494)*(id_brho[0]/id_mhtdc_aoq_s2s4[i])),2);
+               id_mhtdc_gamma_ta_s2[i]  = TMath::Sqrt(mhtdc_gamma1square[i] );
+               id_mhtdc_dEdegoQ[i]     =  (id_mhtdc_gamma_ta_s2[i]  - id_mhtdc_gamma_s2s4[i])*id_mhtdc_aoq_s2s4[i];
+               id_mhtdc_dEdeg[i]       =  id_mhtdc_dEdegoQ[i] * id_mhtdc_z_music41[i];
       }
     }
   else id_mhtdc_aoq_s2s4[i]=0;
   }
 }
-////ID Select TPC
+//ID Select TPC
 if(2== id->mhtdc_s2pos_option){
    // Calculation of velocity beta and gamma
   for (int i=0; i<10; i++){
+ 
+       if(1==id->tof_s4_select && mhtdc_tof4121[i]>-100)id_mhtdc_beta_s2s4[i]   =  ( id->mhtdc_length_s2s4 / mhtdc_tof4121[i]) / speed_light;
+     
+       if(3==id->tof_s4_select && mhtdc_tof4122[i]>-100)id_mhtdc_beta_s2s4[i]   =  ( id->mhtdc_length_s2s4 / mhtdc_tof4122[i]) / speed_light;
+        id_mhtdc_gamma_s2s4[i]  = 1./sqrt(1. - id_mhtdc_beta_s2s4[i]*id_mhtdc_beta_s2s4[i]);
 
-    if( mhtdc_tof4121[i]>-100){
-  id_mhtdc_beta_s2s4[i]   =  ( id->mhtdc_length_s2s4 / mhtdc_tof4121[i]) / speed_light;
-  id_mhtdc_gamma_s2s4[i]  = 1./sqrt(1. - id_mhtdc_beta_s2s4[i]*id_mhtdc_beta_s2s4[i]);
-
-
- // cout<< "222 i " << i << " id_mhtdc_gamma_s2s4[i] " << id_mhtdc_gamma_s2s4[i] << " mhtdc_tof4121[i] " << mhtdc_tof4121[i] <<" id_mhtdc_beta_s2s4[i] " << id_mhtdc_beta_s2s4[i] <<endl;
-
-    }
   // calculation of delta(momentum_deviation) and AoQ
    mean_brho_s2s4 = 0.5*( frs->bfield[2] + frs->bfield[3] );
 
@@ -4030,25 +3762,26 @@ if(2== id->mhtdc_s2pos_option){
    else if( -200<temp_s4x && temp_s4x<200. && -200.< temp_s2x && temp_s2x<200. ){
             ///id_mhtdc_delta_s2s4[i] = ( temp_s4x - (temp_s2x_mhtdc[i] * frs->magnification[1] ))/(-1.0 * frs->dispersion[1] *1000.0 ) ; //1000 is dispertsion from meter to mm. -1.0 is sign definition.
      id_mhtdc_delta_s2s4[i] = ( temp_s4x - (temp_s2x * frs->magnification[1] ))/(-1.0 * frs->dispersion[1] *1000.0 ) ; //1000 is dispertsion from meter to mm. -1.0 is sign definition.
-     
-     
-             //cout<<"DELTA GUY " << id_mhtdc_delta_s2s4 << " temp_s2x " <<temp_s2x << endl;
-// 
+
        if(0.0 < id_mhtdc_beta_s2s4[i] && id_mhtdc_beta_s2s4[i] < 1.0){
             id_mhtdc_aoq_s2s4[i] = mean_brho_s2s4 *( 1. + id_mhtdc_delta_s2s4[i]   ) * temp_tm_to_MeV / (temp_mu * id_mhtdc_beta_s2s4[i] * id_mhtdc_gamma_s2s4[i]);
+           
+            ///Gain Match AoQ
+             for(int j=0; j<AoQ_Shift_array; j++){
+               if(ts_mins >=FRS_WR_i[j] && ts_mins < FRS_WR_j[j]){
+             id_mhtdc_aoq_s2s4[i] = id_mhtdc_aoq_s2s4[i] - AoQ_shift_TPC_value[j]-0.01097;
+          
+                }
+             }
+            
              id_mhtdc_aoq_corr_s2s4[i] = id_mhtdc_aoq_s2s4[i] - id->a2AoQCorr * temp_a2;
 	  
-
-
-            // if(i==0) cout<<"SINGLE HIT id_mhtdc_aoq_s2s4[i] " <<id_mhtdc_aoq_s2s4[i] << " id_mhtdc_beta_s2s4[i] " <<id_mhtdc_beta_s2s4[i] << " id_mhtdc_gamma_s2s4[i] " <<id_mhtdc_gamma_s2s4[i]<<" mean_brho_s2s4 " <<mean_brho_s2s4 <<" temp_mu " <<temp_mu <<  " id_mhtdc_delta_s2s4 " <<id_mhtdc_delta_s2s4  <<" temp_tm_to_MeV " <<temp_tm_to_MeV <<  " i " << i << endl;
-
-   // if(i>0) cout<<"MULTI HIT id_mhtdc_aoq_s2s4[i] " <<id_mhtdc_aoq_s2s4[i] << " id_mhtdc_beta_s2s4[i] " <<id_mhtdc_beta_s2s4[i] << " id_mhtdc_gamma_s2s4[i] " <<id_mhtdc_gamma_s2s4[i]<<" mean_brho_s2s4 " <<mean_brho_s2s4 <<" temp_mu " <<temp_mu <<  " id_mhtdc_delta_s2s4 " <<id_mhtdc_delta_s2s4  <<" temp_tm_to_MeV " <<temp_tm_to_MeV <<  " i " << i << endl;
-
-
-    float mhtdc_gamma1square = 1.0 + TMath::Power(((299.792458/931.494)*(id_brho[0]/id_mhtdc_aoq_s2s4[i])),2);
-               id_mhtdc_gamma_ta_s2 = TMath::Sqrt(mhtdc_gamma1square);
-               id_mhtdc_dEdegoQ     =  (id_mhtdc_gamma_ta_s2  - id_mhtdc_gamma_s2s4[i])*id_mhtdc_aoq_s2s4[i];
-               id_mhtdc_dEdeg       =  id_mhtdc_dEdegoQ * id_mhtdc_z_music41[i];
+             
+     mhtdc_gamma1square[i] = 1.0 + TMath::Power(((299.792458/931.494)*(id_brho[0]/id_mhtdc_aoq_s2s4[i])),2);
+               id_mhtdc_gamma_ta_s2[i] = TMath::Sqrt(mhtdc_gamma1square[i]);
+               id_mhtdc_dEdegoQ[i]     =  (id_mhtdc_gamma_ta_s2[i]  - id_mhtdc_gamma_s2s4[i])*id_mhtdc_aoq_s2s4[i];
+               id_mhtdc_dEdeg[i]       =  id_mhtdc_dEdegoQ[i] * id_mhtdc_z_music41[i];
+             
       }
     }
   else id_mhtdc_aoq_s2s4[i]=0;
@@ -4068,6 +3801,7 @@ if(2== id->mhtdc_s2pos_option){
 
     }
   }
+  if(id_mhtdc_v_cor_music41[k]!=0)
 
 
     if (id_mhtdc_v_cor_music41[k] > 0.0){
@@ -4091,9 +3825,29 @@ for (int k=0;k<10;k++){
   }
 }
 
+
+///Gain match Z
+  for(int i=0; i<Z_Shift_array; i++){
+           for (int k=0; k<10 ; k++) {
+           if(ts_mins >=FRS_WR_a[i] && ts_mins < FRS_WR_b[i]){
+               id_mhtdc_z_music41[k] = id_mhtdc_z_music41[k] - Z1_shift_value[i];
+               id_mhtdc_z_music42[k] = id_mhtdc_z_music42[k] - Z2_shift_value[i];
+                }
+            }
+      }
+      for(int i=0; i<10; i++){
+          if(id_mhtdc_aoq_s2s4[i]!=0){
+        mhtdc_gamma1square[i] = 1.0 + TMath::Power(((299.792458/931.494)*(id_brho[0]/id_mhtdc_aoq_s2s4[i])),2);
+               id_mhtdc_gamma_ta_s2[i] = TMath::Sqrt(mhtdc_gamma1square[i]);
+               id_mhtdc_dEdegoQ[i]     =  (id_mhtdc_gamma_ta_s2[i]  - id_mhtdc_gamma_s2s4[i])*id_mhtdc_aoq_s2s4[i];
+               id_mhtdc_dEdeg[i]       =  id_mhtdc_dEdegoQ[i] * id_mhtdc_z_music41[i];
+        }
+      }
+
+
 //  id_trigger=trigger;
 
-
+///TAC stuff starts here
   // focal plane information
   // S2 priority: tpc2324 -> tpc2224 -> tpc2122 -> sc22 -> sc21
      if(1 == id->x_s2_select){
@@ -4166,7 +3920,7 @@ for (int k=0;k<10;k++){
   /* ID.Path(i)                     Flight path/c [ps]        */
   /* TOF(i)        BIN FLOAT(24),   Flight time  [ps]         */
   /*----------------------------------------------------------*/
-
+    id_beta=0;
   //SC21-SC41
   if(1 == id->tof_s4_select){ //SC21-SC41
   if (sci_b_tofll2 && sci_b_tofrr2){
@@ -4245,7 +3999,29 @@ for (int k=0;k<10;k++){
       id_gamma = 1./sqrt(1. - id_beta * id_beta);
       id_AoQ   = id_brho[1]/id_beta/id_gamma/f ;
       id_AoQ_corr = id_AoQ - id->a2AoQCorr * id_a2;  //correction for id_a2, JK 16.9.11
-
+      if(id_AoQ_corr>0){
+            
+      for(int i=0; i<AoQ_Shift_array; i++){
+           if(ts_mins >=FRS_WR_i[i] && ts_mins < FRS_WR_j[i]){
+        
+         if(2 == id->x_s2_select){
+           id_AoQ = id_AoQ - AoQ_shift_Sci21_value[i];
+               id_AoQ_corr = id_AoQ_corr - AoQ_shift_Sci21_value[i];
+               
+         }
+         else if(3 == id->x_s2_select) {
+           id_AoQ = id_AoQ - AoQ_shift_Sci22_value[i];
+               id_AoQ_corr = id_AoQ_corr - AoQ_shift_Sci22_value[i];      
+                   
+        }
+        else {
+           id_AoQ = id_AoQ - AoQ_shift_TPC_value[i];
+               id_AoQ_corr = id_AoQ_corr - AoQ_shift_TPC_value[i];
+                
+            }
+        }
+    }
+}
 
      // cout<<"FRS Calc id_AoQ " << id_AoQ <<" id_AoQ_corr "<<id_AoQ_corr <<" id_a2 " <<id_a2 <<  endl;
 
@@ -4317,8 +4093,15 @@ for (int k=0;k<10;k++){
       id_b_z2 = kTRUE;
     }
   }
-
-
+//Gainmatch Z
+for(int i=0; i<Z_Shift_array; i++){
+           if(ts_mins >=FRS_WR_a[i] && ts_mins < FRS_WR_b[i]){
+               id_z = id_z - Z1_shift_value[i];
+               id_z2 = id_z2 - Z2_shift_value[i];
+            }
+      }
+      
+      
   /****  S4  (MUSIC)   */
   if((de[2]>0.0) && (id_beta>0.0) && (id_beta<1.0)){
     Double_t power = 1., sum = 0.;
@@ -4398,24 +4181,35 @@ for (int k=0;k<10;k++){
 
    /****  for S2-S4  ****/
 
-   for (int i=0;i<5;i++){
-     id_b_x4AoQ[i] = Check_PolyCond_Multi_X_Y(id_AoQ, id_x4, cID_x4AoQ, 5, 0);
-     id_b_x2AoQ[i] = Check_PolyCond_Multi_X_Y(id_AoQ, id_x2, cID_x2AoQ, 5, 0);
-     id_b_z_AoQ[i] =  Check_PolyCond_Multi_X_Y(id_AoQ, id_z, cID_Z_AoQ, 5, i);
-   }
+//    for (int i=0;i<5;i++){
+//      id_b_x4AoQ[i] = Check_PolyCond_Multi_X_Y(id_AoQ, id_x4, cID_x4AoQ, 5, 0);
+//      id_b_x2AoQ[i] = Check_PolyCond_Multi_X_Y(id_AoQ, id_x2, cID_x2AoQ, 5, 0);
+//      id_b_z_AoQ[i] =  Check_PolyCond_Multi_X_Y(id_AoQ, id_z, cID_Z_AoQ, 5, i);
+//    }
 //          mhtdc_tof4121=0;
 //    mhtdc_tof4122=0;
 //    mhtdc_tof4221=0;
+
 }
-
-
+/// WR to FRS branch
+Int_t FRS_Detector_System::WR_Check(int ts_minutes){
+    ts_mins =ts_minutes;
+    return ts_mins;
+}
+ ///A.K.M. NOTE: Multi-dimensional arrays don't decay to pointers as one-dimensional arrays do https://stackoverflow.com/questions/12674094/array-to-pointer-decay-and-passing-multidimensional-arrays-to-functions
 void FRS_Detector_System::get_Event_data(Raw_Event* RAW){
 
     RAW->set_DATA_MUSIC(de, de_cor, music_e1, music_e2, music_t1, music_t2);
     RAW->set_DATA_SCI(sci_l, sci_r, sci_e, sci_tx, sci_x);
     RAW->set_DATA_SCI_dT(dt_21l_21r, dt_41l_41r, dt_21l_41l, dt_21r_41r, dt_42l_42r, dt_43l_43r,dt_42l_21l, dt_42r_21r, dt_81l_81r, dt_21l_81l, dt_21r_81r);
     RAW->set_DATA_SCI_ToF(sci_tofll2, sci_tofll3, sci_tofll5, sci_tof2, sci_tofrr2, sci_tofrr3, sci_tofrr5, sci_tof3,sci_tof5,sci_tof2_calib,sci_tof3_calib,sci_tof5_calib);
-    RAW->set_DATA_TPC(tpc_lt,tpc_rt, tpc_x, tpc_y, x0, x1);
+    
+    RAW->set_DATA_TPC(tpc_lt,tpc_rt, tpc_x, tpc_y, tpc_a, tpc_l, tpc_r, tpc_dt);
+    
+    RAW->set_DATA_TPC_S2(tpc_x_s2_foc_23_24, tpc_y_s2_foc_23_24, tpc_angle_x_s2_foc_23_24, tpc_angle_y_s2_foc_23_24,tpc23_24_sc21_x,tpc23_24_sc21_y,tpc23_24_sc22_x ,tpc23_24_sc22_y);
+    
+     RAW->set_DATA_TPC_S4(tpc_x_s4, tpc_y_s4, tpc_angle_x_s4, tpc_angle_y_s4,tpc_sc41_x,tpc_sc41_y, tpc_sc42_x,tpc_sc42_y);
+    
     RAW->set_DATA_ID_2_4(id_x2, id_y2, id_a2, id_b2, id_x4, id_y4, id_a4, id_b4);
     RAW->set_DATA_ID_Beta_Rho(id_brho, id_rho, id_beta, id_beta3, id_gamma);
     RAW->set_DATA_ID_Z_AoQ(id_AoQ, id_AoQ_corr, id_z, id_z2, id_z3,id_dEdeg,id_dEdegoQ);
@@ -4786,11 +4580,8 @@ void FRS_Detector_System::Setup_Conditions(){
     if(i < 4){
         cMusic3_E[i] = new Float_t[2];
         cMusic3_T[i] = new Float_t[2];
+        }
     }
-
-    }
-
-
 
 
     line_number = 0;
@@ -4852,51 +4643,49 @@ void FRS_Detector_System::Setup_Conditions(){
         sscanf(line.c_str(),format,&cMusic3_dec[0],&cMusic3_dec[1]);
     }
 
-
-
+///DESPEC code doesnt use window conditions for the TPCs (extracts gates directly from FRS setup file - no real difference) A.K.M. 2022
+/*
     cTPC_LT0= new Float_t*[7];
     cTPC_RT0= new Float_t*[7];
     cTPC_LT1= new Float_t*[7];
     cTPC_RT1= new Float_t*[7];
     cTPC_DT= new Float_t**[7];
-    cTPC_SC_TIMEREF= new Float_t*[8];
+    cTPC_SC_TIMEREF= new Float_t*[8];*/
 
-    for(int i=0; i<8; i++) cTPC_SC_TIMEREF[i] =  new Float_t[2];
+//     for(int i=0; i<8; i++) cTPC_SC_TIMEREF[i] =  new Float_t[2];
+// 
+//     for(int i=0; i<7; i++){
+//         cTPC_LT0[i] =  new Float_t[2];
+//         cTPC_RT0[i] =  new Float_t[2];
+//         cTPC_LT1[i] =  new Float_t[2];
+//         cTPC_RT1[i] =  new Float_t[2];
+// 
+//         cTPC_DT[i] =    new Float_t*[4];
+//          for(int j=0; j<4; j++)cTPC_DT[i][j]=  new Float_t[2];
+//     }
 
-    for(int i=0; i<7; i++){
-        cTPC_LT0[i] =  new Float_t[2];
-        cTPC_RT0[i] =  new Float_t[2];
-        cTPC_LT1[i] =  new Float_t[2];
-        cTPC_RT1[i] =  new Float_t[2];
 
-        cTPC_DT[i] =    new Float_t*[4];
-         for(int j=0; j<4; j++)cTPC_DT[i][j]=  new Float_t[2];
-    }
-
-
-    for(int i=0; i<8; i++){
-    cTPC_SC_TIMEREF[i][0] = tpc->lim_timeref[i][0];
-    cTPC_SC_TIMEREF[i][1] = tpc->lim_timeref[i][1];
-
-    }
-    for(int i=0; i<7; i++){
-    cTPC_LT0[i][0] = tpc->lim_lt[i][0][0];
-    cTPC_LT0[i][1] = tpc->lim_lt[i][0][1];
-    cTPC_RT0[i][0] = tpc->lim_rt[i][0][0];
-    cTPC_RT0[i][1] = tpc->lim_rt[i][0][1];
-
-    cTPC_LT1[i][0] = tpc->lim_lt[i][1][0];
-    cTPC_LT1[i][1] = tpc->lim_lt[i][1][1];
-    cTPC_RT1[i][0] = tpc->lim_rt[i][1][0];
-    cTPC_RT1[i][1] = tpc->lim_rt[i][1][1];
-
-    for(int j=0; j<4; j++){
-    cTPC_DT[i][j][0] = tpc->lim_dt[i][j][0];
-    cTPC_DT[i][j][1] = tpc->lim_dt[i][j][1];
-
-    }
-
-    }
+//     for(int i=0; i<8; i++){
+//     cTPC_SC_TIMEREF[i][0] = tpc->lim_timeref[i][0];
+//     cTPC_SC_TIMEREF[i][1] = tpc->lim_timeref[i][1];
+// 
+//     }
+//     for(int i=0; i<7; i++){
+//     cTPC_LT0[i][0] = tpc->lim_lt[i][0][0];
+//     cTPC_LT0[i][1] = tpc->lim_lt[i][0][1];
+//     cTPC_RT0[i][0] = tpc->lim_rt[i][0][0];
+//     cTPC_RT0[i][1] = tpc->lim_rt[i][0][1];
+// 
+//     cTPC_LT1[i][0] = tpc->lim_lt[i][1][0];
+//     cTPC_LT1[i][1] = tpc->lim_lt[i][1][1];
+//     cTPC_RT1[i][0] = tpc->lim_rt[i][1][0];
+//     cTPC_RT1[i][1] = tpc->lim_rt[i][1][1];
+// 
+//     for(int j=0; j<4; j++){
+//     cTPC_DT[i][j][0] = tpc->lim_dt[i][j][0];
+//     cTPC_DT[i][j][1] = tpc->lim_dt[i][j][1];
+//         }
+//     }
 
     /***SCINTILATOR Condtions***/
 
@@ -4976,34 +4765,10 @@ void FRS_Detector_System::Setup_Conditions(){
 
     }
 
-    cSCI_detof = new Float_t*[5];
-
-    for(int i = 0; i < 5; ++i){
-
-    cSCI_detof[i] = new Float_t[2];
-
-    }
-
-    line_number = 0;
-
-    format = "%f %f";
-
-     ifstream cond_j("Configuration_Files/FRS/FRS_Window_Conditions/SCI_dEToF.txt");
-
-    while(/*cond_j.good()*/getline(cond_j,line,'\n')){
-
-    //getline(cond_j,line,'\n');
-    if(line[0] == '#') continue;
-        sscanf(line.c_str(),format,&cSCI_detof[line_number][0],&cSCI_detof[line_number][1]);
-
-    line_number++;
-    }
-
     /***ID Condtions***/
 
     cID_x2 = new Float_t[2];
     cID_x4 = new Float_t[2];
-   // cID_x8 = new Float_t[2];
     cID_Z_Z = new Float_t[2];
 
     format = "%f %f";
@@ -5029,15 +4794,6 @@ void FRS_Detector_System::Setup_Conditions(){
 
     }
 
-//      ifstream cond_l("Configuration_Files/FRS_Window_Conditions/ID_x8.txt");
-//
-//     while(/*cond_l.good()*/getline(cond_l,line,'\n')){
-//
-//     //getline(cond_l,line,'\n');
-//     if(line[0] == '#') continue;
-//         sscanf(line.c_str(),format,&cID_x8[0],&cID_x8[1]);
-//
-//     }
 
      ifstream cond_m("Configuration_Files/FRS/FRS_Window_Conditions/ID_Z_Z.txt");
 
@@ -5048,137 +4804,6 @@ void FRS_Detector_System::Setup_Conditions(){
         sscanf(line.c_str(),format,&cID_Z_Z[0],&cID_Z_Z[1]);
 
     }
-
-
-    cID_x4AoQ_Z = new Float_t*[5];
-
-    for(int i = 0; i < 5; ++i){
-
-    cID_x4AoQ_Z[i] = new Float_t[2];
-
-    }
-
-
-    line_number = 0;
-
-     ifstream cond_n("Configuration_Files/FRS/FRS_Window_Conditions/ID_Z_Z.txt");
-
-    while(/*cond_n.good()*/getline(cond_n,line,'\n')){
-
-    //getline(cond_n,line,'\n');
-    if(line[0] == '#') continue;
-        sscanf(line.c_str(),format,&cID_x4AoQ_Z[line_number][0],&cID_x4AoQ_Z[line_number][1]);
-
-    line_number++;
-
-    }
-
-    cID_x2AoQ = new Float_t**[6];
-    cID_x4AoQ = new Float_t**[6];
-    cID_Z_AoQ = new Float_t**[5];
-
-    for(int i = 0; i < 6; ++i){
-
-    cID_x2AoQ[i] = new Float_t*[6];
-    cID_x4AoQ[i] = new Float_t*[6];
-    if (i < 5) cID_Z_AoQ[i] = new Float_t*[6];
-
-        for(int j = 0; j < 6; ++j){
-
-        cID_x2AoQ[i][j] = new Float_t[2];
-        cID_x4AoQ[i][j] = new Float_t[2];
-        if (i < 5) cID_Z_AoQ[i][j] = new Float_t[2];
-
-        }
-
-    }
-
-    line_number = 0;
-    int selection_number = 0;
-
-     ifstream cond_o("Configuration_Files/FRS/FRS_Window_Conditions/ID_x2AoQ.txt");
-
-    while(/*cond_o.good()*/getline(cond_o,line,'\n')){
-
-    //getline(cond_o,line,'\n');
-    if(line[0] == '#') continue;
-    if(line[0] == '&'){
-        selection_number++;
-        line_number = 0;
-        continue;
-    }
-
-        sscanf(line.c_str(),format,&cID_x2AoQ[selection_number][line_number][0],&cID_x2AoQ[selection_number][line_number][1]);
-
-    line_number++;
-
-    }
-
-    line_number = 0;
-    int selection_number_2 = 0;
-
-     ifstream cond_z("Configuration_Files/FRS/FRS_Window_Conditions/ID_x4AoQ.txt");
-
-    while(/*cond_b.good()*/getline(cond_z,line,'\n')){
-
-    //getline(cond_o,line,'\n');
-    if(line[0] == '#') continue;
-    if(line[0] == '&'){
-        selection_number_2++;
-        line_number = 0;
-        continue;
-    }
-
-        sscanf(line.c_str(),format,&cID_x4AoQ[selection_number_2][line_number][0],&cID_x4AoQ[selection_number_2][line_number][1]);
-
-    line_number++;
-
-    }
-
-
-    line_number = 0;
-    selection_number = 0;
-
-     ifstream cond_p("Configuration_Files/FRS/FRS_Window_Conditions/ID_Z_AoQ.txt");
-
-    while(/*cond_p.good()*/getline(cond_p,line,'\n')){
-
-    //getline(cond_p,line,'\n');
-    if(line[0] == '#') continue;
-    if(line[0] == '&'){
-        selection_number++;
-        line_number = 0;
-        continue;
-    }
-        sscanf(line.c_str(),format,&cID_Z_AoQ[selection_number][line_number][0],&cID_Z_AoQ[selection_number][line_number][1]);
-
-    line_number++;
-
-    }
-
-    cID_dEToF = new Float_t*[5];
-
-    for(int i = 0; i < 5; ++i){
-
-    cID_dEToF[i] = new Float_t[2];
-
-    }
-    line_number = 0;
-    selection_number = 0;
-
-     ifstream cond_q("Configuration_Files/FRS/FRS_Window_Conditions/ID_dEToF.txt");
-
-    while(/*cond_q.good()*/getline(cond_q,line,'\n')){
-
-    //getline(cond_p,line,'\n');
-    if(line[0] == '#') continue;
-
-        sscanf(line.c_str(),format,&cID_dEToF[line_number][0],&cID_dEToF[line_number][1]);
-
-    line_number++;
-
-    }
-
 
     /*for(int i=0;i<8;i++){
 
@@ -5208,7 +4833,64 @@ void FRS_Detector_System::Setup_Conditions(){
     cMusic3_dec = MakeWindowCond("MUSIC/MUSIC 3","Music3_dec", 10., 4000., "hMUSIC3_dECOR");*/
 
 }
+///--------------------------------------------------------------------------------
 
+void FRS_Detector_System::FRS_GainMatching(){
+     ifstream    file;
+   string line;
+   Float_t frs_wr_a;
+   Float_t frs_wr_b;
+   Float_t frs_wr_i;
+   Float_t frs_wr_j;
+   Float_t z1_shift_value;
+   Float_t z2_shift_value;
+   Float_t aoq_shift_value;
+   Float_t aoq_shift_tpc_value;
+   Float_t aoq_shift_sci21_value;
+   Float_t aoq_shift_sci22_value;
+ 
+   
+   int f=0;
+   int d=0;
+   file.open("Configuration_Files/FRS/Z1_Z2_Shift.txt");
+   while(file.good()){
+    getline(file,line,'\n');
+    if(line[0] == '#') continue;
+    sscanf(line.c_str(),"%f %f %f %f",&frs_wr_a,&frs_wr_b,&z1_shift_value,&z2_shift_value);
+       //if(IsData(file)) file >> FRS_WR_a[i]>> FRS_WR_b[i]>>Z1_shift_value[i] ;
+    FRS_WR_a[f]=frs_wr_a;
+    FRS_WR_b[f]=frs_wr_b;
+    Z1_shift_value[f]=z1_shift_value;
+    Z2_shift_value[f]=z2_shift_value;
+    Z_Shift_array=f;
+       f++;
+       
+     }
+
+  file.close();
+  ///--------------------------------------------------------------------------------
+
+      file.open("Configuration_Files/FRS/AoQ_Shift.txt");
+   while(file.good()){
+       
+    getline(file,line,'\n');
+    if(line[0] == '#') continue;
+    sscanf(line.c_str(),"%f %f %f %f %f",&frs_wr_i,&frs_wr_j,&aoq_shift_tpc_value,&aoq_shift_sci21_value,&aoq_shift_sci22_value);
+
+    FRS_WR_i[d]=frs_wr_i;
+    
+    FRS_WR_j[d]=frs_wr_j;
+    AoQ_shift_TPC_value[d]=aoq_shift_tpc_value;
+    AoQ_shift_Sci21_value[d]=aoq_shift_sci21_value;
+    AoQ_shift_Sci22_value[d]=aoq_shift_sci22_value;
+    AoQ_Shift_array=d;
+       d++;
+       
+     }
+
+  file.close();
+    
+}
 
 #ifdef CALIBRATION_VFTX
 void FRS_Detector_System::VFTX_Calibration(int module, int channel) {
@@ -5306,8 +4988,6 @@ Double_t FRS_Detector_System::VFTX_GetTraw_ps(int module, int channel, int cc, i
   }
   double ft_ps = calib + gain*(double)rand ;
   double cc_ps = (double)(cc);
- // cout<<"ft_ps " <<ft_ps << " cc_ps " <<" cc_ps "<< cc_ps <<endl;
-
   return (5000.*cc_ps - ft_ps);
 }
 
