@@ -70,8 +70,6 @@ DESPECAnalysis::DESPECAnalysis(int argc, char** argv) :
    }
 
    cout << "**** DESPECAnalysis: Create " << argv[0] << endl;
-
- 
   
    TString kind, input, out1, out2;
 
@@ -96,7 +94,7 @@ DESPECAnalysis::DESPECAnalysis(int argc, char** argv) :
    step2->SetSourceEnabled(kTRUE);
    step2->SetErrorStopEnabled(kTRUE);
    AddAnalysisStep(step2);
-
+cout<<"MHTDC_OR_TAC " <<MHTDC_OR_TAC << endl;
 // Create step 3 Correlations.
    TGo4StepFactory* factory3 = new TGo4StepFactory("CorrelationsFactory");
    factory3->DefInputEvent("AnlEvent", "EventAnlStore"); // object name, class name
@@ -118,8 +116,6 @@ DESPECAnalysis::DESPECAnalysis(int argc, char** argv) :
   fCorrel = new CorrelParameter("CorrelPar");
   AddParameter(fCorrel);
 
-  
-  
   fFRSPar = new TFRSParameter("FRSPar");
   AddParameter(fFRSPar);
 

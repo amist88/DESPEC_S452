@@ -96,6 +96,15 @@ class EventAnlProc : public TGo4EventProcessor {
         double SC41L_DIG_lead_bPlas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS], SC41R_DIG_lead_bPlas[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         double lead_lead_fat_Ref0[bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
         int hits_bplas_lead = 0, hits_bplas_trail=0;
+        int hits_bplas_lead_fast = 0, hits_bplas_trail_fast=0;
+        int hits_bplas_lead_slow = 0, hits_bplas_trail_slow=0;
+        
+        double ToT_bplas_Fast[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
+        double ToT_bplas_Slow[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
+        double lead_bplas_fast[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
+        double lead_bplas_slow[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
+        double trail_bplas_fast[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
+        double trail_bplas_slow[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS] ;
 
 
         double bPlas_TAM_SC41L_ANA;
@@ -178,8 +187,8 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t  FRS_dEdeg, FRS_dEdegoQ;
 //    Float_t  FRS_AoQ_mhtdc, FRS_AoQ_corr_mhtdc;
 //      Float_t  FRS_z_mhtdc, FRS_z2_mhtdc;
-      Float_t  FRS_dEdeg_mhtdc, FRS_dEdegoQ_mhtdc;
-      Float_t  FRS_beta_mhtdc;
+      Float_t  FRS_dEdeg_mhtdc[10], FRS_dEdegoQ_mhtdc[10];
+      Float_t  FRS_beta_mhtdc[10];
       Float_t  FRS_timestamp, FRS_ts, FRS_ts2;
       bool FRS_spill;
       Long64_t FRS_time_mins;
@@ -217,11 +226,12 @@ class EventAnlProc : public TGo4EventProcessor {
       Float_t X_ZZ2[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZZ2[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t X_ZZ2_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZZ2_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t XX4_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX4_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints];
-            Float_t XX4_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX4_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+      Float_t XX4_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX4_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t XX2_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ[MAX_FRS_GATE][MAX_FRS_PolyPoints];
-Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+      Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
 
       Float_t X_dEdeg[MAX_FRS_GATE][MAX_FRS_PolyPoints], Y_dEdeg[MAX_FRS_GATE][MAX_FRS_PolyPoints];
+      Float_t X_dEdeg_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], Y_dEdeg_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       Float_t X_ZAoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints],Y_ZAoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints];
       int       Aida_Fired;
 
@@ -331,7 +341,8 @@ Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_G
 
      void Make_FRS_Histos();
      void Make_Aida_Histos();
-     void Make_Plastic_VME_Histos();
+    // void Make_Plastic_VME_Histos();
+     void Make_Plastic_Twinpeaks_Histos();
      void Make_Plastic_Tamex_Histos();
      void Make_Fatima_Tamex_Histos();
      void Make_Fatima_Histos();
@@ -343,9 +354,10 @@ Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_G
      void Make_Fat_Plas_Histos();
      void Make_Fing_Plas_Histos();
 
-     void Process_FRS_Histos(EventAnlStore* pOutput);
-     void Process_Plastic_VME_Histos(EventAnlStore* pOutput);
+     void Process_FRS_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+   //  void Process_Plastic_VME_Histos(EventAnlStore* pOutput);
      void Process_Plastic_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
+     void Process_Plastic_Twinpeaks_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
      void Process_Fatima_Tamex_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
      void Process_Fatima_Histos(EventUnpackStore* pInput, EventAnlStore* pOutput);
 
@@ -405,12 +417,10 @@ Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_G
             std::vector<TH1*> decays_per_event;
             std::vector<TH1*> decays_channels;
 
-             std::vector<AidaCluster> EventsToClusters(std::vector<AidaEvent> const&);
+            std::vector<AidaCluster> EventsToClusters(std::vector<AidaEvent> const&);
             AidaHit ClusterPairToHit(std::pair<AidaCluster, AidaCluster> const&);
 
             int      IsData(std::ifstream &f);
-
-
 
             TH1 *hFat_deadtime;
             TH1 *hFatTAM_deadtime;
@@ -434,115 +444,182 @@ Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_G
             //FRS Histograms
             TH2  *hID_Z1_vs_T;
             TH2  *hID_AoQ_vs_T;
+            TH2  *hID_Z_AoQ;
+            TH2  *hID_Z_AoQ_corr;
+            TH2  *hID_Z_AoQ_zsame; 
+            TH2  *hID_x4AoQ_zsame;
+            TH2  *hID_x2AoQ_zsame;
+            TH2  *hID_x2AoQ;
+            TH2  *hID_x4AoQ;
+            TH2  *hID_a2AoQ;
+            TH2  *hID_a4AoQ;
+            TH2  *hdEdegoQ_Z;
+            TH2  *hdEdeg_Z;
+            TH2  *hID_Z_Z2;
+            TH2  *hID_Z_dE2;
+            TH2  *hSCI_dE24;
+            TH2  *hID_Z_Sc21E; 
+            TH2  *hID_Z_Sc21E_mhtdc;
+            TH2  *hID_x2z;
+            TH2  *hID_x4z;
+            TH2  *hID_E_Xs4;
+            TH2  *hID_E_Xs2;
+            TH2  *hID_x2a2;
+            TH2  *hID_y2b2;
+            TH2  *hID_x4a4;
+            TH2  *hID_y4b4;
+            TH2  *hID_x2x4;
+            TH2  *hID_SC41dE_AoQ;
+            TH2  *hID_dEToF;
+                 
             TH2  *hID_AoQ_mhtdc_T;
             TH2  *hID_Z_mhtdc_T;
-             TH2  *hID_x2AoQ;
-             TH2 *hID_x4AoQ;
-             TH2 *hID_x4AoQ_zsame;
-             TH2 *hID_Z_AoQ;
-             TH2 *hID_Z_AoQ_zsame;
-             TH2 *hID_Z_AoQ_corr;
-             TH2 *hID_Z_Z2;
-             TH2 *hdEdegoQ_Z;
-             TH2 *hdEdeg_Z;
-
-             TH2 *hID_Z_Z2_mhtdc;
-             TH2 *hID_Z_AoQ_mhtdc_elif;
-             TH2 *hID_Z_AoQ_mhtdc_first_hit_elif;
-             TH2 *hID_Z_AoQ_mhtdc_excluding_first_hit_elif;
-
-             TH2 *hID_A2_AoQ_mhtdc;
-             TH2 *hID_A4_AoQ_mhtdc;
-             
-             TH2 *hID_A2_AoQ_Corr_mhtdc;
-             TH2 *hID_A4_AoQ_Corr_mhtdc;
-
-             TH2 *hID_Z_AoQ_corr_mhtdc_elif;
-             TH2 *hID_Z_AoQ_corr_mhtdc_first_hit_elif;
-             TH2 *hID_Z_AoQ_corr_mhtdc_excluding_first_hit_elif;
-
-             TH2 * hID_x2AoQ_mhtdc;
-             TH2 * hID_x4AoQ_mhtdc;
-             TH2 *hdEdegoQ_Z_MHTDC;
-             TH2 *hdEdegoQ_Z2_MHTDC;
-             TH2 *hID_Z1_Z2gate_mhtdc[MAX_FRS_GATE];
-
-             TH2 *hID_Z1_Z2gate[MAX_FRS_GATE];
-             TH2 *hID_x2AoQ_x2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_x2AoQ_x4AoQgate[MAX_FRS_GATE];
-
-             TH2 *hID_x4AoQ_x2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_x4AoQ_x4AoQgate[MAX_FRS_GATE];
-
-             TH2 *hID_ZAoQ_x2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_x4AoQgate[MAX_FRS_GATE];
-
-             TH2 *hID_x2AoQ_Z1Z2gate[MAX_FRS_GATE];
-             TH2 *hID_x2AoQ_Z1AoQgate[MAX_FRS_GATE];
-
-             TH2 *hID_x2AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-
-
-             TH2 *hID_x2AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE]; //Elif
-             TH2 *hID_x4AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_x2AoQ_x4AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_x4AoQ_x4AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_x4AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_Z1Z2_X2AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_Z1Z2_X4AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_A2AoQ_Z1Z2_X2AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_A4AoQ_Z1Z2_X2AoQgate_mhtdc[MAX_FRS_GATE];
-
-             TH2 *hID_x4AoQ_Z1Z2gate[MAX_FRS_GATE];
-             TH2 *hID_x4AoQ_Z1AoQgate[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_Z1Z2gate[MAX_FRS_GATE];
-             TH2 *hID_SC43Z1_Z1Z2gate[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_Z1Z2_X2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_ZAoQ_Z1Z2_X4AoQgate[MAX_FRS_GATE];
-             TH2 *hID_Z1_AoQ_dEdegZgate[MAX_FRS_GATE];
-             TH2 *hID_Z1_AoQ_zsame_dEdegZgate[MAX_FRS_GATE];
-             TH2 *hID_Z1_AoQcorr_dEdegZgate[MAX_FRS_GATE];
-             TH2 *hID_Z1_AoQcorr_zsame_dEdegZgate[MAX_FRS_GATE];
-
+            TH2  *hID_Z_AoQ_mhtdc;
+            TH2  *hID_Z_AoQ_corr_mhtdc;
+            TH2  *hID_Z_Z2_mhtdc;
+            TH2  *hID_Z_AoQ_zsame_mhtdc;
+            TH2  *hID_x4AoQ_zsame_mhtdc;
+            TH2  *hID_x2AoQ_mhtdc;
+            TH2  *hID_x2AoQ_zsame_mhtdc;
+            TH2  *hID_x4AoQ_mhtdc;
+            TH2  *hID_a2AoQ_mhtdc;
+            TH2  *hID_a4AoQ_mhtdc;
+            TH2  *hdEdegoQ_Z_mhtdc;
+            TH2  *hdEdeg_Z_mhtdc;
+            TH2  *hID_Z_dE2_mhtdc;
+            TH2  *hID_x2z_mhtdc;
+            TH2  *hID_x4z_mhtdc;
+            // TH2 *hID_Z_AoQ_mhtdc_first_hit;
+            // TH2 *hID_Z_AoQ_mhtdc_excluding_first_hit;
+            // TH2 *hID_Z_AoQ_corr_mhtdc_first_hit;
+            // TH2 *hID_Z_AoQ_corr_mhtdc_excluding_first_hit;
+            
              TGo4PolyCond  *cID_Z_AoQ[MAX_FRS_GATE];
-             TGo4PolyCond  *cID_Z_AoQ_mhtdc[MAX_FRS_GATE];
+             
              TGo4PolyCond  *cID_Z_Z2gate[MAX_FRS_GATE];
              TGo4PolyCond  *cID_x2AoQ[MAX_FRS_GATE];
              TGo4PolyCond  *cID_x4AoQ[MAX_FRS_GATE];
-             TGo4PolyCond  *cID_dEdeg_Z1[MAX_FRS_GATE];
+             TGo4PolyCond  *cID_dEdegZ1[MAX_FRS_GATE];
 
+             TGo4PolyCond  *cID_Z_AoQ_mhtdc[MAX_FRS_GATE];
              TGo4PolyCond  *cID_Z_Z2gate_mhtdc[MAX_FRS_GATE];
              TGo4PolyCond  *cID_x2AoQ_mhtdc[MAX_FRS_GATE];
              TGo4PolyCond  *cID_x4AoQ_mhtdc[MAX_FRS_GATE];
-
-             //TH1I *hID_Z3_gate[5];
-             TH2 *hID_Z_AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_Z1AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_Z1Z2gate[MAX_FRS_GATE];
-
-             TH2 *hID_Z_AoQgate_corr_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_Z1AoQgate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-
-             TH2 *hID_dEdeg_Z1_Z1Z2_X2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_Z1Z2_X4AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_X2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdeg_Z1_X4AoQgate[MAX_FRS_GATE];
-
-             TH2 *hID_dEdegoQ_Z1_Z1AoQgate_mhtdc[MAX_FRS_GATE];
-
-            TH2 *hID_dEdegoQ_Z1_Z1Z2gate[MAX_FRS_GATE];
+             TGo4PolyCond  *cID_dEdegZ1_mhtdc[MAX_FRS_GATE];
+                 
+             ///Z AoQ gated
+             TH2 *hID_ZAoQ_ZAoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_ZAoQgate[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_Z1AoQgate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1AoQgate[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_Z1AoQgate[MAX_FRS_GATE];
+             TH2 *hID_dEdegZ1_Z1AoQgate[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_Z1AoQgate[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_Z1AoQgate[MAX_FRS_GATE];
+                   
+            ///Z1 Z2 gated
+             TH2 *hID_Z1_Z2gate[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_dEdegZ1_Z1Z2gate[MAX_FRS_GATE];
+             TH2 *hID_dEdegoQ_Z1_Z1Z2gate[MAX_FRS_GATE];
+                   
+             ///X2 AoQ gated
+             TH2 *hID_x2AoQ_x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_x2AoQgate[MAX_FRS_GATE];
+             ///Z1 Z2 + X2 AoQ gated
+             TH2 *hID_x2AoQ_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1Z2x2AoQgate [MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_dEdegZ1_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_dEdegoQ_Z1_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_Z1Z2x2AoQgate[MAX_FRS_GATE];
+             
+             ///X4 AoQ gated
+             TH2 *hID_x4AoQ_x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_x4AoQgate[MAX_FRS_GATE];
+             ///Z1 Z2 + X2 AoQ gated
+             TH2 *hID_x2AoQ_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1Z2x4AoQgate[MAX_FRS_GATE]; 
+             TH2 *hID_ZAoQ_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_dEdegZ1_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_dEdegoQ_Z1_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_Z1Z2x4AoQgate[MAX_FRS_GATE];
+             
+             ///dEdegZ Gated
+             TH2 *hID_Z1AoQ_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_Z1AoQ_zsame_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_dEdegZgate[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_dEdegZgate[MAX_FRS_GATE];
+ 
+             ///MHTDC
+             ///Z vs AoQ Gated
+             TH2 *hID_ZAoQ_ZAoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_ZAoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_dEdegoQ_Z1_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_dEdegZ1_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_Z1AoQgate_mhtdc[MAX_FRS_GATE];
+             
+             ///Z1 vs Z2 Gated
+             TH2 *hID_Z1_Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x2AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_x4AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_ZAoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_a2AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_a4AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_dEdegZ1_Z1Z2gate_mhtdc[MAX_FRS_GATE];
              TH2 *hID_dEdegoQ_Z1_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_dEdegoQ_Z1_Z1Z2_X2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdegoQ_Z1_Z1Z2_X4AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdegoQ_Z1_X2AoQgate[MAX_FRS_GATE];
-             TH2 *hID_dEdegoQ_Z1_X4AoQgate[MAX_FRS_GATE];
-
-             TH2 *hID_A2AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-             TH2 *hID_A4AoQ_Z1Z2gate_mhtdc[MAX_FRS_GATE];
-            //bPlast Histograms
+             
+              ///X2 vs AoQ Gated
+             TH2 *hID_x2AoQ_x2AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_x2AoQgate_mhtdc[MAX_FRS_GATE];
+              ///Z1 Z2 + X2 vs AoQ Gated
+              TH2 *hID_x2AoQ_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_x4AoQ_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_Z1Z2_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_ZAoQ_x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_dEdegZ1_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_dEdegoQ_Z1_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_a2AoQ_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_a4AoQ_Z1Z2x2AoQgate_mhtdc[MAX_FRS_GATE];
+              
+              ///X4 vs AoQ Gated
+             TH2 *hID_x4AoQ_x4AoQgate_mhtdc[MAX_FRS_GATE];
+             TH2 *hID_Z1Z2_x4AoQgate_mhtdc[MAX_FRS_GATE];
+              ///Z1 Z2 + X4 vs AoQ Gated
+              TH2 *hID_x2AoQ_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_x4AoQ_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_Z1Z2_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_ZAoQ_x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_dEdegZ1_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_dEdegoQ_Z1_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_a2AoQ_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_a4AoQ_Z1Z2x4AoQgate_mhtdc[MAX_FRS_GATE];
+              
+               ///dE S2 deg vs Z1 Gated
+              TH2 *hID_dEdegZ1_dEdegZ1Gated_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_Z1AoQ_dEdegZgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_Z1AoQ_zsame_dEdegZgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_Z1Z2_dEdegZgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_x2AoQ_dEdegZgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_x4AoQ_dEdegZgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_a2AoQ_dEdegZgate_mhtdc[MAX_FRS_GATE];
+              TH2 *hID_a4AoQ_dEdegZgate_mhtdc[MAX_FRS_GATE];
+             
+            ///bPlast Histograms
 
             TH1 *hbPlas_ToT_det[4][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_Multiplicity_Chan[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
@@ -554,7 +631,7 @@ Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_G
             TH1 *hbPlas_Multiplicity_Det2;
             TH1 *hbPlas_Multiplicity_Det3;
 
-        TH1 *hbPlas_lead_lead_ref_det[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+            TH1 *hbPlas_lead_lead_ref_det[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_lead_lead_gated[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
             TH1 *hbPlas_ToT[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
 
@@ -568,6 +645,16 @@ Float_t XX2_AoQ_mhtdc[MAX_FRS_GATE][MAX_FRS_PolyPoints], YX2_AoQ_mhtdc[MAX_FRS_G
        // TH1 *hbPlas_ToT_Sum_FibreCorr[bPLASTIC_TAMEX_MODULES+1];
 
             TH1 *hbPlas_hit_pattern_det[bPLASTIC_TAMEX_MODULES+1];
+            
+            ///Additional for twinpeaks
+            TH1 *hbPlas_ToT_Sum_Slow[bPLASTIC_TAMEX_MODULES+1];
+            TH1 *hbPlas_ToT_Sum_Fast[bPLASTIC_TAMEX_MODULES+1];
+            TH1 *hbPlas_Lead_T_Slow[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+            TH1 *hbPlas_Lead_T_Fast[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];         
+            TH1 *hbPlas_ToT_det_Slow[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];  
+            TH1 *hbPlas_ToT_det_Fast[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];  
+            TH2 *hbPlas_ToT_Slow_vs_Fast_Det1;
+            TH2 *hbPlas_ToT_Slow_vs_Fast_Det2;
 	    // NEW H.M.A.
 // 	    TH2 *hFIMP_ToT_Correlation_Comb1;
 // 	    TH2 *hFIMP_ToT_Correlation_Comb2;

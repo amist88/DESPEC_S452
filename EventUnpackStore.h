@@ -54,6 +54,7 @@ public:
    Double_t fTRaw_vftx_21l,fTRaw_vftx_21r,fTRaw_vftx_22l,fTRaw_vftx_22r,fTRaw_vftx_41l,fTRaw_vftx_41r,fTRaw_vftx_42l,fTRaw_vftx_42r;
   //  Float_t fFRS_sci_e[12];
   //  Float_t fFRS_sci_tofll2, fFRS_sci_tofll3, fFRS_sci_tof2, fFRS_sci_tofrr2, fFRS_sci_tofrr3, fFRS_sci_tof3;
+    Float_t fFRS_sci_tof2;
     Float_t fFRS_ID_x2, fFRS_ID_y2, fFRS_ID_a2, fFRS_ID_b2;
     Float_t fFRS_ID_x4, fFRS_ID_y4, fFRS_ID_a4, fFRS_ID_b4;
   //  Int_t fFRS_sci_dt_21l_21r, fFRS_sci_dt_41l_41r, fFRS_sci_dt_42l_42r, fFRS_sci_dt_43l_43r;
@@ -68,10 +69,11 @@ public:
     Float_t fFRS_AoQ_mhtdc[10], fFRS_AoQ_corr_mhtdc[10];
 
     Float_t fFRS_z_mhtdc[10], fFRS_z2_mhtdc[10];
-    Float_t fFRS_dEdeg_mhtdc;
-    Float_t fFRS_dEdegoQ_mhtdc;
+    Float_t fFRS_dEdeg_mhtdc[10];
+    Float_t fFRS_dEdegoQ_mhtdc[10];
     Float_t fFRS_beta_mhtdc[10];
     Float_t fFRS_tof4121_mhtdc[10];
+    Float_t fFRS_tof4122_mhtdc[10];
     Float_t fFRS_tof4221_mhtdc;
 
   //  Float_t fFRS_timestamp, fFRS_ts, fFRS_ts2;
@@ -185,6 +187,19 @@ public:
        Double_t fFat_Trail_Fast[100][100];
        Double_t fFat_Trail_Slow[100][100];
 
+         Int_t  fbPlasDetNum_Fast;
+       Int_t  fbPlasDetNum_Slow;
+       Int_t  fbPlas_FastChan[bPLASTIC_TAMEX_MODULES+1];
+       Int_t  fbPlas_SlowChan[bPLASTIC_TAMEX_MODULES+1];
+       Int_t  fbPlast_Fast_Lead_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+       Int_t  fbPlast_Slow_Lead_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+       Int_t  fbPlast_Fast_Trail_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+       Int_t  fbPlast_Slow_Trail_N[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET];
+       Double_t fbPlast_Fast_Lead[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+       Double_t fbPlast_Slow_Lead[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+       Double_t fbPlast_Fast_Trail[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+       Double_t fbPlast_Slow_Trail[bPLASTIC_TAMEX_MODULES+1][bPLASTIC_CHAN_PER_DET][bPLASTIC_TAMEX_HITS];
+       
         //bPlas TAMEX
        Long64_t fbPlas_WR;
        Int_t  fbPlasDetNum;

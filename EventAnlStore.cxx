@@ -54,17 +54,24 @@ void EventAnlStore::Clear(Option_t *t)
     ZERO_ARRAY(pFRS_ZAoQ_pass);
     ZERO_ARRAY(pFRS_ZAoQ_pass_mhtdc);
     ZERO_ARRAY(pFRS_x2AoQ_pass);
+    ZERO_ARRAY(pFRS_x2AoQ_pass_mhtdc);
     ZERO_ARRAY(pFRS_x4AoQ_pass);
     ZERO_ARRAY(pFRS_x4AoQ_pass_mhtdc);
     ZERO_ARRAY(pFRS_Z_Z2_pass);
     ZERO_ARRAY(pFRS_Z_Z2_pass_mhtdc);
     ZERO_ARRAY(pFRS_scaler);
     ZERO_ARRAY(pFRS_scaler_delta);
-    ZERO_ARRAY(pFRS_dEdeg_Z1_pass);
+    ZERO_ARRAY(pFRS_Music_dE);
+    
+    ZERO_ARRAY(pFRS_dEdegZ1_pass);
+    ZERO_ARRAY(pFRS_dEdegZ1_pass_mhtdc);
 
-    ZERO_ARRAY(pFRS_AoQ_mhtdc);       ///Elif
+    ZERO_ARRAY(pFRS_AoQ_mhtdc);      
     ZERO_ARRAY(pFRS_z_mhtdc);
     ZERO_ARRAY(pFRS_z2_mhtdc);
+    ZERO_ARRAY(pFRS_beta_mhtdc);
+    ZERO_ARRAY(pFRS_dEdeg_mhtdc);
+    ZERO_ARRAY(pFRS_dEdegoQ_mhtdc);
 
 
 
@@ -141,6 +148,23 @@ void EventAnlStore::Clear(Option_t *t)
     ZERO_ARRAY(pbPlas_ToTCalib);
     ZERO_ARRAY(pbPlas_LeadT);
     ZERO_ARRAY(pbPlas_TrailT);
+    
+     pbPlasDetNum_Fast=0;
+      pbPlasDetNum_Slow=0;
+      ZERO_ARRAY(pbPlas_FastChan);
+      ZERO_ARRAY(pbPlas_SlowChan);
+      ZERO_ARRAY(pbPlas_Fast_Lead_N);
+      ZERO_ARRAY(pbPlas_Slow_Lead_N);
+      ZERO_ARRAY(pbPlas_FastLeadT);
+      ZERO_ARRAY(pbPlas_SlowLeadT);
+      pbPlas_FastLeadHits=0;
+      pbPlas_SlowLeadHits=0;
+      ZERO_ARRAY(pbPlast_Fast_Trail_N);
+      ZERO_ARRAY(pbPlast_Slow_Trail_N);
+      ZERO_ARRAY(pbPlas_Fast_TrailT);
+      ZERO_ARRAY(pbPlas_Slow_TrailT);
+      ZERO_ARRAY(pbPlas_Fast_ToTCalib);
+      ZERO_ARRAY(pbPlas_Slow_ToTCalib);
   }
    pbPLAS_WR = 0;
 ///      pFat_LeadT[i][j] = 0;

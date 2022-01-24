@@ -68,6 +68,7 @@ void  EventUnpackStore::Clear(Option_t *t)
   fTRaw_vftx_42l=0;
   fTRaw_vftx_42r=0;
 
+   fFRS_sci_tof2=0;
    fFRS_ID_x2 = 0;
    fFRS_ID_y2 = 0;
    fFRS_ID_a2 = 0;
@@ -89,7 +90,7 @@ void  EventUnpackStore::Clear(Option_t *t)
     fFRS_tof4121=0;
     fFRS_tof4221=0;
 //    fFRS_beta3 = 0;
-  fFRS_gamma = 0;
+   fFRS_gamma = 0;
    fFRS_AoQ = 0;
    fFRS_AoQ_corr = 0;
    fFRS_z = 0;
@@ -100,15 +101,18 @@ void  EventUnpackStore::Clear(Option_t *t)
   // fFRS_z_mhtdc= 0;
   // fFRS_z2_mhtdc= 0;
 //   fFRS_dEdeg_mhtdc= 0;
-   //fFRS_dEdegoQ_mhtdc= 0;
+   
    //fFRS_tof4221_mhtdc= 0;
-
-ZERO_ARRAY(fFRS_AoQ_mhtdc);
-ZERO_ARRAY(fFRS_AoQ_corr_mhtdc);
-ZERO_ARRAY(fFRS_beta_mhtdc);
-ZERO_ARRAY(fFRS_tof4121_mhtdc);
-ZERO_ARRAY(fFRS_z_mhtdc);
-ZERO_ARRAY(fFRS_z2_mhtdc);
+   
+    ZERO_ARRAY(fFRS_dEdeg_mhtdc);
+    ZERO_ARRAY(fFRS_dEdegoQ_mhtdc);
+    ZERO_ARRAY(fFRS_AoQ_mhtdc);
+    ZERO_ARRAY(fFRS_AoQ_corr_mhtdc);
+    ZERO_ARRAY(fFRS_beta_mhtdc);
+    ZERO_ARRAY(fFRS_tof4121_mhtdc);
+    ZERO_ARRAY(fFRS_tof4122_mhtdc);
+    ZERO_ARRAY(fFRS_z_mhtdc);
+    ZERO_ARRAY(fFRS_z2_mhtdc);
 
 
 
@@ -217,15 +221,30 @@ ZERO_ARRAY(fFRS_z2_mhtdc);
         fFat_Tamex_WR=0;
         }
   fFat_Tamex_WR=0;
-        if (fbPlas_WR != 0) {
+  
+    ///bPlastic Twin Peaks
+  if (fbPlas_WR != 0) {
+    fbPlasDetNum_Fast=0;
+    fbPlasDetNum_Slow=0;
+    ZERO_ARRAY(fbPlas_FastChan);
+    ZERO_ARRAY(fbPlas_SlowChan);
+    ZERO_ARRAY(fbPlast_Fast_Lead_N);
+    ZERO_ARRAY(fbPlast_Slow_Lead_N);
+    ZERO_ARRAY(fbPlast_Fast_Trail_N);
+    ZERO_ARRAY(fbPlast_Slow_Trail_N);
+    ZERO_ARRAY(fbPlast_Fast_Lead);
+    ZERO_ARRAY(fbPlast_Slow_Lead);
+    ZERO_ARRAY(fbPlast_Fast_Trail);
+    ZERO_ARRAY(fbPlast_Slow_Trail);
+    
         ///bPlastic Tamex
-        fbPlas_WR = 0;
-        ZERO_ARRAY(fbPlasChan);
-        fbPlasDetNum=-1;
-        ZERO_ARRAY(fbPlas_PMT_Lead_N);
-        ZERO_ARRAY(fbPlas_PMT_Trail_N);
-        ZERO_ARRAY(fbPlas_Lead_PMT);
-        ZERO_ARRAY(fbPlas_Trail_PMT);
+    fbPlas_WR = 0;
+    ZERO_ARRAY(fbPlasChan);
+    fbPlasDetNum=-1;
+    ZERO_ARRAY(fbPlas_PMT_Lead_N);
+    ZERO_ARRAY(fbPlas_PMT_Trail_N);
+    ZERO_ARRAY(fbPlas_Lead_PMT);
+    ZERO_ARRAY(fbPlas_Trail_PMT);
         }
   fbPlas_WR = 0;
 }

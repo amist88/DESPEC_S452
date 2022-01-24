@@ -1,7 +1,7 @@
 #include "Raw_Event.h"
 //#include "AidaMover.h"
 #include <iostream>
-
+//A.K.M. NOTE: Multi-dimensional arrays don't decay to pointers as one-dimensional arrays do: https://stackoverflow.com/questions/12674094/array-to-pointer-decay-and-passing-multidimensional-arrays-to-functions
 using namespace std;
 
 //---------------------------------------------------------------
@@ -175,36 +175,91 @@ void Raw_Event::set_DATA_SCI_ToF(Float_t FRS_sci_tofll2,Float_t FRS_sci_tofll3,F
     sci_tof3_calib   = FRS_sci_tof3_calib;
     sci_tof5_calib   = FRS_sci_tof5_calib;
 }
-void Raw_Event::set_DATA_TPC(Int_t*** FRS_TPC_lt,Int_t*** FRS_TPC_rt,Float_t* FRS_TPC_x, Float_t* FRS_TPC_y ,Float_t FRS_TPC_x0,Float_t FRS_TPC_x1){
+void Raw_Event::set_DATA_TPC(Int_t*** FRS_TPC_lt,Int_t*** FRS_TPC_rt,Float_t* FRS_TPC_x, Float_t* FRS_TPC_y, Int_t** FRS_TPC_a, Int_t** FRS_TPC_l, Int_t** FRS_TPC_r, Int_t*** FRS_TPC_dt){
 
-    TPC_x0 = 0;
-    TPC_x1 = 0;
 for(int i=0; i<7; i++){
         TPC_x[i] = 0;
         TPC_y[i] = 0;
-         for(int j=0; j<2; j++){
-             for(int k=0; k<64; k++){
+        
+        for(int j=0; j<4; j++) {
+            TPC_a[i][j]=0;
+            if(j<2){
+               TPC_l[i][j] = 0;
+               TPC_r[i][j] = 0;
+            }
+           for(int k=0; k<64; k++){
+               TPC_dt[i][j][k] =0;
+                if(j<2){
                 TPC_lt[i][j][k] = 0;
                 TPC_rt[i][j][k] = 0;
+                    }
+                }
              }
         }
-    }
+    
      for(int i=0; i<7; i++){
         TPC_x[i] = FRS_TPC_x[i];
         TPC_y[i] = FRS_TPC_y[i];
-        for(int j=0; j<2; j++){
-            for(int k=0; k<64; k++){
-         TPC_lt[i][j][k] =  FRS_TPC_lt[i][j][k];
-         TPC_rt[i][j][k] =  FRS_TPC_rt[i][j][k];
-
+      
+        for(int j=0; j<4; j++) {
+            TPC_a[i][j]=FRS_TPC_a[i][j];
+            if(j<2){ 
+            TPC_l[i][j] = FRS_TPC_l[i][j];
+            TPC_r[i][j] = FRS_TPC_r[i][j];
+            }
+           for(int k=0; k<64; k++){
+               TPC_dt[i][j][k] =  FRS_TPC_dt[i][j][k];
+            if(j<2){
+                 TPC_lt[i][j][k] =  FRS_TPC_lt[i][j][k];
+                 TPC_rt[i][j][k] =  FRS_TPC_rt[i][j][k];
+                }
             }
         }
     }
-    TPC_x0 = FRS_TPC_x0;
-    TPC_x1 = FRS_TPC_x1;
-
+}
+void Raw_Event::set_DATA_TPC_S2(Float_t FRS_TPC_x_s2_foc_23_24, Float_t FRS_TPC_y_s2_foc_23_24, Float_t FRS_TPC_x_angle_s2_foc_23_24, Float_t FRS_TPC_y_angle_s2_foc_23_24, Float_t FRS_TPC_23_24_sc21_x, Float_t FRS_TPC_23_24_sc21_y, Float_t FRS_TPC_23_24_sc22_x, Float_t FRS_TPC_23_24_sc22_y){
+    
+    TPC_x_s2_foc_23_24 = 0;
+    TPC_y_s2_foc_23_24 = 0;
+    TPC_x_angle_s2_foc_23_24 = 0;
+    TPC_y_angle_s2_foc_23_24 = 0;
+    TPC23_24_x_sc21 = 0;
+    TPC23_24_y_sc21 = 0;
+    TPC23_24_x_sc22 = 0;
+    TPC23_24_y_sc22 = 0;
+    
+    TPC_x_s2_foc_23_24 = FRS_TPC_x_s2_foc_23_24;
+    TPC_y_s2_foc_23_24 = FRS_TPC_y_s2_foc_23_24;
+    TPC_x_angle_s2_foc_23_24 = FRS_TPC_x_angle_s2_foc_23_24;
+    TPC_y_angle_s2_foc_23_24 = FRS_TPC_y_angle_s2_foc_23_24;
+    
+    TPC23_24_x_sc21 = FRS_TPC_23_24_sc21_x;
+    TPC23_24_y_sc21 = FRS_TPC_23_24_sc21_y;
+    TPC23_24_x_sc22 = FRS_TPC_23_24_sc22_x;
+    TPC23_24_y_sc22 = FRS_TPC_23_24_sc22_y;
 }
 
+void Raw_Event::set_DATA_TPC_S4(Float_t FRS_TPC_x_s4,Float_t FRS_TPC_y_s4, Float_t FRS_TPC_x_angle_s4, Float_t FRS_TPC_y_angle_s4, Float_t FRS_TPC_x_sc41,Float_t FRS_TPC_y_sc41, Float_t FRS_TPC_x_sc42,Float_t FRS_TPC_y_sc42){
+    
+    TPC_x_s4 = 0;
+    TPC_y_s4 = 0;
+    TPC_x_angle_s4 = 0;
+    TPC_y_angle_s4 = 0;
+    TPC_x_sc41 = 0;
+    TPC_y_sc41 = 0;
+    TPC_x_sc42 = 0;
+    TPC_y_sc42 = 0;
+    
+    TPC_x_s4 = FRS_TPC_x_s4;
+    TPC_y_s4 = FRS_TPC_y_s4;
+    TPC_x_angle_s4 = FRS_TPC_x_angle_s4;
+    TPC_y_angle_s4 = FRS_TPC_y_angle_s4;
+    TPC_x_sc41 =  FRS_TPC_x_sc41;
+    TPC_y_sc41  = FRS_TPC_y_sc41;
+    TPC_x_sc42  = FRS_TPC_x_sc42;
+    TPC_y_sc42  = FRS_TPC_x_sc42;
+    
+}
 void Raw_Event::set_DATA_ID_2_4(Float_t FRS_ID_x2,Float_t FRS_ID_y2,Float_t FRS_ID_a2,Float_t FRS_ID_b2,Float_t FRS_ID_x4,Float_t FRS_ID_y4,Float_t FRS_ID_a4,Float_t FRS_ID_b4){
     ID_x2 = 0;
     ID_y2 = 0;
@@ -303,14 +358,15 @@ void Raw_Event::set_DATA_VFTX(Double_t vftx_21l, Double_t vftx_21r,Double_t vftx
     }
 }
 
-void Raw_Event::set_DATA_RAW_MHTDC(Float_t* raw_mhtdc_sc21lr_dt,Float_t* raw_mhtdc_sc21lr_x,Float_t raw_mhtdc_sc22lr_dt,Float_t raw_mhtdc_sc22lr_x,Float_t raw_mhtdc_sc41lr_dt,Float_t raw_mhtdc_sc41lr_x,Float_t raw_mhtdc_sc42lr_dt,Float_t raw_mhtdc_sc42lr_x){
+void Raw_Event::set_DATA_RAW_MHTDC(Float_t* raw_mhtdc_sc21lr_dt,Float_t* raw_mhtdc_sc21lr_x,Float_t* raw_mhtdc_sc22lr_dt,Float_t* raw_mhtdc_sc22lr_x,Float_t raw_mhtdc_sc41lr_dt,Float_t raw_mhtdc_sc41lr_x,Float_t raw_mhtdc_sc42lr_dt,Float_t raw_mhtdc_sc42lr_x){
 for(int i=0; i<10; i++){
     Raw_mhtdc_sc21lr_dt[i] = raw_mhtdc_sc21lr_dt[i];
     Raw_mhtdc_sc21lr_x[i] = raw_mhtdc_sc21lr_x[i];
+    Raw_mhtdc_sc22lr_dt[i] = raw_mhtdc_sc22lr_dt[i];
+    Raw_mhtdc_sc22lr_x[i] = raw_mhtdc_sc22lr_x[i];
 
 }
-    Raw_mhtdc_sc22lr_dt = raw_mhtdc_sc22lr_dt;
-    Raw_mhtdc_sc22lr_x = raw_mhtdc_sc22lr_x;
+   
     Raw_mhtdc_sc41lr_dt = raw_mhtdc_sc41lr_dt;
     Raw_mhtdc_sc41lr_x = raw_mhtdc_sc41lr_x;
     Raw_mhtdc_sc42lr_dt = raw_mhtdc_sc42lr_dt;
@@ -318,7 +374,7 @@ for(int i=0; i<10; i++){
 
     }
 
-void Raw_Event::set_DATA_ID_MHTDC(Float_t* id_mhtdc_aoq,Float_t* id_mhtdc_aoq_corr, Float_t* id_mhtdc_z1,Float_t* id_mhtdc_z2, Float_t id_mhtdc_dEdeg,Float_t id_mhtdc_dEdegoQ, Float_t* id_mhtdc_beta, Float_t* id_mhtdc_tof4121, Float_t id_mhtdc_tof4221, Float_t id_mhtdc_tof4122){
+void Raw_Event::set_DATA_ID_MHTDC(Float_t* id_mhtdc_aoq,Float_t* id_mhtdc_aoq_corr, Float_t* id_mhtdc_z1,Float_t* id_mhtdc_z2, Float_t* id_mhtdc_dEdeg,Float_t* id_mhtdc_dEdegoQ, Float_t* id_mhtdc_beta, Float_t* id_mhtdc_tof4121, Float_t id_mhtdc_tof4221, Float_t* id_mhtdc_tof4122){
 
   //  (id_mhtdc_aoq_s2s4, id_mhtdc_aoq_corr_s2s4, id_mhtdc_z_music41, id_mhtdc_z_music42, id_mhtdc_dEdeg, id_mhtdc_dEdegoQ, id_mhtdc_beta_s2s4, mhtdc_tof4121, mhtdc_tof4221,mhtdc_tof4122);
 for(int i=0; i<10; i++){
@@ -326,14 +382,16 @@ for(int i=0; i<10; i++){
     ID_mhtdc_AoQ_corr[i] = id_mhtdc_aoq_corr[i];
     ID_mhtdc_Beta[i] = id_mhtdc_beta[i];
     ID_mhtdc_tof4121[i] = id_mhtdc_tof4121[i];
+    ID_mhtdc_tof4122[i] = id_mhtdc_tof4122[i];
     ID_mhtdc_Z1[i] = id_mhtdc_z1[i];
     ID_mhtdc_Z2[i] = id_mhtdc_z2[i];
+    ID_mhtdc_dEdeg[i] = id_mhtdc_dEdeg[i];
+    ID_mhtdc_dEdegoQ[i] = id_mhtdc_dEdegoQ[i];
   }
 
-    ID_mhtdc_dEdeg = id_mhtdc_dEdeg;
-    ID_mhtdc_dEdegoQ = id_mhtdc_dEdegoQ;
+    
     ID_mhtdc_tof4221 = id_mhtdc_tof4221;
-    ID_mhtdc_tof4122 = id_mhtdc_tof4122;
+    
 
 //          ID_mhtdc_AoQ = id_mhtdc_aoq;
 //          ID_mhtdc_Z1 = id_mhtdc_z1;
@@ -554,6 +612,67 @@ void Raw_Event::set_DATA_PLASTIC_TAMEX(int* it_bPlas,double** Edge_Coarse_bPlas,
     Event_Type = 2;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+//--------------------------------------bPlast twinpeaks--------------------------------------//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+void Raw_Event::set_DATA_PLASTIC_TWINPEAKS(int* it_bPlastTwinPeaks,double** Edge_Coarse_bPlastTwinPeaks,double** Edge_fine_bPlastTwinPeaks,UInt** ch_ed_bPlastTwinPeaks,double* Coarse_Trigger_bPlastTwinPeaks,double* Fine_Trigger_bPlastTwinPeaks,int amount_hit_bPlastTwinPeaks, int** Lead_Arr_bPlastTwinPeaks){
+
+    this->amount_hit_bPlastTwinPeaks = amount_hit_bPlastTwinPeaks;
+    //reset lead and trail hits
+    for(int i = 0;i < bPLASTIC_TAMEX_MODULES;i++){
+       
+        for(int j = 0;j < 32;j++){
+            leading_hits_ch_bPlastTwinPeaks[i][j] = 0;
+            trailing_hits_ch_bPlastTwinPeaks[i][j] = 0;
+            leading_array_bPlastTwinPeaks[i][j] = 0;
+//             coarse_T_edge_lead_bPlastTwinPeaks[i][j] = 0;
+//             fine_T_edge_lead_bPlastTwinPeaks[i][j] = 0;
+        }
+    }
+
+    //loop over all tamex modules
+    for(int i = 0;i < amount_hit_bPlastTwinPeaks;i++){
+        iterator_bPlastTwinPeaks[i] = it_bPlastTwinPeaks[i];
+        trigger_coarse_bPlastTwinPeaks[i] = Coarse_Trigger_bPlastTwinPeaks[i];
+        trigger_fine_bPlastTwinPeaks[i] = Fine_Trigger_bPlastTwinPeaks[i];
+        fired_tamex_bPlastTwinPeaks[i] = (iterator_bPlastTwinPeaks[i] > 0);
+        leading_hits_bPlastTwinPeaks[i] = 0;
+        trailing_hits_bPlastTwinPeaks[i] = 0;
+
+        for(int j = 0;j < iterator_bPlastTwinPeaks[i];++j){
+            ch_ID_bPlastTwinPeaks[i][j] = ch_ed_bPlastTwinPeaks[i][j];
+            leading_array_bPlastTwinPeaks[i][j] = Lead_Arr_bPlastTwinPeaks[i][j];
+         //   cout<<"ch_ID_bPlastTwinPeaks[i][j] " <<ch_ID_bPlastTwinPeaks[i][j] << " i " << i << " j " << j << " j % 2 " <<j % 2 << endl;
+            
+            if(ch_ID_bPlastTwinPeaks[i][j] <33 && j % 2 == 0){
+
+                coarse_T_edge_lead_bPlastTwinPeaks[i][j] = (double) Edge_Coarse_bPlastTwinPeaks[i][j];
+                fine_T_edge_lead_bPlastTwinPeaks[i][j] = (double) Edge_fine_bPlastTwinPeaks[i][j];
+
+                phys_channel_bPlastTwinPeaks[i][j] = (ch_ID_bPlastTwinPeaks[i][j]);
+           // cout <<"LEAD RAW Ch " << ch_ID_bPlastTwinPeaks[i][j] <<" phys_channel_bPlastTwinPeaks[i][j] " << phys_channel_bPlastTwinPeaks[i][j]<<" coarse_T_edge_lead_bPlastTwinPeaks[i][j] " <<coarse_T_edge_lead_bPlastTwinPeaks[i][j] <<" fine_T_edge_lead_bPlastTwinPeaks[i][j] " <<fine_T_edge_lead_bPlastTwinPeaks[i][j] <<" i " << i << " j " << j <<   endl;
+                leading_hits_bPlastTwinPeaks[i]++;
+                leading_hits_ch_bPlastTwinPeaks[i][phys_channel_bPlastTwinPeaks[i][j]]++;
+                  // cout <<"RAW Lead" << "coarse_T_edge_lead_bPlastTwinPeaks[i][j] " << coarse_T_edge_lead_bPlastTwinPeaks[i][j] << " fine_T_edge_lead_bPlastTwinPeaks[i][j] " <<fine_T_edge_lead_bPlastTwinPeaks[i][j] <<" phys_channel_bPlastTwinPeaks[i][j] " <<phys_channel_bPlastTwinPeaks[i][j]<< " i " << i << " j " << j << endl;
+                 }
+            if(ch_ID_bPlastTwinPeaks[i][j] >33 && j % 2 == 1  && ch_ID_bPlastTwinPeaks[i][j]<66){
+
+                coarse_T_edge_trail_bPlastTwinPeaks[i][j] = (double)  Edge_Coarse_bPlastTwinPeaks[i][j];
+                fine_T_edge_trail_bPlastTwinPeaks[i][j] =(double)  Edge_fine_bPlastTwinPeaks[i][j];
+
+                trailing_hits_bPlastTwinPeaks[i]++;
+                phys_channel_bPlastTwinPeaks[i][j] = (ch_ID_bPlastTwinPeaks[i][j])-33;
+        if(phys_channel_bPlastTwinPeaks[i][j]<100){
+                trailing_hits_ch_bPlastTwinPeaks[i][phys_channel_bPlastTwinPeaks[i][j]]++;
+        }
+               // cout <<"TRAIL RAW Ch " << ch_ID_bPlastTwinPeaks[i][j] <<" phys_channel_bPlastTwinPeaks[i][j] " << phys_channel_bPlastTwinPeaks[i][j]<<" coarse_T_edge_trail_bPlastTwinPeaks[i][j] " <<coarse_T_edge_trail_bPlastTwinPeaks[i][j] <<" fine_T_edge_trail_bPlastTwinPeaks[i][j] " <<fine_T_edge_trail_bPlastTwinPeaks[i][j] <<" i " << i << " j " << j <<   endl;
+               //cout <<"RAW Trail" << "coarse_T_edge_trail_bPlastTwinPeaks[i][j] " << coarse_T_edge_trail_bPlastTwinPeaks[i][j] << " fine_T_edge_trail_bPlastTwinPeaks[i][j] " <<fine_T_edge_trail_bPlastTwinPeaks[i][j] << " i " << i << " j " << j << endl;
+          }
+        }
+    }
+
+    Event_Type = 2;
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 //--------------------------------------FATIMA VME  ------------------------------------------------//
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -852,8 +971,30 @@ Float_t Raw_Event::get_FRS_tpcX(int i){return TPC_x[i];}
 Float_t Raw_Event::get_FRS_tpcY(int i){return TPC_y[i];}
 Int_t   Raw_Event::get_FRS_tpclt(int i,int j,int k){return TPC_lt[i][j][k];}
 Int_t   Raw_Event::get_FRS_tpcrt(int i,int j,int k){return TPC_rt[i][j][k];}
-Float_t Raw_Event::get_FRS_tpcx0(){return TPC_x0;}
-Float_t Raw_Event::get_FRS_tpcx1(){return TPC_x1;}
+Int_t   Raw_Event::get_FRS_tpc_a(int i,int j){return TPC_a[i][j];}
+Int_t   Raw_Event::get_FRS_tpc_r(int i,int j){return TPC_r[i][j];}
+Int_t   Raw_Event::get_FRS_tpc_l(int i,int j){return TPC_l[i][j];}
+Int_t   Raw_Event::get_FRS_tpc_dt(int i,int j, int k){return TPC_dt[i][j][k];}
+
+Float_t Raw_Event::get_FRS_tpc_x_s2_foc_23_24(){return TPC_x_s2_foc_23_24;}
+Float_t Raw_Event::get_FRS_tpc_y_s2_foc_23_24(){return TPC_y_s2_foc_23_24;}
+Float_t Raw_Event::get_FRS_tpc_x_angle_s2_foc_23_24(){return TPC_x_angle_s2_foc_23_24;}
+Float_t Raw_Event::get_FRS_tpc_y_angle_s2_foc_23_24(){return TPC_y_angle_s2_foc_23_24;}
+
+Float_t Raw_Event::get_FRS_tpc23_24_x_sc21(){return TPC23_24_x_sc21;}
+Float_t Raw_Event::get_FRS_tpc23_24_y_sc21(){return TPC23_24_y_sc21;}
+Float_t Raw_Event::get_FRS_tpc23_24_x_sc22(){return TPC23_24_x_sc22;}
+Float_t Raw_Event::get_FRS_tpc23_24_y_sc22(){return TPC23_24_y_sc22;}
+    
+Float_t Raw_Event::get_FRS_tpc_x_s4(){return TPC_x_s4;}
+Float_t Raw_Event::get_FRS_tpc_y_s4(){return TPC_y_s4;}
+Float_t Raw_Event::get_FRS_tpc_x_angle_s4(){return TPC_x_angle_s4;}
+Float_t Raw_Event::get_FRS_tpc_y_angle_s4(){return TPC_y_angle_s4;}
+
+Float_t Raw_Event::get_FRS_tpc_x_sc41(){return TPC_x_sc41;}
+Float_t Raw_Event::get_FRS_tpc_y_sc41(){return TPC_y_sc41;}
+Float_t Raw_Event::get_FRS_tpc_x_sc42(){return TPC_x_sc42;}
+Float_t Raw_Event::get_FRS_tpc_y_sc42(){return TPC_y_sc42;}
 
 Float_t Raw_Event::get_FRS_brho(int i){return ID_brho[i];}
 Float_t Raw_Event::get_FRS_rho(int i){return ID_rho[i];}
@@ -896,8 +1037,8 @@ Double_t Raw_Event::get_FRS_TRaw_vftx(int i){return TRaw_vftx[i];}
 
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_dt(int i){return Raw_mhtdc_sc21lr_dt[i];}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc21lr_x(int i){return Raw_mhtdc_sc21lr_x[i];}
-Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_dt(){return Raw_mhtdc_sc22lr_dt;}
-Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_x(){return Raw_mhtdc_sc22lr_x;}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_dt(int i){return Raw_mhtdc_sc22lr_dt[i];}
+Float_t Raw_Event::get_FRS_Raw_mhtdc_sc22lr_x(int i){return Raw_mhtdc_sc22lr_x[i];}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc41lr_dt(){return Raw_mhtdc_sc41lr_dt;}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc41lr_x(){return Raw_mhtdc_sc41lr_x;}
 Float_t Raw_Event::get_FRS_Raw_mhtdc_sc42lr_dt(){return Raw_mhtdc_sc42lr_dt;}
@@ -907,12 +1048,12 @@ Float_t Raw_Event::get_FRS_id_mhtdc_aoq(int i){return ID_mhtdc_AoQ[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_aoq_corr(int i){return ID_mhtdc_AoQ_corr[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_z1(int i){return ID_mhtdc_Z1[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_z2(int i){return ID_mhtdc_Z2[i];}
-Float_t Raw_Event::get_FRS_id_mhtdc_dEdeg(){return ID_mhtdc_dEdeg;}
-Float_t Raw_Event::get_FRS_id_mhtdc_dEdegoQ(){return ID_mhtdc_dEdegoQ;}
+Float_t Raw_Event::get_FRS_id_mhtdc_dEdeg(int i){return ID_mhtdc_dEdeg[i];}
+Float_t Raw_Event::get_FRS_id_mhtdc_dEdegoQ(int i){return ID_mhtdc_dEdegoQ[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_beta(int i){return ID_mhtdc_Beta[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_tof4121(int i){return ID_mhtdc_tof4121[i];}
 Float_t Raw_Event::get_FRS_id_mhtdc_tof4221(){return ID_mhtdc_tof4221;}
-Float_t Raw_Event::get_FRS_id_mhtdc_tof4122(){return ID_mhtdc_tof4122;}
+Float_t Raw_Event::get_FRS_id_mhtdc_tof4122(int i){return ID_mhtdc_tof4122[i];}
 // #######################################################
 
 //------------------------------------------ WHITE RABBIT ------------------------------------------//
@@ -1150,6 +1291,71 @@ ULong64_t Raw_Event::get_WR(){return WR;}
 
     int Raw_Event::get_PLASTIC_physical_trail_hits(int i,int j){return trailing_hits_ch_bPlas[i][j];}
 
+     //------------------------ bPlast Twinpeaks TAMEX ------------------------------------//
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_tamex_hits(){return amount_hit_bPlastTwinPeaks;}
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_am_Fired(int i){return iterator_bPlastTwinPeaks[i];}
+
+    double Raw_Event::get_bPLAST_TWINPEAKS_trigger_T(int i){return (trigger_coarse_bPlastTwinPeaks[i] - trigger_fine_bPlastTwinPeaks[i])*5000;}
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_CH_ID(int i,int j){return ch_ID_bPlastTwinPeaks[i][j];}
+
+    double Raw_Event::get_bPLAST_TWINPEAKS_lead_T(int i,int j){
+//         
+  
+        return (coarse_T_edge_lead_bPlastTwinPeaks[i][j] - fine_T_edge_lead_bPlastTwinPeaks[i][j]);
+        
+                    }
+
+    double Raw_Event::get_bPLAST_TWINPEAKS_coarse_lead(int i,int j){
+       // cout <<"RAW getter coarse_T_edge_lead_bPlastTwinPeaks[i][0]" <<coarse_T_edge_lead_bPlastTwinPeaks[i][0]<<" i " <<i << " j " << j <<endl; 
+        return coarse_T_edge_lead_bPlastTwinPeaks[i][j];
+   }
+                    
+   double Raw_Event::get_bPLAST_TWINPEAKS_fine_lead(int i,int j){
+        return fine_T_edge_lead_bPlastTwinPeaks[i][j];
+   }
+   double Raw_Event::get_bPLAST_TWINPEAKS_coarse_trail(int i,int j){
+        return coarse_T_edge_trail_bPlastTwinPeaks[i][j];
+   }
+   double Raw_Event::get_bPLAST_TWINPEAKS_fine_trail(int i,int j){
+        return fine_T_edge_trail_bPlastTwinPeaks[i][j];
+   }
+   
+    double Raw_Event::get_bPLAST_TWINPEAKS_trail_T(int i,int j){
+         return (coarse_T_edge_trail_bPlastTwinPeaks[i][j] - fine_T_edge_trail_bPlastTwinPeaks[i][j]);
+                    }
+                    
+    double Raw_Event::get_bPLAST_TWINPEAKS_Lead_Lead(int i,int j){
+        double T_lead_bPlastTwinPeaks1 = (coarse_T_edge_lead_bPlastTwinPeaks[i][j] - fine_T_edge_lead_bPlastTwinPeaks[i][j]);
+        double T_lead_bPlastTwinPeaks2 = (coarse_T_edge_lead_bPlastTwinPeaks[i][j+2] - fine_T_edge_lead_bPlastTwinPeaks[i][j+2]);
+               return T_lead_bPlastTwinPeaks1 - T_lead_bPlastTwinPeaks2;
+                   }
+
+    double Raw_Event::get_bPLAST_TWINPEAKS_TOT(int i,int j){
+        double T_lead_bPlastTwinPeaks = (coarse_T_edge_lead_bPlastTwinPeaks[i][j] - fine_T_edge_lead_bPlastTwinPeaks[i][j]);
+        double T_trail_bPlastTwinPeaks = (coarse_T_edge_trail_bPlastTwinPeaks[i][j+1] - fine_T_edge_trail_bPlastTwinPeaks[i][j+1]);
+               return T_trail_bPlastTwinPeaks - T_lead_bPlastTwinPeaks;
+                   }
+                   
+//          double Raw_Event::get_bPLAST_TWINPEAKS_TOT_added(int i,int j){
+//         double T_lead1 = (coarse_T_edge_lead_bPlastTwinPeaks[i][j] - fine_T_edge_lead_bPlastTwinPeaks[i][j])*5000;
+//         double T_trail1 = (coarse_T_edge_trail_bPlastTwinPeaks[i][j+1] - fine_T_edge_trail_bPlastTwinPeaks[i][j+1])*5000;
+//         double T_lead2 = (coarse_T_edge_lead_bPlastTwinPeaks[i][j-2] - fine_T_edge_lead_bPlastTwinPeaks[i][j-2])*5000;
+//         double T_trail2 = (coarse_T_edge_trail_bPlastTwinPeaks[i][j-1] - fine_T_edge_trail_bPlastTwinPeaks[i][j-1])*5000;
+//                return (T_trail1 - T_lead1) + (T_trail2 - T_lead2);
+//                    }
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_trail_hits(int i){return trailing_hits_bPlastTwinPeaks[i];}
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_lead_hits(int i){return leading_hits_bPlastTwinPeaks[i];}
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_physical_channel(int i,int j){return phys_channel_bPlastTwinPeaks[i][j];}
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_physical_lead_hits(int i,int j){return leading_hits_ch_bPlastTwinPeaks[i][j];}
+
+    int Raw_Event::get_bPLAST_TWINPEAKS_physical_trail_hits(int i,int j){return trailing_hits_ch_bPlastTwinPeaks[i][j];}
 
 //------------------------------------------ bPlastic VME----------------------------------------//
 //  int Raw_Event::get_plastic_VME_QDC_fired(){return QDC_IT;}
