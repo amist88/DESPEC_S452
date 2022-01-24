@@ -85,14 +85,31 @@ private:
 	Float_t ID_y4;      // set_DATA_ID_2_4
 	Float_t ID_a4;      // set_DATA_ID_2_4
 	Float_t ID_b4;      // set_DATA_ID_2_4
-
+// TPC part 7 TPCs each one with 2 delay lines each!!
+  //7 TPCs (4 at S2, 2 at S4 and one at S3) 03.07.2018 SB
+  //ADCs
+  Int_t TPC_l[7][2]; //[i_tpc][i_delayline_L]
+  Int_t TPC_r[7][2]; //[i_tpc][i_delayline_R]
+  Int_t TPC_a[7][4]; //[i_tpc][i_anode]
 	Float_t TPC_x[7];
     Float_t TPC_y[7];
     Int_t   TPC_lt[7][2][64];
     Int_t   TPC_rt[7][2][64];
-    Float_t TPC_x0;
-    Float_t TPC_x1;
-
+    Int_t   TPC_dt[7][4][64];
+    Float_t TPC_x_s2_foc_23_24;
+    Float_t TPC_y_s2_foc_23_24;
+    Float_t TPC_x_angle_s2_foc_23_24;
+    Float_t TPC_y_angle_s2_foc_23_24;
+    Float_t TPC23_24_x_sc21;
+    Float_t TPC23_24_y_sc21;
+    Float_t TPC23_24_x_sc22;
+    Float_t TPC23_24_y_sc22;
+    Float_t TPC_x_s4;
+    Float_t TPC_y_s4;
+    Float_t TPC_x_angle_s4;
+    Float_t TPC_y_angle_s4;
+    Float_t TPC_x_sc41, TPC_y_sc41, TPC_x_sc42,TPC_y_sc42;
+    
 	Float_t ID_brho[2]; // set_DATA_ID_Beta_Rho
 	Float_t ID_rho[2];  // set_DATA_ID_Beta_Rho
 
@@ -136,8 +153,8 @@ private:
 
     Float_t Raw_mhtdc_sc21lr_dt[10];
     Float_t Raw_mhtdc_sc21lr_x[10];
-    Float_t Raw_mhtdc_sc22lr_dt;
-    Float_t Raw_mhtdc_sc22lr_x;
+    Float_t Raw_mhtdc_sc22lr_dt[10];
+    Float_t Raw_mhtdc_sc22lr_x[10];
     Float_t Raw_mhtdc_sc41lr_dt;
     Float_t Raw_mhtdc_sc41lr_x;
     Float_t Raw_mhtdc_sc42lr_dt;
@@ -147,12 +164,12 @@ private:
     Float_t ID_mhtdc_AoQ_corr[10];
     Float_t ID_mhtdc_Z1[10];
     Float_t ID_mhtdc_Z2[10];
-    Float_t ID_mhtdc_dEdeg;
-    Float_t ID_mhtdc_dEdegoQ;
+    Float_t ID_mhtdc_dEdeg[10];
+    Float_t ID_mhtdc_dEdegoQ[10];
     Float_t ID_mhtdc_Beta[10];
     Float_t ID_mhtdc_tof4221;
     Float_t ID_mhtdc_tof4121[10];
-    Float_t ID_mhtdc_tof4122;
+    Float_t ID_mhtdc_tof4122[10];
 	// ##########################################################
 
 	//White Rabbit
@@ -210,23 +227,23 @@ private:
 
 	//FATIMA TAMEX
     int     amount_hit_tamex_fat;
-    int     iterator_fat[4];
+    int     iterator_fat[FATIMA_TAMEX_MODULES];
     double  trigger_coarse_fat[100];
     double  trigger_fine_fat[100];
-    int     leading_array_fat[4][100];
-    int     leading_hits_fat[4];
-    int     trailing_hits_fat[4];
-    int     phys_channel_fat[4][100];
-    int     leading_hits_ch_fat[4][100];
-    int     trailing_hits_ch_fat[4][100];
-    UInt    ch_ID_fat[4][100];
-    double  coarse_T_edge_lead_fat[4][100];
-    double  coarse_T_edge_trail_fat[4][100];
-    double  fine_T_edge_lead_fat[4][100];
-    double  fine_T_edge_trail_fat[4][100];
-    bool    fired_tamex_fat[4];
-    UInt epoch_ch_leading[4][100];
-    UInt epoch_ch_trailing[4][100];
+    int     leading_array_fat[FATIMA_TAMEX_MODULES][100];
+    int     leading_hits_fat[FATIMA_TAMEX_MODULES];
+    int     trailing_hits_fat[FATIMA_TAMEX_MODULES];
+    int     phys_channel_fat[FATIMA_TAMEX_MODULES][100];
+    int     leading_hits_ch_fat[FATIMA_TAMEX_MODULES][100];
+    int     trailing_hits_ch_fat[FATIMA_TAMEX_MODULES][100];
+    UInt    ch_ID_fat[FATIMA_TAMEX_MODULES][100];
+    double  coarse_T_edge_lead_fat[FATIMA_TAMEX_MODULES][100];
+    double  coarse_T_edge_trail_fat[FATIMA_TAMEX_MODULES][100];
+    double  fine_T_edge_lead_fat[FATIMA_TAMEX_MODULES][100];
+    double  fine_T_edge_trail_fat[FATIMA_TAMEX_MODULES][100];
+    bool    fired_tamex_fat[FATIMA_TAMEX_MODULES];
+    UInt epoch_ch_leading[FATIMA_TAMEX_MODULES][100];
+    UInt epoch_ch_trailing[FATIMA_TAMEX_MODULES][100];
 
 	//bPlastic
 //  	PLASTIC_DataStruct PLASTIC_Data;
@@ -270,24 +287,42 @@ private:
     //bPlastic TAMEX
     int         amount_hit_tamex_bPlas;
     int         tamex_id_bPlas[100];
-    int         iterator_bPlas[4];
+    int         iterator_bPlas[bPLASTIC_TAMEX_MODULES];
     double      trigger_coarse_bPlas[48];
     double      trigger_fine_bPlas[48];
-    int         leading_array_bPlas[4][48];
-    int         leading_hits_bPlas[4];
-    int         trailing_hits_bPlas[4];
-    int         phys_channel_bPlas[4][48];
-    int         leading_hits_ch_bPlas[4][48];
-    int         trailing_hits_ch_bPlas[4][48];
-    int         ch_ID_bPlas[4][100];
-    double      coarse_T_edge_lead_bPlas[4][48];
-    double      coarse_T_edge_trail_bPlas[4][48];
-    double      fine_T_edge_lead_bPlas[4][48];
-    double      fine_T_edge_trail_bPlas[4][48];
-    double      lead_T_bPlas[4][48];
-    double      trail_T_bPlas[4][48];
-    double      ToT[4][48];
-    bool        fired_tamex_bPlas[4];
+    int         leading_array_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    int         leading_hits_bPlas[bPLASTIC_TAMEX_MODULES];
+    int         trailing_hits_bPlas[bPLASTIC_TAMEX_MODULES];
+    int         phys_channel_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    int         leading_hits_ch_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    int         trailing_hits_ch_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    int         ch_ID_bPlas[bPLASTIC_TAMEX_MODULES][100];
+    double      coarse_T_edge_lead_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    double      coarse_T_edge_trail_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    double      fine_T_edge_lead_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    double      fine_T_edge_trail_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    double      lead_T_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    double      trail_T_bPlas[bPLASTIC_TAMEX_MODULES][48];
+    double      ToT[bPLASTIC_TAMEX_MODULES][48];
+    bool        fired_tamex_bPlas[bPLASTIC_TAMEX_MODULES];
+    
+     //bPlast Twinpeaks TAMEX
+    int     amount_hit_bPlastTwinPeaks;
+    int     iterator_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES];
+    double  trigger_coarse_bPlastTwinPeaks[100];
+    double  trigger_fine_bPlastTwinPeaks[100];
+    int     leading_array_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    int     leading_hits_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES];
+    int     trailing_hits_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES];
+    int     phys_channel_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    int     leading_hits_ch_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    int     trailing_hits_ch_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    UInt_t    ch_ID_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    double  coarse_T_edge_lead_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    double  coarse_T_edge_trail_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    double  fine_T_edge_lead_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    double  fine_T_edge_trail_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES][100];
+    bool    fired_tamex_bPlastTwinPeaks[bPLASTIC_TAMEX_MODULES];
 
 	//Germanium
         int         Ge_FIRED;
@@ -315,7 +350,9 @@ public:
 	void set_DATA_SCI(Float_t*,Float_t*,Float_t*,Float_t*,Float_t*);
 	void set_DATA_SCI_dT(Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t, Int_t);
 	void set_DATA_SCI_ToF(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
-    void set_DATA_TPC(Int_t***,Int_t***,Float_t*,Float_t*,Float_t,Float_t);
+    void set_DATA_TPC(Int_t***,Int_t***,Float_t*,Float_t*, Int_t**, Int_t**, Int_t**, Int_t***);
+    void set_DATA_TPC_S2(Float_t, Float_t, Float_t, Float_t,Float_t,Float_t,Float_t ,Float_t);
+    void set_DATA_TPC_S4(Float_t, Float_t, Float_t, Float_t,Float_t,Float_t, Float_t,Float_t);
 	void set_DATA_ID_2_4(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
 	void set_DATA_ID_Beta_Rho(Float_t*,Float_t*,Float_t,Float_t,Float_t);
 	void set_DATA_ID_Z_AoQ(Float_t,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
@@ -323,10 +360,11 @@ public:
     void set_DATA_FRS_SCALERS(Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,Int_t,UInt_t*);
     void set_DATA_VFTX(Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t,Double_t*);
 
-    void set_DATA_RAW_MHTDC(Float_t*,Float_t*,Float_t,Float_t,Float_t,Float_t,Float_t,Float_t);
+    void set_DATA_RAW_MHTDC(Float_t*,Float_t*,Float_t*,Float_t*,Float_t,Float_t,Float_t,Float_t);
 
-    void set_DATA_ID_MHTDC(Float_t*,Float_t*,Float_t*,Float_t*,Float_t,Float_t,Float_t*,Float_t*,Float_t,Float_t);
-	// FRS STUFF //
+    void set_DATA_ID_MHTDC(Float_t*,Float_t*,Float_t*,Float_t*,Float_t*,Float_t*,Float_t*,Float_t*,Float_t,Float_t*);
+	
+    // FRS STUFF //
 
 
 	// ##########################################################
@@ -348,6 +386,8 @@ public:
     void set_DATA_FINGER(int*,double**,double**,UInt**,double*,double*,int,int**);
 
     void set_DATA_PLASTIC_TAMEX(int*,double**,double**,UInt**,double*,double*,int,int**,int*);
+    
+    void set_DATA_PLASTIC_TWINPEAKS(int*,double**,double**,UInt**,double*,double*,int,int**);
 
     void set_DATA_PLASTIC_VME(int, int, double*, double*, int*, double*, int*);
 
@@ -427,9 +467,30 @@ public:
     Float_t get_FRS_tpcY(int);
     Int_t   get_FRS_tpclt(int,int,int);
     Int_t   get_FRS_tpcrt(int,int,int);
-    Float_t get_FRS_tpcx0();
-    Float_t get_FRS_tpcx1();
-
+    Int_t   get_FRS_tpc_dt(int,int,int);
+    Int_t   get_FRS_tpc_a(int, int);
+    Int_t   get_FRS_tpc_r(int, int);
+    Int_t   get_FRS_tpc_l(int, int);
+    
+//     Float_t get_FRS_tpcx0();
+//     Float_t get_FRS_tpcx1();
+    Float_t get_FRS_tpc_x_s2_foc_23_24();
+    Float_t get_FRS_tpc_y_s2_foc_23_24();
+    Float_t get_FRS_tpc_x_angle_s2_foc_23_24();
+    Float_t get_FRS_tpc_y_angle_s2_foc_23_24();
+    Float_t get_FRS_tpc23_24_x_sc21();
+    Float_t get_FRS_tpc23_24_y_sc21();
+    Float_t get_FRS_tpc23_24_x_sc22();
+    Float_t get_FRS_tpc23_24_y_sc22();
+    
+    Float_t get_FRS_tpc_x_s4();
+    Float_t get_FRS_tpc_y_s4();
+    Float_t get_FRS_tpc_x_angle_s4();
+    Float_t get_FRS_tpc_y_angle_s4();
+    Float_t get_FRS_tpc_x_sc41();
+    Float_t get_FRS_tpc_y_sc41();
+    Float_t get_FRS_tpc_x_sc42();
+    Float_t get_FRS_tpc_y_sc42();
 	Float_t get_FRS_brho(int);
 	Float_t get_FRS_rho(int);
 
@@ -471,8 +532,8 @@ public:
 
     Float_t get_FRS_Raw_mhtdc_sc21lr_dt(int i );
     Float_t get_FRS_Raw_mhtdc_sc21lr_x(int i);
-    Float_t get_FRS_Raw_mhtdc_sc22lr_dt();
-    Float_t get_FRS_Raw_mhtdc_sc22lr_x();
+    Float_t get_FRS_Raw_mhtdc_sc22lr_dt(int i);
+    Float_t get_FRS_Raw_mhtdc_sc22lr_x(int i);
     Float_t get_FRS_Raw_mhtdc_sc41lr_dt();
     Float_t get_FRS_Raw_mhtdc_sc41lr_x();
     Float_t get_FRS_Raw_mhtdc_sc42lr_dt();
@@ -482,12 +543,12 @@ public:
     Float_t get_FRS_id_mhtdc_aoq_corr(int);
     Float_t get_FRS_id_mhtdc_z1(int);
     Float_t get_FRS_id_mhtdc_z2(int);
-    Float_t get_FRS_id_mhtdc_dEdeg();
-    Float_t get_FRS_id_mhtdc_dEdegoQ();
+    Float_t get_FRS_id_mhtdc_dEdeg(int);
+    Float_t get_FRS_id_mhtdc_dEdegoQ(int);
     Float_t get_FRS_id_mhtdc_beta(int);
     Float_t get_FRS_id_mhtdc_tof4121(int);
     Float_t get_FRS_id_mhtdc_tof4221();
-    Float_t get_FRS_id_mhtdc_tof4122();
+    Float_t get_FRS_id_mhtdc_tof4122(int);
 
 
 	// ####################################################
@@ -557,6 +618,25 @@ public:
     int     get_FATIMA_tamex_hits();
     double  get_FATIMA_Lead_Lead(int,int);
 
+    //temporary bPlast TAMEX getters
+    int     get_bPLAST_TWINPEAKS_am_Fired(int);
+    double  get_bPLAST_TWINPEAKS_trigger_T(int);
+    int     get_bPLAST_TWINPEAKS_CH_ID(int,int);
+    double  get_bPLAST_TWINPEAKS_lead_T(int,int);
+    double  get_bPLAST_TWINPEAKS_trail_T(int,int);
+    int     get_bPLAST_TWINPEAKS_trail_hits(int);
+    int     get_bPLAST_TWINPEAKS_lead_hits(int);
+    int     get_bPLAST_TWINPEAKS_physical_channel(int,int);
+    int     get_bPLAST_TWINPEAKS_physical_lead_hits(int,int);
+    int     get_bPLAST_TWINPEAKS_physical_trail_hits(int,int);
+    double  get_bPLAST_TWINPEAKS_coarse_lead(int,int);
+    double  get_bPLAST_TWINPEAKS_fine_lead(int,int);
+    double  get_bPLAST_TWINPEAKS_coarse_trail(int,int);
+    double  get_bPLAST_TWINPEAKS_fine_trail(int,int);
+    double  get_bPLAST_TWINPEAKS_TOT(int,int);
+    double  get_bPLAST_TWINPEAKS_TOT_added(int,int);
+    int     get_bPLAST_TWINPEAKS_tamex_hits();
+    double  get_bPLAST_TWINPEAKS_Lead_Lead(int,int);
    // FATIMA_DataStruct* PassFATIMA();
 
     //temporary FINGER getters

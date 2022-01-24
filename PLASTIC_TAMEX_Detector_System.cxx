@@ -367,7 +367,7 @@ void PLASTIC_TAMEX_Detector_System::check_trailer(){
 void PLASTIC_TAMEX_Detector_System::calibrate_ONLINE(){
 
     //send data to ROOT histograms in Calibrator object
-    PLASTIC_TAMEX_Calibration->get_data(edge_fine,ch_ID_edge,tamex_iter,iterator,ch_num);
+    PLASTIC_TAMEX_Calibration->get_data(edge_fine,ch_ID_edge,tamex_iter,iterator);
     double max_count = 1000000.;
     cal_count++;
     if(cal_count % 1000 == 0){

@@ -148,9 +148,13 @@ using namespace std;
 
     Float_t TPC_X[7], TPC_Y[7];
     Int_t TPC_LT[7][2][64], TPC_RT[7][2][64];
-    Float_t TPC_X0, TPC_X1;
-
-
+    Int_t TPC_A[7][4], TPC_L[7][2],TPC_R[7][2];
+    Int_t TPC_DT[7][4][64];
+   // Float_t TPC_X0, TPC_X1;
+    Float_t TPC_X_s2_foc_23_24, TPC_Y_s2_foc_23_24, TPC_X_angle_s2_foc_23_24, TPC_Y_angle_s2_foc_23_24;
+    Float_t TPC_23_24_X_sc21, TPC_23_24_Y_sc21, TPC_23_24_X_sc22, TPC_23_24_Y_sc22;
+    Float_t TPC_X_s4, TPC_Y_s4, TPC_X_angle_s4, TPC_Y_angle_s4;
+    Float_t TPC_X_sc41, TPC_Y_sc41, TPC_X_sc42, TPC_Y_sc42;
     Int_t sci_dt_21l_21r, sci_dt_41l_41r, sci_dt_42l_42r, sci_dt_43l_43r;
 
     Int_t sci_dt_21l_41l, sci_dt_21r_41r, sci_dt_21l_42l, sci_dt_21r_42r;
@@ -169,7 +173,7 @@ using namespace std;
 
     Float_t beta_mhtdc[10];
 
-    Float_t ID_tof4121_mhtdc[10], ID_tof4221_mhtdc,ID_tof4122_mhtdc;
+    Float_t ID_tof4121_mhtdc[10], ID_tof4221_mhtdc,ID_tof4122_mhtdc[10];
 
     Float_t timestamp, ts, ts2;
 
@@ -205,6 +209,30 @@ using namespace std;
             TH2 *hcTPC_XY[7];
             TH2 *hTPC_LTRT[7];
             TH1 *hTPC_DELTAX[7];
+            TH1 *hTPC_A[7][4];
+            TH1 *hTPC_DT[7][4];
+            TH1 *hTPC_L0[7];
+            TH1 *hTPC_L1[7];
+            TH1 *hTPC_R0[7];
+            TH1 *hTPC_R1[7];
+            TH1 *hTPC_LT0[7];
+            TH1 *hTPC_LT1[7];
+            TH1 *hTPC_RT0[7];
+            TH1 *hTPC_RT1[7];
+            
+            TH1 *hTPC_X_S2_TPC_23_24;
+            TH1 *hTPC_Y_S2_TPC_23_24;
+            TH1 *hTPC_AX_S2_TPC_23_24;
+            TH1 *hTPC_AY_S2_TPC_23_24;
+            TH2 *hTPC_X_AX_S2_TPC_23_24;
+            TH2 *hTPC_Y_AY_S2_TPC_23_24;
+            
+            TH1 *hTPC_X_S4;
+            TH1 *hTPC_Y_S4;
+            TH1 *hTPC_AX_S4;
+            TH1 *hTPC_AY_S4;
+            TH2 *hTPC_X_AX_S4;
+            TH2 *hTPC_Y_AY_S4;
 
             // CSUM[index][anode_no]
             TH1I *hTPC_CSUM[7][4];
@@ -220,6 +248,9 @@ using namespace std;
             TH1 *hSCI_Tx[12];
             TH1 *hSCI_X[12];
             TH2 *hSCI_dE24;
+           
+            TH2 *hSCI_Tx_XTPC[12];
+            TH2 *hSCI_X_XTPC[12];
 
             TH2I *hSCIdE41_TPC42X;
             TH2I *hSCIdE41L_TPC41X;
@@ -257,45 +288,32 @@ using namespace std;
 
 			TH1 *hID_AoQ;
             TH1 *hID_AoQ_corr;
+            TH2 *hID_AoQa2;
+            TH2 *hID_AoQa4;
+            
+            
 
             TH1 *hID_AoQ_mhtdc;
             TH1 *hID_AoQ_corr_mhtdc;
             TH1 *hID_beta_mhtdc;
-	    TH1 *hID_beta_mhtdc_first_hit;
-	    TH1 *hID_beta_mhtdc_excl_first_hit;
-	    TH2 *hID_AoQ_vsAngle2_mhtdc;
+//             TH1 *hID_beta_mhtdc_first_hit;
+//             TH1 *hID_beta_mhtdc_excl_first_hit;
+//             TH2 *hID_AoQ_vsAngle2_mhtdc;
 
-            TH2 *hID_Z_AoQ_mhtdc;
-            TH2 *hID_Z_AoQ_corr_mhtdc;
+//             TH2 *hID_Z_AoQ_mhtdc;
+//             TH2 *hID_Z_AoQ_corr_mhtdc;
     //        TH2 *hID_Z_Z2_mhtdc;
 
 			TH1 *hID_Z;
             TH1 *hID_Z2;
-            TH1 *hID_Z3;
 
             TH1 *hID_Z_mhtdc;
             TH1 *hID_Z2_mhtdc;
 
-            TH2 *hID_x2a2;
-            TH2 *hID_y2b2;
-            TH2 *hID_x4a4;
-            TH2 *hID_y4b4;
-
           //  TH2I *hID_Z_Z2;
            // TH2I *hID_Z_Z3;
 
-            TH2 *hID_Z_dE2;
-
-            TH2 *hID_Z_Sc21E;
-            TH2 *hID_SC41dE_AoQ;
-            TH2 *hID_x2z;
-            TH2 *hID_x4z;
-            TH2 *hID_x4AoQ;
-            TH2 *hID_E_Xs4;
-            TH2 *hID_E_Xs2;
-
-            TH2 *hID_x2x4;
-            TH2 *hID_dEToF;
+            //TH2 *hID_dEToF;
             TH1 *hID_beta;
             TH1 *hMultiHitTDC_TOF_41_21;
             TH1 *hMultiHitTDC_TOF_42_21;

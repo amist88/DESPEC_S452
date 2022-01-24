@@ -12,6 +12,8 @@
 #define FRS_CORR 1
 ///For Z1 Z2 AND X A/Q Gate: Use FRS X2 vs A/Q (1) OR X4 vs A/Q (0) 
 #define X2_or_X4 1
+//Set the white rabbit offset time in minutes for the FRS (used only for gain matching of Z and A/Q over time): Defined in the EventUnpackProc and used in FRS_Detector_System
+#define FRS_WR_GAINOFFSET 26900000
 
 #define FRS_MIN_AoQ 2.0
 #define FRS_MAX_AoQ 3.0
@@ -57,6 +59,8 @@
 #define FatTAMEX_TimeMachineCh2 54
 
 ///bPLASTIC 
+///1:twin peaks,  0 for pQDC 
+#define bPLASTIC_TWINPEAKS 0
 #define bPLASTIC_TAMEX_MODULES 3
 #define bPLASTIC_TAMEX_HITS 20
 #define bPLASTIC_TAMEX_CHANNELS 16
