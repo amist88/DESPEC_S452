@@ -13,7 +13,7 @@ using namespace std;
 
 FATIMA_Energy_Calibration::FATIMA_Energy_Calibration(){
     load_Calibration_File();
-    do_gm = 1; 
+    do_gm = 1;
     have_gm_list = 0;
     last_ts_in_list = 0;
     current_gmlist_pos = 0;
@@ -31,7 +31,7 @@ FATIMA_Energy_Calibration::~FATIMA_Energy_Calibration(){
 //----------------------------------------------------------
 
 void FATIMA_Energy_Calibration::load_Calibration_File(){
-    
+
     const char* format = "%d %lf %lf %lf %lf %lf";
 
 
@@ -54,7 +54,7 @@ void FATIMA_Energy_Calibration::load_Calibration_File(){
                                   ,&tmp_coeffs[1],&tmp_coeffs[2]
                                   ,&tmp_coeffs[3],&tmp_coeffs[4]);
 
-        for(int i = 0;i < 5;++i){ 
+        for(int i = 0;i < 5;++i){
             calib_coeffs[det_id][i] = tmp_coeffs[i];
              original_calib_coeffs[det_id][i] = tmp_coeffs[i];
         }
@@ -67,7 +67,7 @@ double FATIMA_Energy_Calibration::Calibrate(double E,int det_id){
     //calibrate using Horner's method (https://en.wikipedia.org/wiki/Horner%27s_method)
     double Energy_c = calib_coeffs[det_id][0];
     for(int i = 1;i < 5;++i) Energy_c = Energy_c*E + calib_coeffs[det_id][i];
-    
+
     Energy_c += (static_cast<double>(rand())/static_cast<double>(RAND_MAX+0.5));
     return Energy_c;
 }
@@ -92,7 +92,7 @@ void FATIMA_Energy_Calibration::UpdateGainMatching(int ts_minutes)
        next_ts_for_update = (ts_minutes + 80000)*1e9*60;
        return;
      }
-     
+
    if(ts_minutes > last_ts_in_list){
        printf("INFO: FATIMA gainmatching - TS larger than largest gm-file. Will not attempt to load again.\n");
     next_ts_for_update = (ts_minutes + 80000)*1e9*60;
@@ -132,7 +132,7 @@ void FATIMA_Energy_Calibration::UpdateGainMatching(int ts_minutes)
      if(!foundit) {
        printf("WARNING: FATIMA, no matching gainmatching parameter file found. Not updating parameters! (This TS = %20d -- newxtTS = %lu\n", ts_minutes, next_ts_for_update);
        do_gm=0;
-       
+
      }
    }
 
@@ -152,10 +152,10 @@ void FATIMA_Energy_Calibration::UpdateGainMatching(int ts_minutes)
         calib_coeffs[i][3] = A*(4*a4*pow(B,3) + 3*a3*pow(B,2) + 2*a2*B + a1);
         calib_coeffs[i][2] = pow(A,2)*(6*a4*pow(B,2) + 3*a3*B + a2);
         calib_coeffs[i][1] = pow(A,3)*(4*a4*B + a3);
-        calib_coeffs[i][0] = pow(A,4)*a4;       
+        calib_coeffs[i][0] = pow(A,4)*a4;
     //printf("corrected--det%02d  %lf  %lf  %lf\n", i, calib_coeffs[i][4],
        //                                              calib_coeffs[i][3],
-        //                                             calib_coeffs[i][2]);                          
+        //                                             calib_coeffs[i][2]);
      }
    }
 }
@@ -189,17 +189,22 @@ void FATIMA_Energy_Calibration::load_GainMatching_List()
      }
      */
     if(sscanf(line.c_str(),
-        "Configuration_Files/FATIMA/gainmatching/%[^_]_%d_%d.gm", 
+        "Configuration_Files/FATIMA/gainmatching/%[^_]_%d_%d.gm",
         name, &firstts, &lastts) == 3) {
       //printf("%s\n", line.c_str());
       //printf("%d, %d, %s\n", firstts+offset, lastts+offset, name);
-      tmpentry = std::make_tuple(firstts+offset, lastts+offset, line); 
+      tmpentry = std::make_tuple(firstts+offset, lastts+offset, line);
       gm_list.push_back(tmpentry);
     }
   }
   gm_filelist.close();
-  sort(gm_list.begin(), gm_list.end());
-  last_ts_in_list = std::get<1>(gm_list.back());
+  if(gm_list.size() > 0){
+    sort(gm_list.begin(), gm_list.end());
+    last_ts_in_list = std::get<1>(gm_list.back());
+  }else{
+    printf("WARNING - FATIMA: Haven't read any entries from gmfiles.list. Check path?\n");
+    exit(0);
+  }
   /*
   for (auto le : gm_list) {
       cout << std::get<0>(le) << endl;
@@ -226,16 +231,14 @@ void FATIMA_Energy_Calibration::load_GainMatching_File(gmentry gm)
   while(gmfile.good()){
     getline(gmfile,line);
     if(line[0] == '#') continue;
-    
+
     if(sscanf(line.c_str(),
-        "%d\t%lf\t%lf", 
+        "%d\t%lf\t%lf",
         &deti, &b, &a) == 3) {
       gm_coeffs[deti][0] = b;
       gm_coeffs[deti][1] = a;
       //cout << "det " << deti << " b " << b << " a " << a << endl;
-    } 
+    }
   }
   gmfile.close();
 }
-
-
