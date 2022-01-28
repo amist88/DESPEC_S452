@@ -1651,7 +1651,7 @@ dT_frsfat_prompt = ((cInputMain->pFat_TDC_T[k]-cInputMain->pSC40[0])*0.025);
                         if(m==n) continue;
 
                         //I will keep the gamma-gamma time gate off for now (in case of isomers). AKM 07.04.21)
-                       if((GeT_bPlast[m]-GeT_bPlast[n])>fCorrel->GGe1_Ge2_Low && (GeT_Long[m]-GeT_Long[n])<fCorrel->GGe1_Ge2_High){
+                       if((GeT_bPlast[m]-GeT_bPlast[n])>fCorrel->GGe1_Ge2_Low && (GeT_bPlast[m]-GeT_bPlast[n])<fCorrel->GGe1_Ge2_High){
                         hbPlast_SpillOff_Germanium_gammagamma->Fill(GeE_bPlast[m],GeE_bPlast[n]);
 
 
